@@ -1,24 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import Dropdown from 'react-bootstrap/Dropdown';
+
 function App() {
+
+  const onSelectCompany = (companyId) => {
+    console.log(companyId)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Dropdown onSelect={onSelectCompany}>
+      <Dropdown.Toggle variant="primary">
+        Choose company
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        <Dropdown.Item eventKey="A">Company A</Dropdown.Item>
+        <Dropdown.Item eventKey="B">Company B</Dropdown.Item>
+        <Dropdown.Item eventKey="C">Company C</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
     </div>
   );
 }
