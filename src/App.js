@@ -1,28 +1,36 @@
 import React from 'react';
-import './App.css';
+import { connect } from 'react-redux';
 
+import { simpleAction } from './actions/simpleAction';
+
+import './App.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-function App() {
+const App = (props) => {
 
   const onSelectCompany = (companyId) => {
-    console.log(companyId)
+    props.dispatch(simpleAction())
   }
 
   return (
     <div className="App">
-    <Dropdown onSelect={onSelectCompany}>
-      <Dropdown.Toggle variant="primary">
-        Choose company
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
-        <Dropdown.Item eventKey="A">Company A</Dropdown.Item>
-        <Dropdown.Item eventKey="B">Company B</Dropdown.Item>
-        <Dropdown.Item eventKey="C">Company C</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+      <Dropdown onSelect={onSelectCompany}>
+        <Dropdown.Toggle variant="primary">
+          Choose company
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Item eventKey="A">Company A</Dropdown.Item>
+          <Dropdown.Item eventKey="B">Company B</Dropdown.Item>
+          <Dropdown.Item eventKey="C">Company C</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+      <pre>{ JSON.stringify(props)}</pre>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => ({
+ ...state
+})
+
+export default connect(mapStateToProps)(App);
