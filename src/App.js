@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { simpleAction } from './actions/simpleAction';
+import { simpleAction, getFilings } from './actions/simpleAction';
 
 import './App.css';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -10,6 +10,7 @@ const App = (props) => {
 
   const onSelectCompany = (companyId) => {
     props.dispatch(simpleAction())
+    props.dispatch(getFilings(companyId))
   }
 
   return (
