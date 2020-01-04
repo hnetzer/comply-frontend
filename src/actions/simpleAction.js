@@ -1,4 +1,4 @@
-const API_BASE_URI = 'http://comply-api.herokuapp.com';
+const API_BASE_URI = 'https://comply-api.herokuapp.com';
 
 const simpleAction = () => dispatch => {
  dispatch({
