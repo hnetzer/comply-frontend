@@ -17,12 +17,12 @@ const GetStartedScreen = (props) => {
   const [validated, setValidated] = useState(false);
 
   const initialFormValues = {
-    companyName: 'Doubledutch',
-    companyPhone: '(412) 551-0569',
-    name: 'Henry Netzer',
-    role: 'Controller',
-    email: 'hnetzer19@gmail.com',
-    password: 'test123'
+    companyName: '',
+    companyPhone: '',
+    name: '',
+    role: '',
+    email: '',
+    password: ''
   }
 
   const handleValidation = values => {
