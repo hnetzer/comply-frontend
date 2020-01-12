@@ -1,11 +1,8 @@
 import React from 'react';
-import { Router, Link } from "@reach/router"
+import { Router } from "@reach/router"
 
 import FilingScheduleScreen from "./screens/FilingScheduleScreen"
 import GetStartedScreen from "./screens/GetStartedScreen"
-
-let Home = () => <div>Home</div>
-let Dash = () => <div>Dash</div>
 
 const App = (props) => {
 

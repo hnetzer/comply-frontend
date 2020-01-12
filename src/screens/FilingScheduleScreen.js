@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
 
-import { simpleAction, getFilings } from '../actions/simpleAction';
+import { getFilings } from '../actions/filing';
 
 import Dropdown from 'react-bootstrap/Dropdown';
 import Table from 'react-bootstrap/Table';
@@ -88,7 +88,7 @@ const FilingScheduleScreen = (props) => {
 }
 
 const mapStateToProps = state => {
-  const data = state.simpleReducer
+  const data = state.filingReducer
   return data
 }
 

@@ -9,9 +9,9 @@ const initialState = {
 
 export default (state = initialState, action) => {
  switch (action.type) {
-  case 'REQUEST':
+  case 'GET_FILINGS_REQUEST':
    return state;
-  case 'RESPONSE':
+  case 'GET_FILINGS_RESPONSE':
     return {
       filings: action.data.filings,
       company: action.data.company,
@@ -19,7 +19,7 @@ export default (state = initialState, action) => {
       jurisdictions: action.data.jurisdictions,
       error: null
     }
-  case 'ERROR':
+  case 'GET_FILINGS_ERROR':
    return {
      filings: [],
      company: null,
