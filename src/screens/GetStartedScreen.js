@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+
 import { Formik } from 'formik';
+
+import { createAccount } from '../actions/signup'
 
 // React Bootstrap components
 import Container from 'react-bootstrap/Container';
@@ -34,10 +38,13 @@ const GetStartedScreen = (props) => {
   }
 
   const handleSubmit = (values, { setSubmitting }) => {
-    setTimeout(() => {
+    /* setTimeout(() => {
       alert(JSON.stringify(values, null, 2));
       setSubmitting(false);
-    }, 400);
+    }, 400); */
+
+    console.log(values)
+    props.dispatch(createAccount(values))
   }
 
   return (
@@ -139,4 +146,4 @@ const GetStartedScreen = (props) => {
   )
 }
 
-export default GetStartedScreen;
+export default connect()(GetStartedScreen);
