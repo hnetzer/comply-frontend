@@ -1,0 +1,17 @@
+.container {
+  margin-top: 64px;
+}
+
+.header {
+  text-align: center;
+}
+
+.formContainer {
+  width: 400px;
+  margin-top: 32px;
+  justify-content: space-between;
+}
+
+.submitButton {
+  margin-top: 32px;
+}
