@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { Formik } from 'formik';
 
-import { createAccount } from '../actions/signup'
+import { createAccount } from 'actions'
 
 // React Bootstrap components
 import Container from 'react-bootstrap/Container';
@@ -40,14 +40,25 @@ const GetStartedScreen = (props) => {
   }
 
   const handleSubmit = (values, { setSubmitting }) => {
-    console.log('inside handle submit')
     /* setTimeout(() => {
       alert(JSON.stringify(values, null, 2));
       setSubmitting(false);
     }, 400); */
 
-    console.log(values)
-    props.dispatch(createAccount(values))
+    const data = {
+      user: {
+        name: values.yourName,
+        role: values.yourRole,
+        email: values.accountEmail,
+        password: values.accountPassword,
+      },
+      company: {
+        name: values.companyName,
+        phone: values.companyPhone
+      }
+    }
+
+    props.dispatch(createAccount(data))
   }
 
   return (

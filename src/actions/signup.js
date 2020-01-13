@@ -26,6 +26,8 @@ const createAccountError = (error) => {
 
 
 const createAccount = (data) => {
+  console.log('inside create account function')
+  console.log(data)
   return dispatch => {
     createAccountRequest()
     fetch(`${api.BASE_URI}/account`, {

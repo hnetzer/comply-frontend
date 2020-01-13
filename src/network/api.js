@@ -1,4 +1,4 @@
-const BASE_URI = 'https://comply-api.herokuapp.com';
+const BASE_URI = 'http://localhost:8080';
 
 export default {
   BASE_URI
