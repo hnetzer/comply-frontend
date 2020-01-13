@@ -17,27 +17,30 @@ const GetStartedScreen = (props) => {
   const [validated, setValidated] = useState(false);
 
   const initialFormValues = {
-    companyName: '',
-    companyPhone: '',
-    name: '',
-    role: '',
-    email: '',
-    password: ''
+    companyName: 'Comply',
+    companyPhone: '(412) 551-0569',
+    yourName: 'Henry',
+    yourRole: 'Controller',
+    accountEmail: 'hnetzer19@gmail.com',
+    accountPassword: 'test'
   }
 
   const handleValidation = values => {
+    console.log('handleValidation')
     const errors = {};
-    if (!values.email) {
+    /* if (!values.email) {
       errors.email = 'Required';
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
     ) {
       errors.email = 'Invalid email address';
-    }
+    }*/
+    console.log(errors)
     return errors;
   }
 
   const handleSubmit = (values, { setSubmitting }) => {
+    console.log('inside handle submit')
     /* setTimeout(() => {
       alert(JSON.stringify(values, null, 2));
       setSubmitting(false);
@@ -94,7 +97,7 @@ const GetStartedScreen = (props) => {
                     onChange={handleChange}
                     type="text"
                     placeholder="Mike Smith"
-                    value={values.name} />
+                    value={values.yourName} />
                 </Form.Group>
               </Col>
               <Col>
@@ -103,7 +106,7 @@ const GetStartedScreen = (props) => {
                   <Form.Control
                     required
                     onChange={handleChange}
-                    value={values.role}
+                    value={values.yourRole}
                     as="select">
                     <option>CEO</option>
                     <option>CFO</option>
@@ -122,7 +125,7 @@ const GetStartedScreen = (props) => {
                 onChange={handleChange}
                 type="email"
                 placeholder="mike@company.com"
-                value={values.email}
+                value={values.accountEmail}
                 />
             </Form.Group>
             <Form.Group controlId="accountPassword">
@@ -132,7 +135,7 @@ const GetStartedScreen = (props) => {
                 onChange={handleChange}
                 type="password"
                 placeholder="******"
-                value={values.password}
+                value={values.accountPassword}
                  />
             </Form.Group>
             <Button variant="primary" type="submit" block className={styles.submitButton}>

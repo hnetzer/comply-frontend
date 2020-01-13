@@ -25,7 +25,7 @@ const createAccountError = (error) => {
 }
 
 
-export const createAccount = (data) => {
+const createAccount = (data) => {
   return dispatch => {
     createAccountRequest()
     fetch(`${api.BASE_URI}/account`, {
@@ -45,6 +45,6 @@ export const createAccount = (data) => {
   };
 }
 
-export default {
+export {
   createAccount
 }
