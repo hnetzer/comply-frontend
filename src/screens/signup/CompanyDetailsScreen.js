@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 
 // import { updateCompanyResponse } from 'actions';
-// import { updateCompany } from 'network/api';
+import { updateCompany } from 'network/api';
 
 import { CompanyDetailsForm } from 'forms'
 
@@ -30,7 +30,7 @@ const CompanyDetailsScreen = (props) => {
     }
 
     try {
-      // const response = await createAccount(data)
+      const response = updateCompany(data, props.token)
       // props.dispatch(createAccountResponse(response))
       // navigate('/company-details')
     } catch (err) {
