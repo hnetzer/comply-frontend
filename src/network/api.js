@@ -32,6 +32,8 @@ export const updateCompany = async (data, token) => {
     let response = await fetch(`${BASE_URI}/company`, settings);
     let json = await response.json()
 
+    // TODO: check for 401 and logout 
+
     // Check response to make sure it was successful
     if (response.status !== 200) {
       throw Error(json.message)

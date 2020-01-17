@@ -107,10 +107,10 @@ const CompanyDetailsForm = (props) => {
               </Col>
             </Form.Row>
           </Form.Group>
-          <Form.Group controlId="companyFormation">
-            <Form.Label><b>Formation Details</b></Form.Label>
-            <Form.Row>
-              <Col>
+          <Form.Label><b>Formation Details</b></Form.Label>
+          <Form.Row>
+            <Col>
+              <Form.Group controlId="companyFormationState">
                 <Form.Label>State</Form.Label>
                 <Form.Control
                   required
@@ -121,8 +121,10 @@ const CompanyDetailsForm = (props) => {
                   <option>California</option>
                   <option>New York</option>
                 </Form.Control>
-              </Col>
-              <Col>
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="companyFormationRegDate">
                 <Form.Label>Registration Date</Form.Label>
                 <Form.Control
                   required
@@ -130,10 +132,9 @@ const CompanyDetailsForm = (props) => {
                   type="text"
                   placeholder="2018-10-31"
                   value={values.companyFormationRegDate} />
-              </Col>
-            </Form.Row>
-          </Form.Group>
-
+              </Form.Group>
+            </Col>
+          </Form.Row>
           <Button variant="primary" type="submit" block>
             Next
           </Button>
