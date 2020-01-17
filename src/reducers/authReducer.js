@@ -1,0 +1,27 @@
+
+const initialState = {
+  error: null,
+  user: null,
+  token: null,
+}
+
+export default (state = initialState, action) => {
+ switch (action.type) {
+  case 'CREATE_ACCOUNT_REQUEST':
+   return state;
+  case 'CREATE_ACCOUNT_RESPONSE':
+    return {
+      error: null,
+      user: action.data.user,
+      token: action.data.token,
+    }
+  case 'CREATE_ACCOUNT_ERROR':
+   return {
+     error: action.err,
+     user: null,
+     token: null,
+   }
+  default:
+   return state
+ }
+}

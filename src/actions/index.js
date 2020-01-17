@@ -1,7 +1,7 @@
-import { createAccount } from './signup'
+import { createAccountResponse } from './signup'
 import { getFilings } from './filing'
 
 export {
-  createAccount,
+  createAccountResponse,
   getFilings
 }

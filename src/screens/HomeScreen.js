@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -30,7 +30,7 @@ const HomeScreen = (props) => {
               justifyContent: 'space-evenly'  }}>
             <Button
               variant="primary"
-              href="/get-started"
+              href="/signup/get-started"
             >
               Sign Up
             </Button>

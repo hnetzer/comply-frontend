@@ -88,7 +88,7 @@ const FilingScheduleScreen = (props) => {
 }
 
 const mapStateToProps = state => {
-  const data = state.filingReducer
+  const data = state.filing
   return data
 }
 

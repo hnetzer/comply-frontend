@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 import filingReducer from './filingReducer';
+import authReducer from './authReducer';
 
 export default combineReducers({
- filingReducer
+ filing: filingReducer,
+ auth: authReducer,
 });
