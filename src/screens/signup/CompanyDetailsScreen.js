@@ -29,8 +29,10 @@ const CompanyDetailsScreen = (props) => {
       tax_class: values.companyTaxClass,
       year_end_month: values.companyYearEndMonth,
       year_end_day: values.companyYearEndDay,
-      formation_state: values.companyFormationState,
-      formation_registration_date: values.companyFormationRegDate
+      jurisdiction: {
+        name: values.companyFormationState,
+        registration: values.companyFormationRegDate
+      }
     }
 
     try {
