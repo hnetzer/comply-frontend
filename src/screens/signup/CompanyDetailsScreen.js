@@ -39,17 +39,18 @@ const CompanyDetailsScreen = (props) => {
       const response = await updateCompany(data, props.token)
       alert('Success updating company details!')
       // props.dispatch(createAccountResponse(response))
-      // navigate('/company-details')
+      navigate('/signup/office-details')
     } catch (err) {
       alert(err.message)
     }
   }
 
+  console.log(props)
   return (
     <div className={styles.container}>
       <Card className={styles.card}>
         <Card.Body className={styles.cardBody}>
-          <Card.Title>Tell us about </Card.Title>
+          <Card.Title>Tell us about <b>{props.company.name}</b></Card.Title>
           <CompanyDetailsForm
             initialValues={initialFormValues}
             handleSubmit={handleSubmit} />

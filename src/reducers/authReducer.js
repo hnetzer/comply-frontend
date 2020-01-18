@@ -14,6 +14,7 @@ export default (state = initialState, action) => {
       error: null,
       user: action.data.user,
       token: action.data.token,
+      company: action.data.company,
     }
   case 'CREATE_ACCOUNT_ERROR':
    return {
