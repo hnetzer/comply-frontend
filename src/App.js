@@ -5,13 +5,15 @@ import FilingScheduleScreen from "./screens/FilingScheduleScreen"
 import GetStartedScreen from "./screens/signup/GetStartedScreen"
 import CompanyDetailsScreen from "./screens/signup/CompanyDetailsScreen"
 import OfficeDetailsScreen from "./screens/signup/OfficeDetailsScreen"
+import WebsiteScreen from "./screens/WebsiteScreen"
 import HomeScreen from "./screens/HomeScreen"
 
 const App = (props) => {
 
   return (
     <Router>
-      <HomeScreen path="/" />
+      <WebsiteScreen path="/" />
+      <HomeScreen path="/home" />
       <GetStartedScreen path="/signup/get-started" />
       <CompanyDetailsScreen path="/signup/company-details" />
       <OfficeDetailsScreen path="/signup/office-details" />

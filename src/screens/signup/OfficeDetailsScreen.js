@@ -18,20 +18,17 @@ const OfficeDetailsScreen = (props) => {
     offices: [{
       address: '',
       city: '',
-      state: '',
+      state: 'California',
       zip: '',
     }]
   }
 
   const handleSubmit = async (values, { setSubmitting }) => {
 
-    const data = { offices: values };
-
     try {
-      const response = await updateOffices(data, props.company.id, props.token)
-      alert('Success updating offices!')
+      const response = await updateOffices(values, props.company.id, props.token)
       // props.dispatch(createAccountResponse(response))
-      // navigate('/home')
+      navigate('/home')
     } catch (err) {
       alert(err.message)
     }
@@ -41,7 +38,7 @@ const OfficeDetailsScreen = (props) => {
     <div className={styles.container}>
       <Card className={styles.card}>
         <Card.Body className={styles.cardBody}>
-          <Card.Title><h2>Where are your offices located?</h2></Card.Title>
+          <Card.Title><h4>Tell us about your offices</h4></Card.Title>
           <OfficeDetailsForm
             initialValues={initialFormValues}
             handleSubmit={handleSubmit} />

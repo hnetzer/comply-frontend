@@ -1,48 +1,31 @@
 import React from 'react';
 
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
 
-import styles from './HomeScreen.module.css'
+import styles from './Home.module.css'
 
 const HomeScreen = (props) => {
 
   return(
-    <div className={styles.container}>
-      <Card style={{
-        width: '400px',
-        height: '240px',
-        marginLeft: 'auto',
-        marginRight: 'auto'
-      }}>
-        <Card.Body style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}>
-          <Card.Title><h1>Comply</h1></Card.Title>
-          <Card.Subtitle>Keeping your buisness in good standing</Card.Subtitle>
-          <div style={{
-              marginTop: 32,
-              width: '70%',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-evenly'  }}>
-            <Button
-              variant="primary"
-              href="/signup/get-started"
-            >
-              Sign Up
-            </Button>
-            <Button
-              variant="secondary"
-              href="login"
-            >
-              Log In
-            </Button>
-          </div>
-        </Card.Body>
-      </Card>
+    <div>
+      <Navbar bg="dark" expand="lg">
+        <Navbar.Brand href="/home">
+          <h3 className={styles.logo}>comply</h3>
+        </Navbar.Brand>
+      </Navbar>
+      <div className={styles.container}>
+        <div className={styles.sideBar}>
+          <Nav defaultActiveKey="/home" className="flex-column">
+            <Nav.Link href="/filings" disabled>Filings</Nav.Link>
+            <Nav.Link href="/agencies" disabled>Agencies</Nav.Link>
+            <Nav.Link href="/company" disabled>Company</Nav.Link>
+          </Nav>
+        </div>
+        <main className={styles.main}>
+            <h1>Welcome to Comply!</h1>
+        </main>
+      </div>
     </div>
   )
 }

@@ -1,5 +1,8 @@
 .container {
-  margin-top: 64px;
+  padding-top: 64px;
+  background-color: rgb(236, 239, 241);
+  height:100vh;
+  min-height: 100%;
 }
 
 .header {
