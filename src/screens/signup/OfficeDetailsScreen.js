@@ -12,11 +12,17 @@ import styles from './Signup.module.css'
 const OfficeDetailsScreen = (props) => {
 
   const initialFormValues = {
+    offices: [{
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+    }]
   }
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    const data = {
-    }
+
+    console.log(values)
 
     try {
     } catch (err) {
