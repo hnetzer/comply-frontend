@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 
+import { OfficeDetailsForm } from 'forms'
+
 // React Bootstrap components
 import Card from 'react-bootstrap/Card';
 
@@ -27,6 +29,9 @@ const OfficeDetailsScreen = (props) => {
       <Card className={styles.card}>
         <Card.Body className={styles.cardBody}>
           <Card.Title><h2>Where are your offices located?</h2></Card.Title>
+          <OfficeDetailsForm
+            initialValues={initialFormValues}
+            handleSubmit={handleSubmit} />
         </Card.Body>
       </Card>
     </div>
