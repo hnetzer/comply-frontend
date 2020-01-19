@@ -1,4 +1,4 @@
-const BASE_URI = 'https://comply-api.herokuapp.com/';
+const BASE_URI = 'https://comply-api.herokuapp.com';
 
 export const createAccount = async (data) => {
   try {
