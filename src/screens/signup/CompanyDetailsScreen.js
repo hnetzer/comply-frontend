@@ -15,23 +15,23 @@ import styles from './Signup.module.css'
 const CompanyDetailsScreen = (props) => {
 
   const initialFormValues = {
-    companyType: 'Corporation',
-    companyTaxClass: 'C Corp',
-    companyYearEndMonth: 11,
-    companyYearEndDay: 31,
-    companyFormationState: 'California',
-    companyFormationRegDate: '',
+    type: 'Corporation',
+    tax_class: 'C Corp',
+    year_end_month: 11,
+    year_end_day: 31,
+    formation_state: 'California',
+    formation_reg_date: '',
   }
 
   const handleSubmit = async (values, { setSubmitting }) => {
     const data = {
-      type: values.companyType,
-      tax_class: values.companyTaxClass,
-      year_end_month: values.companyYearEndMonth,
-      year_end_day: values.companyYearEndDay,
+      type: values.type,
+      tax_class: values.taxClass,
+      year_end_month: values.year_end_month,
+      year_end_day: values.year_end_day,
       jurisdiction: {
-        name: values.companyFormationState,
-        registration: values.companyFormationRegDate
+        name: values.formation_state,
+        registration: values.formation_reg_date
       }
     }
 

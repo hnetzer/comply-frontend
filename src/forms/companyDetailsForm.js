@@ -44,12 +44,12 @@ const CompanyDetailsForm = (props) => {
       /* and other goodies */
     }) => (
         <Form validated={validated} onSubmit={handleSubmit} style={{ width: '100%'}}>
-          <Form.Group controlId="companyType">
+          <Form.Group controlId="type">
             <Form.Label>Company Type</Form.Label>
             <Form.Control
               required
               onChange={handleChange}
-              value={values.companyType}
+              value={values.type}
               as="select">
               <option>Corporation</option>
               <option>LLC</option>
@@ -57,26 +57,26 @@ const CompanyDetailsForm = (props) => {
               <option>LLP</option>
             </Form.Control>
           </Form.Group>
-          <Form.Group controlId="companyTaxClass">
+          <Form.Group controlId="tax_class">
             <Form.Label>Tax Class</Form.Label>
             <Form.Control
               required
               onChange={handleChange}
-              value={values.companyTaxClass}
+              value={values.tax_class}
               as="select">
               <option>C Corp</option>
               <option>S Corp</option>
             </Form.Control>
           </Form.Group>
-          <Form.Group controlId="companyYearEnd">
-            <Form.Label><b>Fiscal Year End</b></Form.Label>
-            <Form.Row>
-              <Col>
+          <Form.Label><b>Fiscal Year End</b></Form.Label>
+          <Form.Row>
+            <Col>
+              <Form.Group controlId="year_end_month">
                 <Form.Label>Month</Form.Label>
                 <Form.Control
                   required
                   onChange={handleChange}
-                  value={values.companyYearEndMonth}
+                  value={values.year_end_month}
                   as="select">
                   <option value={0}>January</option>
                   <option value={1}>Febrary</option>
@@ -91,31 +91,33 @@ const CompanyDetailsForm = (props) => {
                   <option value={10}>November</option>
                   <option value={11}>December</option>
                 </Form.Control>
-              </Col>
-              <Col>
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="year_end_day">
                 <Form.Label>Day</Form.Label>
                 <Form.Control
                   required
                   onChange={handleChange}
-                  value={values.companyYearEndDay}
+                  value={values.year_end_day}
                   as="select">
                   <option value={31}>31st</option>
                   <option value={30}>30th</option>
                   <option value={29}>29th</option>
                   <option value={28}>28th</option>
                 </Form.Control>
-              </Col>
-            </Form.Row>
-          </Form.Group>
+              </Form.Group>
+            </Col>
+          </Form.Row>
           <Form.Label><b>Formation Details</b></Form.Label>
           <Form.Row>
             <Col>
-              <Form.Group controlId="companyFormationState">
+              <Form.Group controlId="formation_state">
                 <Form.Label>State</Form.Label>
                 <Form.Control
                   required
                   onChange={handleChange}
-                  value={values.companyFormationState}
+                  value={values.formation_state}
                   as="select">
                   <option>Delaware</option>
                   <option>California</option>
@@ -124,14 +126,14 @@ const CompanyDetailsForm = (props) => {
               </Form.Group>
             </Col>
             <Col>
-              <Form.Group controlId="companyFormationRegDate">
+              <Form.Group controlId="formation_reg_date">
                 <Form.Label>Registration Date</Form.Label>
                 <Form.Control
                   required
                   onChange={handleChange}
                   type="text"
                   placeholder="2018-10-31"
-                  value={values.companyFormationRegDate} />
+                  value={values.formation_reg_date} />
               </Form.Group>
             </Col>
           </Form.Row>
