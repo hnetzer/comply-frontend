@@ -2,6 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 
+// import { updateOfficeResponse } from 'actions';
+import { updateOffices } from 'network/api';
+
 import { OfficeDetailsForm } from 'forms'
 
 // React Bootstrap components
@@ -22,9 +25,13 @@ const OfficeDetailsScreen = (props) => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
 
-    console.log(values)
+    const data = { offices: values };
 
     try {
+      const response = await updateOffices(data, props.company.id, props.token)
+      alert('Success updating offices!')
+      // props.dispatch(createAccountResponse(response))
+      // navigate('/home')
     } catch (err) {
       alert(err.message)
     }
