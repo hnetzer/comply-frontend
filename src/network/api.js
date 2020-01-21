@@ -1,6 +1,4 @@
-const BASE_URI = 'https://comply-api.herokuapp.com';
-
-
+const BASE_URI = 'http://localhost:8080';
 
 export const createAccount = async (data) => {
   try {
@@ -24,12 +22,12 @@ export const createAccount = async (data) => {
   }
 }
 
-export const login = async (email, password) => {
+export const loginRequest = async (email, password) => {
   try {
     const settings = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, password: password })
+      body: JSON.stringify({ username: email, password: password })
     }
     let response = await fetch(`${BASE_URI}/login`, settings);
     let json = await response.json()
@@ -102,4 +100,5 @@ export default {
   createAccount,
   updateCompany,
   updateOffices,
+  loginRequest
 }

@@ -22,6 +22,15 @@ export default (state = initialState, action) => {
      user: null,
      token: null,
    }
+  case 'LOGIN':
+    return {
+      error: null,
+      user: action.data.user,
+      token: action.data.token,
+      company: null
+    }
+  case 'LOGOUT':
+    return initialState;
   default:
    return state
  }

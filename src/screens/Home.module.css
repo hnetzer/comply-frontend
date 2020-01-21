@@ -25,3 +25,7 @@
   padding: 32px;
   display: flex;
 }
+
+#account-nav-dropdown {
+  color: #fff;
+}

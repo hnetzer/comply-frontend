@@ -3,16 +3,21 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 
+import { AccountMenu } from '../components/molecules'
+
 import styles from './Home.module.css'
 
 const HomeScreen = (props) => {
 
   return(
     <div>
-      <Navbar bg="dark" expand="lg">
+      <Navbar bg="dark" expand="lg" className="justify-content-between">
         <Navbar.Brand href="/home">
           <h3 className={styles.logo}>comply</h3>
         </Navbar.Brand>
+        <div style={{ marginRight: 32 }}>
+          <AccountMenu />
+        </div>
       </Navbar>
       <div className={styles.container}>
         <div className={styles.sideBar}>

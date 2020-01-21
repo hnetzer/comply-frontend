@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 
 import Button from 'react-bootstrap/Button';
@@ -6,7 +7,8 @@ import Card from 'react-bootstrap/Card';
 
 import styles from './Website.module.css'
 
-import { login } from 'network/api';
+import { loginRequest } from 'network/api';
+import { login } from 'actions';
 
 import { LoginForm } from 'forms'
 
@@ -20,8 +22,8 @@ const LoginScreen = (props) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     const { email, password } = values;
     try {
-      await login(email, password)
-      // props.dispatch(createAccountResponse(response))
+      const response = await loginRequest(email, password)
+      props.dispatch(login(response))
       navigate('/home')
     } catch (err) {
       alert(err.message)
@@ -46,4 +48,4 @@ const LoginScreen = (props) => {
   )
 }
 
-export default LoginScreen;
+export default connect()(LoginScreen);
