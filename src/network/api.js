@@ -1,4 +1,4 @@
-const BASE_URI = 'http://localhost:8080';
+const BASE_URI = 'https://comply-api.herokuapp.com';
 
 export const createAccount = async (data) => {
   try {
