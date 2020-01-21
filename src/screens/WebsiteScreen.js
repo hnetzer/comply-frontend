@@ -11,7 +11,6 @@ const WebsiteScreen = (props) => {
     <div className={styles.container}>
       <Card style={{
         width: '400px',
-        height: '240px',
         marginLeft: 'auto',
         marginRight: 'auto'
       }}>

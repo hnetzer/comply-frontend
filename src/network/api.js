@@ -1,5 +1,7 @@
 const BASE_URI = 'https://comply-api.herokuapp.com';
 
+
+
 export const createAccount = async (data) => {
   try {
     const settings = {
@@ -8,6 +10,28 @@ export const createAccount = async (data) => {
       body: JSON.stringify(data)
     }
     let response = await fetch(`${BASE_URI}/account`, settings);
+    let json = await response.json()
+
+    // Check response to make sure it was successful
+    if (response.status !== 200) {
+      throw Error(json.message)
+    }
+
+    return json;
+  }
+  catch (err) {
+    throw Error(err);
+  }
+}
+
+export const login = async (email, password) => {
+  try {
+    const settings = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, password: password })
+    }
+    let response = await fetch(`${BASE_URI}/login`, settings);
     let json = await response.json()
 
     // Check response to make sure it was successful
