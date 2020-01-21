@@ -36,7 +36,7 @@ const CompanyDetailsScreen = (props) => {
     }
 
     try {
-      const response = await updateCompany(data, props.company.id, props.token)
+      await updateCompany(data, props.company.id, props.token)
       // props.dispatch(createAccountResponse(response))
       navigate('/signup/office-details')
     } catch (err) {

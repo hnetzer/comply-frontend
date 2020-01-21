@@ -56,7 +56,7 @@ const OfficeDetailsForm = (props) => {
               <div key={index}>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', borderBottom: '1px solid #c0c0c0', marginBottom: 10}}>
                 <h5>{`${getOrdinal(index)} Office`}</h5>
-                {(index != 0) ? (
+                {(index !== 0) ? (
                   <Button variant="link" onClick={() => arrayHelpers.remove(index)}>
                   Remove
                   </Button>) : null}

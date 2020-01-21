@@ -26,7 +26,7 @@ const OfficeDetailsScreen = (props) => {
   const handleSubmit = async (values, { setSubmitting }) => {
 
     try {
-      const response = await updateOffices(values, props.company.id, props.token)
+      await updateOffices(values, props.company.id, props.token)
       // props.dispatch(createAccountResponse(response))
       navigate('/home')
     } catch (err) {
