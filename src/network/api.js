@@ -1,7 +1,7 @@
 import { store } from 'store';
 import { navigate } from "@reach/router"
 
-const BASE_URI = 'http://localhost:8080';
+const BASE_URI = process.env.REACT_APP_API_BASE_URL;
 
 // Wrapper for all network requests
 export const sendRequest = async (method, path, data, includeAuth = true) => {
