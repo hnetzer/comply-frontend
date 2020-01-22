@@ -4,8 +4,8 @@ import { Formik } from 'formik';
 
 // Bootstrap components
 import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 
 const LoginForm = (props) => {
   const [validated] = useState(false);
@@ -19,7 +19,15 @@ const LoginForm = (props) => {
     return errors;
   }
 
+  const renderServerError = () => {
+    if (!props.error) return null;
+    return (
+      <Alert variant="danger">{props.error}</Alert>
+    );
+  }
   return (
+    <>
+      {renderServerError()}
     <Formik
       initialValues={props.initialValues}
       validate={handleValidation}
@@ -36,30 +44,31 @@ const LoginForm = (props) => {
       /* and other goodies */
     }) => (
         <Form validated={validated} onSubmit={handleSubmit}>
-        <Form.Group controlId="email">
-          <Form.Label>Email Address</Form.Label>
-          <Form.Control
-            required
-            onChange={handleChange}
-            type="email"
-            value={values.email}
-            />
-        </Form.Group>
-        <Form.Group controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            required
-            onChange={handleChange}
-            type="password"
-            value={values.password}
-             />
-        </Form.Group>
+          <Form.Group controlId="email">
+            <Form.Label>Email Address</Form.Label>
+            <Form.Control
+              required
+              onChange={handleChange}
+              type="email"
+              value={values.email}
+              />
+          </Form.Group>
+          <Form.Group controlId="password">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              required
+              onChange={handleChange}
+              type="password"
+              value={values.password}
+              />
+          </Form.Group>
           <Button variant="primary" type="submit" block>
             Log In
           </Button>
         </Form>
       )}
     </Formik>
+  </>
   );
 }
 

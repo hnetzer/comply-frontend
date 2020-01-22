@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 import styles from './Website.module.css'
@@ -13,6 +12,7 @@ import { login } from 'actions';
 import { LoginForm } from 'forms'
 
 const LoginScreen = (props) => {
+  const [error, setError] = useState(null);
 
   const initialFormValues = {
     email: '',
@@ -26,7 +26,8 @@ const LoginScreen = (props) => {
       props.dispatch(login(response))
       navigate('/home')
     } catch (err) {
-      alert(err.message)
+      console.log(err)
+      setError('Email and password are not valid.')
     }
   }
 
@@ -41,7 +42,9 @@ const LoginScreen = (props) => {
           <Card.Title>Login to Comply</Card.Title>
           <LoginForm
             initialValues={initialFormValues}
-            handleSubmit={handleSubmit} />
+            handleSubmit={handleSubmit}
+            error={error}
+            />
         </Card.Body>
       </Card>
     </div>

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 
 import Dropdown from 'react-bootstrap/Dropdown'
-import NavDropdown from 'react-bootstrap/NavDropdown'
 
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
