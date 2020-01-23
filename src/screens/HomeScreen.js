@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { navigate } from "@reach/router"
 
 import { getAgencies } from 'network/api';
+import { logout } from 'actions';
 
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 
-import { AccountMenu } from '../components/molecules'
+
+import { AccountMenu, WelcomeModal } from '../components/molecules'
 
 import styles from './Home.module.css'
 
@@ -32,6 +32,11 @@ class HomeScreen extends React.Component {
     }
   }
 
+  handleLogout = () => {
+    this.props.dispatch(logout())
+    navigate('/login')
+  }
+
   render() {
     return(
       <div>
@@ -40,7 +45,9 @@ class HomeScreen extends React.Component {
             <h3 className={styles.logo}>comply</h3>
           </Navbar.Brand>
           <div style={{ marginRight: 32 }}>
-            <AccountMenu />
+            <AccountMenu
+              user={this.props.user}
+              handleLogout={this.handleLogout} />
           </div>
         </Navbar>
         <div className={styles.container}>
@@ -55,36 +62,10 @@ class HomeScreen extends React.Component {
               <h1>Filing Schedule</h1>
           </main>
         </div>
-        <Modal show={this.state.show} onHide={() => this.setState({ show: false })}>
-          <Modal.Header closeButton>
-            <Modal.Title>Welcome to Comply!</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>
-              Based on your office location, we believe your company needs to
-              comply with the following government agencies.
-            </p>
-            <p>
-              Unselect agencies you don't Comply to file with.
-            </p>
-            <Form>
-              {this.state.agencies.map((agency, index) => {
-                return (
-                  <Form.Check
-                    type="checkbox"
-                    label={`${agency.name} (${agency['jurisdiction.name']})`}
-                    checked={true}
-                  />
-                )
-              })}
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="primary" onClick={() => this.setState({ show: false })}>
-              Save Agencies
-            </Button>
-          </Modal.Footer>
-      </Modal>
+        <WelcomeModal
+          show={this.state.show}
+          handleHide={() => this.setState({ show: false })}
+          agencies={this.state.agencies} />
       </div>
     )
   }

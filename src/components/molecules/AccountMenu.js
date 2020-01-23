@@ -1,13 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { navigate } from "@reach/router"
 
 import Dropdown from 'react-bootstrap/Dropdown'
 
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { logout } from 'actions';
 
 const Toggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
@@ -19,35 +15,32 @@ const Toggle = React.forwardRef(({ children, onClick }, ref) => (
     }}
     style={{ color: '#fff', textDecoration: 'none'}}
   >
-    <FontAwesomeIcon size="lg" color="#fff" icon={faUser}/>
+    <FontAwesomeIcon color="#fff" icon={faUser}/>
+    <span style={{ paddingLeft: 8, paddingRight: 8 }}>
+      {children}
+    </span>
+    <FontAwesomeIcon color="#fff" icon={faCaretDown}/>
   </a>
 ));
 
 
 const AccountMenu = (props) => {
-  const handleLogout = () => {
-    props.dispatch(logout())
-    navigate('/login')
-  }
 
-  const headerText = props.user != null ?
-    `${props.user.name} (${props.user.email})` : '';
+  const email = props.user != null ? props.user.email : '';
+  const name = props.user != null ? props.user.name : '';
 
   return (
     <Dropdown>
-      <Dropdown.Toggle as={Toggle}/>
+      <Dropdown.Toggle as={Toggle}>
+        {name}
+      </Dropdown.Toggle>
       <Dropdown.Menu alignRight>
-        <Dropdown.Header>{headerText}</Dropdown.Header>
-        <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+        <Dropdown.Header>{email}</Dropdown.Header>
+        <Dropdown.Item>Account</Dropdown.Item>
+        <Dropdown.Item onClick={props.handleLogout}>Logout</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.auth.user
-  }
-}
-
-export default connect(mapStateToProps)(AccountMenu);
+export default AccountMenu;
