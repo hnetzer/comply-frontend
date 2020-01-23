@@ -9,7 +9,10 @@ export const sendRequest = async (method, path, data, includeAuth = true) => {
   settings.method = method;
   settings.headers = {};
   settings.headers['Content-Type'] = 'application/json';
-  settings.body = JSON.stringify(data);
+
+  if (data) {
+    settings.body = JSON.stringify(data);
+  }
 
   if (includeAuth) {
     console.log('inside include auth')
@@ -51,11 +54,16 @@ export const updateOffices = async (data, companyId) => {
   return sendRequest('PUT', `/company/${companyId}/offices`, data)
 }
 
+export const getAgencies = async (companyId) => {
+  return sendRequest('GET', `/agencies?companyId=${companyId}`)
+}
+
 
 export default {
   BASE_URI,
   createAccount,
   updateCompany,
   updateOffices,
-  loginRequest
+  loginRequest,
+  getAgencies
 }
