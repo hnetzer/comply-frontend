@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 import styles from './Website.module.css'
 
@@ -45,7 +46,11 @@ const LoginScreen = (props) => {
             handleSubmit={handleSubmit}
             error={error}
             />
+
         </Card.Body>
+        <Button variant="link" href="/signup/get-started" style={{ marginBottom: 16 }}>
+          Create account
+        </Button>
       </Card>
     </div>
   )

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 
-import { getAgencies } from 'network/api';
+import { getAgencies, getCompany } from 'network/api';
 import { logout } from 'actions';
 
 import Navbar from 'react-bootstrap/Navbar'
@@ -17,16 +17,19 @@ import styles from './Home.module.css'
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { show: false, agencies: []};
+    this.state = { show: false, agencies: [], company: null };
   }
 
   async componentDidMount() {
     try {
       const agencies = await getAgencies(this.props.user.company_id);
-      // dispatch this shit to redux probably
-
+      // dispatch this to redux
       this.setState({ agencies: agencies })
       this.setState({ show: true })
+
+      // const company = await getCompany(this.props.user.company_id);
+      // dispatch this to redux
+      // this.setState({ company: company })
     } catch (err) {
       console.log(err)
     }
@@ -52,6 +55,9 @@ class HomeScreen extends React.Component {
         </Navbar>
         <div className={styles.container}>
           <div className={styles.sideBar}>
+            <h5>
+              {this.props.company != null ? this.props.company.name : null}
+            </h5>
             <Nav defaultActiveKey="/home" className="flex-column">
               <Nav.Link href="/filings" disabled>Filings</Nav.Link>
               <Nav.Link href="/agencies" disabled>Agencies</Nav.Link>
