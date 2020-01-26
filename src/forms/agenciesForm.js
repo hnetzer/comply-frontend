@@ -99,7 +99,6 @@ const AgenciesForm = (props) => {
                           render={arrayHelpers => (
                             <>
                               {state.agencies.map((agency, agencyIndex) => {
-                                //console.log(`${state.name} - ${agency.name} - ${agency.selected}`)
                                 return (
                                   <Form.Check
                                     label={toTitleCase(agency.name)}

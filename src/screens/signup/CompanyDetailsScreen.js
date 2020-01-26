@@ -44,7 +44,6 @@ const CompanyDetailsScreen = (props) => {
     }
   }
 
-  console.log(props)
   return (
     <div className={styles.container}>
       <Card className={styles.card}>

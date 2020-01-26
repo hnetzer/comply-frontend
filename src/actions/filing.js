@@ -22,9 +22,7 @@ export const getFilings = (companyId) => {
     fetch(`${api.BASE_URI}/filings?companyId=${companyId}`)
     .then(resp => resp.json())
     .then(resp => {
-      console.log('got response')
       dispatch(getFilingsResponse(resp))
-      console.log(resp)
     })
     .catch(err => {
       dispatch(getFilingsError(err))

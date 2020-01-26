@@ -15,7 +15,7 @@ const App = (props) => {
     <Router>
       <WebsiteScreen path="/" />
       <LoginScreen path="/login" />
-      <HomeScreen path="/home" />
+      <HomeScreen path="/home/*" />
       <GetStartedScreen path="/signup/get-started" />
       <CompanyDetailsScreen path="/signup/company-details" />
       <OfficeDetailsScreen path="/signup/office-details" />

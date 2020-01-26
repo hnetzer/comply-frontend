@@ -15,7 +15,6 @@ export const sendRequest = async (method, path, data, includeAuth = true) => {
   }
 
   if (includeAuth) {
-    console.log('inside include auth')
     const token = store.getState().auth.token;
     settings.headers['Authorization'] = `Bearer ${token}`
   }

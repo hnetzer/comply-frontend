@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { navigate } from "@reach/router"
+import { Router, navigate } from "@reach/router"
 
 import { getAgencies, getCompany, updateAgencies } from 'network/api';
 import { logout } from 'actions';
@@ -9,6 +9,11 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 
 import { AccountMenu, WelcomeModal } from '../components/molecules'
+
+// screens
+import CompanyScreen from './home/CompanyScreen'
+import FilingsListScreen from './home/FilingsListScreen'
+import AgenciesScreen from './home/AgenciesScreen'
 
 import styles from './Home.module.css'
 
@@ -21,14 +26,16 @@ class HomeScreen extends React.Component {
 
   async componentDidMount() {
     try {
-      const agencies = await getAgencies(this.props.user.company_id);
+      const company = await getCompany(this.props.user.company_id);
       // dispatch this to redux
-      this.setState({ agencies: agencies })
-      this.setState({ show: true })
+      this.setState({ company: company })
 
-      // const company = await getCompany(this.props.user.company_id);
-      // dispatch this to redux
-      // this.setState({ company: company })
+      if (company.agencies.length == 0) {
+        const agencies = await getAgencies(this.props.user.company_id);
+        // dispatch this to redux
+        this.setState({ agencies: agencies })
+        this.setState({ show: true })
+      }
     } catch (err) {
       console.log(err)
     }
@@ -64,16 +71,21 @@ class HomeScreen extends React.Component {
         <div className={styles.container}>
           <div className={styles.sideBar}>
             <h5>
-              {this.props.company != null ? this.props.company.name : null}
+              {this.state.company != null ? this.state.company.name : null}
             </h5>
             <Nav defaultActiveKey="/home" className="flex-column">
-              <Nav.Link href="/filings" disabled>Filings</Nav.Link>
-              <Nav.Link href="/agencies" disabled>Agencies</Nav.Link>
-              <Nav.Link href="/company" disabled>Company</Nav.Link>
+              <Nav.Link href="/home/filings">Filings</Nav.Link>
+              <Nav.Link href="/home/agencies">Agencies</Nav.Link>
+              <Nav.Link href="/home/company">Company</Nav.Link>
             </Nav>
           </div>
           <main className={styles.main}>
-              <h1>Filing Schedule</h1>
+            <Router>
+              <FilingsListScreen path="/" />
+              <FilingsListScreen path="/filings" />
+              <CompanyScreen path="/company" company={this.state.company} />
+              <AgenciesScreen path="/agencies" />
+            </Router>
           </main>
         </div>
         <WelcomeModal

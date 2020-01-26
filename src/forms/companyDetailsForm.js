@@ -15,7 +15,6 @@ const CompanyDetailsForm = (props) => {
   }
 
   const handleValidation = values => {
-    console.log('handling the validation')
     const errors = {};
     /* if (!values.email) {
       errors.email = 'Required';
