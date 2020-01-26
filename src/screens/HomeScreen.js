@@ -30,7 +30,7 @@ class HomeScreen extends React.Component {
       // dispatch this to redux
       this.setState({ company: company })
 
-      if (company.agencies.length == 0) {
+      if (company.agencies.length === 0) {
         const agencies = await getAgencies(this.props.user.company_id);
         // dispatch this to redux
         this.setState({ agencies: agencies })
@@ -43,13 +43,13 @@ class HomeScreen extends React.Component {
 
   handleLogout = () => {
     this.props.dispatch(logout())
-    navigate('/login')
+    navigate('/')
   }
 
   handleUpdateAgencies = async (agencyIds) => {
     try {
       this.setState({ show: false })
-      const agencies = await updateAgencies({ agencies: agencyIds }, this.props.user.company_id)
+      await updateAgencies({ agencies: agencyIds }, this.props.user.company_id)
     } catch (err) {
       alert(err)
     }

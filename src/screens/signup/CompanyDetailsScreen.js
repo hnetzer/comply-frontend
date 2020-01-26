@@ -26,7 +26,7 @@ const CompanyDetailsScreen = (props) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     const data = {
       type: values.type,
-      tax_class: values.taxClass,
+      tax_class: values.tax_class,
       year_end_month: values.year_end_month,
       year_end_day: values.year_end_day,
       jurisdiction: {

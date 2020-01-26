@@ -1,11 +1,8 @@
 import React from 'react';
 
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 
 import { AgenciesForm } from 'forms'
-
 
 const WelcomeModal = (props) => {
 
@@ -31,7 +28,7 @@ const WelcomeModal = (props) => {
           we reccomend that your company should comply with the following government agencies.
         </p>
         <p>
-          Please unselect any agencies you do not want us to manage compliance.
+          Please <i>unselect</i> any agencies you do not want us to manage compliance.
         </p>
         <AgenciesForm
           agencies={props.agencies}

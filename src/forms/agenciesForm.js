@@ -5,7 +5,6 @@ import { Formik, FieldArray } from 'formik';
 // Bootstrap components
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert';
 
 const AgenciesForm = (props) => {
   const [validated] = useState(false);
@@ -61,16 +60,24 @@ const AgenciesForm = (props) => {
     return agenciesByState;
   }
 
-  const agencySelectMap = () => {
+  const initialValuesMap = () => {
     return props.agencies.reduce((acc, agency) => {
       acc[agency.id] = true;
       return acc;
     }, {})
   }
 
+  const getAgencyLabel = (agency, state) => {
+    console.log(state)
+    if (state.toLowerCase() === agency.jurisdiction.name.toLowerCase()) {
+      return toTitleCase(agency.name)
+    }
+    return `${toTitleCase(agency.name)} (${toTitleCase(agency.jurisdiction.name)})`
+  }
+
   return (
     <Formik
-      initialValues={agencySelectMap()}
+      initialValues={initialValuesMap()}
       validate={handleValidation}
       onSubmit={handleSubmit}
     >
@@ -101,7 +108,7 @@ const AgenciesForm = (props) => {
                               {state.agencies.map((agency, agencyIndex) => {
                                 return (
                                   <Form.Check
-                                    label={toTitleCase(agency.name)}
+                                    label={getAgencyLabel(agency, state.name)}
                                     key={agencyIndex}
                                     type="checkbox"
                                     onChange={handleChange}
@@ -112,6 +119,7 @@ const AgenciesForm = (props) => {
                             </>
                           )}
                         />
+                        <hr />
                       </div>)
                     })
                   }
@@ -119,9 +127,11 @@ const AgenciesForm = (props) => {
               }
             }
           />
-          <Button variant="primary" type="submit">
-            Save Agencies
-          </Button>
+          <div style={{ marginTop: 32 }}>
+            <Button variant="primary" type="submit" block>
+              Save Agencies
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>

@@ -50,10 +50,10 @@ const CompanyDetailsForm = (props) => {
               onChange={handleChange}
               value={values.type}
               as="select">
-              <option>Corporation</option>
-              <option>LLC</option>
-              <option>LP</option>
-              <option>LLP</option>
+              <option value="Corporation">Corporation</option>
+              <option value="LLC">LLC</option>
+              <option value="LP">LP</option>
+              <option value="LLP">LLP</option>
             </Form.Control>
           </Form.Group>
           <Form.Group controlId="tax_class">
@@ -63,8 +63,8 @@ const CompanyDetailsForm = (props) => {
               onChange={handleChange}
               value={values.tax_class}
               as="select">
-              <option>C Corp</option>
-              <option>S Corp</option>
+              <option value="C Corp">C Corp</option>
+              <option value="S Corp">S Corp</option>
             </Form.Control>
           </Form.Group>
           <Form.Label><b>Fiscal Year End</b></Form.Label>

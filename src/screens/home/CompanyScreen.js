@@ -15,6 +15,7 @@ const CompanyScreen = (props) => {
     if (!props.company) return null;
     const {
       name,
+      phone,
       type,
       tax_class,
       year_end_month,
@@ -23,13 +24,15 @@ const CompanyScreen = (props) => {
 
     return (
       <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>{name}</th>
-            <th></th>
-          </tr>
-        </thead>
         <tbody>
+          <tr>
+            <td>Name</td>
+            <td>{name}</td>
+          </tr>
+          <tr>
+            <td>Phone</td>
+            <td>{phone}</td>
+          </tr>
           <tr>
             <td>Type</td>
             <td>{type}</td>
@@ -47,12 +50,10 @@ const CompanyScreen = (props) => {
     )
   }
 
-
   return(
     <div>
       <h2>Company Details</h2>
       {renderDetailsTable()}
-
     </div>
   )
 }
