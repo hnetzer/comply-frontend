@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 
 import { AgenciesForm } from 'forms'
 
+
 const WelcomeModal = (props) => {
 
   const getInitalFormValues = () => {
@@ -16,15 +17,7 @@ const WelcomeModal = (props) => {
   }
 
   const handleSubmit = async (values, { setSubmitting }) => {
-
-    console.log(values)
-
-    try {
-      // await updateOffices(values, props.company.id, props.token)
-      // props.dispatch(createAccountResponse(response))
-    } catch (err) {
-      alert(err.message)
-    }
+    props.updateAgencies(values)
   }
 
   return (

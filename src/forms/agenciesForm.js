@@ -15,7 +15,7 @@ const AgenciesForm = (props) => {
     const selectedAgencyIds = [];
     for (let agencyId in values) {
       if (values[agencyId]) {
-        selectedAgencyIds.push(agencyId)
+        selectedAgencyIds.push(parseInt(agencyId))
       }
     }
 

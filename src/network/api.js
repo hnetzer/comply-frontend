@@ -54,6 +54,10 @@ export const updateOffices = async (data, companyId) => {
   return sendRequest('PUT', `/company/${companyId}/offices`, data)
 }
 
+export const updateAgencies = async (data, companyId) => {
+  return sendRequest('PUT', `/company/${companyId}/agencies`, data)
+}
+
 export const getAgencies = async (companyId) => {
   return sendRequest('GET', `/agencies?companyId=${companyId}`)
 }
@@ -70,5 +74,6 @@ export default {
   updateOffices,
   loginRequest,
   getAgencies,
-  getCompany
+  getCompany,
+  updateAgencies
 }

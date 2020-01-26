@@ -2,12 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 
-import { getAgencies, getCompany } from 'network/api';
+import { getAgencies, getCompany, updateAgencies } from 'network/api';
 import { logout } from 'actions';
 
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-
 
 import { AccountMenu, WelcomeModal } from '../components/molecules'
 
@@ -38,6 +37,15 @@ class HomeScreen extends React.Component {
   handleLogout = () => {
     this.props.dispatch(logout())
     navigate('/login')
+  }
+
+  handleUpdateAgencies = async (agencyIds) => {
+    try {
+      this.setState({ show: false })
+      const agencies = await updateAgencies({ agencies: agencyIds }, this.props.user.company_id)
+    } catch (err) {
+      alert(err)
+    }
   }
 
   render() {
@@ -71,6 +79,7 @@ class HomeScreen extends React.Component {
         <WelcomeModal
           show={this.state.show}
           handleHide={() => this.setState({ show: false })}
+          updateAgencies={this.handleUpdateAgencies}
           agencies={this.state.agencies} />
       </div>
     )
