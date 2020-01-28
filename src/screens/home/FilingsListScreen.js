@@ -5,18 +5,16 @@ import moment from 'moment'
 import { FilingCard } from '../../components/molecules'
 import { getCompanyFilings } from 'network/api';
 
+import { setFilings } from 'actions';
+
 // Maybe this should just be a functional component?
 class FilingsListScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { filings: props.filings };
-  }
-
   async componentDidMount() {
     try {
       const filings = await getCompanyFilings(this.props.user.company_id)
       console.log('GOT THE FILINGS')
-      this.setState({ filings: filings })
+      console.log('setting them...')
+      this.props.dispatch(setFilings(filings))
     } catch (err) {
     }
   }
@@ -41,7 +39,7 @@ class FilingsListScreen extends React.Component {
   }
 
   renderFilings = () => {
-    const sortedFilings = this.state.filings.sort(this.compareFilingsByDue)
+    const sortedFilings = this.props.filings.sort(this.compareFilingsByDue)
     return sortedFilings.map((filing, index) => (
       <FilingCard filing={filing} key={index} />
     ))
@@ -60,7 +58,8 @@ class FilingsListScreen extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    filings: state.filing.filings
   }
 }
 
