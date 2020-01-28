@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Router, navigate } from "@reach/router"
 
-import { getAgencies, getCompany, updateAgencies } from 'network/api';
+import { getAgencies, getCompany, updateAgencies, getCompanyFilings } from 'network/api';
 import { logout } from 'actions';
 
 import Navbar from 'react-bootstrap/Navbar'
@@ -21,7 +21,7 @@ import styles from './Home.module.css'
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { show: false, agencies: [], company: null };
+    this.state = { show: false, agencies: [], company: null, filings: [] };
   }
 
   async componentDidMount() {
@@ -50,6 +50,8 @@ class HomeScreen extends React.Component {
     try {
       this.setState({ show: false })
       await updateAgencies({ agencies: agencyIds }, this.props.user.company_id)
+      const filings = await getCompanyFilings(this.props.user.company_id)
+      this.setState({ filings: filings })
     } catch (err) {
       alert(err)
     }
@@ -81,8 +83,8 @@ class HomeScreen extends React.Component {
           </div>
           <main className={styles.main}>
             <Router>
-              <FilingsListScreen path="/" />
-              <FilingsListScreen path="/filings" />
+              <FilingsListScreen path="/" filings={this.state.filings} />
+              <FilingsListScreen path="/filings" filings={this.state.filings} />
               <CompanyScreen path="/company" company={this.state.company} />
               <AgenciesScreen path="/agencies" />
             </Router>
