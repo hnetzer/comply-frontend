@@ -4,8 +4,10 @@ import moment from 'moment';
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+
+import styles from './FilingCard.module.css';
 
 const FilingCard = (props) => {
 
@@ -33,14 +35,18 @@ const FilingCard = (props) => {
   }
 
   return (
-    <Card style={{ marginBottom: 16, width: 600 }}>
-      <Card.Body style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+    <Card className={styles.card}>
+      <Card.Body className={styles.cardBody}>
         <div>
           <Card.Title>{props.filing.name}</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">{toTitleCase(props.filing.agency.name)}</Card.Subtitle>
-          <Card.Subtitle className="mb-2 text-muted">{props.filing.agency.jurisdiction.name}</Card.Subtitle>
+          <Card.Subtitle className="mb-2 text-muted">
+            {toTitleCase(props.filing.agency.name)}
+          </Card.Subtitle>
+          <Card.Subtitle className="mb-2 text-muted">
+            {props.filing.agency.jurisdiction.name}
+          </Card.Subtitle>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+        <div className={styles.cardBodyRight}>
           {renderDueDate(props.filing.due)}
           {renderCTA(props.filing.due)}
         </div>
