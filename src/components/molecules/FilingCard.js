@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { toTitleCase } from 'utils';
 
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,12 +11,6 @@ import Button from 'react-bootstrap/Button';
 import styles from './FilingCard.module.css';
 
 const FilingCard = (props) => {
-
-  const toTitleCase = (str) => {
-    return str.replace(/\w\S*/g, function(txt){
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-  }
 
   const renderDueDate = (due) => {
     if (!due) {
@@ -28,9 +23,9 @@ const FilingCard = (props) => {
     )
   }
 
-  const renderCTA = (due) => {
+  const renderCTA = (due, filingId) => {
     return due != null ?
-      (<Button variant="outline-primary">Initialize Filing</Button>) :
+      (<Button href={`/home/filings/${filingId}?due=${due}`} variant="outline-primary">Start Filing</Button>) :
       (<Button style={{ color: '#dc3545'}} variant="link">Add Registration Info ></Button>);
   }
 
@@ -48,7 +43,7 @@ const FilingCard = (props) => {
         </div>
         <div className={styles.cardBodyRight}>
           {renderDueDate(props.filing.due)}
-          {renderCTA(props.filing.due)}
+          {renderCTA(props.filing.due, props.filing.id)}
         </div>
       </Card.Body>
     </Card>

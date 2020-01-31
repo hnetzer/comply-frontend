@@ -14,6 +14,7 @@ import { AccountMenu, WelcomeModal } from '../components/molecules'
 import CompanyScreen from './home/CompanyScreen'
 import FilingsListScreen from './home/FilingsListScreen'
 import AgenciesScreen from './home/AgenciesScreen'
+import FilingScreen from './filings/FilingScreen'
 
 import styles from './Home.module.css'
 
@@ -87,6 +88,7 @@ class HomeScreen extends React.Component {
               <FilingsListScreen path="/filings" filings={this.state.filings} />
               <CompanyScreen path="/company" company={this.state.company} />
               <AgenciesScreen path="/agencies" />
+              <FilingScreen path="/filings/:filingId" />
             </Router>
           </main>
         </div>

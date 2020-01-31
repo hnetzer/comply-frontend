@@ -69,6 +69,10 @@ export const getCompanyFilings = async (companyId) => {
   return sendRequest('GET', `/company/${companyId}/filings`);
 }
 
+export const getFiling = async (filingId) => {
+  return sendRequest('GET', `/filings/${filingId}`);
+}
+
 
 export default {
   BASE_URI,
@@ -79,5 +83,6 @@ export default {
   getAgencies,
   getCompany,
   updateAgencies,
-  getCompanyFilings
+  getCompanyFilings,
+  getFiling
 }
