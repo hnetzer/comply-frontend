@@ -8,7 +8,6 @@ import { InfoPopover } from 'components/molecules'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import Alert from 'react-bootstrap/Alert';
 import InputGroup from 'react-bootstrap/InputGroup'
 
 const BusinessLicenseForm = (props) => {
@@ -46,10 +45,22 @@ const BusinessLicenseForm = (props) => {
     { name: 'Public Administration', code: 92 },
   ];
 
+  const initialValues = {
+    ban: '',
+    ein: '',
+    pin: '',
+    niacs: '' ,
+    property: false,
+    rentalIncome: false,
+    numEmployees: '',
+    totalPayroll: '',
+    sfPayroll: ''
+  }
+
   return (
     <>
     <Formik
-      initialValues={{ ban: '', ein: '', pin: '', niacs: null, numEmployees: null }}
+      initialValues={initialValues}
       validate={handleValidation}
       onSubmit={handleSubmit}
     >
@@ -124,7 +135,7 @@ const BusinessLicenseForm = (props) => {
               value={values.niacs}
               as="select">
               {NIACS_OPTIONS.map(
-                option => (<option value={option.code}>{option.name}</option>)
+                (option, i) => (<option key={i} value={option.code}>{option.name}</option>)
               )}
             </Form.Control>
           </Form.Group>
@@ -142,7 +153,7 @@ const BusinessLicenseForm = (props) => {
           </Form.Group>
           <Form.Row>
             <Col>
-              <Form.Group controlId="pin">
+              <Form.Group controlId="numEmployees">
                 <Form.Label>Number of SF Employees</Form.Label>
                 <Form.Control
                   required

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { toTitleCase, getURLParam } from 'utils'
 import moment from 'moment'
 
-import { getFiling } from 'network/api';
+import { getFiling, createCompanyFiling } from 'network/api';
 
 import { SanFrancisco } from 'forms/filings'
 
@@ -19,7 +19,20 @@ class FilingScreen extends React.Component {
     console.log(getURLParam('due'))
     const filing = await getFiling(this.props.filingId);
     this.setState({ filing: filing, due: getURLParam('due') })
+  }
 
+  handleSubmit = async (values) => {
+    try {
+      const data = { field_data: values, status: 'draft' };
+      const companyId = this.props.user.company_id;
+      const filingId = this.props.filingId;
+      console.log(data)
+      console.log(companyId)
+      console.log(filingId)
+      await createCompanyFiling(companyId, filingId, data);
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   renderHeader = () => {
@@ -46,7 +59,10 @@ class FilingScreen extends React.Component {
       case 'san francisco': {
         switch (filing.agency.name.toLowerCase()) {
           case 'tax and treasurer': {
-            return <SanFrancisco.TaxAndTreasurer.BusinessLicenseForm />
+            return (<SanFrancisco.TaxAndTreasurer.BusinessLicenseForm
+              initialValues={{}}
+              handleSubmit={this.handleSubmit}
+              error={null}/>)
           }
         }
       }
@@ -67,4 +83,10 @@ class FilingScreen extends React.Component {
   }
 }
 
-export default connect()(FilingScreen);
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user
+  }
+}
+
+export default connect(mapStateToProps)(FilingScreen);

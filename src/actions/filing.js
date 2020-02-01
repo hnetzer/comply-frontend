@@ -1,5 +1,3 @@
-import api from '../network/api'
-
 const SET_FILINGS = "SET_FILINGS";
 
 export const setFilings = (data) => {
