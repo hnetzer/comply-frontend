@@ -14,7 +14,7 @@ import { AccountMenu, WelcomeModal } from '../components/molecules'
 import CompanyScreen from './home/CompanyScreen'
 import FilingsListScreen from './home/FilingsListScreen'
 import AgenciesScreen from './home/AgenciesScreen'
-import FilingScreen from './filings/FilingScreen'
+import FilingScreen from './FilingScreen'
 
 import styles from './Home.module.css'
 

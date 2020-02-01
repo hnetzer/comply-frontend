@@ -4,6 +4,8 @@ import { toTitleCase } from 'utils'
 
 import { getFiling } from 'network/api';
 
+import { SanFrancisco } from 'forms/filings'
+
 class FilingScreen extends React.Component {
   constructor(props) {
     super(props)
@@ -27,9 +29,27 @@ class FilingScreen extends React.Component {
     </div>)
   }
 
+  renderForm = () => {
+    const filing = this.state.filing
+    if (!filing) return null;
+
+    switch (filing.jurisdiction.name.toLowerCase()) {
+      case 'san francisco': {
+        switch (filing.agency.name.toLowerCase()) {
+          case 'tax and treasurer': {
+            return <SanFrancisco.TaxAndTreasurer.BusinessLicenseForm />
+          }
+        }
+      }
+      default:
+        return null;
+    }
+  }
+
   render() {
     return (<>
       {this.renderHeader()}
+      {this.renderForm()}
     </>);
   }
 }
