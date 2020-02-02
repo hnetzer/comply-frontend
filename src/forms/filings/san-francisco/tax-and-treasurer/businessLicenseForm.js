@@ -60,7 +60,7 @@ const BusinessLicenseForm = (props) => {
   return (
     <>
     <Formik
-      initialValues={initialValues}
+      initialValues={props.initialValues != null ? props.initialValues : initialValues}
       validate={handleValidation}
       onSubmit={handleSubmit}
     >

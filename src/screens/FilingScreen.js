@@ -14,20 +14,25 @@ import Card from 'react-bootstrap/Card';
 class FilingScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { filing: null, due: null }
+    this.state = { filing: null, due: null, initialValues: null }
   }
 
   async componentDidMount() {
-    const filingId = getURLParam('filingId')
-    console.log('getting the filing')
-    const filing = await getFiling(filingId);
-    if (this.props.companyFilingId) {
-      const companyFiling = await getCompanyFiling(this.props.user.company_id, this.props.companyFilingId)
-      console.log('GOT THE COMPANY FILING')
-      console.log(companyFiling)
+    // Filing hasn't been started yet
+    if (getURLParam('filingId')) {
+      const filingId = getURLParam('filingId')
+      const due = getURLParam('due')
+      const filing = await getFiling(filingId);
+      this.setState({ filing: filing, due: getURLParam('due'), initialValues: null })
     }
 
-    this.setState({ filing: filing, due: getURLParam('due') })
+    // Filing has been started
+    if (this.props.companyFilingId) {
+      const { user, companyFilingId } = this.props
+      const companyFiling = await getCompanyFiling(user.company_id, companyFilingId)
+      const { filing, due_date, field_data } = companyFiling
+      this.setState({ filing: filing, due: due_date, initialValues: field_data })
+    }
   }
 
   handleSubmit = async (values) => {
@@ -40,7 +45,7 @@ class FilingScreen extends React.Component {
       };
       const { user, filingId } = this.props
       const companyFiling = await createCompanyFiling(user.company_id, filingId, data);
-      navigate(`/home/filings/${companyFiling.id}?filingId=${filingId}`)
+      navigate(`/home/filings/${companyFiling.id}`)
     } catch (err) {
       console.log(err)
     }
@@ -71,7 +76,7 @@ class FilingScreen extends React.Component {
         switch (filing.agency.name.toLowerCase()) {
           case 'tax and treasurer': {
             return (<SanFrancisco.TaxAndTreasurer.BusinessLicenseForm
-              initialValues={{}}
+              initialValues={this.state.initialValues}
               handleSubmit={this.handleSubmit}
               error={null}/>)
           }
