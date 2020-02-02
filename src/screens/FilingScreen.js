@@ -10,6 +10,7 @@ import { getFiling, createCompanyFiling, getCompanyFiling } from 'network/api';
 import { SanFrancisco } from 'forms/filings'
 
 import Card from 'react-bootstrap/Card';
+import Breadcrumb from 'react-bootstrap/Breadcrumb'
 
 class FilingScreen extends React.Component {
   constructor(props) {
@@ -87,8 +88,20 @@ class FilingScreen extends React.Component {
     }
   }
 
+  renderBreadcrumb = () => {
+    const  { filing } = this.state
+    if (!filing) return null;
+    return (
+      <Breadcrumb>
+        <Breadcrumb.Item href="/home/filings">Filings</Breadcrumb.Item>
+        <Breadcrumb.Item active>{filing.name}</Breadcrumb.Item>
+      </Breadcrumb>
+    )
+  }
+
   render() {
     return (<>
+      {this.renderBreadcrumb()}
       {this.renderHeader()}
       <Card style={{ marginTop: 24 }}>
         <Card.Body>

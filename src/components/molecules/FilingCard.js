@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Badge from 'react-bootstrap/Badge'
 
 import styles from './FilingCard.module.css';
 
@@ -31,14 +32,22 @@ const FilingCard = (props) => {
     }
 
     const { id } = props.filing.companyFiling
-    return (<Button href={`/home/filings/${id}`} variant="outline-warning">Edit Filing</Button>) 
+    return (<Button href={`/home/filings/${id}`} variant="link">Edit</Button>)
+  }
+
+  const renderBadge = (filing) => {
+    if (!filing.companyFiling) return null;
+    return (<Badge style={{ marginLeft: 16 }} variant="info">{filing.companyFiling.status}</Badge>)
   }
 
   return (
     <Card className={styles.card}>
       <Card.Body className={styles.cardBody}>
         <div>
-          <Card.Title>{props.filing.name}</Card.Title>
+          <Card.Title>
+            {props.filing.name}
+            {renderBadge(props.filing)}
+          </Card.Title>
           <Card.Subtitle className="mb-2 text-muted">
             {toTitleCase(props.filing.agency.name)}
           </Card.Subtitle>

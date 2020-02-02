@@ -18,14 +18,6 @@ class FilingsListScreen extends React.Component {
   }
 
   compareFilingsByDue = (a, b) => {
-    if (a.due == null && b.due == null) {
-      return 0
-    } else if (a.due != null && b.due == null) {
-      return 1
-    } else if (a.due == null && b.due != null) {
-      return -1
-    }
-
     const dueA = moment(a.due).unix()
     const dueB = moment(b.due).unix()
     if (dueA > dueB) {
@@ -36,18 +28,51 @@ class FilingsListScreen extends React.Component {
     return 0
   }
 
-  renderFilings = () => {
-    const sortedFilings = this.props.filings.sort(this.compareFilingsByDue)
-    return sortedFilings.map((filing, index) => (
+  renderFilings = (filings) => {
+    return filings.map((filing, index) => (
       <FilingCard filing={filing} key={index} />
     ))
   }
 
+  renderNeedMoreInfo = () => {
+    return this.renderFilings(this.props.filings.filter(f => f.due == null))
+  }
+
+  renderInProgress = () => {
+    return this.renderFilings(this.props.filings.filter(f => f.companyFiling != null))
+  }
+
+  renderNext60Days = () => {
+    const future = moment().add(60, 'd').unix()
+    const now = moment().unix()
+    const filings = this.props.filings.filter(f => {
+      if (f.due == null) return false
+      if (f.companyFiling != null) return false
+      const due = moment(f.due).unix()
+      return due < future && due >= now;
+    })
+
+    return this.renderFilings(filings.sort(this.compareFilingsByDue))
+  }
+
+
+  /*renderFilings = () => {
+    const sortedFilings = this.props.filings.sort(this.compareFilingsByDue)
+    return sortedFilings.map((filing, index) => (
+      <FilingCard filing={filing} key={index} />
+    ))
+  }*/
+
   render() {
     return(
       <div>
-        <h2>Filing Schedule</h2>
-        {this.renderFilings()}
+        <h2>Filings</h2>
+        <h4>Need More Info</h4>
+        {this.renderNeedMoreInfo()}
+        <h4>In Progress</h4>
+        {this.renderInProgress()}
+        <h4>Next 60 Days</h4>
+        {this.renderNext60Days()}
       </div>
     )
   }
