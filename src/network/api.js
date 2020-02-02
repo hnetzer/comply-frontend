@@ -74,7 +74,12 @@ export const getFiling = async (filingId) => {
 }
 
 export const createCompanyFiling = async (companyId, filingId, data) => {
-  return sendRequest('POST', `/company/${companyId}/filings/${filingId}`, data);
+  return sendRequest('POST', `/company/${companyId}/filings`, data);
+}
+
+export const getCompanyFiling = async (companyId, companyFilingId) => {
+  console.log('getting company filing')
+  return sendRequest('GET', `/company/${companyId}/filings/${companyFilingId}`);
 }
 
 
@@ -89,5 +94,6 @@ export default {
   updateAgencies,
   getCompanyFilings,
   getFiling,
-  createCompanyFiling
+  createCompanyFiling,
+  getCompanyFiling
 }

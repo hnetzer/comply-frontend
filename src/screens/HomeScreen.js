@@ -88,7 +88,8 @@ class HomeScreen extends React.Component {
               <FilingsListScreen path="/filings" filings={this.state.filings} />
               <CompanyScreen path="/company" company={this.state.company} />
               <AgenciesScreen path="/agencies" />
-              <FilingScreen path="/filings/:filingId" />
+              <FilingScreen path="/filings/new" />
+              <FilingScreen path="/filings/:companyFilingId" />
             </Router>
           </main>
         </div>

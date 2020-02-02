@@ -1,9 +1,11 @@
 import React from 'react';
+import { navigate } from "@reach/router"
 import { connect } from 'react-redux';
+
 import { toTitleCase, getURLParam } from 'utils'
 import moment from 'moment'
 
-import { getFiling, createCompanyFiling } from 'network/api';
+import { getFiling, createCompanyFiling, getCompanyFiling } from 'network/api';
 
 import { SanFrancisco } from 'forms/filings'
 
@@ -16,20 +18,29 @@ class FilingScreen extends React.Component {
   }
 
   async componentDidMount() {
-    console.log(getURLParam('due'))
-    const filing = await getFiling(this.props.filingId);
+    const filingId = getURLParam('filingId')
+    console.log('getting the filing')
+    const filing = await getFiling(filingId);
+    if (this.props.companyFilingId) {
+      const companyFiling = await getCompanyFiling(this.props.user.company_id, this.props.companyFilingId)
+      console.log('GOT THE COMPANY FILING')
+      console.log(companyFiling)
+    }
+
     this.setState({ filing: filing, due: getURLParam('due') })
   }
 
   handleSubmit = async (values) => {
     try {
-      const data = { field_data: values, status: 'draft' };
-      const companyId = this.props.user.company_id;
-      const filingId = this.props.filingId;
-      console.log(data)
-      console.log(companyId)
-      console.log(filingId)
-      await createCompanyFiling(companyId, filingId, data);
+      const data = {
+        field_data: values,
+        status: 'draft',
+        due_date: this.state.due,
+        filing_id: this.state.filing.id
+      };
+      const { user, filingId } = this.props
+      const companyFiling = await createCompanyFiling(user.company_id, filingId, data);
+      navigate(`/home/filings/${companyFiling.id}?filingId=${filingId}`)
     } catch (err) {
       console.log(err)
     }

@@ -25,7 +25,7 @@ const FilingCard = (props) => {
 
   const renderCTA = (due, filingId) => {
     return due != null ?
-      (<Button href={`/home/filings/${filingId}?due=${due}`} variant="outline-primary">Start Filing</Button>) :
+      (<Button href={`/home/filings/new?filingId=${filingId}&due=${due}`} variant="outline-primary">Start Filing</Button>) :
       (<Button style={{ color: '#dc3545'}} variant="link">Add Registration Info ></Button>);
   }
 

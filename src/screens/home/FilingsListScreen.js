@@ -12,8 +12,6 @@ class FilingsListScreen extends React.Component {
   async componentDidMount() {
     try {
       const filings = await getCompanyFilings(this.props.user.company_id)
-      console.log('GOT THE FILINGS')
-      console.log('setting them...')
       this.props.dispatch(setFilings(filings))
     } catch (err) {
     }
