@@ -24,9 +24,14 @@ const FilingCard = (props) => {
   }
 
   const renderCTA = (due, filingId) => {
-    return due != null ?
-      (<Button href={`/home/filings/new?filingId=${filingId}&due=${due}`} variant="outline-primary">Start Filing</Button>) :
-      (<Button style={{ color: '#dc3545'}} variant="link">Add Registration Info ></Button>);
+    if (!props.filing.companyFiling) {
+      return due != null ?
+        (<Button href={`/home/filings/new?filingId=${filingId}&due=${due}`} variant="outline-primary">Start Filing</Button>) :
+        (<Button style={{ color: '#dc3545'}} variant="link">Add Registration Info ></Button>);
+    }
+
+    const { id } = props.filing.companyFiling
+    return (<Button href={`/home/filings/${id}`} variant="outline-warning">Edit Filing</Button>) 
   }
 
   return (
