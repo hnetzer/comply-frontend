@@ -5,7 +5,12 @@ import { connect } from 'react-redux';
 import { toTitleCase, getURLParam } from 'utils'
 import moment from 'moment'
 
-import { getFiling, createCompanyFiling, getCompanyFiling } from 'network/api';
+import {
+  getFiling,
+  createCompanyFiling,
+  getCompanyFiling,
+  updateCompanyFiling
+} from 'network/api';
 
 import { SanFrancisco } from 'forms/filings'
 
@@ -15,12 +20,13 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb'
 class FilingScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { filing: null, due: null, initialValues: null }
+    this.state = { filing: null, due: null, companyFiling: null }
   }
 
   async componentDidMount() {
     // Filing hasn't been started yet
     if (getURLParam('filingId')) {
+      console.log('new filing')
       const filingId = getURLParam('filingId')
       const due = getURLParam('due')
       const filing = await getFiling(filingId);
@@ -29,27 +35,57 @@ class FilingScreen extends React.Component {
 
     // Filing has been started
     if (this.props.companyFilingId) {
+      console.log('existing filing')
       const { user, companyFilingId } = this.props
       const companyFiling = await getCompanyFiling(user.company_id, companyFilingId)
       const { filing, due_date, field_data } = companyFiling
-      this.setState({ filing: filing, due: due_date, initialValues: field_data })
+      this.setState({ filing: filing, due: due_date, companyFiling: companyFiling })
     }
   }
 
-  handleSubmit = async (values) => {
+  handleSubmit = async (values, status) => {
     try {
-      const data = {
-        field_data: values,
-        status: 'draft',
-        due_date: this.state.due,
-        filing_id: this.state.filing.id
-      };
-      const { user, filingId } = this.props
-      const companyFiling = await createCompanyFiling(user.company_id, filingId, data);
-      navigate(`/home/filings/${companyFiling.id}`)
+      const { filing, companyFiling } = this.state
+      // Saving or submitting the first setDraft
+      if (!companyFiling) {
+        this.createFiling(values, status)
+      }
+      // Updating an existing filing
+      if (companyFiling) {
+        this.updateFiling(values, status)
+      }
     } catch (err) {
       console.log(err)
     }
+  }
+
+  createFiling = async (values, status) => {
+    const { user } = this.props
+    const { due, filing } = this.state
+    const data = {
+      field_data: values,
+      status: status,
+      due_date: due,
+      filing_id: filing.id
+    };
+    const filingId = getURLParam('filingId')
+    const companyFiling = await createCompanyFiling(user.company_id, filingId, data);
+    navigate(`/home/filings/${companyFiling.id}`)
+    alert('created filing successfully')
+  }
+
+  updateFiling = async (values, status) => {
+    const { user } = this.props
+    const { filing, companyFiling } = this.state
+    const data = {
+      field_data: values,
+      status: status,
+      due_date: companyFiling.due,
+      filing_id: filing.id
+    };
+
+    const update = await updateCompanyFiling(user.company_id, companyFiling.id, data);
+    alert('updated filing successfully')
   }
 
   renderHeader = () => {
@@ -77,7 +113,7 @@ class FilingScreen extends React.Component {
         switch (filing.agency.name.toLowerCase()) {
           case 'tax and treasurer': {
             return (<SanFrancisco.TaxAndTreasurer.BusinessLicenseForm
-              initialValues={this.state.initialValues}
+              initialValues={this.state.companyFiling.field_data}
               handleSubmit={this.handleSubmit}
               error={null}/>)
           }

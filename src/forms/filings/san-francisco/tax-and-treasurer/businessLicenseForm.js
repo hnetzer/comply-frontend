@@ -11,10 +11,12 @@ import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup'
 
 const BusinessLicenseForm = (props) => {
+  const [draft, setDraft] = useState(true);
   const [validated] = useState(false);
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    await props.handleSubmit(values, { setSubmitting })
+    const status = draft ? 'draft' : 'submitted'
+    await props.handleSubmit(values, status)
   }
 
   const handleValidation = values => {
@@ -201,12 +203,12 @@ const BusinessLicenseForm = (props) => {
           </Form.Row>
           <Form.Row style={{ marginTop: 24 }}>
             <Col>
-              <Button variant="secondary" type="submit" block>
+              <Button onClick={() => setDraft(true)} variant="secondary" type="submit" block>
                 Save Draft
               </Button>
             </Col>
             <Col>
-              <Button variant="primary" type="submit" block>
+              <Button onClick={() => setDraft(false)} variant="primary" type="submit" block>
                 Submit to Comply
               </Button>
             </Col>
