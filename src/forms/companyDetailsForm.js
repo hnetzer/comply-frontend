@@ -16,13 +16,6 @@ const CompanyDetailsForm = (props) => {
 
   const handleValidation = values => {
     const errors = {};
-    /* if (!values.email) {
-      errors.email = 'Required';
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-    ) {
-      errors.email = 'Invalid email address';
-    }*/
     return errors;
   }
 
@@ -67,11 +60,22 @@ const CompanyDetailsForm = (props) => {
               <option value="S Corp">S Corp</option>
             </Form.Control>
           </Form.Group>
-          <Form.Label><b>Fiscal Year End</b></Form.Label>
+          <Form.Group controlId="formation_state">
+            <Form.Label>Formation State</Form.Label>
+            <Form.Control
+              required
+              onChange={handleChange}
+              value={values.formation_state}
+              as="select">
+              <option>Delaware</option>
+              <option>California</option>
+              <option>New York</option>
+            </Form.Control>
+          </Form.Group>
+          <Form.Label>Fiscal Year End</Form.Label>
           <Form.Row>
             <Col>
               <Form.Group controlId="year_end_month">
-                <Form.Label>Month</Form.Label>
                 <Form.Control
                   required
                   onChange={handleChange}
@@ -94,7 +98,6 @@ const CompanyDetailsForm = (props) => {
             </Col>
             <Col>
               <Form.Group controlId="year_end_day">
-                <Form.Label>Day</Form.Label>
                 <Form.Control
                   required
                   onChange={handleChange}
@@ -105,34 +108,6 @@ const CompanyDetailsForm = (props) => {
                   <option value={29}>29th</option>
                   <option value={28}>28th</option>
                 </Form.Control>
-              </Form.Group>
-            </Col>
-          </Form.Row>
-          <Form.Label><b>Formation Details</b></Form.Label>
-          <Form.Row>
-            <Col>
-              <Form.Group controlId="formation_state">
-                <Form.Label>State</Form.Label>
-                <Form.Control
-                  required
-                  onChange={handleChange}
-                  value={values.formation_state}
-                  as="select">
-                  <option>Delaware</option>
-                  <option>California</option>
-                  <option>New York</option>
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group controlId="formation_reg_date">
-                <Form.Label>Registration Date</Form.Label>
-                <Form.Control
-                  required
-                  onChange={handleChange}
-                  type="text"
-                  placeholder="2018-10-31"
-                  value={values.formation_reg_date} />
               </Form.Group>
             </Col>
           </Form.Row>

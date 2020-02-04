@@ -19,8 +19,7 @@ const CompanyDetailsScreen = (props) => {
     tax_class: 'C Corp',
     year_end_month: 11,
     year_end_day: 31,
-    formation_state: 'California',
-    formation_reg_date: '',
+    formation_state: 'Delaware',
   }
 
   const handleSubmit = async (values, { setSubmitting }) => {
@@ -31,7 +30,6 @@ const CompanyDetailsScreen = (props) => {
       year_end_day: values.year_end_day,
       jurisdiction: {
         name: values.formation_state,
-        registration: values.formation_reg_date
       }
     }
 
