@@ -20,7 +20,7 @@ const WebsiteScreen = (props) => {
           alignItems: 'center',
         }}>
           <Card.Title><h1>Comply</h1></Card.Title>
-          <Card.Subtitle>Keeping your buisness in good standing</Card.Subtitle>
+          <Card.Subtitle>Keeping your business in good standing</Card.Subtitle>
           <div style={{
               marginTop: 32,
               width: '70%',
