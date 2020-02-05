@@ -1,10 +1,11 @@
 import { createAccountResponse } from './signup'
-import { setFilings } from './filing'
+import { setFilings, setAgencies } from './company'
 import { logout, login } from './auth'
 
 export {
   createAccountResponse,
   setFilings,
   logout,
-  login
+  login,
+  setAgencies,
 }
