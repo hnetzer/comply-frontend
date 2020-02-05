@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import Badge from 'react-bootstrap/Badge'
+import Badge from 'react-bootstrap/Badge';
 
 import styles from './FilingCard.module.css';
 
@@ -24,20 +24,26 @@ const FilingCard = (props) => {
     )
   }
 
-  const renderCTA = (due, filingId) => {
-    if (!props.filing.companyFiling) {
-      return due != null ?
-        (<Button href={`/home/filings/new?filingId=${filingId}&due=${due}`} variant="outline-primary">Start Filing</Button>) :
-        (<Button style={{ color: '#dc3545'}} variant="link">Add Registration Info ></Button>);
+  const renderCTA = () => {
+    const { due, companyFilingId, id, status } = props.filing
+
+    if (!due) {
+      return (<Button style={{ color: '#dc3545'}} variant="link">Add Registration Info ></Button>);
     }
 
-    const { id } = props.filing.companyFiling
-    return (<Button href={`/home/filings/${id}`} variant="link">Edit</Button>)
+    if (companyFilingId) {
+      const linkText = status === 'draft' ? 'Edit' : 'View Details'
+      return (<Button href={`/home/filings/${companyFilingId}`} variant="link">{linkText}</Button>)
+    }
+
+    const href = `/home/filings/new?filingId=${id}&due=${due}`;
+    return (<Button href={href} variant="outline-primary">Start Filing</Button>);
   }
 
-  const renderBadge = (filing) => {
-    if (!filing.companyFiling) return null;
-    return (<Badge style={{ marginLeft: 16 }} variant="info">{filing.companyFiling.status}</Badge>)
+  const renderBadge = () => {
+    const { companyFilingId, status } = props.filing
+    if (!companyFilingId) return null;
+    return (<Badge style={{ marginLeft: 16 }} variant="info">{status}</Badge>)
   }
 
   return (
@@ -45,7 +51,7 @@ const FilingCard = (props) => {
       <Card.Body className={styles.cardBody}>
         <div>
           <Card.Title>
-            {props.filing.name}
+            {toTitleCase(props.filing.name)}
             {renderBadge(props.filing)}
           </Card.Title>
           <Card.Subtitle className="mb-2 text-muted">

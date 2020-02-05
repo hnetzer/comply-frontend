@@ -35,11 +35,23 @@ class FilingsListScreen extends React.Component {
   }
 
   renderNeedMoreInfo = () => {
-    return this.renderFilings(this.props.filings.filter(f => f.due == null))
+    const filings = this.props.filings.filter(f => f.due == null)
+    if (filings.length) {
+      return (<>
+        <h5>Need More Information</h5>
+        {this.renderFilings(filings)}
+      </>)
+    }
   }
 
   renderInProgress = () => {
-    return this.renderFilings(this.props.filings.filter(f => f.companyFiling != null))
+    const filings = this.props.filings.filter(f => f.companyFilingId != null)
+    if (filings.length) {
+      return (<>
+        <h5>In Progress</h5>
+        {this.renderFilings(filings)}
+      </>)
+    }
   }
 
   renderNext60Days = () => {
@@ -47,31 +59,30 @@ class FilingsListScreen extends React.Component {
     const now = moment().unix()
     const filings = this.props.filings.filter(f => {
       if (f.due == null) return false
-      if (f.companyFiling != null) return false
+      if (f.companyFilingId != null) return false
+
+      // Show SF Tax & Treasurer Buisness License for now
+      if (f.id === 15) return true
+
       const due = moment(f.due).unix()
       return due < future && due >= now;
     })
 
-    return this.renderFilings(filings.sort(this.compareFilingsByDue))
+    if (filings.length) {
+      return (<>
+        <h5>Next 60 Days</h5>
+        {this.renderFilings(filings.sort(this.compareFilingsByDue))}
+      </>)
+    }
   }
 
-
-  /*renderFilings = () => {
-    const sortedFilings = this.props.filings.sort(this.compareFilingsByDue)
-    return sortedFilings.map((filing, index) => (
-      <FilingCard filing={filing} key={index} />
-    ))
-  }*/
 
   render() {
     return(
       <div>
         <h2>Filings</h2>
-        <h4>Need More Info</h4>
         {this.renderNeedMoreInfo()}
-        <h4>In Progress</h4>
         {this.renderInProgress()}
-        <h4>Next 60 Days</h4>
         {this.renderNext60Days()}
       </div>
     )

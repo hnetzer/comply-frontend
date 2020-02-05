@@ -4,7 +4,6 @@ import moment from 'moment'
 
 import Table from 'react-bootstrap/Table'
 
-
 const CompanyScreen = (props) => {
   const getYearEnd = (m, d) => {
     const month = moment().month(m).format('MMMM');
