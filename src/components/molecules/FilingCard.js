@@ -28,7 +28,9 @@ const FilingCard = (props) => {
     const { due, companyFilingId, id, status } = props.filing
 
     if (!due) {
-      return (<Button style={{ color: '#dc3545'}} variant="link">Add Registration Info ></Button>);
+      const href = '/home/agencies'
+      const style = { color: '#dc3545'};
+      return (<Button style={style} href={href} variant="link">Add Registration Info ></Button>);
     }
 
     if (companyFilingId) {
