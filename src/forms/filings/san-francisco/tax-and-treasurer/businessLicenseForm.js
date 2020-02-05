@@ -119,7 +119,6 @@ const BusinessLicenseForm = (props) => {
                   />
                 </Form.Label>
                 <Form.Control
-                  required
                   onChange={handleChange}
                   type="text"
                   value={values.pin}
@@ -132,7 +131,6 @@ const BusinessLicenseForm = (props) => {
           <Form.Group controlId="niacs">
             <Form.Label>NIACS Buisness Activity Selection</Form.Label>
             <Form.Control
-              required
               onChange={handleChange}
               value={values.niacs}
               as="select">
@@ -158,7 +156,6 @@ const BusinessLicenseForm = (props) => {
               <Form.Group controlId="numEmployees">
                 <Form.Label>Number of SF Employees</Form.Label>
                 <Form.Control
-                  required
                   onChange={handleChange}
                   type="number"
                   value={values.numEmployees}
@@ -176,7 +173,6 @@ const BusinessLicenseForm = (props) => {
                     <InputGroup.Text>$</InputGroup.Text>
                   </InputGroup.Prepend>
                   <Form.Control
-                    required
                     onChange={handleChange}
                     type="number"
                     value={values.totalPayroll}
@@ -192,7 +188,6 @@ const BusinessLicenseForm = (props) => {
                     <InputGroup.Text>$</InputGroup.Text>
                   </InputGroup.Prepend>
                   <Form.Control
-                    required
                     onChange={handleChange}
                     type="number"
                     value={values.sfPayroll}

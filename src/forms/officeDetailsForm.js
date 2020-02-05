@@ -69,8 +69,13 @@ const OfficeDetailsForm = (props) => {
                       <Form.Control
                         required
                         onChange={handleChange}
-                        type="text"
-                        value={values.offices[index].city} />
+                        value={values.offices[index].city}
+                        as="select">
+                        <option value=""></option>
+                        <option value="Los Angeles">Los Angeles</option>
+                        <option value="New York">New York</option>
+                        <option value="San Francisco">San Francisco</option>
+                      </Form.Control>
                     </Form.Group>
                   </Col>
                   <Col>
@@ -81,9 +86,9 @@ const OfficeDetailsForm = (props) => {
                         onChange={handleChange}
                         value={values.offices[index].state}
                         as="select">
-                        <option>California</option>
-                        <option>New York</option>
-                        <option>Delaware</option>
+                        <option value=""></option>
+                        <option value="California">California</option>
+                        <option value="New York">New York</option>
                       </Form.Control>
                     </Form.Group>
                   </Col>

@@ -18,7 +18,7 @@ const OfficeDetailsScreen = (props) => {
     offices: [{
       address: '',
       city: '',
-      state: 'California',
+      state: '',
       zip: '',
     }]
   }
