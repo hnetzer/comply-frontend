@@ -6,6 +6,7 @@ import { toTitleCase, getURLParam } from 'utils'
 import moment from 'moment'
 
 import Table from 'react-bootstrap/Table'
+import Alert from 'react-bootstrap/Alert'
 
 import {
   getFiling,
@@ -20,6 +21,9 @@ import Card from 'react-bootstrap/Card';
 import Breadcrumb from 'react-bootstrap/Breadcrumb'
 import Badge from 'react-bootstrap/Badge';
 
+const DRAFT_SUCCESS_ALERT = 'Your draft has been saved successfully.';
+const SUBMIT_SUCCESS_ALERT = 'Thanks we are processing your filing and will be in touch soon';
+
 class FilingScreen extends React.Component {
   constructor(props) {
     super(props)
@@ -29,6 +33,8 @@ class FilingScreen extends React.Component {
       fieldData: null,
       status: null,
       companyFilingId: null,
+      showAlert: false,
+      alertText: ''
     }
   }
 
@@ -51,7 +57,9 @@ class FilingScreen extends React.Component {
         filing: filing,
         due: due_date,
         fieldData: field_data,
-        status: status
+        status: status,
+        showAlert: status === 'submitted',
+        alertText: status === 'submitted' ? SUBMIT_SUCCESS_ALERT : ''
       })
     }
   }
@@ -84,11 +92,16 @@ class FilingScreen extends React.Component {
     const filingId = getURLParam('filingId')
     const companyFiling = await createCompanyFiling(user.company_id, filingId, data);
     const { due_date, field_data, status, id } = companyFiling
+    const alertText = status === 'draft' ? DRAFT_SUCCESS_ALERT : SUBMIT_SUCCESS_ALERT;
+
     this.setState({
       companyFilingId: id,
       fieldData: field_data,
-      status: status
+      status: status,
+      showAlert: true,
+      alertText: alertText,
     })
+
     navigate(`/home/filings/${companyFiling.id}`)
   }
 
@@ -103,7 +116,12 @@ class FilingScreen extends React.Component {
     };
 
     const companyFiling = await updateCompanyFiling(user.company_id, companyFilingId, data);
-    this.setState({ status: companyFiling.status })
+    const alertText = status === 'draft' ? DRAFT_SUCCESS_ALERT : SUBMIT_SUCCESS_ALERT;
+    this.setState({
+      status: companyFiling.status,
+      showAlert: true,
+      alertText: alertText
+    });
   }
 
   renderHeader = () => {
@@ -134,38 +152,23 @@ class FilingScreen extends React.Component {
     </Badge>);
   }
 
+  formNotSupported = () => (<div>
+    <h6>This filing is not supported yet.</h6>
+    <p>We are working to support more filings.</p>
+  </div>)
+
   renderForm = () => {
     const filing = this.state.filing
     if (!filing) return null;
-    let form = (<div>
-      <h6>This filing is not supported yet.</h6>
-      <p>We are working to support more filings.</p>
-    </div>);
-
-    switch (filing.jurisdiction.name.toLowerCase()) {
-      case 'san francisco': {
-        switch (filing.agency.name.toLowerCase()) {
-          case 'tax and treasurer': {
-            switch (filing.name) {
-              case 'Business License': {
-                form = (<SanFrancisco.TaxAndTreasurer.BusinessLicenseForm
-                  initialValues={this.state.fieldData}
-                  handleSubmit={this.handleSubmit}
-                  error={null}/>);
-                break;
-              }
-              default:
-                break;
-            }
-            break;
-          }
-          default:
-            break;
-        }
-        break;
-      }
-      default:
-        break;
+    let form = this.formNotSupported();
+    const jurisdiction = filing.jurisdiction.name.toLowerCase();
+    const agency = filing.agency.name.toLowerCase();
+    const name = filing.name.toLowerCase();
+    if (jurisdiction === 'san francisco' && agency === 'tax and treasurer' && name === 'business license') {
+      form = (<SanFrancisco.TaxAndTreasurer.BusinessLicenseForm
+        initialValues={this.state.fieldData}
+        handleSubmit={this.handleSubmit}
+        error={null}/>);
     }
 
     return (
@@ -210,11 +213,17 @@ class FilingScreen extends React.Component {
     )
   }
 
+  renderAlert = () => {
+    if (!this.state.showAlert) return
+    return  (<Alert style={{ marginTop: 16 }} variant="info">{this.state.alertText}</Alert>)
+  }
+
   render() {
     const { status } = this.state
     return (<>
       {this.renderBreadcrumb()}
       {this.renderHeader()}
+      {this.renderAlert()}
       {status === 'draft' || !status ? this.renderForm() : null}
       {status === 'submitted' ? this.renderFieldData() : null}
     </>);
