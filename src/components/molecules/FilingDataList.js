@@ -10,7 +10,7 @@ const FilingDataList = ({ data }) => {
     <Table striped bordered hover>
       <tbody>
       {fields.map((field, index) => (
-        <tr>
+        <tr key={index}>
           <td>{field}</td>
           <td>{data[field]}</td>
         </tr>))}

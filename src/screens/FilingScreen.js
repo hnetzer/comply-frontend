@@ -121,15 +121,15 @@ class FilingScreen extends React.Component {
   </div>)
 
   renderForm = () => {
-    const { filing } = this.state
+    const { filing, companyFiling } = this.state
     const { jurisdiction, agency, name } = filing;
 
     let form = this.formNotSupported();
-    if (jurisdiction.toLowerCase() === 'san francisco' &&
-        agency.toLowerCase() === 'tax and treasurer' &&
+    if (jurisdiction.name.toLowerCase() === 'san francisco' &&
+        agency.name.toLowerCase() === 'tax and treasurer' &&
         name.toLowerCase() === 'business license') {
       form = (<SanFrancisco.TaxAndTreasurer.BusinessLicenseForm
-        initialValues={this.state.fieldData}
+        initialValues={companyFiling.field_data}
         handleSubmit={this.handleSubmit}
         error={null}/>);
     }
