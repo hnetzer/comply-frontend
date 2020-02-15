@@ -3,10 +3,10 @@ import { navigate } from "@reach/router"
 import { connect } from 'react-redux';
 
 import { toTitleCase, getURLParam } from 'utils'
-import moment from 'moment'
 
-import Table from 'react-bootstrap/Table'
 import Alert from 'react-bootstrap/Alert'
+import Spinner from 'react-bootstrap/Spinner'
+import Card from 'react-bootstrap/Card';
 
 import {
   getFiling,
@@ -15,11 +15,10 @@ import {
   updateCompanyFiling
 } from 'network/api';
 
+import { FilingHeader, FilingDataList } from 'components/molecules'
 import { SanFrancisco } from 'forms/filings'
 
-import Card from 'react-bootstrap/Card';
 import Breadcrumb from 'react-bootstrap/Breadcrumb'
-import Badge from 'react-bootstrap/Badge';
 
 const DRAFT_SUCCESS_ALERT = 'Your draft has been saved successfully.';
 const SUBMIT_SUCCESS_ALERT = 'Thanks we are processing your filing and will be in touch soon';
@@ -30,11 +29,9 @@ class FilingScreen extends React.Component {
     this.state = {
       filing: null,
       due: null,
-      fieldData: null,
+      companyFiling: null,
       status: null,
-      companyFilingId: null,
-      showAlert: false,
-      alertText: ''
+      alert: null,
     }
   }
 
@@ -51,15 +48,13 @@ class FilingScreen extends React.Component {
     if (this.props.companyFilingId) {
       const { user, companyFilingId } = this.props
       const companyFiling = await getCompanyFiling(user.company_id, companyFilingId)
-      const { filing, due_date, field_data, status, id } = companyFiling
+      const { filing, due_date, status } = companyFiling
       this.setState({
-        companyFilingId: id,
         filing: filing,
         due: due_date,
-        fieldData: field_data,
+        companyFiling: companyFiling,
         status: status,
-        showAlert: status === 'submitted',
-        alertText: status === 'submitted' ? SUBMIT_SUCCESS_ALERT : ''
+        alert: status === 'submitted' ? SUBMIT_SUCCESS_ALERT : null
       })
     }
   }
@@ -91,15 +86,13 @@ class FilingScreen extends React.Component {
     };
     const filingId = getURLParam('filingId')
     const companyFiling = await createCompanyFiling(user.company_id, filingId, data);
-    const { due_date, field_data, status, id } = companyFiling
-    const alertText = status === 'draft' ? DRAFT_SUCCESS_ALERT : SUBMIT_SUCCESS_ALERT;
+    const { field_data, status, id } = companyFiling
 
     this.setState({
       companyFilingId: id,
       fieldData: field_data,
       status: status,
-      showAlert: true,
-      alertText: alertText,
+      alert: status === 'draft' ? DRAFT_SUCCESS_ALERT : SUBMIT_SUCCESS_ALERT
     })
 
     navigate(`/home/filings/${companyFiling.id}`)
@@ -107,7 +100,7 @@ class FilingScreen extends React.Component {
 
   updateFiling = async (values, status) => {
     const { user } = this.props
-    const { filing, due, companyFilingId } = this.state
+    const { filing, due, companyFiling } = this.state
     const data = {
       field_data: values,
       status: status,
@@ -115,41 +108,11 @@ class FilingScreen extends React.Component {
       filing_id: filing.id
     };
 
-    const companyFiling = await updateCompanyFiling(user.company_id, companyFilingId, data);
-    const alertText = status === 'draft' ? DRAFT_SUCCESS_ALERT : SUBMIT_SUCCESS_ALERT;
+    const updated = await updateCompanyFiling(user.company_id, companyFiling.id, data);
     this.setState({
-      status: companyFiling.status,
-      showAlert: true,
-      alertText: alertText
+      status: updated.status,
+      alert: status === 'draft' ? DRAFT_SUCCESS_ALERT : SUBMIT_SUCCESS_ALERT
     });
-  }
-
-  renderHeader = () => {
-    const { filing } = this.state
-    if (!filing) return null;
-    return (<div>
-      <h2>{toTitleCase(filing.name)}</h2>
-      <h5 className="mb-2 text-muted">
-        {`${toTitleCase(filing.agency.name)} - ${filing.jurisdiction.name}`}
-      </h5>
-      {this.renderDueDate()}
-      {this.renderBadge()}
-    </div>)
-  }
-
-  renderDueDate = () => {
-    const { due } = this.state;
-    return (<span className="mb-2 text-muted">
-      {`Due: ${moment(due).format('MMM Do, YYYY')}`}
-    </span>);
-  }
-
-  renderBadge = () => {
-    const { status } = this.state;
-    if (!status) return null;
-    return (<Badge style={{ marginLeft: 16 }} variant="info">
-      {status}
-    </Badge>);
   }
 
   formNotSupported = () => (<div>
@@ -158,74 +121,44 @@ class FilingScreen extends React.Component {
   </div>)
 
   renderForm = () => {
-    const filing = this.state.filing
-    if (!filing) return null;
+    const { filing } = this.state
+    const { jurisdiction, agency, name } = filing;
+
     let form = this.formNotSupported();
-    const jurisdiction = filing.jurisdiction.name.toLowerCase();
-    const agency = filing.agency.name.toLowerCase();
-    const name = filing.name.toLowerCase();
-    if (jurisdiction === 'san francisco' && agency === 'tax and treasurer' && name === 'business license') {
+    if (jurisdiction.toLowerCase() === 'san francisco' &&
+        agency.toLowerCase() === 'tax and treasurer' &&
+        name.toLowerCase() === 'business license') {
       form = (<SanFrancisco.TaxAndTreasurer.BusinessLicenseForm
         initialValues={this.state.fieldData}
         handleSubmit={this.handleSubmit}
         error={null}/>);
     }
-
-    return (
-      <Card style={{ marginTop: 24 }}>
-        <Card.Body>
-          {form}
-        </Card.Body>
-      </Card>
-    );
+    return form;
   }
 
-  renderFieldData = () => {
-    const { fieldData } = this.state;
-    if(!fieldData) return null;
-    const fields = Object.keys(fieldData)
-    return (
-      <Card style={{ marginTop: 24 }}>
-        <Card.Body>
-          <Card.Title>Form Details</Card.Title>
-          <Table striped bordered hover>
-            <tbody>
-            {fields.map((field, index) => (
-              <tr>
-                <td>{field}</td>
-                <td>{fieldData[field]}</td>
-              </tr>))}
-            </tbody>
-          </Table>
-        </Card.Body>
-      </Card>
-    );
-  }
 
-  renderBreadcrumb = () => {
-    const  { filing } = this.state
-    if (!filing) return null;
-    return (
+  render() {
+    const { status, filing, companyFiling, alert } = this.state
+
+    // Loading state
+    if (!filing) return (<Spinner animation="grow" variant="primary" />);
+
+    return (<>
       <Breadcrumb>
         <Breadcrumb.Item href="/home/filings">Filings</Breadcrumb.Item>
         <Breadcrumb.Item active>{toTitleCase(filing.name)}</Breadcrumb.Item>
       </Breadcrumb>
-    )
-  }
-
-  renderAlert = () => {
-    if (!this.state.showAlert) return
-    return  (<Alert style={{ marginTop: 16 }} variant="info">{this.state.alertText}</Alert>)
-  }
-
-  render() {
-    const { status } = this.state
-    return (<>
-      {this.renderBreadcrumb()}
-      {this.renderHeader()}
-      {this.renderAlert()}
-      {status === 'draft' || !status ? this.renderForm() : null}
-      {status === 'submitted' ? this.renderFieldData() : null}
+      <FilingHeader filing={filing} status={status} />
+      <Alert show={alert != null} style={{ marginTop: 16 }} variant="info">
+        {alert}
+      </Alert>
+      <Card style={{ marginTop: 24 }}>
+        <Card.Body>
+          {status === 'submitted' ? <FilingDataList data={companyFiling.field_data} /> :
+            this.renderForm()
+          }
+        </Card.Body>
+      </Card>
     </>);
   }
 }
