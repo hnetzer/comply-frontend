@@ -6,6 +6,7 @@ const SideNavigation = ({ companyName }) => {
 
   const style = {
     top: '4rem',
+    height: '100vh',
     backgroundColor: '#f7f7f7',
     borderRight: '1px solid #ececec',
     padding: '32px 16px',

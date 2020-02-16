@@ -9,6 +9,9 @@ export default (state = initialState, action) => {
    return {
      filings: action.data
    }
+  case 'LOGOUT': {
+    return initialState;
+  }
   default:
    return state
  }

@@ -36,7 +36,7 @@ const AccountMenu = (props) => {
       </Dropdown.Toggle>
       <Dropdown.Menu alignRight>
         <Dropdown.Header>{email}</Dropdown.Header>
-        <Dropdown.Item>Account</Dropdown.Item>
+        {/*<Dropdown.Item>Account</Dropdown.Item>*/}
         <Dropdown.Item onClick={props.handleLogout}>Logout</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

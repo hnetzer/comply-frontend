@@ -7,10 +7,10 @@ import Navbar from 'react-bootstrap/Navbar'
 
 import { logout } from 'actions';
 
-const NavigationBar = ({ user }) => {
+const NavigationBar = ({ user, dispatch }) => {
 
   const handleLogout = () => {
-    this.props.dispatch(logout())
+    dispatch(logout())
     navigate('/')
   }
 

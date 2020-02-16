@@ -9,6 +9,8 @@ export default (state = initialState, action) => {
    return {
      agencies: action.data
    }
+  case 'LOGOUT':
+    return initialState;
   default:
    return state
  }
