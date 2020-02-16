@@ -11,6 +11,9 @@ import WebsiteScreen from "./screens/WebsiteScreen"
 import HomeScreen from "./screens/HomeScreen"
 import LoginScreen from './screens/LoginScreen'
 
+// Admin
+import AdminScreen from "./screens/admin/AdminScreen"
+
 
 const App = (props) => {
 
@@ -24,6 +27,7 @@ const App = (props) => {
         <CompanyDetailsScreen path="/company-details" />
         <OfficeDetailsScreen path="/office-details" />
       </SignupScreen>
+      <AdminScreen path="/admin/*" />
     </Router>
   )
 }

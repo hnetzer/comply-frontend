@@ -4,6 +4,7 @@ import { navigate } from "@reach/router"
 
 import { AccountMenu } from '../molecules'
 import Navbar from 'react-bootstrap/Navbar'
+import Badge from 'react-bootstrap/Badge';
 
 import { logout } from 'actions';
 
@@ -20,11 +21,19 @@ const NavigationBar = ({ user, dispatch }) => {
     fontFamily: "'Raleway', sans-serif"
   }
 
+  const isAdmin = user && (user.roles.indexOf('admin') !== -1)
+
+  const href = isAdmin ? '/admin' : '/home'
+
   return (
-    <Navbar bg="dark" expand="lg" className="justify-content-between">
-      <Navbar.Brand href="/home">
-        <h3 style={logoStyle}>comply</h3>
-      </Navbar.Brand>
+    <Navbar bg="dark" expand="lg" className="justify-content-between" style={{ paddingLeft: 64 }}>
+      <div>
+        <Navbar.Brand href={href}>
+          <h3 style={logoStyle}>comply</h3>
+        </Navbar.Brand>
+        {isAdmin ? <Badge style={{ marginLeft: 16 }} variant="info">admin</Badge> : null}
+      </div>
+
       <div style={{ marginRight: 32 }}>
         <AccountMenu
           user={user}

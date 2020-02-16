@@ -54,7 +54,7 @@ class HomeScreen extends React.Component {
     const { company, filings } = this.state;
     return(
       <div>
-        <NavigationBar handleLogout={this.handleLogout} />
+        <NavigationBar />
         <div className={styles.container}>
           <SideNavigation companyName={company && company.name} />
           <main className={styles.main}>

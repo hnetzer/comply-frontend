@@ -25,8 +25,18 @@ const LoginScreen = (props) => {
     try {
       const response = await loginRequest(email, password)
       props.dispatch(login(response))
+
+      const { user } = response
+      // If admin, then go to admin
+      if (user.roles.indexOf('admin') !== -1) {
+        navigate('/admin')
+        return
+      }
+
+      // Otherwise go to client home
       navigate('/home')
     } catch (err) {
+      console.log(err)
       setError('Email and password are not valid.')
     }
   }
