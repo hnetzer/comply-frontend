@@ -8,10 +8,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import style from './SideListItem.module.css'
 
 
-const SideListItem = ({ filing }) => {
+const SideListItem = ({ filing, index, onSelect }) => {
+
+  const handleClick = () => {
+    onSelect(index)
+  }
+
   const f = filing
   return (
-    <div className={style.item}>
+    <div className={style.item} onClick={handleClick}>
       <div>
         <div className={style.title}>{f.company.name}</div>
         <div className={style.subtitle}>
@@ -22,7 +27,7 @@ const SideListItem = ({ filing }) => {
         </div>
       </div>
       <div className={style.rightContainer}>
-        <FontAwesomeIcon color="#778899" size="lg" icon={faAngleRight}/>
+        <FontAwesomeIcon className={style.arrow} size="lg" icon={faAngleRight}/>
       </div>
     </div>
   )

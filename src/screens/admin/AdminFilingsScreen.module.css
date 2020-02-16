@@ -1,0 +1,13 @@
+.sideList {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 20%;
+  max-width: 20%;
+  background-color: #f7f7f7;
+  height: 87vh;
+  overflow: scroll;
+}
+
+.content {
+  padding: 32px;
+}
