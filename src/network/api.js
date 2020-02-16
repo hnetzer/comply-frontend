@@ -90,7 +90,7 @@ export const getCompanyAgencies = async (companyId) => {
 }
 
 export const getAllCompanyFilings = async () => {
-  return sendRequest('GET', `/companyfilings`)
+  return sendRequest('GET', `/admin/companyfilings`)
 }
 
 

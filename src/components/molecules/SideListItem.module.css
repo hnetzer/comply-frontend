@@ -1,0 +1,24 @@
+.item {
+  padding: 16px;
+  width: 100%;
+  border-bottom: 1px solid #c2c2c2;
+  display: flex;
+  flex-direction: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 1.0rem;
+  color: #2f3f3f;
+}
+
+.subtitle {
+  font-size: .8rem;
+  color: #778899;
+}
+
+.rightContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

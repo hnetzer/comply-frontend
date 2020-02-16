@@ -11,11 +11,9 @@ const AdminScreen  = () => {
     <div>
       <NavigationBar />
       <AdminNavigation />
-      <main style={{ width: '100%', display: 'flex' }}>
-        <Router>
-          <AdminFilingsScreen path="/filings" />
-        </Router>
-      </main>
+      <Router>
+        <AdminFilingsScreen path="/filings" />
+      </Router>
     </div>
   )
 }

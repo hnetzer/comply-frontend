@@ -4,10 +4,14 @@ import InfoPopover from './InfoPopover';
 import FilingHeader from './FilingHeader';
 import FilingDataList from './FilingDataList';
 
+// Admin
+import SideListItem from './SideListItem'
+
 export {
   AccountMenu,
   FilingCard,
   InfoPopover,
   FilingHeader,
-  FilingDataList
+  FilingDataList,
+  SideListItem
 }
