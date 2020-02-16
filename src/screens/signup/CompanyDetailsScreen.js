@@ -43,16 +43,14 @@ const CompanyDetailsScreen = (props) => {
   }
 
   return (
-    <div className={styles.container}>
-      <Card className={styles.card}>
-        <Card.Body className={styles.cardBody}>
-          <Card.Title><h4>Tell us about {props.company.name}</h4></Card.Title>
-          <CompanyDetailsForm
-            initialValues={initialFormValues}
-            handleSubmit={handleSubmit} />
-        </Card.Body>
-      </Card>
-    </div>
+    <Card className={styles.card}>
+      <Card.Body className={styles.cardBody}>
+        <Card.Title><h4>Tell us about {props.company.name}</h4></Card.Title>
+        <CompanyDetailsForm
+          initialValues={initialFormValues}
+          handleSubmit={handleSubmit} />
+      </Card.Body>
+    </Card>
   )
 }
 

@@ -47,16 +47,14 @@ const GetStartedScreen = (props) => {
   }
 
   return (
-    <div className={styles.container}>
-      <Card className={styles.card}>
-        <Card.Body className={styles.cardBody}>
-          <Card.Title><h1>Get started with Comply</h1></Card.Title>
-          <CreateAccountForm
-            initialValues={initialFormValues}
-            handleSubmit={handleSubmit} />
-        </Card.Body>
-      </Card>
-    </div>
+    <Card className={styles.card}>
+      <Card.Body className={styles.cardBody}>
+        <Card.Title><h1>Get started with Comply</h1></Card.Title>
+        <CreateAccountForm
+          initialValues={initialFormValues}
+          handleSubmit={handleSubmit} />
+      </Card.Body>
+    </Card>
   )
 }
 

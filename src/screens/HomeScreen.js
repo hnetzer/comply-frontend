@@ -3,12 +3,9 @@ import { connect } from 'react-redux';
 import { Router, navigate } from "@reach/router"
 
 import { getAgencies, getCompany, updateAgencies, getCompanyFilings } from 'network/api';
-import { logout, setFilings } from 'actions';
+import { setFilings } from 'actions';
 
-import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
-
-import { AccountMenu, WelcomeModal } from '../components/molecules'
+import { NavigationBar, WelcomeModal, SideNavigation } from '../components/organisms'
 
 // screens
 import CompanyScreen from './home/CompanyScreen'
@@ -42,11 +39,6 @@ class HomeScreen extends React.Component {
     }
   }
 
-  handleLogout = () => {
-    this.props.dispatch(logout())
-    navigate('/')
-  }
-
   handleUpdateAgencies = async (agencyIds) => {
     try {
       this.setState({ show: false })
@@ -59,34 +51,17 @@ class HomeScreen extends React.Component {
   }
 
   render() {
+    const { company, filings } = this.state;
     return(
       <div>
-        <Navbar bg="dark" expand="lg" className="justify-content-between">
-          <Navbar.Brand href="/home">
-            <h3 className={styles.logo}>comply</h3>
-          </Navbar.Brand>
-          <div style={{ marginRight: 32 }}>
-            <AccountMenu
-              user={this.props.user}
-              handleLogout={this.handleLogout} />
-          </div>
-        </Navbar>
+        <NavigationBar handleLogout={this.handleLogout} />
         <div className={styles.container}>
-          <div className={styles.sideBar}>
-            <h5>
-              {this.state.company != null ? this.state.company.name : null}
-            </h5>
-            <Nav defaultActiveKey="/home" className="flex-column">
-              <Nav.Link href="/home/filings">Filings</Nav.Link>
-              <Nav.Link href="/home/agencies">Agencies</Nav.Link>
-              <Nav.Link href="/home/company">Company</Nav.Link>
-            </Nav>
-          </div>
+          <SideNavigation companyName={company && company.name} />
           <main className={styles.main}>
             <Router>
-              <FilingsListScreen path="/" filings={this.state.filings} />
-              <FilingsListScreen path="/filings" filings={this.state.filings} />
-              <CompanyScreen path="/company" company={this.state.company} />
+              <FilingsListScreen path="/" filings={filings} />
+              <FilingsListScreen path="/filings" filings={filings} />
+              <CompanyScreen path="/company" company={company} />
               <AgenciesScreen path="/agencies" />
               <FilingScreen path="/filings/new" />
               <FilingScreen path="/filings/:companyFilingId" />

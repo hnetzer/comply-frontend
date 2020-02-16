@@ -129,7 +129,7 @@ class FilingScreen extends React.Component {
         agency.name.toLowerCase() === 'tax and treasurer' &&
         name.toLowerCase() === 'business license') {
       form = (<SanFrancisco.TaxAndTreasurer.BusinessLicenseForm
-        initialValues={companyFiling.field_data}
+        initialValues={companyFiling != null ? companyFiling.field_data : null}
         handleSubmit={this.handleSubmit}
         error={null}/>);
     }

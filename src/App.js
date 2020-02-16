@@ -1,12 +1,16 @@
 import React from 'react';
-import { Router } from "@reach/router"
+import { Router, Root } from "@reach/router"
 
+// Signup
 import GetStartedScreen from "./screens/signup/GetStartedScreen"
 import CompanyDetailsScreen from "./screens/signup/CompanyDetailsScreen"
 import OfficeDetailsScreen from "./screens/signup/OfficeDetailsScreen"
+import SignupScreen from './screens/signup/SignupScreen'
+
 import WebsiteScreen from "./screens/WebsiteScreen"
 import HomeScreen from "./screens/HomeScreen"
 import LoginScreen from './screens/LoginScreen'
+
 
 const App = (props) => {
 
@@ -15,9 +19,11 @@ const App = (props) => {
       <WebsiteScreen path="/" />
       <LoginScreen path="/login" />
       <HomeScreen path="/home/*" />
-      <GetStartedScreen path="/signup/get-started" />
-      <CompanyDetailsScreen path="/signup/company-details" />
-      <OfficeDetailsScreen path="/signup/office-details" />
+      <SignupScreen path="/signup">
+        <GetStartedScreen path="/get-started" />
+        <CompanyDetailsScreen path="/company-details" />
+        <OfficeDetailsScreen path="/office-details" />
+      </SignupScreen>
     </Router>
   )
 }

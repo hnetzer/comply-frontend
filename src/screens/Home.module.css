@@ -1,27 +1,7 @@
-.logo {
-  color: #fff;
-  font-weight: 500;
-  font-family: 'Raleway', sans-serif;
-}
-
 .container {
   width: 100%;
   display: flex;
 }
-
-.sideBar{
-  position: sticky;
-  top: 4rem;
-  height: calc(100vh - 4rem);
-  background-color: #f7f7f7;
-  border-right: 1px solid #ececec;
-  padding: 32px 16px;
-  display: flex;
-  flex-direction: column;
-  flex-basis: 16.6667%;
-  max-width: 16.666667%;
-}
-
 
 .main {
   order: 1;
