@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { getAllCompanyFilings } from 'network/api';
 
+import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 
 import { SideListItem, FilingDataList } from '../../components/molecules'
@@ -66,17 +67,27 @@ class AdminFilingsScreen extends React.Component {
     return(
       <main style={{ width: '100%', display: 'flex' }}>
         <section className={style.sideList}>
-          <div style={{ padding: 8 }}>
-            <span>Status:</span>
-            <select style={{ marginLeft: 8}}>
-              <option>Submitted</option>
-              <option>Rejected</option>
-              <option>Accepted</option>
-            </select>
+          <div style={{ padding: 16 }}>
+            <Form.Control type="text" placeholder="Search company filings" />
+            {false && (<div style={{ fontSize: 14, color: '#222' }}>
+              <div style={{ marginTop: 8, }}>Status</div>
+              <Form.Check type="checkbox" label="Submitted" />
+              <Form.Check type="checkbox" label="Rejected" />
+              <Form.Check type="checkbox" label="Need Signature + Payment" />
+              <Form.Check type="checkbox" label="Filed" />
+              <Form.Check type="checkbox" label="Complete" />
+            </div>)}
           </div>
-          {companyFilings.map((f,i) =>
-            (<SideListItem filing={f} key={i} index={i} onSelect={this.onSelectFiling} />)
-          )}
+          <div>
+          <div className={style.companyFilingsHeader}>
+            Company filings
+          </div>
+          <div className={style.filingsList}>
+            {companyFilings.map((f,i) =>
+              (<SideListItem filing={f} key={i} index={i} onSelect={this.onSelectFiling} />)
+            )}
+          </div>
+          </div>
         </section>
         <section className={style.content}>
           {this.renderFilingTitle()}
