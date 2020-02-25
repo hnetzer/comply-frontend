@@ -57,6 +57,10 @@ export const updateAgencies = async (data, companyId) => {
   return sendRequest('PUT', `/company/${companyId}/agencies`, data)
 }
 
+export const updateCompanyAgency = async (data, companyId, agencyId) => {
+  return sendRequest('PUT', `/company/${companyId}/agencies/${agencyId}`, data);
+}
+
 export const getAgencies = async (companyId) => {
   return sendRequest('GET', `/agencies?companyId=${companyId}`)
 }

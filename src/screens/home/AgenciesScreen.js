@@ -4,10 +4,50 @@ import { connect } from 'react-redux';
 import { getCompanyAgencies } from 'network/api';
 import { setAgencies } from 'actions';
 
-import Table from 'react-bootstrap/Table'
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 import { toTitleCase } from 'utils';
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+class RegistrationDatePicker extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      startDate: props.date ? props.date : new Date()
+    }
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+ 
+  handleChange(date){
+    this.setState({
+      startDate: date
+    });
+  };
+ 
+  render() {
+    return (
+      <DatePicker
+        selected={this.state.startDate}
+        onChange={this.handleChange}
+      />
+    );
+  }
+}
+
 class AgenciesScreen extends React.Component {
+  constructor(props){
+    super(props)
+    console.log(props)
+    this.state = {
+      activeEdits: []
+    }
+
+    this.showDatepicker = this.showDatepicker.bind(this);
+  }
+
   async componentDidMount() {
     try {
       const agencies = await getCompanyAgencies(this.props.user.company_id)
@@ -15,6 +55,11 @@ class AgenciesScreen extends React.Component {
       this.props.dispatch(setAgencies(agencies))
     } catch (err) {
     }
+  }
+
+  showDatepicker(agencyId) {
+    this.setState({activeEdits: [...this.state.activeEdits, agencyId]})
+    console.log('hello', agencyId)
   }
 
   renderAgenciesTable = () => {
@@ -32,7 +77,18 @@ class AgenciesScreen extends React.Component {
             <tr key={i}>
                 <td>{toTitleCase(a.name)}</td>
                 <td>{a.jurisdiction}</td>
-                <td>{a.registration}</td>
+                <td>
+                  { a.registration ?
+                    a.registration : 
+                    null
+                  }
+                  { this.state.activeEdits.includes(a.agency_id) ? 
+                      <RegistrationDatePicker date={a.registration} /> 
+                      :
+                      <Button variant="link" onClick={() => this.showDatepicker(a.agency_id)}>Add/Edit date</Button>
+                  }
+                  
+                </td>
             </tr>
           ))}
         </tbody>
