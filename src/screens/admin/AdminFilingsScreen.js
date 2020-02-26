@@ -7,13 +7,14 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 
 import { SideListItem, FilingDataList } from '../../components/molecules'
+import { AdminRejectFilingModal } from '../../components/organisms'
 
 import style from './AdminFilingsScreen.module.css'
 
 class AdminFilingsScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { companyFilings: [], selectedIndex: null };
+    this.state = { companyFilings: [], selectedIndex: null, showRejectModal: false };
   }
 
   async componentDidMount() {
@@ -56,27 +57,21 @@ class AdminFilingsScreen extends React.Component {
     return (<>
       <FilingDataList data={c.field_data} />
       <div style={{ paddingTop: 16, display: 'flex', justifyContent: 'space-between' }}>
-        <Button variant="warning">Reject</Button>
+        <Button onClick={() => this.setState({ showRejectModal: true})} variant="danger">
+          Reject
+        </Button>
         <Button variant="success">Accept</Button>
       </div>
     </>)
   }
 
   render() {
-    const { companyFilings, selectedIndex } = this.state
+    const { companyFilings, selectedIndex, showRejectModal } = this.state
     return(
       <main style={{ width: '100%', display: 'flex' }}>
         <section className={style.sideList}>
           <div style={{ padding: 16 }}>
             <Form.Control type="text" placeholder="Search company filings" />
-            {false && (<div style={{ fontSize: 14, color: '#222' }}>
-              <div style={{ marginTop: 8, }}>Status</div>
-              <Form.Check type="checkbox" label="Submitted" />
-              <Form.Check type="checkbox" label="Rejected" />
-              <Form.Check type="checkbox" label="Need Signature + Payment" />
-              <Form.Check type="checkbox" label="Filed" />
-              <Form.Check type="checkbox" label="Complete" />
-            </div>)}
           </div>
           <div>
           <div className={style.companyFilingsHeader}>
@@ -92,8 +87,11 @@ class AdminFilingsScreen extends React.Component {
         <section className={style.content}>
           {this.renderFilingTitle()}
           {this.renderFilingDataList()}
-
         </section>
+        <AdminRejectFilingModal
+          show={showRejectModal}
+          handleHide={() => this.setState({ showRejectModal: false })}
+          handleSubmit={() => console.log('reject filing!!')} />
       </main>
     )
   }
