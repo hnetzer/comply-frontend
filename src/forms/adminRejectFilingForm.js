@@ -39,7 +39,12 @@ const AdminRejectFilingForm = (props) => {
         <Form validated={validated} onSubmit={handleSubmit}>
           <Form.Group controlId="reason">
             <Form.Label>Issue</Form.Label>
-            <Form.Control as="textarea" rows="5" />
+            <Form.Control
+              required
+              as="textarea"
+              onChange={handleChange}
+              value={values.reason}
+              rows="5" />
           </Form.Group>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <Button variant="secondary" onClick={props.handleCancel}>

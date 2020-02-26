@@ -7,7 +7,7 @@ import { AdminRejectFilingForm } from 'forms'
 const AdminRejectFilingModal = (props) => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    props.updateAgencies(values)
+    props.handleSubmit(values)
   }
 
   return (

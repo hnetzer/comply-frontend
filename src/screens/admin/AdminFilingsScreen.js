@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { getAllCompanyFilings } from 'network/api';
+import { getAllCompanyFilings, adminRejectCompanyFiling } from 'network/api';
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
@@ -65,6 +65,19 @@ class AdminFilingsScreen extends React.Component {
     </>)
   }
 
+  rejectFiling = async (values) => {
+    const { selectedIndex, companyFilings } = this.state
+    if(selectedIndex === null) return null;
+    const c = companyFilings[selectedIndex]
+    console.log(values)
+    try {
+      const data = { reason: values.reason }
+      const response = await adminRejectCompanyFiling(c.id, values)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   render() {
     const { companyFilings, selectedIndex, showRejectModal } = this.state
     return(
@@ -91,7 +104,7 @@ class AdminFilingsScreen extends React.Component {
         <AdminRejectFilingModal
           show={showRejectModal}
           handleHide={() => this.setState({ showRejectModal: false })}
-          handleSubmit={() => console.log('reject filing!!')} />
+          handleSubmit={this.rejectFiling} />
       </main>
     )
   }
