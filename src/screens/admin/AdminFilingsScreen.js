@@ -73,6 +73,7 @@ class AdminFilingsScreen extends React.Component {
     try {
       const data = { reason: values.reason }
       const response = await adminRejectCompanyFiling(c.id, values)
+      this.setState({ showRejectModal: false})
     } catch (err) {
       console.log(err)
     }
