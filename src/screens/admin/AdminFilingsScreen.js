@@ -1,18 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { getAllCompanyFilings } from 'network/api';
+import { getAllCompanyFilings, adminRejectCompanyFiling } from 'network/api';
 
+import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 
 import { SideListItem, FilingDataList } from '../../components/molecules'
+import { AdminRejectFilingModal } from '../../components/organisms'
 
 import style from './AdminFilingsScreen.module.css'
 
 class AdminFilingsScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { companyFilings: [], selectedIndex: null };
+    this.state = { companyFilings: [], selectedIndex: null, showRejectModal: false };
   }
 
   async componentDidMount() {
@@ -55,34 +57,55 @@ class AdminFilingsScreen extends React.Component {
     return (<>
       <FilingDataList data={c.field_data} />
       <div style={{ paddingTop: 16, display: 'flex', justifyContent: 'space-between' }}>
-        <Button variant="warning">Reject</Button>
+        <Button onClick={() => this.setState({ showRejectModal: true})} variant="danger">
+          Reject
+        </Button>
         <Button variant="success">Accept</Button>
       </div>
     </>)
   }
 
+  rejectFiling = async (values) => {
+    const { selectedIndex, companyFilings } = this.state
+    if(selectedIndex === null) return null;
+    const c = companyFilings[selectedIndex]
+    console.log(values)
+    try {
+      const data = { reason: values.reason }
+      const response = await adminRejectCompanyFiling(c.id, values)
+      this.setState({ showRejectModal: false})
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   render() {
-    const { companyFilings, selectedIndex } = this.state
+    const { companyFilings, selectedIndex, showRejectModal } = this.state
     return(
       <main style={{ width: '100%', display: 'flex' }}>
         <section className={style.sideList}>
-          <div style={{ padding: 8 }}>
-            <span>Status:</span>
-            <select style={{ marginLeft: 8}}>
-              <option>Submitted</option>
-              <option>Rejected</option>
-              <option>Accepted</option>
-            </select>
+          <div style={{ padding: 16 }}>
+            <Form.Control type="text" placeholder="Search company filings" />
           </div>
-          {companyFilings.map((f,i) =>
-            (<SideListItem filing={f} key={i} index={i} onSelect={this.onSelectFiling} />)
-          )}
+          <div>
+          <div className={style.companyFilingsHeader}>
+            Company filings
+          </div>
+          <div className={style.filingsList}>
+            {companyFilings.map((f,i) =>
+              (<SideListItem filing={f} key={i} index={i} onSelect={this.onSelectFiling} />)
+            )}
+          </div>
+          </div>
         </section>
         <section className={style.content}>
           {this.renderFilingTitle()}
           {this.renderFilingDataList()}
-
         </section>
+        <AdminRejectFilingModal
+          show={showRejectModal}
+          handleHide={() => this.setState({ showRejectModal: false })}
+          handleSubmit={this.rejectFiling} />
       </main>
     )
   }

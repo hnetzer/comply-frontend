@@ -21,7 +21,7 @@ const NavigationBar = ({ user, dispatch }) => {
     fontFamily: "'Raleway', sans-serif"
   }
 
-  const isAdmin = user && (user.roles.indexOf('admin') !== -1)
+  const isAdmin = user && user.roles && (user.roles.indexOf('admin') !== -1)
 
   const href = isAdmin ? '/admin' : '/home'
 
