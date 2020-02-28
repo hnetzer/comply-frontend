@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { getCompanyAgencies } from 'network/api';
+import { getCompanyAgencies, updateCompanyAgency } from 'network/api';
 import { setAgencies } from 'actions';
 
 import Table from 'react-bootstrap/Table';
@@ -25,11 +25,15 @@ class RegistrationDatePicker extends React.Component {
     this.setState({
       startDate: date
     });
+    return this.props.onChange(this.props.agencyId, date)
   };
  
   render() {
     return (
       <DatePicker
+        showMonthDropdown
+        showYearDropdown
+        placeholderText="Click to select a date"
         selected={this.state.startDate}
         onChange={this.handleChange}
       />
@@ -40,26 +44,57 @@ class RegistrationDatePicker extends React.Component {
 class AgenciesScreen extends React.Component {
   constructor(props){
     super(props)
-    console.log(props)
     this.state = {
-      activeEdits: []
-    }
+      activeEdits: [],
+      editLog: {},
 
+    }
+    this.handleDateChange = this.handleDateChange.bind(this);
     this.showDatepicker = this.showDatepicker.bind(this);
+    this.saveChanges = this.saveChanges.bind(this);
+  }
+
+  unsavedChanges(){
+    return this.state.activeEdits.length && Object.keys(this.state.editLog).length;
   }
 
   async componentDidMount() {
     try {
       const agencies = await getCompanyAgencies(this.props.user.company_id)
-      console.log(agencies)
       this.props.dispatch(setAgencies(agencies))
     } catch (err) {
+      console.warn(err)
+    }
+  }
+
+  async componentDidUpdate() {
+    try {
+      const agencies = await getCompanyAgencies(this.props.user.company_id)
+      this.props.dispatch(setAgencies(agencies))
+    } catch (err) {
+      console.warn(err)
     }
   }
 
   showDatepicker(agencyId) {
     this.setState({activeEdits: [...this.state.activeEdits, agencyId]})
-    console.log('hello', agencyId)
+  }
+
+  handleDateChange(agencyId, selectedDate){
+    this.setState({
+      editLog: {...this.state.editLog, [agencyId]: selectedDate},
+    })
+  }
+
+  saveChanges = async () => {
+    await Promise.all(Object.entries(this.state.editLog).map(([agencyId, newRegDate]) => {
+      updateCompanyAgency({registration: newRegDate}, this.props.user.company_id, agencyId)
+    }))
+
+    return this.setState({
+      activeEdits: [],
+      editLog: {},
+    })
   }
 
   renderAgenciesTable = () => {
@@ -69,28 +104,34 @@ class AgenciesScreen extends React.Component {
           <tr>
             <th>Agency</th>
             <th>Jurisdiction</th>
-            <th>Reg Date</th>
+            <th>Registration Date</th>
           </tr>
         </thead>
         <tbody>
-          {this.props.agencies.map((a,i) => (
-            <tr key={i}>
+          {this.props.agencies.map((a,i) => {
+            let regDate;
+            if (a.registration) {
+              regDate = new Date(a.registration)
+              regDate.setDate(regDate.getDate() + 1);
+            }
+            return (
+            <tr className="agency-row" key={i}>
                 <td>{toTitleCase(a.name)}</td>
                 <td>{a.jurisdiction}</td>
-                <td>
-                  { a.registration ?
+                <td className="td-reg-date">
+                  { a.registration && !this.state.activeEdits.includes(a.agency_id) ?
                     a.registration : 
                     null
                   }
                   { this.state.activeEdits.includes(a.agency_id) ? 
-                      <RegistrationDatePicker date={a.registration} /> 
+                      <RegistrationDatePicker onChange={this.handleDateChange} agencyId={a.agency_id} date={regDate} /> 
                       :
-                      <Button variant="link" onClick={() => this.showDatepicker(a.agency_id)}>Add/Edit date</Button>
+                      <Button className="edit-date-btn" variant="link" onClick={() => this.showDatepicker(a.agency_id)}>Add/Edit date</Button>
                   }
-                  
                 </td>
             </tr>
-          ))}
+            )
+          })}
         </tbody>
       </Table>
     )
@@ -100,15 +141,20 @@ class AgenciesScreen extends React.Component {
   render() {
     return(
       <div>
-        <h2>Agencies</h2>
-        {this.renderAgenciesTable()}
+        <div className="agency-table-header">
+          <h2>Agencies</h2>
+          {this.unsavedChanges() ? <div>Your changes have not been saved.</div> : null}
+        </div>
+        <div>
+          {this.renderAgenciesTable()}
+        </div>
+        {this.unsavedChanges() ? <Button className="save-changes-btn" onClick={this.saveChanges}>Save Changes</Button> : null}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
     user: state.auth.user,
     agencies: state.company.agencies,

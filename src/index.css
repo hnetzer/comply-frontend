@@ -16,3 +16,40 @@ html, body {
   height: 100%;
   display: block;
 }
+
+td>.edit-date-btn{
+  padding: 0 35px;
+  display: block;
+  /* margin-top: 18px; */
+}
+
+.agency-table-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.agency-table-header>div {
+  padding-top: 10px;
+  margin-bottom: 8px;
+  color: red;
+  font-style: italic;
+}
+
+.save-changes-btn {
+  float: right;
+}
+
+.agency-row {
+  height: 75px;
+}
+
+.table .agency-row>td{
+  padding: 0.6em 1.2em 0.6em 0.6em;
+}
+.td-reg-date {
+  text-align: center;
+}
+
+.react-datepicker__input-container>input {
+  text-align: center;
+}
