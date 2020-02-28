@@ -5,14 +5,14 @@
       "description": "URL for the Comply API",
       "value": "https://comply-api.herokuapp.com"
     }
-  }
+  },
   "environments": {
     "review": {
       "env": {
         "REACT_APP_API_BASE_URL": "https://comply-api.herokuapp.com"
       }
     }
-  }
+  },
   "buildpacks": [
     {
       "url": "heroku/nodejs"
