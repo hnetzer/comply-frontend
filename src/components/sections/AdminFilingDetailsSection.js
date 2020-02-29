@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { adminRejectCompanyFiling } from 'network/api';
+import { adminRejectCompanyFiling, adminUpdateCompanyFilingStatus } from 'network/api';
 
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
@@ -13,18 +13,19 @@ import style from './AdminFilingDetailsSection.module.css'
 const AdminFilingDetailsSection = ({ companyFiling }) => {
   const [showRejectModal, setShowRejectModal] = useState(false);
 
-  const updateFilingStatus = async (status) => {
-
+  const updateStatus = async (status) => {
+    try {
+      const response = await adminUpdateCompanyFilingStatus(companyFiling.id, { status: status })
+    } catch (err) {
+      console.warn(err)
+    }
   }
 
   const rejectFiling = async (values) => {
-    const { selectedIndex, companyFilings } = this.state
-    if(selectedIndex === null) return null;
-    const c = companyFilings[selectedIndex]
     try {
       //const data = { reason: values.reason }
-      const response = await adminRejectCompanyFiling(c.id, values)
-      this.setState({ showRejectModal: false})
+      const response = await adminRejectCompanyFiling(companyFiling.id, values)
+      setShowRejectModal(false)
     } catch (err) {
       console.warn(err)
     }
@@ -36,17 +37,34 @@ const AdminFilingDetailsSection = ({ companyFiling }) => {
     if (status === 'submitted') {
       return (
         <div style={{ paddingTop: 16, display: 'flex', justifyContent: 'space-between' }}>
-          <Button onClick={() => showRejectModal(true)} variant="danger">
+          <Button onClick={() => setShowRejectModal(true)} variant="danger">
             Reject
           </Button>
-          <Button variant="success">Accept</Button>
+          <Button onClick={() => updateStatus('needs-signature-payment')} variant="success">Accept</Button>
         </div>
       )
     }
     if (status === 'needs-follow-up') {
       return (
         <div style={{ paddingTop: 16, display: 'flex', justifyContent: 'space-between' }}>
-          <Button variant="success">Mark Submitted</Button>
+          <Button onClick={() => updateStatus('submitted')} variant="success">Mark Submitted</Button>
+        </div>
+      )
+    }
+
+    if (status === 'needs-signature-payment') {
+      return (
+        <div style={{ paddingTop: 16, display: 'flex', justifyContent: 'space-between' }}>
+          <Button onClick={() => updateStatus('submitted')} variant="secondary">Back to Submitted</Button>
+          <Button onClick={() => updateStatus('filed')} variant="success">Filed</Button>
+        </div>
+      )
+    }
+
+    if (status === 'filed') {
+      return (
+        <div style={{ paddingTop: 16, display: 'flex', justifyContent: 'space-between' }}>
+          <Button onClick={() => updateStatus('complete')} variant="success">Complete</Button>
         </div>
       )
     }
