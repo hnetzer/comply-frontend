@@ -86,7 +86,7 @@ class FilingScreen extends React.Component {
     };
     const filingId = getURLParam('filingId')
     const companyFiling = await createCompanyFiling(user.company_id, filingId, data);
-    const { status, due_date } = companyFiling
+    const { status } = companyFiling
 
     this.setState({
       companyFiling: companyFiling,

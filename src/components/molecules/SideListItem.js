@@ -1,6 +1,5 @@
 import React from 'react';
 import moment from 'moment';
-import { toTitleCase } from 'utils';
 
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

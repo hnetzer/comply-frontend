@@ -6,21 +6,20 @@ import { faUser, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Toggle = React.forwardRef(({ children, onClick }, ref) => (
-  <a
-    href=""
+  <button
     ref={ref}
     onClick={e => {
       e.preventDefault();
       onClick(e);
     }}
-    style={{ color: '#fff', textDecoration: 'none'}}
+    style={{ color: '#fff', textDecoration: 'none', background: 'none', border: 'none' }}
   >
     <FontAwesomeIcon color="#fff" icon={faUser}/>
     <span style={{ paddingLeft: 8, paddingRight: 8 }}>
       {children}
     </span>
     <FontAwesomeIcon color="#fff" icon={faCaretDown}/>
-  </a>
+  </button>
 ));
 
 

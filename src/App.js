@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Root } from "@reach/router"
+import { Router } from "@reach/router"
 
 // Signup
 import GetStartedScreen from "./screens/signup/GetStartedScreen"

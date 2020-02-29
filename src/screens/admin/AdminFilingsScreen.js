@@ -71,8 +71,8 @@ class AdminFilingsScreen extends React.Component {
     const c = companyFilings[selectedIndex]
     console.log(values)
     try {
-      const data = { reason: values.reason }
-      const response = await adminRejectCompanyFiling(c.id, values)
+      //const data = { reason: values.reason }
+      await adminRejectCompanyFiling(c.id, values)
       this.setState({ showRejectModal: false})
     } catch (err) {
       console.log(err)
@@ -80,7 +80,7 @@ class AdminFilingsScreen extends React.Component {
   }
 
   render() {
-    const { companyFilings, selectedIndex, showRejectModal } = this.state
+    const { companyFilings, showRejectModal } = this.state
     return(
       <main style={{ width: '100%', display: 'flex' }}>
         <section className={style.sideList}>

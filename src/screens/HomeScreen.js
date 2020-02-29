@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Router, navigate } from "@reach/router"
+import { Router } from "@reach/router"
 
 import { getAgencies, getCompany, updateAgencies, getCompanyFilings } from 'network/api';
 import { setFilings } from 'actions';
