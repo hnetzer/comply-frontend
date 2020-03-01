@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { getAllCompanyFilings } from 'network/api';
 
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Button from 'react-bootstrap/Button'
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
-import ToggleButton from 'react-bootstrap/ToggleButton'
 
 import { setCompanyFilings } from 'actions';
 
@@ -37,22 +36,33 @@ class AdminFilingsScreen extends React.Component {
     this.setState({ filter: value })
   }
 
+  compareByDueDate = (a, b) => {
+    const dueA = moment(a.due_date).unix()
+    const dueB = moment(b.due_date).unix()
+    if (dueA > dueB) {
+      return 1
+    } else if (dueA < dueB) {
+      return -1
+    }
+    return 0
+  }
+
   renderFilingList = () => {
     let { companyfilings } = this.props;
     console.log(companyfilings)
     const { filter } = this.state
-    if (filter != 'all') {
+    if (filter !== 'all') {
       companyfilings = companyfilings.filter(f => f.status === filter)
     }
 
-    console.log(companyfilings)
-    return companyfilings.map((f,i) =>
+
+    return companyfilings.sort(this.compareByDueDate).map((f,i) =>
       (<SideListItem filing={f} key={i} index={i} onSelect={this.onSelectFiling} />)
     )
   }
 
   render() {
-    const { showRejectModal, filter } = this.state
+    const { filter } = this.state
     return(
       <main style={{ width: '100%', display: 'flex' }}>
         <section className={style.sideList}>
