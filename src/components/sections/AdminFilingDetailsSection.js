@@ -37,8 +37,7 @@ const AdminFilingDetailsSection = ({ companyFiling, dispatch }) => {
   }
 
 
-  const renderCTAs = () => {
-    const { status } = companyFiling
+  const renderCTAs = (status) => {
     if (status === 'submitted') {
       return (
         <div style={{ paddingTop: 16, display: 'flex', justifyContent: 'space-between' }}>
@@ -93,7 +92,7 @@ const AdminFilingDetailsSection = ({ companyFiling, dispatch }) => {
           {`Due: ${moment(filing.due).format('MMM Do, YYYY')}`}
         </span>
         <FilingDataList data={field_data} />
-        {renderCTAs()}
+        {renderCTAs(status)}
       </section>
       <AdminRejectFilingModal
         show={showRejectModal}

@@ -1,4 +1,19 @@
 
+function updateObjectInArray(array, action) {
+  return array.map((item, index) => {
+    if (item.id !== action.data.id) {
+      // This isn't the item we care about - keep it as-is
+      return item
+    }
+    // Otherwise, this is the one we want - return an updated value
+    return {
+      ...item,
+      ...action.data
+    }
+  })
+}
+
+
 const initialState = {
   companyfilings: [],
 }
@@ -11,18 +26,8 @@ export default (state = initialState, action) => {
    }
   case 'UPDATE_COMPANY_FILING':
     {
-      let index = 0;
-      for (let i =0; i < state.companyfilings.length; i++) {
-        const x = state.companyfilings[i]
-        if (x.id = action.data.id) {
-          index = i;
-          break;
-        }
-      }
-      const array = state.companyfilings.slice()
-      array[index] = action.data;
       return {
-        companyfilings: array
+        companyfilings: updateObjectInArray(state.companyfilings, action)
       }
     }
   default:
