@@ -4,6 +4,8 @@ import { getAllCompanyFilings } from 'network/api';
 
 import Form from 'react-bootstrap/Form'
 
+import { setCompanyFilings } from 'actions';
+
 import { SideListItem } from '../../components/molecules'
 import { AdminFilingDetailsSection } from '../../components/sections'
 
@@ -12,13 +14,13 @@ import style from './AdminFilingsScreen.module.css'
 class AdminFilingsScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { companyFilings: [], selectedIndex: null };
+    this.state = { selectedIndex: null };
   }
 
   async componentDidMount() {
     try {
       const data = await getAllCompanyFilings()
-      this.setState({ companyFilings: data })
+      this.props.dispatch(setCompanyFilings(data))
     } catch (err) {
       console.log(err)
     }
@@ -41,16 +43,22 @@ class AdminFilingsScreen extends React.Component {
             Company filings
           </div>
           <div className={style.filingsList}>
-            {companyFilings.map((f,i) =>
+            {this.props.companyfilings.map((f,i) =>
               (<SideListItem filing={f} key={i} index={i} onSelect={this.onSelectFiling} />)
             )}
           </div>
           </div>
         </section>
-        <AdminFilingDetailsSection companyFiling={companyFilings[this.state.selectedIndex]} />
+        <AdminFilingDetailsSection companyFiling={this.props.companyfilings[this.state.selectedIndex]} />
       </main>
     )
   }
 }
 
-export default connect(state => state)(AdminFilingsScreen);
+const mapStateToProps = (state) => {
+  return {
+    companyfilings: state.admin.companyfilings
+  }
+}
+
+export default connect(mapStateToProps)(AdminFilingsScreen);

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import moment from 'moment';
 import { adminRejectCompanyFiling, adminUpdateCompanyFilingStatus } from 'network/api';
 
@@ -8,14 +9,17 @@ import Badge from 'react-bootstrap/Badge';
 import { FilingDataList } from '../../components/molecules'
 import { AdminRejectFilingModal } from '../../components/organisms'
 
+import { updateCompanyFiling } from 'actions';
+
 import style from './AdminFilingDetailsSection.module.css'
 
-const AdminFilingDetailsSection = ({ companyFiling }) => {
+const AdminFilingDetailsSection = ({ companyFiling, dispatch }) => {
   const [showRejectModal, setShowRejectModal] = useState(false);
 
   const updateStatus = async (status) => {
     try {
-      const response = await adminUpdateCompanyFilingStatus(companyFiling.id, { status: status })
+      const data = await adminUpdateCompanyFilingStatus(companyFiling.id, { status: status })
+      dispatch(updateCompanyFiling(data))
     } catch (err) {
       console.warn(err)
     }
@@ -24,7 +28,8 @@ const AdminFilingDetailsSection = ({ companyFiling }) => {
   const rejectFiling = async (values) => {
     try {
       //const data = { reason: values.reason }
-      const response = await adminRejectCompanyFiling(companyFiling.id, values)
+      const data = await adminRejectCompanyFiling(companyFiling.id, values)
+      dispatch(updateCompanyFiling(data))
       setShowRejectModal(false)
     } catch (err) {
       console.warn(err)
@@ -99,4 +104,4 @@ const AdminFilingDetailsSection = ({ companyFiling }) => {
 }
 
 
-export default AdminFilingDetailsSection;
+export default connect(state => state)(AdminFilingDetailsSection);

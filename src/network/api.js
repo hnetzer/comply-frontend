@@ -101,6 +101,10 @@ export const adminUpdateCompanyFilingStatus = async (companyFilingId, data) => {
   return sendRequest('PUT', `/admin/companyfilings/${companyFilingId}`, data)
 }
 
+export const adminGetCompanyFiling = async (companyFilingId) => {
+  return sendRequest('GET', `/admin/companyfilings/${companyFilingId}`)
+}
+
 
 export default {
   BASE_URI,
@@ -122,4 +126,5 @@ export default {
   getAllCompanyFilings,
   adminRejectCompanyFiling,
   adminUpdateCompanyFilingStatus,
+  adminGetCompanyFiling
 }
