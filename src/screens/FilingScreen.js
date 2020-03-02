@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import { toTitleCase, getURLParam } from 'utils'
 
-import Alert from 'react-bootstrap/Alert'
 import Spinner from 'react-bootstrap/Spinner'
 import Card from 'react-bootstrap/Card';
 
@@ -12,16 +11,14 @@ import {
   getFiling,
   createCompanyFiling,
   getCompanyFiling,
-  updateCompanyFiling
+  updateCompanyFiling,
+  getCompanyFilingMessages
 } from 'network/api';
 
-import { FilingHeader, FilingDataList } from 'components/molecules'
+import { FilingHeader, FilingDataList, FilingAlertMessage } from 'components/molecules'
 import { SanFrancisco } from 'forms/filings'
 
 import Breadcrumb from 'react-bootstrap/Breadcrumb'
-
-const DRAFT_SUCCESS_ALERT = 'Your draft has been saved successfully.';
-const SUBMIT_SUCCESS_ALERT = 'Thanks we are processing your filing and will be in touch soon';
 
 class FilingScreen extends React.Component {
   constructor(props) {
@@ -48,13 +45,14 @@ class FilingScreen extends React.Component {
     if (this.props.companyFilingId) {
       const { user, companyFilingId } = this.props
       const companyFiling = await getCompanyFiling(user.company_id, companyFilingId)
+      const messages = await getCompanyFilingMessages(user.company_id, companyFilingId)
       const { filing, due_date, status } = companyFiling
       this.setState({
         filing: filing,
         due: due_date,
         companyFiling: companyFiling,
         status: status,
-        alert: status === 'submitted' ? SUBMIT_SUCCESS_ALERT : null
+        messages: messages
       })
     }
   }
@@ -91,7 +89,6 @@ class FilingScreen extends React.Component {
     this.setState({
       companyFiling: companyFiling,
       status: status,
-      alert: status === 'draft' ? DRAFT_SUCCESS_ALERT : SUBMIT_SUCCESS_ALERT
     })
 
     navigate(`/home/filings/${companyFiling.id}`)
@@ -108,10 +105,7 @@ class FilingScreen extends React.Component {
     };
 
     const updated = await updateCompanyFiling(user.company_id, companyFiling.id, data);
-    this.setState({
-      status: updated.status,
-      alert: status === 'draft' ? DRAFT_SUCCESS_ALERT : SUBMIT_SUCCESS_ALERT
-    });
+    this.setState({ status: updated.status });
   }
 
   formNotSupported = () => (<div>
@@ -135,9 +129,21 @@ class FilingScreen extends React.Component {
     return form;
   }
 
+  renderFilingData = () => {
+    const { companyFiling, status } = this.state
+    switch(status) {
+      case 'draft': return this.renderForm()
+      case 'submitted': return (<FilingDataList data={companyFiling.field_data} />)
+      case 'needs-follow-up': return this.renderForm()
+      case 'needs-signature-payment': return (<FilingDataList data={companyFiling.field_data} />)
+      case 'filed': return (<FilingDataList data={companyFiling.field_data} />)
+      default: return this.renderForm()
+    }
+  }
+
 
   render() {
-    const { status, filing, companyFiling, alert } = this.state
+    const { status, filing, messages } = this.state
 
     // Loading state
     if (!filing) return (<Spinner animation="grow" variant="primary" />);
@@ -148,14 +154,10 @@ class FilingScreen extends React.Component {
         <Breadcrumb.Item active>{toTitleCase(filing.name)}</Breadcrumb.Item>
       </Breadcrumb>
       <FilingHeader filing={filing} status={status} />
-      <Alert show={alert != null} style={{ marginTop: 16 }} variant="info">
-        {alert}
-      </Alert>
+      <FilingAlertMessage status={status} messages={messages} />
       <Card style={{ marginTop: 24 }}>
         <Card.Body>
-          {status === 'submitted' ? <FilingDataList data={companyFiling.field_data} /> :
-            this.renderForm()
-          }
+          {this.renderFilingData()}
         </Card.Body>
       </Card>
     </>);
