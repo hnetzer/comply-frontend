@@ -17,10 +17,10 @@ const AdminNavigation = () => {
   const renderOpsNavItems = () => {
     return (<>
       <Nav.Item>
-        <Nav.Link href="/admin/filings">Filings</Nav.Link>
+        <Nav.Link href="/admin/filings">Company Filings</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/admin/companies" disabled>Companies</Nav.Link>
+        <Nav.Link href="/admin/companies">Company Data</Nav.Link>
       </Nav.Item>
     </>)
   }
@@ -28,13 +28,13 @@ const AdminNavigation = () => {
   const renderPlatformNavItems = () => {
     return (<>
       <Nav.Item>
-        <Nav.Link href="/admin/platform/jurisdictions" disabled>Jurisdictions</Nav.Link>
+        <Nav.Link href="/admin/platform/jurisdictions">Jurisdictions</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/admin/platform/agencies" disabled>Agencies</Nav.Link>
+        <Nav.Link href="/admin/platform/agencies">Agencies</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/admin/platform/filings" disabled>Filings</Nav.Link>
+        <Nav.Link href="/admin/platform/filings">Filings</Nav.Link>
       </Nav.Item>
     </>)
   }

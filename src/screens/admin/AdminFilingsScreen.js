@@ -1,26 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { getAllCompanyFilings, adminRejectCompanyFiling } from 'network/api';
+import { getAllCompanyFilings } from 'network/api';
 
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import Button from 'react-bootstrap/Button'
 
-import { SideListItem, FilingDataList } from '../../components/molecules'
-import { AdminRejectFilingModal } from '../../components/organisms'
+import { setCompanyFilings } from 'actions';
+
+import { SideListItem } from '../../components/molecules'
+import { AdminFilingDetailsSection } from '../../components/sections'
 
 import style from './AdminFilingsScreen.module.css'
 
 class AdminFilingsScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { companyFilings: [], selectedIndex: null, showRejectModal: false };
+    this.state = { selectedIndex: null, filter: 'all' };
   }
 
   async componentDidMount() {
     try {
       const data = await getAllCompanyFilings()
-      this.setState({ companyFilings: data })
+      this.props.dispatch(setCompanyFilings(data))
     } catch (err) {
       console.log(err)
     }
@@ -30,85 +32,83 @@ class AdminFilingsScreen extends React.Component {
     this.setState({ selectedIndex: index })
   }
 
-  renderFilingTitle = () => {
-    const { selectedIndex, companyFilings } = this.state
-    if(selectedIndex === null) return null;
-
-    const c = companyFilings[selectedIndex]
-    const { filing } = c
-
-    return (<>
-      <h4>{c.company.name}</h4>
-      <h5>{filing.name}</h5>
-      <h5 className="mb-2 text-muted">
-        {`${filing.agency.name} - ${filing.agency.jurisdiction.name}`}
-      </h5>
-      <span className="mb-2 text-muted">
-        {`Due: ${moment(filing.due).format('MMM Do, YYYY')}`}
-      </span>
-    </>)
+  setFilter = (value) => {
+    this.setState({ filter: value })
   }
 
-  renderFilingDataList = () => {
-    const { selectedIndex, companyFilings } = this.state
-    if(selectedIndex === null) return null;
-    const c = companyFilings[selectedIndex]
-
-    return (<>
-      <FilingDataList data={c.field_data} />
-      <div style={{ paddingTop: 16, display: 'flex', justifyContent: 'space-between' }}>
-        <Button onClick={() => this.setState({ showRejectModal: true})} variant="danger">
-          Reject
-        </Button>
-        <Button variant="success">Accept</Button>
-      </div>
-    </>)
-  }
-
-  rejectFiling = async (values) => {
-    const { selectedIndex, companyFilings } = this.state
-    if(selectedIndex === null) return null;
-    const c = companyFilings[selectedIndex]
-    console.log(values)
-    try {
-      //const data = { reason: values.reason }
-      await adminRejectCompanyFiling(c.id, values)
-      this.setState({ showRejectModal: false})
-    } catch (err) {
-      console.log(err)
+  compareByDueDate = (a, b) => {
+    const dueA = moment(a.due_date).unix()
+    const dueB = moment(b.due_date).unix()
+    if (dueA > dueB) {
+      return 1
+    } else if (dueA < dueB) {
+      return -1
     }
+    return 0
+  }
+
+  renderFilingList = () => {
+    let { companyfilings } = this.props;
+    console.log(companyfilings)
+    const { filter } = this.state
+    if (filter !== 'all') {
+      companyfilings = companyfilings.filter(f => f.status === filter)
+    }
+
+
+    return companyfilings.sort(this.compareByDueDate).map((f,i) =>
+      (<SideListItem filing={f} key={i} index={i} onSelect={this.onSelectFiling} />)
+    )
   }
 
   render() {
-    const { companyFilings, showRejectModal } = this.state
+    const { filter } = this.state
     return(
       <main style={{ width: '100%', display: 'flex' }}>
         <section className={style.sideList}>
           <div style={{ padding: 16 }}>
-            <Form.Control type="text" placeholder="Search company filings" />
+            <ButtonGroup>
+              <Button size="sm"
+                onClick={() => this.setState({ filter: 'all'})}
+                variant={filter === 'all' ? 'primary' : 'secondary'}>
+                All
+              </Button>
+              <Button size="sm"
+                onClick={() => this.setState({ filter: 'submitted'})}
+                variant={filter === 'submitted' ? 'primary' : 'secondary'}>
+                Submitted
+              </Button>
+              <Button size="sm"
+                onClick={() => this.setState({ filter: 'needs-follow-up'})}
+                variant={filter === 'needs-follow-up' ? 'primary' : 'secondary'}>
+                Follow
+              </Button>
+              <Button size="sm"
+                onClick={() => this.setState({ filter: 'needs-signature-payment'})}
+                variant={filter === 'needs-signature-payment' ? 'primary' : 'secondary'}>
+                Sign/Pay
+              </Button>
+            </ButtonGroup>
           </div>
           <div>
           <div className={style.companyFilingsHeader}>
             Company filings
           </div>
           <div className={style.filingsList}>
-            {companyFilings.map((f,i) =>
-              (<SideListItem filing={f} key={i} index={i} onSelect={this.onSelectFiling} />)
-            )}
+            {this.renderFilingList()}
           </div>
           </div>
         </section>
-        <section className={style.content}>
-          {this.renderFilingTitle()}
-          {this.renderFilingDataList()}
-        </section>
-        <AdminRejectFilingModal
-          show={showRejectModal}
-          handleHide={() => this.setState({ showRejectModal: false })}
-          handleSubmit={this.rejectFiling} />
+        <AdminFilingDetailsSection companyFiling={this.props.companyfilings[this.state.selectedIndex]} />
       </main>
     )
   }
 }
 
-export default connect(state => state)(AdminFilingsScreen);
+const mapStateToProps = (state) => {
+  return {
+    companyfilings: state.admin.companyfilings
+  }
+}
+
+export default connect(mapStateToProps)(AdminFilingsScreen);
