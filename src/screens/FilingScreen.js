@@ -59,13 +59,13 @@ class FilingScreen extends React.Component {
 
   handleSubmit = async (values, status) => {
     try {
-      const { companyFilingId } = this.state
+      const { companyFiling } = this.state
       // Saving or submitting the first setDraft
-      if (!companyFilingId) {
+      if (!companyFiling) {
         this.createFiling(values, status)
       }
       // Updating an existing filing
-      if (companyFilingId) {
+      if (companyFiling) {
         this.updateFiling(values, status)
       }
     } catch (err) {

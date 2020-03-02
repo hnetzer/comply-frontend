@@ -42,6 +42,16 @@ const FilingAlertMessage = ({ status, messages, filing }) => {
     }
   }
 
+  const variant = () => {
+    switch(status) {
+      case 'submitted': return "info"
+      case 'needs-follow-up': return "warning"
+      case 'needs-signature-payment': return "info"
+      case 'filed': return "success"
+      default: return "info"
+    }
+  }
+
   const compareByCreatedDate = (a, b) => {
     const dueA = moment(a.createdAt).unix()
     const dueB = moment(b.createdAt).unix()
@@ -70,7 +80,7 @@ const FilingAlertMessage = ({ status, messages, filing }) => {
   }
 
   return (
-    <Alert show={show()} style={{ marginTop: 16 }} variant="info">
+    <Alert show={show()} style={{ marginTop: 16, width: 550 }} variant={variant()}>
       {text()}
     </Alert>
   )
