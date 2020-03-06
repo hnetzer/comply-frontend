@@ -17,7 +17,7 @@ const AdminNavigation = () => {
   const renderOpsNavItems = () => {
     return (<>
       <Nav.Item>
-        <Nav.Link href="/admin/filings">Company Filings</Nav.Link>
+        <Nav.Link href="/admin/companyfilings">Company Filings</Nav.Link>
       </Nav.Item>
       <Nav.Item>
         <Nav.Link href="/admin/companies">Company Data</Nav.Link>
@@ -38,14 +38,15 @@ const AdminNavigation = () => {
       </Nav.Item>
     </>)
   }
-
+  console.log(window.location.pathname)
   return (
-    <Nav variant="tabs" defaultActiveKey="/admin/filings" style={style}>
-      <ButtonGroup style={{ marginTop: 8, marginRight: 48}} size="sm" className="mb-2">
+    <Nav variant="tabs" activeKey={window.location.pathname} style={style}>
+      {/*<ButtonGroup style={{ marginTop: 8, marginRight: 48}} size="sm" className="mb-2">
         <Button variant={ops ? 'dark' : 'light'} onClick={() => setOps(true)}>Operations</Button>
         <Button variant={ops ? 'light' : 'dark'} onClick={() => setOps(false)}>Platform</Button>
-      </ButtonGroup>
-      {ops ? renderOpsNavItems() : renderPlatformNavItems()}
+      </ButtonGroup> */}
+      {renderOpsNavItems()}
+      {renderPlatformNavItems()}
     </Nav>
   )
 }

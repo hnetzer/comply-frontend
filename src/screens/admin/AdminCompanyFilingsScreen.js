@@ -9,11 +9,11 @@ import Button from 'react-bootstrap/Button'
 import { setCompanyFilings } from 'actions';
 
 import { SideListItem } from '../../components/molecules'
-import { AdminFilingDetailsSection } from '../../components/sections'
+import { AdminCompanyFilingDetailsSection } from '../../components/sections'
 
 import style from './AdminFilingsScreen.module.css'
 
-class AdminFilingsScreen extends React.Component {
+class AdminCompanyFilingsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { selectedIndex: null, filter: 'all' };
@@ -99,7 +99,8 @@ class AdminFilingsScreen extends React.Component {
           </div>
           </div>
         </section>
-        <AdminFilingDetailsSection companyFiling={this.props.companyfilings[this.state.selectedIndex]} />
+        <AdminCompanyFilingDetailsSection
+          companyFiling={this.props.companyfilings[this.state.selectedIndex]} />
       </main>
     )
   }
@@ -111,4 +112,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(AdminFilingsScreen);
+export default connect(mapStateToProps)(AdminCompanyFilingsScreen);

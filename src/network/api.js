@@ -109,6 +109,13 @@ export const adminGetCompanyFiling = async (companyFilingId) => {
   return sendRequest('GET', `/admin/companyfilings/${companyFilingId}`)
 }
 
+export const adminGetJurisdictions = async () => {
+  return sendRequest('GET', `/admin/jurisdictions`)
+}
+
+export const adminCreateJurisdiction = async (data) => {
+  return sendRequest('POST', `/admin/jurisdictions`, data)
+}
 
 export default {
   BASE_URI,
@@ -131,5 +138,7 @@ export default {
   getAllCompanyFilings,
   adminRejectCompanyFiling,
   adminUpdateCompanyFilingStatus,
-  adminGetCompanyFiling
+  adminGetCompanyFiling,
+  adminGetJurisdictions,
+  adminCreateJurisdiction
 }

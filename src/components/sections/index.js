@@ -1,5 +1,5 @@
-import AdminFilingDetailsSection from './AdminFilingDetailsSection'
+import AdminCompanyFilingDetailsSection from './AdminCompanyFilingDetailsSection'
 
 export {
-  AdminFilingDetailsSection
+  AdminCompanyFilingDetailsSection
 }

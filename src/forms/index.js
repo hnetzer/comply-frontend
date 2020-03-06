@@ -4,6 +4,7 @@ import OfficeDetailsForm from './officeDetailsForm';
 import AgenciesForm from './agenciesForm';
 import LoginForm from './loginForm';
 import AdminRejectFilingForm from './adminRejectFilingForm';
+import AdminJurisdictionForm from './adminJurisidictionForm';
 
 export {
   CreateAccountForm,
@@ -11,5 +12,6 @@ export {
   OfficeDetailsForm,
   AgenciesForm,
   LoginForm,
-  AdminRejectFilingForm
+  AdminRejectFilingForm,
+  AdminJurisdictionForm
 }

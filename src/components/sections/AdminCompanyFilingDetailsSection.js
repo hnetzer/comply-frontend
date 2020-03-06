@@ -11,7 +11,7 @@ import { AdminRejectFilingModal } from '../../components/organisms'
 
 import { updateCompanyFiling } from 'actions';
 
-import style from './AdminFilingDetailsSection.module.css'
+import style from './AdminCompanyFilingDetailsSection.module.css'
 
 const AdminFilingDetailsSection = ({ companyFiling, dispatch }) => {
   const [showRejectModal, setShowRejectModal] = useState(false);
