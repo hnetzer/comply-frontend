@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { getCompanyAgencies } from 'network/api';
-import { setAgencies } from 'actions';
+import { setCompanyAgencies } from 'actions';
 
 import Table from 'react-bootstrap/Table'
 import { toTitleCase } from 'utils';
@@ -12,7 +12,7 @@ class AgenciesScreen extends React.Component {
     try {
       const agencies = await getCompanyAgencies(this.props.user.company_id)
       console.log(agencies)
-      this.props.dispatch(setAgencies(agencies))
+      this.props.dispatch(setCompanyAgencies(agencies))
     } catch (err) {
     }
   }

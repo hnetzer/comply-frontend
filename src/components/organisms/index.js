@@ -4,6 +4,7 @@ import SideNavigation from './SideNavigation'
 import AdminNavigation from './AdminNavigation'
 import AdminRejectFilingModal from './AdminRejectFilingModal'
 import AdminJurisdictionModal from './AdminJurisdictionModal'
+import AdminAgencyModal from './AdminAgencyModal'
 
 export {
   WelcomeModal,
@@ -11,5 +12,6 @@ export {
   SideNavigation,
   AdminNavigation,
   AdminRejectFilingModal,
-  AdminJurisdictionModal
+  AdminJurisdictionModal,
+  AdminAgencyModal
 }

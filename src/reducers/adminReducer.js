@@ -21,7 +21,8 @@ function insertItem(array, action) {
 
 const initialState = {
   companyfilings: [],
-  jurisdictions: []
+  jurisdictions: [],
+  agencies: []
 }
 
 export default (state = initialState, action) => {
@@ -53,10 +54,17 @@ export default (state = initialState, action) => {
       ...state,
       jurisdictions: insertItem(state.jurisdictions, action)
     }
+  case 'SET_AGENCIES':
+    return {
+      ...state,
+      agencies: action.data
+    }
+  case 'ADD_AGENCY':
+    return {
+      ...state,
+      agencies: insertItem(state.agencies, action)
+    }
   default:
-   return {
-     ...state,
-     jurisdictions: state.jurisdictions,
-   }
+   return state
  }
 }

@@ -121,6 +121,14 @@ export const adminUpdateJurisdiction = async (jurisdictionId, data) => {
   return sendRequest('PUT', `/admin/jurisdictions/${jurisdictionId}`, data)
 }
 
+export const adminGetAgencies = async () => {
+  return sendRequest('GET', `/admin/agencies`)
+}
+
+export const adminCreateAgency = async (data) => {
+  return sendRequest('POST', `/admin/agencies`, data)
+}
+
 export default {
   BASE_URI,
   createAccount,
@@ -146,4 +154,6 @@ export default {
   adminGetJurisdictions,
   adminCreateJurisdiction,
   adminUpdateJurisdiction,
+  adminGetAgencies,
+  adminCreateAgency
 }

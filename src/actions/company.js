@@ -1,5 +1,5 @@
 const SET_FILINGS = "SET_FILINGS";
-const SET_AGENCIES = "SET_AGENCIES";
+const SET_COMPANY_AGENCIES = "SET_COMPANY_AGENCIES";
 
 export const setFilings = (data) => {
   return {
@@ -8,9 +8,9 @@ export const setFilings = (data) => {
   }
 }
 
-export const setAgencies = (data) => {
+export const setCompanyAgencies = (data) => {
   return {
-    type: SET_AGENCIES,
+    type: SET_COMPANY_AGENCIES,
     data: data
   }
 }
@@ -18,5 +18,5 @@ export const setAgencies = (data) => {
 
 export default {
   setFilings,
-  setAgencies,
+  setCompanyAgencies,
 }

@@ -5,6 +5,9 @@ const SET_JURISDICTIONS = "SET_JURISDICTIONS";
 const ADD_JURISDICTION = "ADD_JURISDICTION";
 const UPDATE_JURISDICTION = "UPDATE_JURISDICTION";
 
+const SET_AGENCIES = "SET_AGENCIES";
+const ADD_AGENCY = "ADD_AGENCY";
+
 
 export const setCompanyFilings = (data) => {
   return {
@@ -41,9 +44,25 @@ export const updateJurisdiction = (jurisdiction) => {
   }
 }
 
+export const setAgencies = (agencies) => {
+  return {
+    type: SET_AGENCIES,
+    data: agencies
+  }
+}
+
+export const addAgency = (agency) => {
+  return {
+    type: ADD_AGENCY,
+    data: agency
+  }
+}
+
 export default {
   setCompanyFilings,
   setJurisdictions,
   addJurisdiction,
-  updateJurisdiction
+  updateJurisdiction,
+  setAgencies,
+  addAgency
 }

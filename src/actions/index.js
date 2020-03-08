@@ -1,12 +1,14 @@
 import { createAccountResponse } from './signup'
-import { setFilings, setAgencies } from './company'
+import { setFilings, setCompanyAgencies } from './company'
 import { logout, login } from './auth'
 import {
   setCompanyFilings,
   updateCompanyFiling,
   setJurisdictions,
   addJurisdiction,
-  updateJurisdiction
+  updateJurisdiction,
+  setAgencies,
+  addAgency
 } from './admin'
 
 export {
@@ -14,10 +16,12 @@ export {
   setFilings,
   logout,
   login,
-  setAgencies,
+  setCompanyAgencies,
   setCompanyFilings,
   updateCompanyFiling,
   setJurisdictions,
   addJurisdiction,
-  updateJurisdiction
+  updateJurisdiction,
+  setAgencies,
+  addAgency
 }
