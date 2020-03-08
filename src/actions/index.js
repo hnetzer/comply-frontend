@@ -8,7 +8,8 @@ import {
   addJurisdiction,
   updateJurisdiction,
   setAgencies,
-  addAgency
+  addAgency,
+  updateAgency,
 } from './admin'
 
 export {
@@ -23,5 +24,6 @@ export {
   addJurisdiction,
   updateJurisdiction,
   setAgencies,
-  addAgency
+  addAgency,
+  updateAgency
 }

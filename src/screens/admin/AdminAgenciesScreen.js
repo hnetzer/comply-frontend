@@ -7,10 +7,11 @@ import Button from 'react-bootstrap/Button';
 import {
   adminGetAgencies,
   adminGetJurisdictions,
-  adminCreateAgency
+  adminCreateAgency,
+  adminUpdateAgency,
 } from 'network/api';
 
-import { setAgencies, setJurisdictions, addAgency } from 'actions';
+import { setAgencies, setJurisdictions, addAgency, updateAgency } from 'actions';
 
 import { AdminAgencyModal } from '../../components/organisms'
 
@@ -34,6 +35,24 @@ class AdminAgenciesScreen extends React.Component {
   }
 
   sortBy = (a, b) => {
+    if (a.jurisdiction.state > b.jurisdiction.state) {
+      return 1
+    } else if (a.jurisdiction.state < b.jurisdiction.state) {
+      return -1
+    } else if (a.jurisdiction.state === b.jurisdiction.state) {
+      if (a.jurisdiction.name > b.jurisdiction.name) {
+        return 1
+      } else if (a.jurisdiction.name < b.jurisdiction.name) {
+        return -1
+      } else if (a.jurisdiction.name === b.jurisdiction.name) {
+        if (a.name > b.name) {
+          return 1
+        } else if (a.name < b.name) {
+          return -1
+        }
+      }
+    }
+    return 0
   }
 
   showAddAgencyModal = () => {
@@ -49,14 +68,19 @@ class AdminAgenciesScreen extends React.Component {
   }
 
   handleAgencyFormSubmit = async (values) => {
-    if (values.id) {
-      //const jurisdiction = await adminUpdateJurisdiction(values.id, values)
-      // this.props.dispatch(updateJurisdiction(jurisdiction))
-      this.hideModal()
-    } else {
-      const agency = await adminCreateAgency(values)
-      this.props.dispatch(addAgency(agency))
-      this.hideModal()
+    try {
+      if (values.id) {
+        const data = { name: values.name, jurisdiction_id: values.jurisdiction_id }
+        const agency = await adminUpdateAgency(values.id, data)
+        this.props.dispatch(updateAgency(agency))
+        this.hideModal()
+      } else {
+        const agency = await adminCreateAgency(values)
+        this.props.dispatch(addAgency(agency))
+        this.hideModal()
+      }
+    } catch (err) {
+      console.log(err)
     }
   }
 

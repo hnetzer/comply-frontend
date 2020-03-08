@@ -7,7 +7,7 @@ const UPDATE_JURISDICTION = "UPDATE_JURISDICTION";
 
 const SET_AGENCIES = "SET_AGENCIES";
 const ADD_AGENCY = "ADD_AGENCY";
-
+const UPDATE_AGENCY = "UPDATE_AGENCY";
 
 export const setCompanyFilings = (data) => {
   return {
@@ -58,11 +58,19 @@ export const addAgency = (agency) => {
   }
 }
 
+export const updateAgency = (agency) => {
+  return {
+    type: UPDATE_AGENCY,
+    data: agency
+  }
+}
+
 export default {
   setCompanyFilings,
   setJurisdictions,
   addJurisdiction,
   updateJurisdiction,
   setAgencies,
-  addAgency
+  addAgency,
+  updateAgency
 }

@@ -64,6 +64,11 @@ export default (state = initialState, action) => {
       ...state,
       agencies: insertItem(state.agencies, action)
     }
+  case 'UPDATE_AGENCY':
+    return {
+      ...state,
+      agencies: updateObjectInArray(state.agencies, action)
+    }
   default:
    return state
  }
