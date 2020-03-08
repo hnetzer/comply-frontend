@@ -13,10 +13,14 @@ const AdminJurisdictionModal = (props) => {
   return (
     <Modal show={props.show} onHide={props.handleHide}>
       <Modal.Header closeButton>
-        <Modal.Title>Create Jurisdiction</Modal.Title>
+        <Modal.Title>
+          {props.jurisdiction === null ? 'Create Jurisdiction' : 'Edit Jurisdiction'}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <AdminJurisdictionForm handleSubmit={handleSubmit} />
+        <AdminJurisdictionForm
+          initialValues={props.jurisdiction}
+          handleSubmit={handleSubmit} />
       </Modal.Body>
   </Modal>
   )

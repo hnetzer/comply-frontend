@@ -1,7 +1,13 @@
 import { createAccountResponse } from './signup'
 import { setFilings, setAgencies } from './company'
 import { logout, login } from './auth'
-import { setCompanyFilings, updateCompanyFiling } from './admin'
+import {
+  setCompanyFilings,
+  updateCompanyFiling,
+  setJurisdictions,
+  addJurisdiction,
+  updateJurisdiction
+} from './admin'
 
 export {
   createAccountResponse,
@@ -10,5 +16,8 @@ export {
   login,
   setAgencies,
   setCompanyFilings,
-  updateCompanyFiling
+  updateCompanyFiling,
+  setJurisdictions,
+  addJurisdiction,
+  updateJurisdiction
 }

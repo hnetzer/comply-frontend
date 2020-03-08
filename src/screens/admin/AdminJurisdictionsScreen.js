@@ -4,21 +4,26 @@ import { connect } from 'react-redux';
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button';
 
-import { adminGetJurisdictions, adminCreateJurisdiction } from 'network/api';
+import {
+  adminGetJurisdictions,
+  adminCreateJurisdiction,
+  adminUpdateJurisdiction
+} from 'network/api';
+
+import { setJurisdictions, addJurisdiction, updateJurisdiction } from 'actions';
 
 import { AdminJurisdictionModal } from '../../components/organisms'
 
 class AdminJurisdictionsScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { jurisdictions: [], showModal: false };
+    this.state = { showModal: false, selected: null };
   }
 
   async componentDidMount() {
     try {
       const jurisdictions = await adminGetJurisdictions();
-      jurisdictions.sort(this.sortBy)
-      this.setState({ jurisdictions: jurisdictions });
+      this.props.dispatch(setJurisdictions(jurisdictions))
     } catch (err) {
       console.log(err)
     }
@@ -43,34 +48,43 @@ class AdminJurisdictionsScreen extends React.Component {
     this.setState({ showModal: true })
   }
 
+  showEditJurisdictionModal = (jurisdiction) => {
+    this.setState({ showModal: true, selected: jurisdiction })
+  }
+
+  hideModal = () => {
+    this.setState({ showModal: false, selected: null })
+  }
+
   handleJurisdictionFormSubmit = async (values) => {
     if (values.id) {
-      // add update request here
+      const jurisdiction = await adminUpdateJurisdiction(values.id, values)
+      this.props.dispatch(updateJurisdiction(jurisdiction))
+      this.hideModal()
     } else {
       const jurisdiction = await adminCreateJurisdiction(values)
-      const js = this.state.jurisdictions
-      js.push(jurisdiction)
-      js.sort(this.sortBy)
-      this.setState({ jurisdictions: js, showModal: false })
+      this.props.dispatch(addJurisdiction(jurisdiction))
+      this.hideModal()
     }
-    console.log(values)
   }
 
   render() {
-    const { jurisdictions } = this.state
+    const { jurisdictions } = this.props
+    jurisdictions.sort(this.sortBy)
     return(
       <main style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <section style={{ paddingTop: 64 }}>
+        <section style={{ paddingTop: 32 }}>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <h3>Jurisdictions</h3>
             <Button onClick={this.showAddJurisdictionModal} variant="link">+ Add Jurisdiction</Button>
           </div>
-          <Table striped bordered hover size="sm" style={{ width: 600, marginTop: 24}}>
+          <Table striped bordered hover size="sm" responsive style={{ width: 600, marginTop: 24 }}>
             <thead>
               <tr>
                 <th>Name</th>
                 <th>State</th>
                 <th>Type</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -79,14 +93,23 @@ class AdminJurisdictionsScreen extends React.Component {
                   <td>{j.name}</td>
                   <td>{j.state}</td>
                   <td>{j.type}</td>
+                  <td>
+                    <Button
+                      onClick={() => this.showEditJurisdictionModal(j)}
+                      style={{ lineHeight: 1 }}
+                      variant="link">
+                      Edit
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </Table>
           <AdminJurisdictionModal
             show={this.state.showModal}
+            jurisdiction={this.state.selected}
             handleSubmit={this.handleJurisdictionFormSubmit}
-            handleHide={() => this.setState({ showModal: false })} />
+            handleHide={this.hideModal} />
         </section>
       </main>
     )
@@ -94,7 +117,9 @@ class AdminJurisdictionsScreen extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    jurisdictions: state.admin.jurisdictions
+  }
 }
 
 export default connect(mapStateToProps)(AdminJurisdictionsScreen);

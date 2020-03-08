@@ -1,4 +1,3 @@
-
 function updateObjectInArray(array, action) {
   return array.map((item, index) => {
     if (item.id !== action.data.id) {
@@ -13,24 +12,51 @@ function updateObjectInArray(array, action) {
   })
 }
 
+function insertItem(array, action) {
+  let newArray = array.slice()
+  newArray.splice(0, 0, action.data)
+  return newArray
+}
+
 
 const initialState = {
   companyfilings: [],
+  jurisdictions: []
 }
 
 export default (state = initialState, action) => {
  switch (action.type) {
   case 'SET_COMPANY_FILINGS':
    return {
+     ...state,
+     jurisdictions: state.jurisdictions,
      companyfilings: action.data
    }
   case 'UPDATE_COMPANY_FILING':
-    {
-      return {
-        companyfilings: updateObjectInArray(state.companyfilings, action)
-      }
+    return {
+      ...state,
+      jurisdictions: state.jurisdictions,
+      companyfilings: updateObjectInArray(state.companyfilings, action)
+    }
+  case 'SET_JURISDICTIONS':
+    return {
+      ...state,
+      jurisdictions: action.data
+    }
+  case 'UPDATE_JURISDICTION':
+    return {
+      ...state,
+      jurisdictions: updateObjectInArray(state.jurisdictions, action)
+    }
+  case 'ADD_JURISDICTION':
+    return {
+      ...state,
+      jurisdictions: insertItem(state.jurisdictions, action)
     }
   default:
-   return state
+   return {
+     ...state,
+     jurisdictions: state.jurisdictions,
+   }
  }
 }

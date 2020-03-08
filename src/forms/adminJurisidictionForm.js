@@ -24,7 +24,7 @@ const AdminJurisdictionForm = (props) => {
   return (
     <>
     <Formik
-      initialValues={{ name: '', state: '', type: '' }}
+      initialValues={props.initialValues === null ? { name: '', state: '', type: '' } : props.initialValues}
       validate={handleValidation}
       onSubmit={handleSubmit}
     >
@@ -74,7 +74,7 @@ const AdminJurisdictionForm = (props) => {
           </Form.Group>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
             <Button variant="primary" type="submit">
-              Create
+              {props.initialValues === null ? 'Create' : 'Update'}
             </Button>
           </div>
         </Form>

@@ -1,6 +1,11 @@
 const SET_COMPANY_FILINGS = "SET_COMPANY_FILINGS";
 const UPDATE_COMPANY_FILING = "UPDATE_COMPANY_FILING";
 
+const SET_JURISDICTIONS = "SET_JURISDICTIONS";
+const ADD_JURISDICTION = "ADD_JURISDICTION";
+const UPDATE_JURISDICTION = "UPDATE_JURISDICTION";
+
+
 export const setCompanyFilings = (data) => {
   return {
     type: SET_COMPANY_FILINGS,
@@ -15,7 +20,30 @@ export const updateCompanyFiling = (data) => {
   }
 }
 
+export const setJurisdictions = (data) => {
+  return {
+    type: SET_JURISDICTIONS,
+    data: data
+  }
+}
+
+export const addJurisdiction = (jurisdiction) => {
+  return {
+    type: ADD_JURISDICTION,
+    data: jurisdiction
+  }
+}
+
+export const updateJurisdiction = (jurisdiction) => {
+  return {
+    type: UPDATE_JURISDICTION,
+    data: jurisdiction
+  }
+}
 
 export default {
   setCompanyFilings,
+  setJurisdictions,
+  addJurisdiction,
+  updateJurisdiction
 }
