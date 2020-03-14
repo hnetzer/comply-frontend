@@ -1,21 +1,41 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+import { AdminFilingForm } from 'forms'
+import { adminGetAgencies, adminGetJurisdictions } from 'network/api'
+
 
 import style from './AdminEditFilingSection.module.css'
 
-import { AdminFilingForm } from 'forms'
+class AdminEditFilingSection extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { jurisdictions: [], agencies: [] };
+  }
 
-const AdminEditFilingSection = ({ filing }) => {
+  async componentDidMount() {
+    try {
+      const agencies = await adminGetAgencies();
+      const jurisdictions = await adminGetJurisdictions();
+      this.setState({ agencies: agencies, jurisdictions: jurisdictions })
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
-  console.log('AdminEditFilingSection ')
-  console.log(filing)
-
-  return (
-    <div className={style.content}>
-      <h2>{filing != null ? 'Edit Filing' : 'Create Filing'}</h2>
-      <AdminFilingForm filing={filing} />
-    </div>
-  )
+  render() {
+    return (
+      <div className={style.content}>
+        <h3 className={style.title}>
+          {this.props.filing != null ? 'Edit Filing' : 'Create Filing'}
+        </h3>
+        <AdminFilingForm
+          filing={this.props.filing}
+          jurisdictions={this.state.jurisdictions}
+          agencies={this.state.agencies} />
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = (state) => {

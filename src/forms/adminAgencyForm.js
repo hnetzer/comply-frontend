@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 
 import { Formik } from 'formik';
 
-import states from '../data/states.json'
-
 // Bootstrap components
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
