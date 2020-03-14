@@ -11,7 +11,7 @@ import { setCompanyFilings } from 'actions';
 import { SideListItem } from '../../components/molecules'
 import { AdminCompanyFilingDetailsSection } from '../../components/sections'
 
-import style from './AdminFilingsScreen.module.css'
+import style from './AdminScreens.module.css'
 
 class AdminCompanyFilingsScreen extends React.Component {
   constructor(props) {
@@ -57,7 +57,13 @@ class AdminCompanyFilingsScreen extends React.Component {
 
 
     return companyfilings.sort(this.compareByDueDate).map((f,i) =>
-      (<SideListItem filing={f} key={i} index={i} onSelect={this.onSelectFiling} />)
+      (<SideListItem
+          title={f.company.name}
+          subtitle={`${f.filing.name} - ${f.filing.agency.jurisdiction.name}`}
+          text={`Due: ${moment(f.due_date).format("MMM Do, YYYY")}`}
+          key={i}
+          index={i}
+          onSelect={this.onSelectFiling} />)
     )
   }
 
@@ -91,12 +97,12 @@ class AdminCompanyFilingsScreen extends React.Component {
             </ButtonGroup>
           </div>
           <div>
-          <div className={style.companyFilingsHeader}>
-            Company filings
-          </div>
-          <div className={style.filingsList}>
-            {this.renderFilingList()}
-          </div>
+            <div className={style.companyFilingsHeader}>
+              Company filings
+            </div>
+            <div className={style.filingsList}>
+              {this.renderFilingList()}
+            </div>
           </div>
         </section>
         <AdminCompanyFilingDetailsSection

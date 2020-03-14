@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import style from './AdminFilingsScreen.module.css';
-
 class AdminCompaniesScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -20,8 +18,6 @@ class AdminCompaniesScreen extends React.Component {
   render() {
     return(
       <main style={{ width: '100%', display: 'flex' }}>
-        <section className={style.sideList}>
-        </section>
         <section style={{ flexBasis: '80%', display: 'flex', justifyContent: 'center' }}>
           <h1 style={{ margin: 'auto' }}>Companies</h1>
         </section>

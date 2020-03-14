@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Nav from 'react-bootstrap/Nav'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import Button from 'react-bootstrap/Button'
 
 const AdminNavigation = () => {
-  const [ops, setOps] = useState(true);
 
   const style = {
     display: 'flex',
