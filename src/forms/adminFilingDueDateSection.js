@@ -19,13 +19,11 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
     return (
       <Form.Row style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
         <Form.Group style={{ width: 154 }} controlId="due_dates[0].fixed_month">
-          <Form.Label>Month</Form.Label>
           <MonthPicker
             handleChange={handleChange}
             value={values.due_dates[0].fixed_month} />
         </Form.Group>
         <Form.Group style={{ width: 154 }} controlId="due_dates[0].fixed_day">
-          <Form.Label>Day</Form.Label>
           <DueDayPicker
             handleChange={handleChange}
             value={values.due_dates[0].fixed_day}
@@ -35,7 +33,7 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
     )
   }
 
-  const renderOccurenceFields = () => {
+  const renderOccurenceOptions = () => {
     return (
       <Form.Group controlId="due_date_occurence">
          <Form.Check inline
@@ -60,7 +58,7 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
     )
   }
 
-  const renderDependencyFields = () => {
+  const renderDependencyOptions = () => {
     const occurence = values.due_date_occurence
     if (occurence === "multiple") return null;
     return (
@@ -123,12 +121,57 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
     )
   }
 
+  const renderDependencyFields = () => {
+    const occurence = values.due_date_occurence
+    if (occurence === "multiple") return null;
+    const dependency = values.due_date_dependency
+    if (dependency === "none") return null;
+    return (
+      <Form.Row style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Form.Group style={{ width: 154 }} controlId="due_dates[0].month_offset">
+          <Form.Control
+            required
+            onChange={handleChange}
+            value={values.due_dates[0].month_offset}
+            size="sm"
+            as="select">
+            <option value={null}>select month offset</option>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
+            <option value={6}>6</option>
+            <option value={7}>7</option>
+            <option value={8}>8</option>
+            <option value={9}>9</option>
+            <option value={10}>10</option>
+            <option value={11}>11</option>
+          </Form.Control>
+        </Form.Group>
+        <Form.Group style={{ width: 154 }} controlId="due_dates[0].day_offset">
+          <Form.Control
+            required
+            onChange={handleChange}
+            value={values.due_dates[0].day_offset}
+            size="sm"
+            as="select">
+            <option value={null}>select day</option>
+            <option value="15">15th</option>
+            <option value="end-of-month">end of the month</option>
+          </Form.Control>
+        </Form.Group>
+      </Form.Row>
+    )
+  }
+
 
   return (<>
-    {renderOccurenceFields()}
+    {renderOccurenceOptions()}
     {renderMultipleTimesFields()}
-    {renderDependencyFields()}
+    {renderDependencyOptions()}
     {renderFixedDateFields()}
+    {renderDependencyFields()}
   </>)
 
 }
