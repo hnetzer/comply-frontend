@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button';
 
 import style from './adminFilingForm.module.css'
 
+import AdminFilingDueDateSection from './adminFilingDueDateSection'
+
 // Bootstrap components
 import Form from 'react-bootstrap/Form';
 
@@ -44,7 +46,12 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit }) => {
       name: '',
       agency_id: '',
       agency: { jurisdiction_id: '' },
-      fields: []
+      fields: [],
+      due_date_occurence: 'annual',
+      due_dates: [{
+        fixed_month: '',
+        fixed_day: ''
+      }]
     };
 
   return (
@@ -110,15 +117,9 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit }) => {
               <Card className={style.shortCard}>
                 <Card.Body>
                   <Card.Title>Due Dates</Card.Title>
-                  <Form.Group controlId="due_date">
-                    <Form.Label>Due Date</Form.Label>
-                    <Form.Control
-                      required
-                      onChange={handleChange}
-                      type="date"
-                      placeholder=""
-                      value={values.due_date} />
-                  </Form.Group>
+                  <AdminFilingDueDateSection
+                    handleChange={handleChange}
+                    values={values} />
                 </Card.Body>
               </Card>
             </div>
@@ -173,7 +174,11 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit }) => {
                 />
               </Card.Body>
             </Card>
-
+            <div className={style.ctaContainer}>
+              <Button className={style.submitButton} variant="secondary" type="submit">
+                Save Filing
+              </Button>
+            </div>
           </Form>
         )}
       </Formik>

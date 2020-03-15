@@ -20,6 +20,7 @@
 .fieldsCard {
   width: 100%;
   margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .fieldsCardTitleSection {
@@ -33,4 +34,10 @@
   position: relative;
   bottom: 8px;
   left: 16px;
+}
+
+.ctaContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }

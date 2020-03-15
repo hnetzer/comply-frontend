@@ -23,6 +23,10 @@ class AdminEditFilingSection extends Component {
     }
   }
 
+  submitFiling = (values) => {
+    console.log(values)
+  }
+
   render() {
     return (
       <div className={style.content}>
@@ -30,6 +34,7 @@ class AdminEditFilingSection extends Component {
           {this.props.filing != null ? 'Edit Filing' : 'Create Filing'}
         </h3>
         <AdminFilingForm
+          handleSubmit={this.submitFiling}
           filing={this.props.filing}
           jurisdictions={this.state.jurisdictions}
           agencies={this.state.agencies} />
