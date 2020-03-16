@@ -137,6 +137,10 @@ export const adminGetFilings = async () => {
   return sendRequest('GET', `/admin/filings/`)
 }
 
+export const adminCreateFiling = async (data) => {
+  return sendRequest('POST', `/admin/filings/`, data)
+}
+
 export default {
   BASE_URI,
   createAccount,
@@ -165,5 +169,6 @@ export default {
   adminGetAgencies,
   adminCreateAgency,
   adminUpdateAgency,
-  adminGetFilings
+  adminGetFilings,
+  adminCreateFiling,
 }

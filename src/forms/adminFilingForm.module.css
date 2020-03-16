@@ -41,3 +41,9 @@
   flex-direction: row;
   justify-content: flex-end;
 }
+
+.dateRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

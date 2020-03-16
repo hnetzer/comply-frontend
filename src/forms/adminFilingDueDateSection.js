@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Formik, FieldArray } from 'formik';
+import { FieldArray } from 'formik';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -14,10 +14,10 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
   const renderFixedDateFields = () => {
     const occurence = values.due_date_occurence
     if (occurence === "multiple") return null;
-    const dependency = values.due_date_dependency
-    if (dependency !== "none") return null;
+    const dependency = values.due_dates[0].offset_type
+    if (dependency !== "") return null;
     return (
-      <Form.Row style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+      <Form.Row className={style.dateRow}>
         <Form.Group style={{ width: 154 }} controlId="due_dates[0].fixed_month">
           <MonthPicker
             handleChange={handleChange}
@@ -62,27 +62,27 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
     const occurence = values.due_date_occurence
     if (occurence === "multiple") return null;
     return (
-      <Form.Group controlId="due_date_dependency">
+      <Form.Group controlId="due_dates[0].offset_type">
         <Form.Label>Dependency</Form.Label>
         <div>
           <Form.Check inline
              label="none"
              type="radio"
-             value="none"
+             value=""
              onChange={handleChange}
-             checked={values.due_date_dependency === "none"}/>
+             checked={values.due_dates[0].offset_type === ""}/>
            <Form.Check inline
               label="registration"
               type="radio"
               value="registration"
               onChange={handleChange}
-              checked={values.due_date_dependency === "registration"}/>
+              checked={values.due_dates[0].offset_type === "registration"}/>
           <Form.Check inline
              label="year end"
              type="radio"
              value="year-end"
              onChange={handleChange}
-             checked={values.due_date_dependency === "year-end"}/>
+             checked={values.due_dates[0].offset_type === "year-end"}/>
         </div>
       </Form.Group>
     )
@@ -97,7 +97,7 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
         render={arrayHelpers => (
         <>
           {values.due_dates.map((due_date, index) => (
-            <Form.Row style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Form.Row key={index} className={style.dateRow}>
               <Form.Group style={{ width: 154 }} controlId={`due_dates[${index}].fixed_month`}>
                 <MonthPicker
                   handleChange={handleChange}
@@ -112,7 +112,13 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
             </Form.Row>
           ))}
           <Button
-            onClick={() => arrayHelpers.push({ fixed_day: '', fixed_month: ''})}
+            onClick={() => arrayHelpers.push({
+              fixed_day: '',
+              fixed_month: '',
+              offset_type: '',
+              month_offset: '',
+              day_offset: ''
+            })}
             size="sm"
             variant="link">+ Add Date</Button>
           </>
@@ -124,10 +130,10 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
   const renderDependencyFields = () => {
     const occurence = values.due_date_occurence
     if (occurence === "multiple") return null;
-    const dependency = values.due_date_dependency
-    if (dependency === "none") return null;
+    const dependency = values.due_dates[0].offset_type
+    if (dependency === "") return null;
     return (
-      <Form.Row style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+      <Form.Row className={style.dateRow}>
         <Form.Group style={{ width: 154 }} controlId="due_dates[0].month_offset">
           <Form.Control
             required
@@ -136,17 +142,17 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
             size="sm"
             as="select">
             <option value={null}>select month offset</option>
-            <option value={1}>1</option>
-            <option value={2}>2</option>
-            <option value={3}>3</option>
-            <option value={4}>4</option>
-            <option value={5}>5</option>
-            <option value={6}>6</option>
-            <option value={7}>7</option>
-            <option value={8}>8</option>
-            <option value={9}>9</option>
-            <option value={10}>10</option>
-            <option value={11}>11</option>
+            <option value={1}>+1 month</option>
+            <option value={2}>+2 months</option>
+            <option value={3}>+3 months</option>
+            <option value={4}>+4 months</option>
+            <option value={5}>+5 months</option>
+            <option value={6}>+6 months</option>
+            <option value={7}>+7 months</option>
+            <option value={8}>+8 months</option>
+            <option value={9}>+9 months</option>
+            <option value={10}>+10 months</option>
+            <option value={11}>+11 months</option>
           </Form.Control>
         </Form.Group>
         <Form.Group style={{ width: 154 }} controlId="due_dates[0].day_offset">
@@ -157,8 +163,9 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
             size="sm"
             as="select">
             <option value={null}>select day</option>
-            <option value="15">15th</option>
-            <option value="end-of-month">end of the month</option>
+            <option value="1">1st of the month</option>
+            <option value="15">15th of the month</option>
+            <option value="end-of-month">last day the month</option>
           </Form.Control>
         </Form.Group>
       </Form.Row>

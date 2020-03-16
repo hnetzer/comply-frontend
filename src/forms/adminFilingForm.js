@@ -48,12 +48,12 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit }) => {
       agency: { jurisdiction_id: '' },
       fields: [],
       due_date_occurence: 'annual',
-      due_date_dependency: 'none',
       due_dates: [{
         fixed_month: '',
         fixed_day: '',
         month_offset: '',
-        day_offset: ''
+        day_offset: '',
+        offset_type: ''
       }]
     };
 

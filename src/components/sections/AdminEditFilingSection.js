@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { AdminFilingForm } from 'forms'
-import { adminGetAgencies, adminGetJurisdictions } from 'network/api'
+import {
+  adminGetAgencies,
+  adminGetJurisdictions,
+  adminCreateFiling
+} from 'network/api'
 
 
 import style from './AdminEditFilingSection.module.css'
@@ -23,8 +27,13 @@ class AdminEditFilingSection extends Component {
     }
   }
 
-  submitFiling = (values) => {
+  submitFiling = async (values) => {
     console.log(values)
+    if (values.id) {
+      // we should update the filing here
+    } else {
+      const filing = await adminCreateFiling(values)
+    }
   }
 
   render() {
