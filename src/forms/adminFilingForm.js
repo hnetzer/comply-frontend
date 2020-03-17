@@ -47,13 +47,13 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit }) => {
       agency_id: '',
       agency: { jurisdiction_id: '' },
       fields: [],
-      due_date_occurence: 'annual',
+      occurrence: 'annual',
       due_dates: [{
-        fixed_month: '',
-        fixed_day: '',
-        month_offset: '',
-        day_offset: '',
-        offset_type: ''
+        fixed_month: null,
+        fixed_day: null,
+        month_offset: null,
+        day_offset: null,
+        offset_type: 'none'
       }]
     };
 
@@ -168,7 +168,8 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit }) => {
                             type="number"
                             style={{ width: 48 }}
                             autoComplete="off"
-                            value={values.fields[index].order || (index+1)} />
+                            placeholder={index+1}
+                            value={values.fields[index].order} />
                         </Form.Group>
                       </Form.Row>
                     ))}

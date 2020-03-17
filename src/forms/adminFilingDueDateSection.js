@@ -12,10 +12,10 @@ import style from './adminFilingForm.module.css'
 const AdminFilingDueDateSection = ({ values, handleChange }) => {
 
   const renderFixedDateFields = () => {
-    const occurence = values.due_date_occurence
-    if (occurence === "multiple") return null;
+    const occurrence = values.occurrence
+    if (occurrence === "multiple") return null;
     const dependency = values.due_dates[0].offset_type
-    if (dependency !== "") return null;
+    if (dependency !== "none") return null;
     return (
       <Form.Row className={style.dateRow}>
         <Form.Group style={{ width: 154 }} controlId="due_dates[0].fixed_month">
@@ -33,34 +33,34 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
     )
   }
 
-  const renderOccurenceOptions = () => {
+  const renderOccurrenceOptions = () => {
     return (
-      <Form.Group controlId="due_date_occurence">
+      <Form.Group controlId="occurrence">
          <Form.Check inline
             label="annual"
             type="radio"
             value="annual"
             onChange={handleChange}
-            checked={values.due_date_occurence === "annual"}/>
+            checked={values.occurrence === "annual"}/>
          <Form.Check inline
             label="multiple per year"
             type="radio"
             value="multiple"
             onChange={handleChange}
-            checked={values.due_date_occurence === "multiple"}/>
+            checked={values.occurrence === "multiple"}/>
           <Form.Check inline
              label="biennial"
              type="radio"
              value="biennial"
              onChange={handleChange}
-             checked={values.due_date_occurence === "biennial"}/>
+             checked={values.occurrence === "biennial"}/>
       </Form.Group>
     )
   }
 
   const renderDependencyOptions = () => {
-    const occurence = values.due_date_occurence
-    if (occurence === "multiple") return null;
+    const occurrence = values.occurrence
+    if (occurrence === "multiple") return null;
     return (
       <Form.Group controlId="due_dates[0].offset_type">
         <Form.Label>Dependency</Form.Label>
@@ -68,9 +68,9 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
           <Form.Check inline
              label="none"
              type="radio"
-             value=""
+             value="none"
              onChange={handleChange}
-             checked={values.due_dates[0].offset_type === ""}/>
+             checked={values.due_dates[0].offset_type === "none"}/>
            <Form.Check inline
               label="registration"
               type="radio"
@@ -89,8 +89,8 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
   }
 
   const renderMultipleTimesFields = () => {
-    const occurence = values.due_date_occurence
-    if (occurence !== "multiple") return null;
+    const occurrence = values.occurrence
+    if (occurrence !== "multiple") return null;
     return (
       <FieldArray
         name="due_dates"
@@ -113,11 +113,11 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
           ))}
           <Button
             onClick={() => arrayHelpers.push({
-              fixed_day: '',
-              fixed_month: '',
-              offset_type: '',
-              month_offset: '',
-              day_offset: ''
+              fixed_day: null,
+              fixed_month: null,
+              offset_type: null,
+              month_offset: null,
+              day_offset: 'none'
             })}
             size="sm"
             variant="link">+ Add Date</Button>
@@ -128,17 +128,17 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
   }
 
   const renderDependencyFields = () => {
-    const occurence = values.due_date_occurence
-    if (occurence === "multiple") return null;
+    const occurrence = values.occurrence
+    if (occurrence === "multiple") return null;
     const dependency = values.due_dates[0].offset_type
-    if (dependency === "") return null;
+    if (dependency === "none") return null;
     return (
       <Form.Row className={style.dateRow}>
         <Form.Group style={{ width: 154 }} controlId="due_dates[0].month_offset">
           <Form.Control
             required
             onChange={handleChange}
-            value={values.due_dates[0].month_offset}
+            value={values.due_dates[0].month_offset || ''}
             size="sm"
             as="select">
             <option value={null}>select month offset</option>
@@ -159,7 +159,7 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
           <Form.Control
             required
             onChange={handleChange}
-            value={values.due_dates[0].day_offset}
+            value={values.due_dates[0].day_offset || ''}
             size="sm"
             as="select">
             <option value={null}>select day</option>
@@ -174,7 +174,7 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
 
 
   return (<>
-    {renderOccurenceOptions()}
+    {renderOccurrenceOptions()}
     {renderMultipleTimesFields()}
     {renderDependencyOptions()}
     {renderFixedDateFields()}

@@ -41,7 +41,7 @@ const DueDayPicker = ({ value, handleChange, month }) => {
   return (<Form.Control
     required
     onChange={handleChange}
-    value={value}
+    value={value || ''}
     size="sm"
     as="select">
     <option value={null}>select day</option>

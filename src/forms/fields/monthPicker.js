@@ -5,7 +5,7 @@ const MonthPicker = ({ value, handleChange }) => {
   return (<Form.Control
     required
     onChange={handleChange}
-    value={value}
+    value={value || ''}
     size="sm"
     as="select">
     <option value={null}>select month</option>
