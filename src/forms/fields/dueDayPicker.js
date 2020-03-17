@@ -45,6 +45,7 @@ const DueDayPicker = ({ value, handleChange, month }) => {
     size="sm"
     as="select">
     <option value={null}>select day</option>
+    <option value={1}>1st</option>
     <option value={15}>15th</option>
     <option value={getLastDayOfMonth()}>
     {`${getLastDayOfMonth()}${suffix(getLastDayOfMonth())}`}
