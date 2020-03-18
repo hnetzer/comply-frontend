@@ -25,6 +25,7 @@ const FilingCard = (props) => {
   }
 
   const renderCTA = () => {
+    console.log(props.filing)
     const { due, companyFilingId, id, status } = props.filing
 
     if (!due) {

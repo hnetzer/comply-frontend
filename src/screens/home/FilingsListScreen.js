@@ -55,14 +55,14 @@ class FilingsListScreen extends React.Component {
   }
 
   renderNext60Days = () => {
-    const future = moment().add(60, 'd').unix()
+    const future = moment().add(120, 'd').unix()
     const now = moment().unix()
     const filings = this.props.filings.filter(f => {
       if (f.due == null) return false
       if (f.companyFilingId != null) return false
 
       // Show SF Tax & Treasurer Buisness License for now
-      if (f.id === 15) return true
+      if (f.id === 4) return true
 
       const due = moment(f.due).unix()
       return due < future && due >= now;
@@ -70,7 +70,7 @@ class FilingsListScreen extends React.Component {
 
     if (filings.length) {
       return (<>
-        <h5>Next 60 Days</h5>
+        <h5>Next 120 Days</h5>
         {this.renderFilings(filings.sort(this.compareFilingsByDue))}
       </>)
     }

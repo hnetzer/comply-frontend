@@ -115,7 +115,11 @@ class FilingScreen extends React.Component {
 
   renderForm = () => {
     const { filing, companyFiling } = this.state
-    const { jurisdiction, agency, name } = filing;
+    const { agency, name } = filing;
+    const { jurisdiction } = agency;
+
+    console.log('FILING!!')
+    console.log(filing)
 
     let form = this.formNotSupported();
     if (jurisdiction.name.toLowerCase() === 'san francisco' &&

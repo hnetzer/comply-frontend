@@ -12,7 +12,7 @@ const FilingHeader = ({ filing, status }) => {
     <div>
       <h2>{toTitleCase(filing.name)}</h2>
       <h5 className="mb-2 text-muted">
-        {`${toTitleCase(filing.agency.name)} - ${filing.jurisdiction.name}`}
+        {`${toTitleCase(filing.agency.name)} - ${filing.agency.jurisdiction.name}`}
       </h5>
       <span className="mb-2 text-muted">
         {`Due: ${moment(filing.due).format('MMM Do, YYYY')}`}
