@@ -3,6 +3,7 @@ import FilingCard from './FilingCard';
 import InfoPopover from './InfoPopover';
 import FilingHeader from './FilingHeader';
 import FilingDataList from './FilingDataList';
+import DatePicker from './DatePicker';
 
 // Admin
 import SideListItem from './SideListItem'
@@ -13,5 +14,6 @@ export {
   InfoPopover,
   FilingHeader,
   FilingDataList,
-  SideListItem
+  SideListItem,
+  DatePicker
 }

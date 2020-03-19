@@ -8,54 +8,16 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { toTitleCase } from 'utils';
 
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-
-class RegistrationDatePicker extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      startDate: props.date ? props.date : new Date()
-    }
-    this.handleChange = this.handleChange.bind(this);
-  }
-
- 
-  handleChange(date){
-    this.setState({
-      startDate: date
-    });
-    return this.props.onChange(this.props.agencyId, date)
-  };
- 
-  render() {
-    return (
-      <DatePicker
-        showMonthDropdown
-        showYearDropdown
-        placeholderText="Click to select a date"
-        selected={this.state.startDate}
-        onChange={this.handleChange}
-      />
-    );
-  }
-}
+import { DatePicker } from '../../components/molecules';
 
 class AgenciesScreen extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      activeEdits: [],
-      editLog: {},
-
+      activeEdit: null
     }
     this.handleDateChange = this.handleDateChange.bind(this);
     this.showDatepicker = this.showDatepicker.bind(this);
-    this.saveChanges = this.saveChanges.bind(this);
-  }
-
-  unsavedChanges(){
-    return this.state.activeEdits.length && Object.keys(this.state.editLog).length;
   }
 
   async componentDidMount() {
@@ -77,24 +39,12 @@ class AgenciesScreen extends React.Component {
   }
 
   showDatepicker(agencyId) {
-    this.setState({activeEdits: [...this.state.activeEdits, agencyId]})
+    this.setState({activeEdit: agencyId})
   }
 
   handleDateChange(agencyId, selectedDate){
-    this.setState({
-      editLog: {...this.state.editLog, [agencyId]: selectedDate},
-    })
-  }
-
-  saveChanges = async () => {
-    await Promise.all(Object.entries(this.state.editLog).map(([agencyId, newRegDate]) => {
-      updateCompanyAgency({registration: newRegDate}, this.props.user.company_id, agencyId)
-    }))
-
-    return this.setState({
-      activeEdits: [],
-      editLog: {},
-    })
+    updateCompanyAgency({registration: selectedDate}, this.props.user.company_id, agencyId)
+    this.setState({activeEdit: null})
   }
 
   renderAgenciesTable = () => {
@@ -104,7 +54,7 @@ class AgenciesScreen extends React.Component {
           <tr>
             <th>Agency</th>
             <th>Jurisdiction</th>
-            <th>Registration Date</th>
+            <th>What's your registration date?</th>
           </tr>
         </thead>
         <tbody>
@@ -119,12 +69,12 @@ class AgenciesScreen extends React.Component {
                 <td>{toTitleCase(a.name)}</td>
                 <td>{a.jurisdiction}</td>
                 <td className="td-reg-date">
-                  { a.registration && !this.state.activeEdits.includes(a.agency_id) ?
+                  { a.registration && this.state.activeEdit !== a.agency_id ?
                     a.registration : 
                     null
                   }
-                  { this.state.activeEdits.includes(a.agency_id) ? 
-                      <RegistrationDatePicker onChange={this.handleDateChange} agencyId={a.agency_id} date={regDate} /> 
+                  { this.state.activeEdit === a.agency_id ? 
+                      <DatePicker onChange={this.handleDateChange} agencyId={a.agency_id} date={regDate} /> 
                       :
                       <Button className="edit-date-btn" variant="link" onClick={() => this.showDatepicker(a.agency_id)}>Add/Edit date</Button>
                   }
@@ -143,12 +93,10 @@ class AgenciesScreen extends React.Component {
       <div>
         <div className="agency-table-header">
           <h2>Agencies</h2>
-          {this.unsavedChanges() ? <div>Your changes have not been saved.</div> : null}
         </div>
         <div>
           {this.renderAgenciesTable()}
         </div>
-        {this.unsavedChanges() ? <Button className="save-changes-btn" onClick={this.saveChanges}>Save Changes</Button> : null}
       </div>
     )
   }
