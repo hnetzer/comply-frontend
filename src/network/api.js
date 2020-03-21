@@ -65,8 +65,12 @@ export const getCompany = async (companyId) => {
   return sendRequest('GET', `/company/${companyId}`);
 }
 
-export const getCompanyFilings = async (companyId) => {
+export const getFilingsForCompany = async (companyId) => {
   return sendRequest('GET', `/company/${companyId}/filings`);
+}
+
+export const getCompanyFilings = async (companyId) => {
+  return sendRequest('GET', `/company/${companyId}/companyfilings`);
 }
 
 export const getFiling = async (filingId) => {
@@ -74,11 +78,11 @@ export const getFiling = async (filingId) => {
 }
 
 export const createCompanyFiling = async (companyId, filingId, data) => {
-  return sendRequest('POST', `/company/${companyId}/filings`, data);
+  return sendRequest('POST', `/company/${companyId}/companyfilings`, data);
 }
 
 export const getCompanyFiling = async (companyId, companyFilingId) => {
-  return sendRequest('GET', `/company/${companyId}/filings/${companyFilingId}`);
+  return sendRequest('GET', `/company/${companyId}/companyfilings/${companyFilingId}`);
 }
 
 export const getCompanyFilingMessages = async (companyId, companyFilingId) => {
@@ -86,7 +90,7 @@ export const getCompanyFilingMessages = async (companyId, companyFilingId) => {
 }
 
 export const updateCompanyFiling = async (companyId, companyFilingId, data) => {
-  return sendRequest('PUT', `/company/${companyId}/filings/${companyFilingId}`, data);
+  return sendRequest('PUT', `/company/${companyId}/companyfilings/${companyFilingId}`, data);
 }
 
 export const getCompanyAgencies = async (companyId) => {
@@ -158,6 +162,7 @@ export default {
   getAgencies,
   getCompany,
   updateAgencies,
+  getFilingsForCompany,
   getCompanyFilings,
   getFiling,
   createCompanyFiling,

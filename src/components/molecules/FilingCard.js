@@ -25,8 +25,7 @@ const FilingCard = (props) => {
   }
 
   const renderCTA = () => {
-    console.log(props.filing)
-    const { due, companyFilingId, id, status } = props.filing
+    const { filing, companyFilingId, status, due } = props
 
     if (!due) {
       const href = '/home/agencies'
@@ -39,12 +38,12 @@ const FilingCard = (props) => {
       return (<Button href={`/home/filings/${companyFilingId}`} variant="link">{linkText}</Button>)
     }
 
-    const href = `/home/filings/new?filingId=${id}&due=${due}`;
+    const href = `/home/filings/new?filingId=${filing.id}&due=${due}`;
     return (<Button href={href} variant="outline-primary">Start Filing</Button>);
   }
 
   const renderBadge = () => {
-    const { companyFilingId, status } = props.filing
+    const { companyFilingId, status } = props
     if (!companyFilingId) return null;
     return (<Badge style={{ marginLeft: 16 }} variant="info">{status}</Badge>)
   }
@@ -65,7 +64,7 @@ const FilingCard = (props) => {
           </Card.Subtitle>
         </div>
         <div className={styles.cardBodyRight}>
-          {renderDueDate(props.filing.due)}
+          {renderDueDate(props.due)}
           {renderCTA(props.filing.due, props.filing.id)}
         </div>
       </Card.Body>
