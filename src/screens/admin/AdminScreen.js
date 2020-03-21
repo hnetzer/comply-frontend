@@ -20,7 +20,7 @@ const AdminScreen  = () => {
         <AdminCompaniesScreen path="/companies" />
         <AdminJurisdictionsScreen path="/platform/jurisdictions" />
         <AdminAgenciesScreen path="/platform/agencies" />
-        <AdminFilingsScreen path="/platform/filings" />
+        <AdminFilingsScreen path="/platform/filings/*" />
       </Router>
     </div>
   )

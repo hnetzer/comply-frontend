@@ -137,8 +137,16 @@ export const adminGetFilings = async () => {
   return sendRequest('GET', `/admin/filings/`)
 }
 
+export const adminGetFiling = async (id) => {
+  return sendRequest('GET', `/admin/filings/${id}`)
+}
+
 export const adminCreateFiling = async (data) => {
   return sendRequest('POST', `/admin/filings/`, data)
+}
+
+export const adminUpdateFiling = async (filingId, data) => {
+  return sendRequest('PUT', `/admin/filings/${filingId}`, data)
 }
 
 export default {
@@ -171,4 +179,6 @@ export default {
   adminUpdateAgency,
   adminGetFilings,
   adminCreateFiling,
+  adminGetFiling,
+  adminUpdateFiling
 }

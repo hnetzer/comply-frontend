@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Router, navigate } from "@reach/router";
 
 import { adminGetFilings } from 'network/api';
+
+import Button from 'react-bootstrap/Button';
 
 import { SideListItem } from 'components/molecules'
 import { AdminEditFilingSection} from 'components/sections'
@@ -24,10 +27,9 @@ class AdminFilingsScreen extends React.Component {
   }
 
   onSelectFiling = (index) => {
-    console.log(index)
     const filing = this.state.filings[index]
-    console.log(filing)
     this.setState({ selected: filing })
+    navigate(`/admin/platform/filings/${filing.id}`)
   }
 
   render() {
@@ -35,6 +37,7 @@ class AdminFilingsScreen extends React.Component {
       <main style={{ width: '100%', display: 'flex' }}>
         <section className={style.sideList}>
           <div style={{ padding: 16 }}>
+            <Button href="/admin/platform/filings/new" variant="link">+ New Filing</Button>
           </div>
           <div>
             <div className={style.companyFilingsHeader}>
@@ -55,7 +58,10 @@ class AdminFilingsScreen extends React.Component {
           </div>
         </section>
         <section className={style.main}>
-          <AdminEditFilingSection filing={this.state.selected} />
+          <Router>
+            <AdminEditFilingSection path="/:filingId" filing={this.state.selected} />
+            <AdminEditFilingSection path="/new" filing={null} />
+          </Router>
         </section>
       </main>
     )

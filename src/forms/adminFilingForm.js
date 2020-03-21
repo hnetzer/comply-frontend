@@ -57,10 +57,6 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit }) => {
       }]
     };
 
-    console.log('AdminFilingForm')
-    console.log('initial filing')
-    console.log(initial)
-
   return (
     <div className={style.container}>
       <Formik

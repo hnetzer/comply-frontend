@@ -115,9 +115,9 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
             onClick={() => arrayHelpers.push({
               fixed_day: null,
               fixed_month: null,
-              offset_type: null,
+              offset_type: 'none',
               month_offset: null,
-              day_offset: 'none'
+              day_offset: null,
             })}
             size="sm"
             variant="link">+ Add Date</Button>

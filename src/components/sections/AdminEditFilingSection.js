@@ -5,7 +5,8 @@ import { AdminFilingForm } from 'forms'
 import {
   adminGetAgencies,
   adminGetJurisdictions,
-  adminCreateFiling
+  adminCreateFiling,
+  adminUpdateFiling
 } from 'network/api'
 
 
@@ -28,9 +29,8 @@ class AdminEditFilingSection extends Component {
   }
 
   submitFiling = async (values) => {
-    console.log(values)
     if (values.id) {
-      // we should update the filing here
+      const filing = await adminUpdateFiling(values)
     } else {
       const filing = await adminCreateFiling(values)
     }
