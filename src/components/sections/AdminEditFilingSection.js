@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { navigate } from "@reach/router"
 
 import { AdminFilingForm } from 'forms'
 import {
   adminGetAgencies,
   adminGetJurisdictions,
   adminCreateFiling,
+  adminGetFiling,
   adminUpdateFiling
 } from 'network/api'
 
@@ -15,24 +17,38 @@ import style from './AdminEditFilingSection.module.css'
 class AdminEditFilingSection extends Component {
   constructor(props) {
     super(props);
-    this.state = { jurisdictions: [], agencies: [] };
+    this.state = { jurisdictions: [], agencies: [], filing: null };
   }
 
   async componentDidMount() {
     try {
+      let filing = null
       const agencies = await adminGetAgencies();
       const jurisdictions = await adminGetJurisdictions();
-      this.setState({ agencies: agencies, jurisdictions: jurisdictions })
+
+      if (this.props.filingId != null) {
+        filing = await adminGetFiling(this.props.filingId)
+      }
+
+      this.setState({ agencies: agencies, jurisdictions: jurisdictions, filing: filing })
     } catch (err) {
       console.log(err)
     }
   }
 
+  async componentDidUpdate(prevProps) {
+    if (prevProps.filingId != this.props.filingId) {
+      const filing = await adminGetFiling(this.props.filingId)
+      this.setState({ filing: filing })
+    }
+  }
+
   submitFiling = async (values) => {
     if (values.id) {
-      const filing = await adminUpdateFiling(values)
+      const filing = await adminUpdateFiling(values.id, values)
     } else {
       const filing = await adminCreateFiling(values)
+      navigate(`/admin/platform/filings/${filing.id}`)
     }
   }
 
@@ -40,11 +56,11 @@ class AdminEditFilingSection extends Component {
     return (
       <div className={style.content}>
         <h3 className={style.title}>
-          {this.props.filing != null ? 'Edit Filing' : 'Create Filing'}
+          {this.state.filing != null ? 'Edit Filing' : 'Create Filing'}
         </h3>
         <AdminFilingForm
           handleSubmit={this.submitFiling}
-          filing={this.props.filing}
+          filing={this.state.filing}
           jurisdictions={this.state.jurisdictions}
           agencies={this.state.agencies} />
       </div>

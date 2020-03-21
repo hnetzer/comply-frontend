@@ -14,7 +14,7 @@ import style from './AdminScreens.module.css';
 class AdminFilingsScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { filings: [], selected: null };
+    this.state = { filings: [] };
   }
 
   async componentDidMount() {
@@ -28,7 +28,6 @@ class AdminFilingsScreen extends React.Component {
 
   onSelectFiling = (index) => {
     const filing = this.state.filings[index]
-    this.setState({ selected: filing })
     navigate(`/admin/platform/filings/${filing.id}`)
   }
 

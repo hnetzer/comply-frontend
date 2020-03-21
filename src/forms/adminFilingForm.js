@@ -35,7 +35,7 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit }) => {
   const addFormField = (arrayHelpers) => {
     arrayHelpers.push({
       name: '',
-      helperText: '',
+      helper_text: '',
       type: 'text',
       order: ''
     })
@@ -151,7 +151,7 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit }) => {
                             autoComplete="off"
                             value={values.fields[index].name} />
                         </Form.Group>
-                        <Form.Group controlId={`fields[${index}].helperText`}>
+                        <Form.Group controlId={`fields[${index}].helper_text`}>
                           <Form.Control
                             required
                             onChange={handleChange}
@@ -159,7 +159,7 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit }) => {
                             placeholder="Helper text"
                             style={{ width: 376, marginRight: 16 }}
                             autoComplete="off"
-                            value={values.fields[index].helperText} />
+                            value={values.fields[index].helper_text || ''} />
                         </Form.Group>
                         <Form.Group controlId={`fields[${index}].order`}>
                           <Form.Control
@@ -180,7 +180,7 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit }) => {
             </Card>
             <div className={style.ctaContainer}>
               <Button className={style.submitButton} variant="secondary" type="submit">
-                Save Filing
+                { initial.id == null ? 'Create Filing' : 'Update Filing'}
               </Button>
             </div>
           </Form>
