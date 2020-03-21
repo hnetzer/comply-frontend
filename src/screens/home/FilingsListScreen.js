@@ -15,6 +15,16 @@ class FilingsListScreen extends React.Component {
   }
 
   async componentDidMount() {
+    await this.loadPageData()
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (prevProps.agencies.length !== this.props.agencies.length) {
+      await this.loadPageData()
+    }
+  }
+
+  loadPageData = async () => {
     try {
       const filings = await getFilingsForCompany(this.props.user.company_id)
       const companyFilings = await getCompanyFilings(this.props.user.company_id)
@@ -110,7 +120,8 @@ class FilingsListScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    filings: state.filing.filings
+    filings: state.filing.filings,
+    agencies: state.company.agencies
   }
 }
 

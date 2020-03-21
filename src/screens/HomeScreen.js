@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Router } from "@reach/router"
 
 import { getAgencies, getCompany, updateAgencies, getCompanyFilings } from 'network/api';
-import { setFilings } from 'actions';
+import { setFilings, setCompanyAgencies } from 'actions';
 
 import { NavigationBar, WelcomeModal, SideNavigation } from '../components/organisms'
 
@@ -42,9 +42,10 @@ class HomeScreen extends React.Component {
   handleUpdateAgencies = async (agencyIds) => {
     try {
       this.setState({ show: false })
-      await updateAgencies({ agencies: agencyIds }, this.props.user.company_id)
+      const agencies = await updateAgencies({ agencies: agencyIds }, this.props.user.company_id)
       const filings = await getCompanyFilings(this.props.user.company_id)
       this.props.dispatch(setFilings(filings))
+      this.props.dispatch(setCompanyAgencies(agencies))
     } catch (err) {
       alert(err)
     }

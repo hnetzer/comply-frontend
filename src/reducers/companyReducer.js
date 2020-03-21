@@ -5,7 +5,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
  switch (action.type) {
-  case 'SET_AGENCIES':
+  case 'SET_COMPANY_AGENCIES':
    return {
      agencies: action.data
    }

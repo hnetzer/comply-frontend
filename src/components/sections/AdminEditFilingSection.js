@@ -37,7 +37,7 @@ class AdminEditFilingSection extends Component {
   }
 
   async componentDidUpdate(prevProps) {
-    if (prevProps.filingId != this.props.filingId) {
+    if (prevProps.filingId !== this.props.filingId) {
       const filing = await adminGetFiling(this.props.filingId)
       this.setState({ filing: filing })
     }
