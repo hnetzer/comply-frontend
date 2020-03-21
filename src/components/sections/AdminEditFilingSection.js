@@ -17,7 +17,7 @@ import style from './AdminEditFilingSection.module.css'
 class AdminEditFilingSection extends Component {
   constructor(props) {
     super(props);
-    this.state = { jurisdictions: [], agencies: [], filing: null };
+    this.state = { jurisdictions: [], agencies: [], filing: null, status: null };
   }
 
   async componentDidMount() {
@@ -45,8 +45,11 @@ class AdminEditFilingSection extends Component {
 
   submitFiling = async (values) => {
     if (values.id) {
+      this.setState({ status: 'updating...' })
       const filing = await adminUpdateFiling(values.id, values)
+      this.setState({ status: null, filing: filing})
     } else {
+      this.setState({ status: 'saving...' })
       const filing = await adminCreateFiling(values)
       navigate(`/admin/platform/filings/${filing.id}`)
     }
@@ -59,6 +62,7 @@ class AdminEditFilingSection extends Component {
           {this.state.filing != null ? 'Edit Filing' : 'Create Filing'}
         </h3>
         <AdminFilingForm
+          status={this.state.status}
           handleSubmit={this.submitFiling}
           filing={this.state.filing}
           jurisdictions={this.state.jurisdictions}

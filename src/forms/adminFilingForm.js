@@ -11,7 +11,7 @@ import AdminFilingDueDateSection from './adminFilingDueDateSection'
 // Bootstrap components
 import Form from 'react-bootstrap/Form';
 
-const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit }) => {
+const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status }) => {
   const [validated] = useState(false);
 
   const submit = async (values, { setSubmitting }) => {
@@ -179,6 +179,9 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit }) => {
               </Card.Body>
             </Card>
             <div className={style.ctaContainer}>
+              {status != null ? (
+                <div style={{ color: 'green', marginRight: 16 }}>{status}</div>
+              ) : null}
               <Button className={style.submitButton} variant="secondary" type="submit">
                 { initial.id == null ? 'Create Filing' : 'Update Filing'}
               </Button>

@@ -5,7 +5,7 @@
   width: 20%;
   min-width: 265px;
   background-color: #f7f7f7;
-  max-height: 800px;
+  height: 100%;
   overflow: scroll;
 
 }
