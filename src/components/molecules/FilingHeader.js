@@ -5,7 +5,7 @@ import Badge from 'react-bootstrap/Badge';
 import { toTitleCase } from 'utils'
 import moment from 'moment'
 
-const FilingHeader = ({ filing, status }) => {
+const FilingHeader = ({ filing, due, status }) => {
   if(!filing) return null;
 
   return (

@@ -147,7 +147,7 @@ class FilingScreen extends React.Component {
 
 
   render() {
-    const { status, filing, messages } = this.state
+    const { status, filing, messages, due } = this.state
 
     // Loading state
     if (!filing) return (<Spinner animation="grow" variant="primary" />);
@@ -157,7 +157,7 @@ class FilingScreen extends React.Component {
         <Breadcrumb.Item href="/home/filings">Filings</Breadcrumb.Item>
         <Breadcrumb.Item active>{toTitleCase(filing.name)}</Breadcrumb.Item>
       </Breadcrumb>
-      <FilingHeader filing={filing} status={status} />
+      <FilingHeader filing={filing} status={status} due={due} />
       <FilingAlertMessage status={status} messages={messages} />
       <Card style={{ marginTop: 24 }}>
         <Card.Body>

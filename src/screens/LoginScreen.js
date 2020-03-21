@@ -28,7 +28,7 @@ const LoginScreen = (props) => {
 
       const { user } = response
       // If admin, then go to admin
-      if (user.roles.indexOf('admin') !== -1) {
+      if (user.roles != null && user.roles.indexOf('admin') !== -1) {
         navigate('/admin')
         return
       }

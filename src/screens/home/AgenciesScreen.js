@@ -2,22 +2,27 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { getCompanyAgencies } from 'network/api';
-import { setCompanyAgencies } from 'actions';
 
 import Table from 'react-bootstrap/Table'
 import { toTitleCase } from 'utils';
 
 class AgenciesScreen extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { agencies: []}
+  }
+
+
   async componentDidMount() {
     try {
       const agencies = await getCompanyAgencies(this.props.user.company_id)
-      console.log(agencies)
-      this.props.dispatch(setCompanyAgencies(agencies))
+      this.setState({ agencies: agencies })
     } catch (err) {
     }
   }
 
   renderAgenciesTable = () => {
+    console.log(this.props.agencies)
     return (
       <Table striped bordered hover>
         <thead>
@@ -28,7 +33,7 @@ class AgenciesScreen extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.agencies.map((a,i) => (
+          {this.state.agencies.map((a,i) => (
             <tr key={i}>
                 <td>{toTitleCase(a.name)}</td>
                 <td>{a.jurisdiction}</td>
