@@ -3,16 +3,18 @@ import React from 'react';
 import Table from 'react-bootstrap/Table'
 
 const FilingDataList = ({ data }) => {
+  console.log(data)
   if(!data) return null;
-  const fields = Object.keys(data)
+  const fields = data
+  console.log(fields)
 
   return (<>
     <Table striped bordered hover>
       <tbody>
       {fields.map((field, index) => (
         <tr key={index}>
-          <td>{field}</td>
-          <td>{data[field]}</td>
+          <td>{field.filing_field.name}</td>
+          <td>{field.value}</td>
         </tr>))}
       </tbody>
     </Table>

@@ -59,7 +59,7 @@ class HomeScreen extends React.Component {
         <div className={styles.container}>
           <SideNavigation companyName={company && company.name} />
           <main className={styles.main}>
-            <Router>
+            <Router style={{ width: '100%' }}>
               <FilingsListScreen path="/" filings={filings} />
               <FilingsListScreen path="/filings" filings={filings} />
               <CompanyScreen path="/company" company={company} />

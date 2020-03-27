@@ -76,7 +76,7 @@ const AdminFilingDetailsSection = ({ companyFiling, dispatch }) => {
 
 
   if (!companyFiling) return null;
-  const { filing, status, field_data, company } = companyFiling
+  const { filing, status, fields, company } = companyFiling
   return (
     <>
       <section className={style.content}>
@@ -91,7 +91,7 @@ const AdminFilingDetailsSection = ({ companyFiling, dispatch }) => {
         <span className="mb-2 text-muted">
           {`Due: ${moment(filing.due).format('MMM Do, YYYY')}`}
         </span>
-        <FilingDataList data={field_data} />
+        <FilingDataList data={fields} />
         {renderCTAs(status)}
       </section>
       <AdminRejectFilingModal

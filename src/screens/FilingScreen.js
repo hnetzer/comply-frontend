@@ -2,10 +2,11 @@ import React from 'react';
 import { navigate } from "@reach/router"
 import { connect } from 'react-redux';
 
-import { toTitleCase, getURLParam } from 'utils'
+import { getURLParam } from 'utils'
 
 import Spinner from 'react-bootstrap/Spinner'
 import Card from 'react-bootstrap/Card';
+// import Breadcrumb from 'react-bootstrap/Breadcrumb'
 
 import {
   getFiling,
@@ -17,8 +18,7 @@ import {
 
 import { FilingHeader, FilingDataList, FilingAlertMessage } from 'components/molecules'
 import { SanFrancisco } from 'forms/filings'
-
-import Breadcrumb from 'react-bootstrap/Breadcrumb'
+import { CompanyFilingForm } from 'forms'
 
 class FilingScreen extends React.Component {
   constructor(props) {
@@ -45,8 +45,9 @@ class FilingScreen extends React.Component {
     if (this.props.companyFilingId) {
       const { user, companyFilingId } = this.props
       const companyFiling = await getCompanyFiling(user.company_id, companyFilingId)
+      const filing = await getFiling(companyFiling.filing_id)
       const messages = await getCompanyFilingMessages(user.company_id, companyFilingId)
-      const { filing, due_date, status } = companyFiling
+      const { due_date, status } = companyFiling
       this.setState({
         filing: filing,
         due: due_date,
@@ -77,12 +78,13 @@ class FilingScreen extends React.Component {
     const { user } = this.props
     const { due, filing } = this.state
     const data = {
-      field_data: values,
+      fields: values.fields,
       status: formStatus,
       due_date: due,
       filing_id: filing.id
     };
     const filingId = getURLParam('filingId')
+
     const companyFiling = await createCompanyFiling(user.company_id, filingId, data);
     const { status } = companyFiling
 
@@ -96,11 +98,10 @@ class FilingScreen extends React.Component {
 
   updateFiling = async (values, status) => {
     const { user } = this.props
-    const { filing, due, companyFiling } = this.state
+    const { filing, companyFiling } = this.state
     const data = {
-      field_data: values,
+      fields: values.fields,
       status: status,
-      due_date: due,
       filing_id: filing.id
     };
 
@@ -118,9 +119,6 @@ class FilingScreen extends React.Component {
     const { agency, name } = filing;
     const { jurisdiction } = agency;
 
-    console.log('FILING!!')
-    console.log(filing)
-
     let form = this.formNotSupported();
     if (jurisdiction.name.toLowerCase() === 'san francisco' &&
         agency.name.toLowerCase() === 'tax and treasurer' &&
@@ -130,17 +128,28 @@ class FilingScreen extends React.Component {
         handleSubmit={this.handleSubmit}
         error={null}/>);
     }
+
+    if (filing.fields.length > 0) {
+      return (
+        <CompanyFilingForm
+          filing={filing}
+          companyFiling={companyFiling}
+          handleSubmit={this.handleSubmit} />
+      )
+    }
+
     return form;
   }
+
 
   renderFilingData = () => {
     const { companyFiling, status } = this.state
     switch(status) {
       case 'draft': return this.renderForm()
-      case 'submitted': return (<FilingDataList data={companyFiling.field_data} />)
+      case 'submitted': return (<FilingDataList data={companyFiling.fields} />)
       case 'needs-follow-up': return this.renderForm()
-      case 'needs-signature-payment': return (<FilingDataList data={companyFiling.field_data} />)
-      case 'filed': return (<FilingDataList data={companyFiling.field_data} />)
+      case 'needs-signature-payment': return (<FilingDataList data={companyFiling.fields} />)
+      case 'filed': return (<FilingDataList data={companyFiling.fields} />)
       default: return this.renderForm()
     }
   }
@@ -153,17 +162,21 @@ class FilingScreen extends React.Component {
     if (!filing) return (<Spinner animation="grow" variant="primary" />);
 
     return (<>
-      <Breadcrumb>
+      {/*<Breadcrumb>
         <Breadcrumb.Item href="/home/filings">Filings</Breadcrumb.Item>
         <Breadcrumb.Item active>{toTitleCase(filing.name)}</Breadcrumb.Item>
-      </Breadcrumb>
-      <FilingHeader filing={filing} status={status} due={due} />
-      <FilingAlertMessage status={status} messages={messages} />
-      <Card style={{ marginTop: 24 }}>
-        <Card.Body>
-          {this.renderFilingData()}
-        </Card.Body>
-      </Card>
+      </Breadcrumb>*/}
+      <div style={{ width: '100%', display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
+        <div style={{ width: 440 }}>
+          <FilingHeader filing={filing} status={status} due={due} />
+          <FilingAlertMessage status={status} messages={messages} />
+        </div>
+        <Card style={{ marginTop: 24, width: 440 }}>
+          <Card.Body>
+            {this.renderFilingData()}
+          </Card.Body>
+        </Card>
+      </div>
     </>);
   }
 }
