@@ -15,9 +15,6 @@ const HeaderBar = ({ user, dispatch, title = ""}) => {
     navigate('/')
   }
 
-  const isAdmin = user && user.roles && (user.roles.indexOf('admin') !== -1)
-  const href = isAdmin ? '/admin' : '/home'
-
   return (
     <div className={style.headerBar}>
       <h3>{title}</h3>

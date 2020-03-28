@@ -1,8 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import moment from 'moment'
-
-import Table from 'react-bootstrap/Table'
 
 import { HeaderBar } from 'components/organisms'
 import style from './Screens.module.scss'
@@ -20,4 +16,4 @@ const DashboardScreen = (props) => {
   )
 }
 
-export default connect()(DashboardScreen);
+export default DashboardScreen;
