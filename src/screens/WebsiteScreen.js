@@ -10,8 +10,8 @@ const WebsiteScreen = (props) => {
     <div className={styles.container}>
       <Card className={styles.card}>
         <Card.Body className={styles.cardBody}>
-          <Card.Title><h1>Comply</h1></Card.Title>
-          <Card.Subtitle>Keeping your business in good standing</Card.Subtitle>
+          <Card.Title className={styles.complyTitle}>Comply</Card.Title>
+          <Card.Subtitle className={styles.complyTagline}>Simple. Dependable. Smart.</Card.Subtitle>
           <div style={{
               marginTop: 32,
               width: '70%',
