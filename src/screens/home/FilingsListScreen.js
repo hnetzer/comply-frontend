@@ -5,7 +5,11 @@ import moment from 'moment'
 import { FilingCard } from '../../components/molecules'
 import { getFilingsForCompany, getCompanyFilings } from 'network/api';
 
+import { HeaderBar } from 'components/organisms'
+
 import { setFilings } from 'actions';
+
+import style from './FilingsListScreen.module.scss'
 
 // Maybe this should just be a functional component?
 class FilingsListScreen extends React.Component {
@@ -55,7 +59,7 @@ class FilingsListScreen extends React.Component {
     const filings = this.props.filings.filter(f => f.due == null)
     if (filings.length) {
       return (<>
-        <h5>Need More Information</h5>
+        <h4>NEED INFO</h4>
         {this.renderFilings(filings)}
       </>)
     }
@@ -63,7 +67,7 @@ class FilingsListScreen extends React.Component {
 
   renderInProgress = () => {
     return (<>
-      <h5>In Progress</h5>
+      <h4>IN PROGRESS</h4>
       {this.state.companyFilings.map((c, index) => (
         <FilingCard
           filing={c.filing}
@@ -97,7 +101,7 @@ class FilingsListScreen extends React.Component {
 
     if (filings.length) {
       return (<>
-        <h5>Next 120 Days</h5>
+        <h4>NEXT</h4>
         {this.renderFilings(filings.sort(this.compareFilingsByDue))}
       </>)
     }
@@ -106,12 +110,16 @@ class FilingsListScreen extends React.Component {
 
   render() {
     return(
-      <div>
-        <h2>Filings</h2>
-        {this.renderNeedMoreInfo()}
-        {this.renderInProgress()}
-        {this.renderNext60Days()}
-      </div>
+      <>
+        <HeaderBar title="Filings"/>
+        <section className={style.container}>
+          <div className={style.content}>
+            {this.renderNeedMoreInfo()}
+            {this.renderInProgress()}
+            {this.renderNext60Days()}
+          </div>
+        </section>
+      </>
     )
   }
 

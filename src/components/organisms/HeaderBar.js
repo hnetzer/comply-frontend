@@ -8,7 +8,7 @@ import { logout } from 'actions';
 
 import style from './HeaderBar.module.scss'
 
-const HeaderBar = ({ user, dispatch }) => {
+const HeaderBar = ({ user, dispatch, title = ""}) => {
 
   const handleLogout = () => {
     dispatch(logout())
@@ -20,6 +20,7 @@ const HeaderBar = ({ user, dispatch }) => {
 
   return (
     <div className={style.headerBar}>
+      <h3>{title}</h3>
       <AccountMenu
         user={user}
         handleLogout={handleLogout} />

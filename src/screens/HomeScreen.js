@@ -5,7 +5,7 @@ import { Router } from "@reach/router"
 import { getAgencies, getCompany, updateAgencies, getCompanyFilings } from 'network/api';
 import { setFilings, setCompanyAgencies } from 'actions';
 
-import { HeaderBar, WelcomeModal, SideNavigation } from '../components/organisms'
+import { WelcomeModal, SideNavigation } from 'components/organisms'
 
 // screens
 import CompanyScreen from './home/CompanyScreen'
@@ -57,7 +57,6 @@ class HomeScreen extends React.Component {
       <>
         <SideNavigation companyName={company && company.name} />
         <main className={styles.main}>
-          <HeaderBar />
           <Router style={{ width: '100%' }}>
             <FilingsListScreen path="/" filings={filings} />
             <FilingsListScreen path="/filings" filings={filings} />
