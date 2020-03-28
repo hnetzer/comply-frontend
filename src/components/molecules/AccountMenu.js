@@ -12,13 +12,13 @@ const Toggle = React.forwardRef(({ children, onClick }, ref) => (
       e.preventDefault();
       onClick(e);
     }}
-    style={{ color: '#fff', textDecoration: 'none', background: 'none', border: 'none' }}
+    style={{ textDecoration: 'none', background: 'none', border: 'none' }}
   >
-    <FontAwesomeIcon color="#fff" icon={faUser}/>
+    <FontAwesomeIcon  icon={faUser}/>
     <span style={{ paddingLeft: 8, paddingRight: 8 }}>
       {children}
     </span>
-    <FontAwesomeIcon color="#fff" icon={faCaretDown}/>
+    <FontAwesomeIcon icon={faCaretDown}/>
   </button>
 ));
 

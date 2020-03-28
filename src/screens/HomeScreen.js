@@ -5,7 +5,7 @@ import { Router } from "@reach/router"
 import { getAgencies, getCompany, updateAgencies, getCompanyFilings } from 'network/api';
 import { setFilings, setCompanyAgencies } from 'actions';
 
-import { NavigationBar, WelcomeModal, SideNavigation } from '../components/organisms'
+import { HeaderBar, WelcomeModal, SideNavigation } from '../components/organisms'
 
 // screens
 import CompanyScreen from './home/CompanyScreen'
@@ -54,27 +54,25 @@ class HomeScreen extends React.Component {
   render() {
     const { company, filings } = this.state;
     return(
-      <div>
-        <NavigationBar />
-        <div className={styles.container}>
-          <SideNavigation companyName={company && company.name} />
-          <main className={styles.main}>
-            <Router style={{ width: '100%' }}>
-              <FilingsListScreen path="/" filings={filings} />
-              <FilingsListScreen path="/filings" filings={filings} />
-              <CompanyScreen path="/company" company={company} />
-              <AgenciesScreen path="/agencies" />
-              <FilingScreen path="/filings/new" />
-              <FilingScreen path="/filings/:companyFilingId" />
-            </Router>
-          </main>
-        </div>
+      <>
+        <SideNavigation companyName={company && company.name} />
+        <main className={styles.main}>
+          <HeaderBar />
+          <Router style={{ width: '100%' }}>
+            <FilingsListScreen path="/" filings={filings} />
+            <FilingsListScreen path="/filings" filings={filings} />
+            <CompanyScreen path="/company" company={company} />
+            <AgenciesScreen path="/agencies" />
+            <FilingScreen path="/filings/new" />
+            <FilingScreen path="/filings/:companyFilingId" />
+          </Router>
+        </main>
         <WelcomeModal
           show={this.state.show}
           handleHide={() => this.setState({ show: false })}
           updateAgencies={this.handleUpdateAgencies}
           agencies={this.state.agencies} />
-      </div>
+      </>
     )
   }
 }

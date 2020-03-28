@@ -1,0 +1,10 @@
+@import "../../index.scss";
+
+
+.sidebar {
+  border-right: 1px solid $secondary;
+  background-color: $navy;
+  display: block;
+  max-width: 200px;
+  width: 100%;
+}

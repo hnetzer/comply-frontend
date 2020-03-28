@@ -7,13 +7,13 @@ import AdminJurisdictionsScreen from './AdminJurisdictionsScreen'
 import AdminAgenciesScreen from './AdminAgenciesScreen'
 import AdminFilingsScreen from './AdminFilingsScreen'
 
-import { NavigationBar, AdminNavigation } from '../../components/organisms';
+import { HeaderBar, AdminNavigation } from '../../components/organisms';
 
 const AdminScreen  = () => {
 
   return(
     <div>
-      <NavigationBar />
+      <HeaderBar />
       <AdminNavigation />
       <Router>
         <AdminCompanyFilingsScreen path="/companyfilings" />
