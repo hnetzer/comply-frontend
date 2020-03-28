@@ -4,6 +4,9 @@ import moment from 'moment'
 
 import Table from 'react-bootstrap/Table'
 
+import { HeaderBar } from 'components/organisms'
+import style from './Screens.module.scss'
+
 const CompanyScreen = (props) => {
   const getYearEnd = (m, d) => {
     const month = moment().month(m).format('MMMM');
@@ -50,10 +53,14 @@ const CompanyScreen = (props) => {
   }
 
   return(
-    <div>
-      <h2>Company Details</h2>
-      {renderDetailsTable()}
-    </div>
+    <>
+      <HeaderBar title="Filings"/>
+      <section className={style.container}>
+        <div className={style.content}>
+          {renderDetailsTable()}
+        </div>
+      </section>
+    </>
   )
 }
 

@@ -11,6 +11,7 @@ import { WelcomeModal, SideNavigation } from 'components/organisms'
 import CompanyScreen from './home/CompanyScreen'
 import FilingsListScreen from './home/FilingsListScreen'
 import AgenciesScreen from './home/AgenciesScreen'
+import DashboardScreen from './home/DashboardScreen'
 import FilingScreen from './FilingScreen'
 
 import styles from './Home.module.css'
@@ -58,12 +59,12 @@ class HomeScreen extends React.Component {
         <SideNavigation companyName={company && company.name} />
         <main className={styles.main}>
           <Router style={{ width: '100%' }}>
-            <FilingsListScreen path="/" filings={filings} />
             <FilingsListScreen path="/filings" filings={filings} />
             <CompanyScreen path="/company" company={company} />
             <AgenciesScreen path="/agencies" />
             <FilingScreen path="/filings/new" />
             <FilingScreen path="/filings/:companyFilingId" />
+            <DashboardScreen path="/" />
           </Router>
         </main>
         <WelcomeModal

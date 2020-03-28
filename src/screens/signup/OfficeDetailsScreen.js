@@ -10,7 +10,7 @@ import { OfficeDetailsForm } from 'forms'
 // React Bootstrap components
 import Card from 'react-bootstrap/Card';
 
-import styles from './Signup.module.css'
+import styles from './Signup.module.scss'
 
 const OfficeDetailsScreen = (props) => {
 

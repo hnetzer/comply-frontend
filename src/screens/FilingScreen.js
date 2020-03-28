@@ -6,7 +6,9 @@ import { getURLParam } from 'utils'
 
 import Spinner from 'react-bootstrap/Spinner'
 import Card from 'react-bootstrap/Card';
-// import Breadcrumb from 'react-bootstrap/Breadcrumb'
+
+import { HeaderBar } from 'components/organisms'
+import style from './home/Screens.module.scss'
 
 import {
   getFiling,
@@ -161,22 +163,22 @@ class FilingScreen extends React.Component {
     // Loading state
     if (!filing) return (<Spinner animation="grow" variant="primary" />);
 
-    return (<>
-      {/*<Breadcrumb>
-        <Breadcrumb.Item href="/home/filings">Filings</Breadcrumb.Item>
-        <Breadcrumb.Item active>{toTitleCase(filing.name)}</Breadcrumb.Item>
-      </Breadcrumb>*/}
-      <div style={{ width: '100%', display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
-        <div style={{ width: 440 }}>
-          <FilingHeader filing={filing} status={status} due={due} />
-          <FilingAlertMessage status={status} messages={messages} />
+    return (
+    <>
+      <HeaderBar title={filing.name}/>
+      <section className={style.container}>
+        <div className={style.content}>
+          <div style={{ width: 440 }}>
+            <FilingHeader filing={filing} status={status} due={due} title={false} />
+            <FilingAlertMessage status={status} messages={messages} />
+          </div>
+          <Card style={{ marginTop: 24, width: 440 }}>
+            <Card.Body>
+              {this.renderFilingData()}
+            </Card.Body>
+          </Card>
         </div>
-        <Card style={{ marginTop: 24, width: 440 }}>
-          <Card.Body>
-            {this.renderFilingData()}
-          </Card.Body>
-        </Card>
-      </div>
+      </section>
     </>);
   }
 }

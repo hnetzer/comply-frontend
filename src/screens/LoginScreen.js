@@ -5,7 +5,7 @@ import { navigate } from "@reach/router"
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
-import styles from './Website.module.css'
+import styles from './Website.module.scss'
 
 import { loginRequest } from 'network/api';
 import { login } from 'actions';

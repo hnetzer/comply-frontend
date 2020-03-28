@@ -9,7 +9,7 @@ import { HeaderBar } from 'components/organisms'
 
 import { setFilings } from 'actions';
 
-import style from './FilingsListScreen.module.scss'
+import style from './Screens.module.scss'
 
 // Maybe this should just be a functional component?
 class FilingsListScreen extends React.Component {

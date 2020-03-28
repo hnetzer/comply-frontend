@@ -3,7 +3,3 @@
   display: flex;
   flex-direction: column;
 }
-
-#account-nav-dropdown {
-  color: #fff;
-}

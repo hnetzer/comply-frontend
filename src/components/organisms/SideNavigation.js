@@ -3,7 +3,7 @@ import React from 'react';
 import Nav from 'react-bootstrap/Nav'
 import style from './SideNavigation.module.scss';
 
-import { faBuilding, faFileAlt, faLandmark } from "@fortawesome/free-solid-svg-icons";
+import { faBuilding, faFileAlt, faLandmark, faHome } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SideNavigation = ({ companyName }) => {
@@ -15,18 +15,30 @@ const SideNavigation = ({ companyName }) => {
       <div className={style.divider} />
       <div className={style.companyNameContainer}>
         <div className={style.companyName}>
-          <FontAwesomeIcon className={style.navIcon} icon={faBuilding}/>
+          <div className={style.navIconContainer}>
+            <FontAwesomeIcon icon={faBuilding}/>
+          </div>
           <span>{companyName}</span>
         </div>
       </div>
       <div className={style.divider} />
       <Nav defaultActiveKey="/home" className={style.nav}>
+        <Nav.Link className={style.navLink} href="/home">
+          <div className={style.navIconContainer}>
+            <FontAwesomeIcon className={style.navIcon} icon={faHome}/>
+          </div>
+          <span>Home</span>
+        </Nav.Link>
         <Nav.Link className={style.navLink} href="/home/filings">
-          <FontAwesomeIcon className={style.navIcon} icon={faFileAlt}/>
+          <div className={style.navIconContainer}>
+            <FontAwesomeIcon className={style.navIcon} icon={faFileAlt}/>
+          </div>
           <span>Filings</span>
         </Nav.Link>
         <Nav.Link className={style.navLink} href="/home/agencies">
-          <FontAwesomeIcon className={style.navIcon} icon={faLandmark}/>
+          <div className={style.navIconContainer}>
+            <FontAwesomeIcon className={style.navIcon} icon={faLandmark}/>
+          </div>
           <span>Agencies</span>
         </Nav.Link>
       </Nav>
