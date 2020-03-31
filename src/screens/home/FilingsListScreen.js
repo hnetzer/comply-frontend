@@ -10,12 +10,16 @@ import { HeaderBar } from 'components/organisms'
 import { setFilings } from 'actions';
 
 import style from './Screens.module.scss'
+import listStyles from './FilingsListScreen.module.scss';
 
 // Maybe this should just be a functional component?
 class FilingsListScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { companyFilings: [] }
+    this.state = {
+      companyFilings: [],
+      filings: []
+    }
   }
 
   async componentDidMount() {
@@ -32,7 +36,10 @@ class FilingsListScreen extends React.Component {
     try {
       const filings = await getFilingsForCompany(this.props.user.company_id)
       const companyFilings = await getCompanyFilings(this.props.user.company_id)
-      this.setState({ companyFilings: companyFilings})
+      this.setState({
+        companyFilings: companyFilings,
+        filings: filings
+      })
       this.props.dispatch(setFilings(filings))
     } catch (err) {
     }
@@ -49,38 +56,36 @@ class FilingsListScreen extends React.Component {
     return 0
   }
 
-  renderFilings = (filings) => {
-    return filings.map((filing, index) => (
-      <FilingCard filing={filing} due={filing.due} key={index} />
-    ))
-  }
-
   renderNeedMoreInfo = () => {
-    const filings = this.props.filings.filter(f => f.due == null)
-    if (filings.length) {
-      return (<>
-        <h4>NEED INFO</h4>
-        {this.renderFilings(filings)}
-      </>)
-    }
+    const filings =  this.props.filings.filter(f => f.due == null)
+    const f = filings.map((filing, index) => (
+      <FilingCard
+        size="bg"
+        filing={filing}
+        status={null}
+        due={filing.due}
+        companyFilingId={null}
+        key={index} />
+    ))
+
+    return this.renderFilingSection(filings.length, f, 'Need More Information')
   }
 
   renderInProgress = () => {
-    return (<>
-      <h4>IN PROGRESS</h4>
-      {this.state.companyFilings.map((c, index) => (
+    const f = this.state.companyFilings.map((c, index) => (
         <FilingCard
+          size="bg"
           filing={c.filing}
           status={c.status}
           due={c.due_date}
           companyFilingId={c.id}
           key={index} />
-      ))}
-    </>)
+      ))
+
+    return this.renderFilingSection(this.state.companyFilings.length, f, 'In Progress')
   }
 
-  renderNext60Days = () => {
-    const future = moment().add(120, 'd').unix()
+  renderNext = () => {
     const now = moment().unix()
     const companyFilingMap = this.state.companyFilings.reduce((acc, item) => {
       acc[item.filing.id] = item.due_date
@@ -88,23 +93,46 @@ class FilingsListScreen extends React.Component {
     }, {})
 
     const filings = this.props.filings.filter(f => {
+      // remove filings that need more info
       if (f.due == null) return false
+      // remove filings that have already been started
       if (companyFilingMap[f.id] != null) return false
 
-      // Show SF Tax & Treasurer Buisness License for now
-      if (f.id === 4) return true
-
       const due = moment(f.due).unix()
-      return due < future && due >= now;
+      if (due > now) {
+        return false
+      }
+
+      return true
     })
 
+    const f = filings
+      .sort(this.compareFilingsByDue)
+      .slice(0, 2)
+      .map((filing, index) => (
+        <FilingCard
+          size="bg"
+          filing={filing}
+          status={null}
+          due={filing.due}
+          companyFilingId={null}
+          key={index} />
+      ))
 
-    if (filings.length) {
-      return (<>
-        <h4>NEXT</h4>
-        {this.renderFilings(filings.sort(this.compareFilingsByDue))}
-      </>)
-    }
+    return this.renderFilingSection(filings.length, f, 'Next Filings')
+
+  }
+
+  renderFilingSection = (count, filings, title) => {
+    if (!count) return null;
+    return (<div className={listStyles.section}>
+      <div className={listStyles.title}>
+        <h5>{title}</h5>
+      </div>
+      <div className={listStyles.list}>
+        {filings}
+      </div>
+    </div>)
   }
 
 
@@ -114,15 +142,14 @@ class FilingsListScreen extends React.Component {
         <HeaderBar title="Filings"/>
         <section className={style.container}>
           <div className={style.content}>
-            {this.renderNeedMoreInfo()}
             {this.renderInProgress()}
-            {this.renderNext60Days()}
+            {this.renderNext()}
+            {this.renderNeedMoreInfo()}
           </div>
         </section>
       </>
     )
   }
-
 }
 
 const mapStateToProps = state => {
