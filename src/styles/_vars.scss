@@ -9,6 +9,8 @@ $accent: #309F76;
 $navy: #112532;
 $chrome: #F1F2F3;
 
+$error: #db6955;
+
 $theme-colors: (
   primary: $primary,
   secondary: $secondary,
@@ -24,4 +26,4 @@ $input-focus-border-color: $secondary;
 $input-focus-box-shadow: none;
 $input-focus-color: $navy;
 
-@import "~bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
