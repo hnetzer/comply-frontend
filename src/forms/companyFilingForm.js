@@ -69,9 +69,10 @@ const CompanyFilingForm = (props) => {
                     <Form.Label>{field.name}</Form.Label>
                     <InfoPopover content={field.helper_text} />
                     <Form.Control
+                      autoComplete="off"
                       onChange={handleChange}
                       type="text"
-                      value={values.fields[index].value} />
+                      value={values.fields[index] != null ? values.fields[index].value : ''} />
                   </Form.Group>
                 ))}
               </>

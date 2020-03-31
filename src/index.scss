@@ -15,6 +15,16 @@ $theme-colors: (
 );
 
 
+$input-border-radius: 2px;
+$input-border-width: 2px;
+$input-border-color: rgba(17, 37, 50, 0.25);
+$input-box-shadow: none;
+$input-color: $navy;
+
+$input-focus-border-color: $secondary;
+$input-focus-box-shadow: none;
+$input-focus-color: $navy;
+
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 html {
