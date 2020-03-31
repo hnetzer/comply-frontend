@@ -2,25 +2,45 @@ import React from 'react';
 import moment from 'moment';
 import { toTitleCase } from 'utils';
 
-import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { faClock, faFileAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
 
-import styles from './FilingCard.module.css';
+import styles from './FilingCard.module.scss';
 
 const FilingCard = (props) => {
 
   const renderDueDate = (due) => {
-    if (!due) {
-      return (<FontAwesomeIcon size="lg" color="#dc3545" icon={faExclamationCircle}/>)
-    }
+    const text = due != null ? `Due ${moment(due).toNow()}` : 'Unable to determine'
+    const clockStyle = due != null ? styles.clockIcon : styles.clockIconError
+
     return (
-      <Card.Subtitle className="mb-2 text-muted">
-        {`${moment(due).format("MMM Do, YYYY")}`}
-      </Card.Subtitle>
+      <span>
+        <FontAwesomeIcon
+          className={clockStyle}
+          icon={faClock} />
+        <span className={styles.dueText}>
+            {text}
+        </span>
+      </span>
+    )
+  }
+
+  const renderStatus = (status) => {
+    if (!status) return null;
+
+    return (
+      <span>
+        <span className={styles.statusText}>
+          {toTitleCase(status)}
+        </span>
+        <FontAwesomeIcon
+          className={styles.filingIcon}
+          icon={faFileAlt} />
+      </span>
     )
   }
 
@@ -28,47 +48,63 @@ const FilingCard = (props) => {
     const { filing, companyFilingId, status, due } = props
 
     if (!due) {
-      const href = '/home/agencies'
-      const style = { color: '#dc3545'};
-      return (<Button style={style} href={href} variant="link">Add Registration Info ></Button>);
+      return (
+        <Button
+          href="/home/agencies"
+          variant="secondary"
+          block
+        >
+          Fix Issues
+        </Button>
+      );
     }
 
     if (companyFilingId) {
-      const linkText = status === 'draft' ? 'Edit' : 'View Details'
-      return (<Button href={`/home/filings/${companyFilingId}`} variant="link">{linkText}</Button>)
+      const linkText = status === 'draft' ? 'Edit Draft' : 'View Details'
+      return (
+        <Button
+          href={`/home/filings/${companyFilingId}`}
+          variant="secondary"
+          block
+        >
+          {linkText}
+        </Button>
+      )
     }
 
-    const href = `/home/filings/new?filingId=${filing.id}&due=${due}`;
-    return (<Button href={href} variant="outline-primary">Start Filing</Button>);
-  }
 
-  const renderBadge = () => {
-    const { companyFilingId, status } = props
-    if (!companyFilingId) return null;
-    return (<Badge style={{ marginLeft: 16 }} variant="info">{status}</Badge>)
+    return (
+      <Button
+        href={`/home/filings/new?filingId=${filing.id}&due=${due}`}
+        block
+        variant="secondary"
+      >
+        Start Filing
+      </Button>
+    );
   }
 
   return (
-    <Card className={styles.card}>
-      <Card.Body className={styles.cardBody}>
-        <div>
-          <Card.Title>
-            {toTitleCase(props.filing.name)}
-            {renderBadge(props.filing)}
-          </Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">
-            {toTitleCase(props.filing.agency.name)}
-          </Card.Subtitle>
-          <Card.Subtitle className="mb-2 text-muted">
-            {props.filing.agency.jurisdiction.name}
-          </Card.Subtitle>
+    <div className={props.size === "bg" ? styles.cardBig : styles.cardSmall}>
+      <div className={styles.cardTopLine}>
+        {renderDueDate(props.due)}
+        {renderStatus(props.status)}
+      </div>
+      <div className={styles.titleContainer}>
+        <div className={styles.filingName} >
+          {toTitleCase(props.filing.name)}
         </div>
-        <div className={styles.cardBodyRight}>
-          {renderDueDate(props.due)}
-          {renderCTA(props.filing.due, props.filing.id)}
+        <div className={styles.filingAgency}>
+          {toTitleCase(props.filing.agency.name)}
         </div>
-      </Card.Body>
-    </Card>
+        <div className={styles.filingJurisdiction}>
+          {toTitleCase(props.filing.agency.jurisdiction.name)}
+        </div>
+      </div>
+      <div>
+        {renderCTA(props.filing.due, props.filing.id)}
+      </div>
+    </div>
   )
 }
 

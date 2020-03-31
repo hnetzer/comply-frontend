@@ -59,6 +59,7 @@ class FilingsListScreen extends React.Component {
     const filings =  this.props.filings.filter(f => f.due == null)
     const f = filings.map((filing, index) => (
       <FilingCard
+        size="sm"
         filing={filing}
         status={null}
         due={filing.due}
@@ -72,6 +73,7 @@ class FilingsListScreen extends React.Component {
   renderInProgress = () => {
     const f = this.state.companyFilings.map((c, index) => (
         <FilingCard
+          size="bg"
           filing={c.filing}
           status={c.status}
           due={c.due_date}
@@ -91,7 +93,6 @@ class FilingsListScreen extends React.Component {
     const filings = this.props.filings.filter(f => {
       // remove filings that need more info
       if (f.due == null) return false
-
       // remove filings that have already been started
       if (companyFilingMap[f.id] != null) return false
 
@@ -103,6 +104,7 @@ class FilingsListScreen extends React.Component {
       .slice(0, 3)
       .map((filing, index) => (
         <FilingCard
+          size="sm"
           filing={filing}
           status={null}
           due={filing.due}
@@ -116,9 +118,11 @@ class FilingsListScreen extends React.Component {
 
   renderFilingSection = (count, filings, title) => {
     if (!count) return null;
-    return (<div>
-      <h5>{title}</h5>
-      <div>
+    return (<div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginBottom: 24 }}>
+      <div style={{ width: '100%' }}>
+        <h5>{title}</h5>
+      </div>
+      <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         {filings}
       </div>
     </div>)
@@ -131,15 +135,14 @@ class FilingsListScreen extends React.Component {
         <HeaderBar title="Filings"/>
         <section className={style.container}>
           <div className={style.content}>
-            {this.renderNeedMoreInfo()}
             {this.renderInProgress()}
             {this.renderNext()}
+            {this.renderNeedMoreInfo()}
           </div>
         </section>
       </>
     )
   }
-
 }
 
 const mapStateToProps = state => {

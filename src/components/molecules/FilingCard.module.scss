@@ -1,0 +1,80 @@
+@import "styles/vars";
+
+.card {
+  padding: 16px;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cardBig {
+  @extend .card;
+  width: 320px;
+}
+
+.cardSmall {
+  @extend .card;
+  width: 256px;
+}
+
+.clockIcon {
+  color: $accent;
+  font-size: 16px;
+}
+
+.clockIconError {
+  color: $error;
+  font-size: 16px;
+}
+
+.dueText {
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.cardTopLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 15px
+}
+
+.filingIcon {
+  color: $gray-500;
+  margin-left: 4px;
+  font-size: 18px;
+}
+
+.statusText {
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+.titleContainer {
+  margin: 24px 0px;
+}
+
+.filingName, .filingAgency, .filingJurisdiction  {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.filingName {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.filingAgency {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.filingJurisdiction {
+  font-size: 16px;
+  line-height: 24px;
+}
