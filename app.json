@@ -8,7 +8,7 @@
     "SASS_PATH": {
       "value": "node_modules:src"
     }
-  }
+  },
   "environments": {
     "review": {
       "env": {
@@ -16,7 +16,7 @@
         "SASS_PATH": "node_modules:src"
       }
     }
-  }
+  },
   "buildpacks": [
     {
       "url": "heroku/nodejs"
