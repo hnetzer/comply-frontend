@@ -5,6 +5,8 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import { faUser, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import style from './AccountMenu.module.scss'
+
 const Toggle = React.forwardRef(({ children, onClick }, ref) => (
   <button
     ref={ref}
@@ -12,13 +14,13 @@ const Toggle = React.forwardRef(({ children, onClick }, ref) => (
       e.preventDefault();
       onClick(e);
     }}
-    style={{ textDecoration: 'none', background: 'none', border: 'none' }}
+    className={style.button}
   >
-    <FontAwesomeIcon  icon={faUser}/>
+    <FontAwesomeIcon className={style.icon} icon={faUser}/>
     <span style={{ paddingLeft: 8, paddingRight: 8 }}>
       {children}
     </span>
-    <FontAwesomeIcon icon={faCaretDown}/>
+    <FontAwesomeIcon className={style.icon} icon={faCaretDown}/>
   </button>
 ));
 

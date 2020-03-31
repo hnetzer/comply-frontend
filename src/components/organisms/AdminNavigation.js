@@ -25,7 +25,7 @@ const AdminNavigation = ({ user, dispatch }) => {
           <Nav.Link href="/admin/companyfilings">Company Filings</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/admin/companies">Company Data</Nav.Link>
+          <Nav.Link disabled href="/admin/companies">Company Data</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link href="/admin/platform/jurisdictions">Jurisdictions</Nav.Link>

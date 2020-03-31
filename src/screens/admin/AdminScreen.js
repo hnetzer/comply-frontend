@@ -18,6 +18,7 @@ const AdminScreen  = () => {
       <AdminNavigation />
       <main className={styles.main}>
         <Router style={{ width: '100%' }}>
+          <AdminCompanyFilingsScreen path="/" />
           <AdminCompanyFilingsScreen path="/companyfilings" />
           <AdminCompaniesScreen path="/companies" />
           <AdminJurisdictionsScreen path="/platform/jurisdictions" />
