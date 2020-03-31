@@ -1,31 +1,7 @@
-// Required
+//@import "./_base.scss";
 
-$font-family-base: "Avenir", sans-serif;
-
-$white: #ffffff;
-$primary: #299FEB;
-$secondary: #30749F;
-$accent: #309F76;
 $navy: #112532;
-$chrome: #F1F2F3;
-
-$theme-colors: (
-  primary: $primary,
-  secondary: $secondary,
-);
-
-
-$input-border-radius: 2px;
-$input-border-width: 2px;
-$input-border-color: rgba(17, 37, 50, 0.25);
-$input-box-shadow: none;
-$input-color: $navy;
-
-$input-focus-border-color: $secondary;
-$input-focus-box-shadow: none;
-$input-focus-color: $navy;
-
-@import "../node_modules/bootstrap/scss/bootstrap";
+$white: #ffffff;
 
 html {
   font-size: 100%;
