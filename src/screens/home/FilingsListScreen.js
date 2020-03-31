@@ -85,6 +85,7 @@ class FilingsListScreen extends React.Component {
   }
 
   renderNext = () => {
+    const now = moment().unix()
     const companyFilingMap = this.state.companyFilings.reduce((acc, item) => {
       acc[item.filing.id] = item.due_date
       return acc
@@ -95,6 +96,11 @@ class FilingsListScreen extends React.Component {
       if (f.due == null) return false
       // remove filings that have already been started
       if (companyFilingMap[f.id] != null) return false
+
+      const due = moment(f.due).unix()
+      if (due > now) {
+        return false
+      }
 
       return true
     })
@@ -122,7 +128,7 @@ class FilingsListScreen extends React.Component {
       <div style={{ width: '100%' }}>
         <h5>{title}</h5>
       </div>
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}>
         {filings}
       </div>
     </div>)
