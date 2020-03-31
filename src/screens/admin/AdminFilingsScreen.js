@@ -33,7 +33,7 @@ class AdminFilingsScreen extends React.Component {
 
   render() {
     return(
-      <main style={{ width: '100%', display: 'flex' }}>
+      <main className={style.main}>
         <section className={style.sideList}>
           <div style={{ padding: 16 }}>
             <Button href="/admin/platform/filings/new" variant="link">+ New Filing</Button>
@@ -56,8 +56,8 @@ class AdminFilingsScreen extends React.Component {
             </div>
           </div>
         </section>
-        <section className={style.main}>
-          <Router>
+        <section className={style.rightContent}>
+          <Router style={{ display: 'flex', justifyContent: 'center' }}>
             <AdminEditFilingSection path="/:filingId" filing={this.state.selected} />
             <AdminEditFilingSection path="/new" filing={null} />
           </Router>

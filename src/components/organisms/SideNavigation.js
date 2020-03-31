@@ -1,30 +1,48 @@
 import React from 'react';
 
 import Nav from 'react-bootstrap/Nav'
+import style from './SideNavigation.module.scss';
+
+import { faBuilding, faFileAlt, faLandmark, faHome } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SideNavigation = ({ companyName }) => {
-
-  const style = {
-    top: '4rem',
-    height: '100vh',
-    backgroundColor: '#f7f7f7',
-    borderRight: '1px solid #ececec',
-    padding: '32px 16px',
-    display: 'flex',
-    flexDirection: 'column',
-    flexBasis: '16.6667%',
-    maxWidth: '16.666667%',
-  }
-
   return (
-    <div style={style}>
-      <h5>{companyName}</h5>
-      <Nav defaultActiveKey="/home" className="flex-column">
-        <Nav.Link href="/home/filings">Filings</Nav.Link>
-        <Nav.Link href="/home/agencies">Agencies</Nav.Link>
-        <Nav.Link href="/home/company">Company</Nav.Link>
+    <section className={style.sidebar}>
+      <header className={style.logoHeader}>
+        <a className={style.logoLink} href="/home">Comply</a>
+      </header>
+      <div className={style.divider} />
+      <div className={style.companyNameContainer}>
+        <div className={style.companyName}>
+          <div className={style.navIconContainer}>
+            <FontAwesomeIcon icon={faBuilding}/>
+          </div>
+          <span>{companyName}</span>
+        </div>
+      </div>
+      <div className={style.divider} />
+      <Nav defaultActiveKey="/home" className={style.nav}>
+        <Nav.Link className={style.navLink} href="/home">
+          <div className={style.navIconContainer}>
+            <FontAwesomeIcon className={style.navIcon} icon={faHome}/>
+          </div>
+          <span>Home</span>
+        </Nav.Link>
+        <Nav.Link className={style.navLink} href="/home/filings">
+          <div className={style.navIconContainer}>
+            <FontAwesomeIcon className={style.navIcon} icon={faFileAlt}/>
+          </div>
+          <span>Filings</span>
+        </Nav.Link>
+        <Nav.Link className={style.navLink} href="/home/agencies">
+          <div className={style.navIconContainer}>
+            <FontAwesomeIcon className={style.navIcon} icon={faLandmark}/>
+          </div>
+          <span>Agencies</span>
+        </Nav.Link>
       </Nav>
-    </div>
+    </section>
   )
 }
 

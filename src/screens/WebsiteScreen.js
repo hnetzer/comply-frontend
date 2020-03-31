@@ -3,24 +3,15 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-import styles from './Website.module.css'
+import styles from './Website.module.scss'
 
 const WebsiteScreen = (props) => {
-
   return(
     <div className={styles.container}>
-      <Card style={{
-        width: '400px',
-        marginLeft: 'auto',
-        marginRight: 'auto'
-      }}>
-        <Card.Body style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}>
-          <Card.Title><h1>Comply</h1></Card.Title>
-          <Card.Subtitle>Keeping your business in good standing</Card.Subtitle>
+      <Card className={styles.card}>
+        <Card.Body className={styles.cardBody}>
+          <Card.Title className={styles.complyTitle}>Comply</Card.Title>
+          <Card.Subtitle className={styles.complyTagline}>Simple. Dependable. Smart.</Card.Subtitle>
           <div style={{
               marginTop: 32,
               width: '70%',

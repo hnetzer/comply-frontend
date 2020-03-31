@@ -1,15 +1,5 @@
-.container {
-  width: 100%;
-  display: flex;
-}
-
 .main {
-  order: 1;
-  padding: 32px;
+  flex-grow: 1;
   display: flex;
-  width: 100%;
-}
-
-#account-nav-dropdown {
-  color: #fff;
+  flex-direction: column;
 }

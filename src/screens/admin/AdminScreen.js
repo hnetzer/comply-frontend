@@ -7,21 +7,25 @@ import AdminJurisdictionsScreen from './AdminJurisdictionsScreen'
 import AdminAgenciesScreen from './AdminAgenciesScreen'
 import AdminFilingsScreen from './AdminFilingsScreen'
 
-import { NavigationBar, AdminNavigation } from '../../components/organisms';
+import { AdminNavigation } from '../../components/organisms';
+
+import styles from './AdminScreens.module.css'
 
 const AdminScreen  = () => {
 
   return(
-    <div>
-      <NavigationBar />
+    <div className={styles.container}>
       <AdminNavigation />
-      <Router>
-        <AdminCompanyFilingsScreen path="/companyfilings" />
-        <AdminCompaniesScreen path="/companies" />
-        <AdminJurisdictionsScreen path="/platform/jurisdictions" />
-        <AdminAgenciesScreen path="/platform/agencies" />
-        <AdminFilingsScreen path="/platform/filings/*" />
-      </Router>
+      <main className={styles.main}>
+        <Router style={{ width: '100%' }}>
+          <AdminCompanyFilingsScreen path="/" />
+          <AdminCompanyFilingsScreen path="/companyfilings" />
+          <AdminCompaniesScreen path="/companies" />
+          <AdminJurisdictionsScreen path="/platform/jurisdictions" />
+          <AdminAgenciesScreen path="/platform/agencies" />
+          <AdminFilingsScreen path="/platform/filings/*" />
+        </Router>
+      </main>
     </div>
   )
 }

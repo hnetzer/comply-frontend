@@ -1,5 +1,5 @@
 import WelcomeModal from './WelcomeModal'
-import NavigationBar from './NavigationBar'
+import HeaderBar from './HeaderBar'
 import SideNavigation from './SideNavigation'
 import AdminNavigation from './AdminNavigation'
 import AdminRejectFilingModal from './AdminRejectFilingModal'
@@ -8,7 +8,7 @@ import AdminAgencyModal from './AdminAgencyModal'
 
 export {
   WelcomeModal,
-  NavigationBar,
+  HeaderBar,
   SideNavigation,
   AdminNavigation,
   AdminRejectFilingModal,

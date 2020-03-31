@@ -70,7 +70,7 @@ class AdminCompanyFilingsScreen extends React.Component {
   render() {
     const { filter } = this.state
     return(
-      <main style={{ width: '100%', display: 'flex' }}>
+      <main className={style.main}>
         <section className={style.sideList}>
           <div style={{ padding: 16 }}>
             <ButtonGroup>
@@ -105,8 +105,10 @@ class AdminCompanyFilingsScreen extends React.Component {
             </div>
           </div>
         </section>
-        <AdminCompanyFilingDetailsSection
-          companyFiling={this.props.companyfilings[this.state.selectedIndex]} />
+        <section className={style.rightContent}>
+          <AdminCompanyFilingDetailsSection
+            companyFiling={this.props.companyfilings[this.state.selectedIndex]} />
+        </section>
       </main>
     )
   }

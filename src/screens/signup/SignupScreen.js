@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './Signup.module.css'
+import styles from './Signup.module.scss'
 
 const SignupScreen = (props) => {
   return (

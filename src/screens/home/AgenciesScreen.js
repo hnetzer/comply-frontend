@@ -6,6 +6,9 @@ import { getCompanyAgencies } from 'network/api';
 import Table from 'react-bootstrap/Table'
 import { toTitleCase } from 'utils';
 
+import { HeaderBar } from 'components/organisms'
+import style from './Screens.module.scss'
+
 class AgenciesScreen extends React.Component {
   constructor(props) {
     super(props)
@@ -48,10 +51,14 @@ class AgenciesScreen extends React.Component {
 
   render() {
     return(
-      <div>
-        <h2>Agencies</h2>
-        {this.renderAgenciesTable()}
-      </div>
+      <>
+        <HeaderBar title="Agencies"/>
+        <section className={style.container}>
+          <div className={style.content}>
+          {this.renderAgenciesTable()}
+          </div>
+        </section>
+      </>
     )
   }
 }
