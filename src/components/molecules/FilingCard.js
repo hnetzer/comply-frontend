@@ -19,12 +19,17 @@ const FilingCard = (props) => {
     let clockStyle = due != null ? styles.clockIcon : styles.clockIconError
 
     if (status === 'filed' || status === 'complete') {
-      text = 'Submitted on [date]';
+      text = 'Filed on [date]';
       clockStyle = styles.filingStatusNavy;
     }
 
+
+    if (moment(due).unix() > moment().unix()) {
+      clockStyle = styles.clockIconError;
+    }
+
     return (
-      <span>
+      <span className={clockStyle}>
         <FontAwesomeIcon
           className={clockStyle}
           icon={faClock} />

@@ -10,6 +10,7 @@ import { HeaderBar } from 'components/organisms'
 import { setFilings } from 'actions';
 
 import style from './Screens.module.scss'
+import listStyles from './FilingsListScreen.module.scss';
 
 // Maybe this should just be a functional component?
 class FilingsListScreen extends React.Component {
@@ -59,7 +60,7 @@ class FilingsListScreen extends React.Component {
     const filings =  this.props.filings.filter(f => f.due == null)
     const f = filings.map((filing, index) => (
       <FilingCard
-        size="sm"
+        size="bg"
         filing={filing}
         status={null}
         due={filing.due}
@@ -107,10 +108,10 @@ class FilingsListScreen extends React.Component {
 
     const f = filings
       .sort(this.compareFilingsByDue)
-      .slice(0, 3)
+      .slice(0, 2)
       .map((filing, index) => (
         <FilingCard
-          size="sm"
+          size="bg"
           filing={filing}
           status={null}
           due={filing.due}
@@ -124,11 +125,11 @@ class FilingsListScreen extends React.Component {
 
   renderFilingSection = (count, filings, title) => {
     if (!count) return null;
-    return (<div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginBottom: 24 }}>
-      <div style={{ width: '100%' }}>
+    return (<div className={listStyles.section}>
+      <div className={listStyles.title}>
         <h5>{title}</h5>
       </div>
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}>
+      <div className={listStyles.list}>
         {filings}
       </div>
     </div>)
