@@ -60,7 +60,6 @@ class FilingsListScreen extends React.Component {
     const filings =  this.props.filings.filter(f => f.due == null)
     const f = filings.map((filing, index) => (
       <FilingCard
-        size="bg"
         filing={filing}
         status={null}
         due={filing.due}
@@ -74,7 +73,6 @@ class FilingsListScreen extends React.Component {
   renderInProgress = () => {
     const f = this.state.companyFilings.map((c, index) => (
         <FilingCard
-          size="bg"
           filing={c.filing}
           status={c.status}
           due={c.due_date}
@@ -111,7 +109,6 @@ class FilingsListScreen extends React.Component {
       .slice(0, 2)
       .map((filing, index) => (
         <FilingCard
-          size="bg"
           filing={filing}
           status={null}
           due={filing.due}
