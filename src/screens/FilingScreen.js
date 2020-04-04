@@ -123,15 +123,6 @@ class FilingScreen extends React.Component {
     const { jurisdiction } = agency;
 
     let form = this.formNotSupported();
-    if (jurisdiction.name.toLowerCase() === 'san francisco' &&
-        agency.name.toLowerCase() === 'tax and treasurer' &&
-        name.toLowerCase() === 'business license') {
-      form = (<SanFrancisco.TaxAndTreasurer.BusinessLicenseForm
-        initialValues={companyFiling != null ? companyFiling.field_data : null}
-        handleSubmit={this.handleSubmit}
-        error={null}/>);
-    }
-
     if (filing.fields.length > 0) {
       return (
         <CompanyFilingForm
@@ -171,9 +162,11 @@ class FilingScreen extends React.Component {
         <div className={screenStyle.content}>
           <div className={style.headerSection}>
             <FilingHeader filing={filing} status={status} due={due} title={false} />
-            <FilingAlertMessage status={status} messages={messages} />
           </div>
           <div className={style.divider} />
+          <div className={style.alertSection}>
+            <FilingAlertMessage status={status} messages={messages} />
+          </div>
           <div className={style.formContainer}>
             <div className={style.formContent}>
               {this.renderFilingData()}

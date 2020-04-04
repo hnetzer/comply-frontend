@@ -1,9 +1,14 @@
 import React from 'react';
 import moment from 'moment';
+
+import style from './FilingAlertMessage.module.scss'
+
 import Alert from 'react-bootstrap/Alert'
 
-
-const SUBMITTED_MESSAGE = 'Thanks we are processing your filing and will be in touch soon.';
+const SUBMITTED_MESSAGE = (<>
+  <Alert.Heading>{`You've submitted the filing!`}</Alert.Heading>
+  <p>{'We are reviewing your filing and will be in touch soon.'}</p>
+</>);
 const FOLLOW_UP_MESSAGE = 'We reviewed your filing and we found some issues. Please re-submit.'
 const NEEDS_PAYMENT_SIGNATURE_MESSAGE = (<>
   <Alert.Heading>{`You're filing is almost done!`}</Alert.Heading>
@@ -80,7 +85,7 @@ const FilingAlertMessage = ({ status, messages, filing }) => {
   }
 
   return (
-    <Alert show={show()} style={{ marginTop: 16, width: 550 }} variant={variant()}>
+    <Alert className={style.alert} show={show()} variant={variant()}>
       {text()}
     </Alert>
   )

@@ -1,5 +1,8 @@
 $navy: #112532;
 $white: #ffffff;
+$primary: #299FEB;
+$secondary: #30749F;
+$accent: #309F76;
 
 html {
   font-size: 100%;
@@ -48,4 +51,8 @@ h4 {
 .form-label {
   font-weight: 600;
   color: $navy;
+}
+
+.info-bg {
+  background-color: $primary
 }
