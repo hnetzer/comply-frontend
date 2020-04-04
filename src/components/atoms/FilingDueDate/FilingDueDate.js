@@ -7,27 +7,46 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import style from './FilingDueDate.module.scss'
 
 const FilingDueDate = ({ due, status }) => {
-  let text = due != null ? `Due ${moment(due).toNow()}` : 'Unable to determine'
-  let clockStyle = due != null ? style.clockIcon : style.clockIconError
+  const getDueText = () => {
+    if (!due) {
+      return 'Unable to determine'
+    }
+    if (status === 'filed' || status === 'complete') {
+      return 'Filed on [date]'
+    }
 
-  if (status === 'filed' || status === 'complete') {
-    text = 'Filed on [date]';
-    clockStyle = style.statusNavy;
+    const date = moment(due)
+    return `Due ${moment().to(date)} (${date.format('M/D/YY')})`
   }
 
-  if (moment(due).unix() > moment().unix()) {
-    clockStyle = style.clockIconError;
+  const getClockStyle = () => {
+    const now = new Date()
+    const date = new Date(due)
+
+
+    if (date.getTime() < now.getTime()) {
+      return style.clockIconError;
+    }
+    if (status === 'filed' || status === 'complete') {
+      return style.statusNavy;
+    }
+
+    if (!due) {
+      return style.clockIconError
+    }
+
+    return style.clockIcon
   }
 
   return (
-    <span className={clockStyle}>
+    <div className={getClockStyle()}>
       <FontAwesomeIcon
-        className={clockStyle}
+        className={getClockStyle()}
         icon={faClock} />
       <span className={style.dueText}>
-          {text}
+        {getDueText()}
       </span>
-    </span>
+    </div>
   )
 }
 
