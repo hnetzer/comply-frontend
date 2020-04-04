@@ -1,6 +1,6 @@
 import AccountMenu from './AccountMenu/AccountMenu';
 import FilingCard from './FilingCard/FilingCard';
-import InfoPopover from './InfoPopover';
+import InfoPopover from './InfoPopover/InfoPopover';
 import FilingHeader from './FilingHeader/FilingHeader';
 import FilingDataList from './FilingDataList';
 import FilingAlertMessage from './FilingAlertMessage';

@@ -8,7 +8,8 @@ import Spinner from 'react-bootstrap/Spinner'
 import Card from 'react-bootstrap/Card';
 
 import { HeaderBar } from 'components/organisms'
-import style from './home/Screens.module.scss'
+import screenStyle from './home/Screens.module.scss'
+import style from './FilingScreen.module.scss'
 
 import {
   getFiling,
@@ -166,17 +167,19 @@ class FilingScreen extends React.Component {
     return (
     <>
       <HeaderBar title={filing.name}/>
-      <section className={style.container}>
-        <div className={style.content}>
-          <div style={{ width: 440 }}>
+      <section className={screenStyle.container}>
+        <div className={screenStyle.content}>
+          <div className={style.headerSection}>
             <FilingHeader filing={filing} status={status} due={due} title={false} />
             <FilingAlertMessage status={status} messages={messages} />
           </div>
-          <Card style={{ marginTop: 24, width: 440 }}>
-            <Card.Body>
+          <div className={style.divider} />
+          <div className={style.formContainer}>
+            <div className={style.formContent}>
               {this.renderFilingData()}
-            </Card.Body>
-          </Card>
+            </div>
+          </div>
+
         </div>
       </section>
     </>);

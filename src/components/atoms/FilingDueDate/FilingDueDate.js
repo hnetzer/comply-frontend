@@ -23,7 +23,6 @@ const FilingDueDate = ({ due, status }) => {
     const now = new Date()
     const date = new Date(due)
 
-
     if (date.getTime() < now.getTime()) {
       return style.clockIconError;
     }

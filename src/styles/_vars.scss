@@ -30,4 +30,11 @@ $border-radius: 2px;
 $border-radius-sm: 2px;
 $border-radius-lg: 2px;
 
+$popover-bg: $navy;
+$popover-border-color: $navy;
+$popover-box-shadow: 0 .25rem .5rem rgba($navy, .2);
+$popover-header-color: $white;
+$popover-body-color: $white;
+
+
 @import "bootstrap/scss/bootstrap";

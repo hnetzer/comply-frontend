@@ -8,6 +8,8 @@ import Button from 'react-bootstrap/Button';
 
 import { InfoPopover } from 'components/molecules'
 
+import style from './companyFilingForm.module.scss'
+
 const CompanyFilingForm = (props) => {
   const [draft, setDraft] = useState(true);
   const [validated] = useState(false);
@@ -67,21 +69,33 @@ const CompanyFilingForm = (props) => {
                 {props.filing.fields.map((field, index) => (
                   <Form.Group key={index} controlId={`fields[${index}].value`}>
                     <Form.Label>{field.name}</Form.Label>
-                    <InfoPopover content={field.helper_text} />
-                    <Form.Control
-                      autoComplete="off"
-                      onChange={handleChange}
-                      type="text"
-                      value={values.fields[index] != null ? values.fields[index].value : ''} />
+                    <div className={style.inputRow}>
+                      <Form.Control
+                        autoComplete="off"
+                        onChange={handleChange}
+                        type="text"
+                        value={values.fields[index] != null ? values.fields[index].value : ''} />
+                      <InfoPopover content={field.helper_text} />
+                    </div>
                   </Form.Group>
                 ))}
               </>
             )} />
-            <Form.Row style={{ marginTop: 24, display: 'flex', justifyContent: 'space-between' }}>
-              <Button style={{ width: 160 }} onClick={() => setDraft(true)} variant="secondary" type="submit">
+            <Form.Row className={style.submitFormRow}>
+              <Button
+                className={style.submitButton}
+                onClick={() => setDraft(true)}
+                variant="secondary"
+                type="submit"
+              >
                 Save Draft
               </Button>
-              <Button style={{ width: 160 }} onClick={() => setDraft(false)} variant="primary" type="submit">
+              <Button
+                className={style.submitButton}
+                onClick={() => setDraft(false)}
+                variant="primary"
+                type="submit"
+              >
                 Submit to Comply
               </Button>
             </Form.Row>

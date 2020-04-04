@@ -4,12 +4,12 @@ import Popover from 'react-bootstrap/Popover'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-//<i class="fas fa-info-circle"></i>
+import style from './InfoPopover.module.scss';
 
 const popover = (props) => (
-  <Popover id="popover-basic">
+  <Popover id="popover-basic" className={style.popover}>
     <Popover.Content>
       {props.content}
     </Popover.Content>
@@ -17,9 +17,9 @@ const popover = (props) => (
 );
 
 const InfoPopover = (props) => (
-  <span style={{ marginRight: 8, marginLeft: 8 }}>
+  <span className={style.iconContainer}>
     <OverlayTrigger trigger="hover" placement="right" overlay={popover(props)}>
-      <FontAwesomeIcon color="#aaa" icon={faInfoCircle}/>
+      <FontAwesomeIcon icon={faInfoCircle}/>
     </OverlayTrigger>
   </span>
 );
