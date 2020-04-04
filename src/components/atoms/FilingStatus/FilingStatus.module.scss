@@ -1,0 +1,41 @@
+@import "styles/vars";
+
+.filingIcon {
+  color: $gray-500;
+  margin-left: 4px;
+  font-size: 18px;
+}
+
+.statusSecondary {
+  color: $secondary;
+  .filingIcon {
+    color: $secondary;
+  }
+}
+
+.statusNavy {
+  color: $navy;
+  .filingIcon {
+    color: $navy;
+  }
+}
+
+.statusError {
+  color: $error;
+  .filingIcon {
+    color: $error;
+  }
+}
+
+.statusGreen {
+  color: $accent;
+  .filingIcon {
+    color: $accent;
+  }
+}
+
+.statusText {
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 500;
+}

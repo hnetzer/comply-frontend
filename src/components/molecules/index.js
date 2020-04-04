@@ -1,7 +1,7 @@
-import AccountMenu from './AccountMenu';
-import FilingCard from './FilingCard';
+import AccountMenu from './AccountMenu/AccountMenu';
+import FilingCard from './FilingCard/FilingCard';
 import InfoPopover from './InfoPopover';
-import FilingHeader from './FilingHeader';
+import FilingHeader from './FilingHeader/FilingHeader';
 import FilingDataList from './FilingDataList';
 import FilingAlertMessage from './FilingAlertMessage';
 
