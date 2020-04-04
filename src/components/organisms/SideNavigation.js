@@ -12,17 +12,15 @@ const SideNavigation = ({ companyName }) => {
       <header className={style.logoHeader}>
         <a className={style.logoLink} href="/home">Comply</a>
       </header>
-      <div className={style.divider} />
-      <div className={style.companyNameContainer}>
-        <div className={style.companyName}>
-          <div className={style.navIconContainer}>
+      <Nav defaultActiveKey="/home" className={style.nav}>
+        <div className={style.divider} />
+        <Nav.Link className={style.navLink} href="/home/company">
+          <div className={style.companyIconContainer}>
             <FontAwesomeIcon icon={faBuilding}/>
           </div>
-          <span>{companyName}</span>
-        </div>
-      </div>
-      <div className={style.divider} />
-      <Nav defaultActiveKey="/home" className={style.nav}>
+          <span className={style.companyName}>{companyName}</span>
+        </Nav.Link>
+        <div className={style.divider} />
         <Nav.Link className={style.navLink} href="/home">
           <div className={style.navIconContainer}>
             <FontAwesomeIcon className={style.navIcon} icon={faHome}/>

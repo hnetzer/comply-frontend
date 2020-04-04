@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { getURLParam } from 'utils'
 
 import Spinner from 'react-bootstrap/Spinner'
-import Card from 'react-bootstrap/Card';
 
 import { HeaderBar } from 'components/organisms'
 import screenStyle from './home/Screens.module.scss'
@@ -20,7 +19,6 @@ import {
 } from 'network/api';
 
 import { FilingHeader, FilingDataList, FilingAlertMessage } from 'components/molecules'
-import { SanFrancisco } from 'forms/filings'
 import { CompanyFilingForm } from 'forms'
 
 class FilingScreen extends React.Component {
@@ -119,8 +117,6 @@ class FilingScreen extends React.Component {
 
   renderForm = () => {
     const { filing, companyFiling } = this.state
-    const { agency, name } = filing;
-    const { jurisdiction } = agency;
 
     let form = this.formNotSupported();
     if (filing.fields.length > 0) {

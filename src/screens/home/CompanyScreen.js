@@ -54,7 +54,7 @@ const CompanyScreen = (props) => {
 
   return(
     <>
-      <HeaderBar title="Filings"/>
+      <HeaderBar title={props.company && props.company.name}/>
       <section className={style.container}>
         <div className={style.content}>
           {renderDetailsTable()}
