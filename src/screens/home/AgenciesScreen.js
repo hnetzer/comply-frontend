@@ -1,18 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { getCompanyAgencies } from 'network/api';
+import { getCompanyAgencies, updateCompanyAgency } from 'network/api';
+import { setAgencies } from 'actions';
 
-import Table from 'react-bootstrap/Table'
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 import { toTitleCase } from 'utils';
 
+import { DatePicker } from 'components/molecules';
 import { HeaderBar } from 'components/organisms'
-import style from './Screens.module.scss'
+
+import screenStyle from './Screens.module.scss'
+
 
 class AgenciesScreen extends React.Component {
-  constructor(props) {
+  constructor(props){
     super(props)
-    this.state = { agencies: []}
+    this.state = {
+      activeEdit: null,
+      agencies: []
+    }
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.showDatepicker = this.showDatepicker.bind(this);
   }
 
 
@@ -21,7 +31,26 @@ class AgenciesScreen extends React.Component {
       const agencies = await getCompanyAgencies(this.props.user.company_id)
       this.setState({ agencies: agencies })
     } catch (err) {
+      console.warn(err)
     }
+  }
+
+  async componentDidUpdate() {
+    try {
+      const agencies = await getCompanyAgencies(this.props.user.company_id)
+      this.setState({ agencies: agencies })
+    } catch (err) {
+      console.warn(err)
+    }
+  }
+
+  showDatepicker(agencyId) {
+    this.setState({activeEdit: agencyId})
+  }
+
+  handleDateChange(agencyId, selectedDate){
+    updateCompanyAgency({registration: selectedDate}, this.props.user.company_id, agencyId)
+    this.setState({activeEdit: null})
   }
 
   renderAgenciesTable = () => {
@@ -32,17 +61,34 @@ class AgenciesScreen extends React.Component {
           <tr>
             <th>Agency</th>
             <th>Jurisdiction</th>
-            <th>Reg Date</th>
+            <th>What's your registration date?</th>
           </tr>
         </thead>
         <tbody>
-          {this.state.agencies.map((a,i) => (
+          {this.state.agencies.map((a,i) => {
+            let regDate;
+            if (a.registration) {
+              regDate = new Date(a.registration)
+              regDate.setDate(regDate.getDate() + 1);
+            }
+            return (
             <tr key={i}>
                 <td>{toTitleCase(a.name)}</td>
                 <td>{a.jurisdiction}</td>
-                <td>{a.registration}</td>
+                <td>
+                  { a.registration && this.state.activeEdit !== a.agency_id ?
+                    a.registration :
+                    null
+                  }
+                  { this.state.activeEdit === a.agency_id ?
+                      <DatePicker onChange={this.handleDateChange} agencyId={a.agency_id} date={regDate} />
+                      :
+                      <Button variant="link" onClick={() => this.showDatepicker(a.agency_id)}>Add/Edit date</Button>
+                  }
+                </td>
             </tr>
-          ))}
+            )
+          })}
         </tbody>
       </Table>
     )
@@ -53,8 +99,8 @@ class AgenciesScreen extends React.Component {
     return(
       <>
         <HeaderBar title="Agencies"/>
-        <section className={style.container}>
-          <div className={style.content}>
+        <section className={screenStyle.container}>
+          <div className={screenStyle.content}>
           {this.renderAgenciesTable()}
           </div>
         </section>
@@ -64,7 +110,6 @@ class AgenciesScreen extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
     user: state.auth.user,
     agencies: state.company.agencies,
