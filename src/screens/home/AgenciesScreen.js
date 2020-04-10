@@ -8,10 +8,11 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { toTitleCase } from 'utils';
 
-import { DatePicker } from '../../components/molecules';
-
+import { DatePicker } from 'components/molecules';
 import { HeaderBar } from 'components/organisms'
-import style from './Screens.module.scss'
+
+import screenStyle from './Screens.module.scss'
+
 
 class AgenciesScreen extends React.Component {
   constructor(props){
@@ -71,10 +72,10 @@ class AgenciesScreen extends React.Component {
               regDate.setDate(regDate.getDate() + 1);
             }
             return (
-            <tr className="agency-row" key={i}>
+            <tr key={i}>
                 <td>{toTitleCase(a.name)}</td>
                 <td>{a.jurisdiction}</td>
-                <td className="td-reg-date">
+                <td>
                   { a.registration && this.state.activeEdit !== a.agency_id ?
                     a.registration :
                     null
@@ -82,7 +83,7 @@ class AgenciesScreen extends React.Component {
                   { this.state.activeEdit === a.agency_id ?
                       <DatePicker onChange={this.handleDateChange} agencyId={a.agency_id} date={regDate} />
                       :
-                      <Button className="edit-date-btn" variant="link" onClick={() => this.showDatepicker(a.agency_id)}>Add/Edit date</Button>
+                      <Button variant="link" onClick={() => this.showDatepicker(a.agency_id)}>Add/Edit date</Button>
                   }
                 </td>
             </tr>
@@ -98,8 +99,8 @@ class AgenciesScreen extends React.Component {
     return(
       <>
         <HeaderBar title="Agencies"/>
-        <section className={style.container}>
-          <div className={style.content}>
+        <section className={screenStyle.container}>
+          <div className={screenStyle.content}>
           {this.renderAgenciesTable()}
           </div>
         </section>
