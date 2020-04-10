@@ -1,16 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Router, navigate } from "@reach/router"
+import { Router } from "@reach/router"
 
 import { getAgencies, getCompany, updateAgencies, getCompanyFilings } from 'network/api';
-import { setFilings } from 'actions';
+import { setFilings, setCompanyAgencies } from 'actions';
 
-import { NavigationBar, WelcomeModal, SideNavigation } from '../components/organisms'
+import { WelcomeModal, SideNavigation } from 'components/organisms'
 
 // screens
 import CompanyScreen from './home/CompanyScreen'
 import FilingsListScreen from './home/FilingsListScreen'
 import AgenciesScreen from './home/AgenciesScreen'
+import DashboardScreen from './home/DashboardScreen'
 import FilingScreen from './FilingScreen'
 
 import styles from './Home.module.css'
@@ -42,9 +43,10 @@ class HomeScreen extends React.Component {
   handleUpdateAgencies = async (agencyIds) => {
     try {
       this.setState({ show: false })
-      await updateAgencies({ agencies: agencyIds }, this.props.user.company_id)
+      const agencies = await updateAgencies({ agencies: agencyIds }, this.props.user.company_id)
       const filings = await getCompanyFilings(this.props.user.company_id)
       this.props.dispatch(setFilings(filings))
+      this.props.dispatch(setCompanyAgencies(agencies))
     } catch (err) {
       alert(err)
     }
@@ -53,27 +55,24 @@ class HomeScreen extends React.Component {
   render() {
     const { company, filings } = this.state;
     return(
-      <div>
-        <NavigationBar />
-        <div className={styles.container}>
-          <SideNavigation companyName={company && company.name} />
-          <main className={styles.main}>
-            <Router>
-              <FilingsListScreen path="/" filings={filings} />
-              <FilingsListScreen path="/filings" filings={filings} />
-              <CompanyScreen path="/company" company={company} />
-              <AgenciesScreen path="/agencies" />
-              <FilingScreen path="/filings/new" />
-              <FilingScreen path="/filings/:companyFilingId" />
-            </Router>
-          </main>
-        </div>
+      <>
+        <SideNavigation companyName={company && company.name} />
+        <main className={styles.main}>
+          <Router style={{ width: '100%' }}>
+            <FilingsListScreen path="/filings" filings={filings} />
+            <CompanyScreen path="/company" company={company} />
+            <AgenciesScreen path="/agencies" />
+            <FilingScreen path="/filings/new" />
+            <FilingScreen path="/filings/:companyFilingId" />
+            <DashboardScreen path="/" />
+          </Router>
+        </main>
         <WelcomeModal
           show={this.state.show}
           handleHide={() => this.setState({ show: false })}
           updateAgencies={this.handleUpdateAgencies}
           agencies={this.state.agencies} />
-      </div>
+      </>
     )
   }
 }

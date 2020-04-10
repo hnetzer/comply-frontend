@@ -10,7 +10,7 @@ import { OfficeDetailsForm } from 'forms'
 // React Bootstrap components
 import Card from 'react-bootstrap/Card';
 
-import styles from './Signup.module.css'
+import styles from './Signup.module.scss'
 
 const OfficeDetailsScreen = (props) => {
 
@@ -28,7 +28,7 @@ const OfficeDetailsScreen = (props) => {
     try {
       await updateOffices(values, props.company.id, props.token)
       // props.dispatch(createAccountResponse(response))
-      navigate('/home')
+      navigate('/home/filings')
     } catch (err) {
       alert(err.message)
     }

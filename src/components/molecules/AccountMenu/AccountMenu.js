@@ -5,22 +5,23 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import { faUser, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import style from './AccountMenu.module.scss'
+
 const Toggle = React.forwardRef(({ children, onClick }, ref) => (
-  <a
-    href=""
+  <button
     ref={ref}
     onClick={e => {
       e.preventDefault();
       onClick(e);
     }}
-    style={{ color: '#fff', textDecoration: 'none'}}
+    className={style.button}
   >
-    <FontAwesomeIcon color="#fff" icon={faUser}/>
+    <FontAwesomeIcon className={style.icon} icon={faUser}/>
     <span style={{ paddingLeft: 8, paddingRight: 8 }}>
       {children}
     </span>
-    <FontAwesomeIcon color="#fff" icon={faCaretDown}/>
-  </a>
+    <FontAwesomeIcon className={style.icon} icon={faCaretDown}/>
+  </button>
 ));
 
 
@@ -36,7 +37,6 @@ const AccountMenu = (props) => {
       </Dropdown.Toggle>
       <Dropdown.Menu alignRight>
         <Dropdown.Header>{email}</Dropdown.Header>
-        {/*<Dropdown.Item>Account</Dropdown.Item>*/}
         <Dropdown.Item onClick={props.handleLogout}>Logout</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

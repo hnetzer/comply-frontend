@@ -1,0 +1,37 @@
+// Required
+
+$font-family-base: "Avenir", sans-serif;
+
+$white: #ffffff;
+$primary: #299FEB;
+$secondary: #30749F;
+$accent: #309F76;
+$navy: #112532;
+$chrome: #F1F2F3;
+
+$error: #db6955;
+
+$info: $primary;
+
+$input-border-radius: 2px;
+$input-border-width: 2px;
+$input-border-color: rgba(17, 37, 50, 0.25);
+$input-box-shadow: none;
+$input-color: $navy;
+
+$input-focus-border-color: $secondary;
+$input-focus-box-shadow: none;
+$input-focus-color: $navy;
+
+$border-radius: 2px;
+$border-radius-sm: 2px;
+$border-radius-lg: 2px;
+
+$popover-bg: $navy;
+$popover-border-color: $navy;
+$popover-box-shadow: 0 .25rem .5rem rgba($navy, .2);
+$popover-header-color: $white;
+$popover-body-color: $white;
+
+
+@import "bootstrap/scss/bootstrap";

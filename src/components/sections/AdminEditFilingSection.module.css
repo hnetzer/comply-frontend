@@ -1,0 +1,10 @@
+.content {
+  padding-top: 36px;
+  display: flex;
+  flex-direction: column;
+  width: 744px;
+}
+
+.title {
+  margin-bottom: 24px;
+}

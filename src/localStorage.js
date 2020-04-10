@@ -11,8 +11,14 @@ export const loadState = () => {
 };
 
 export const saveState = (state) => {
+
+  // whitelist the reducers we want to cache
+  const stateToStore = {
+    auth: state.auth,
+  }
+
   try {
-    const serializedState = JSON.stringify(state);
+    const serializedState = JSON.stringify(stateToStore);
     localStorage.setItem('state', serializedState);
   } catch (err) {
     // Ignore write errors.

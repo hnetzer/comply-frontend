@@ -3,15 +3,43 @@ import { connect } from 'react-redux';
 import moment from 'moment'
 
 import { FilingCard } from '../../components/molecules'
-import { getCompanyFilings } from 'network/api';
+import { getFilingsForCompany, getCompanyFilings } from 'network/api';
+
+import { HeaderBar } from 'components/organisms'
 
 import { setFilings } from 'actions';
 
+import style from './Screens.module.scss'
+import listStyles from './FilingsListScreen.module.scss';
+
 // Maybe this should just be a functional component?
 class FilingsListScreen extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      companyFilings: [],
+      filings: []
+    }
+  }
+
   async componentDidMount() {
+    await this.loadPageData()
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (prevProps.agencies.length !== this.props.agencies.length) {
+      await this.loadPageData()
+    }
+  }
+
+  loadPageData = async () => {
     try {
-      const filings = await getCompanyFilings(this.props.user.company_id)
+      const filings = await getFilingsForCompany(this.props.user.company_id)
+      const companyFilings = await getCompanyFilings(this.props.user.company_id)
+      this.setState({
+        companyFilings: companyFilings,
+        filings: filings
+      })
       this.props.dispatch(setFilings(filings))
     } catch (err) {
     }
@@ -28,72 +56,105 @@ class FilingsListScreen extends React.Component {
     return 0
   }
 
-  renderFilings = (filings) => {
-    return filings.map((filing, index) => (
-      <FilingCard filing={filing} key={index} />
-    ))
-  }
-
   renderNeedMoreInfo = () => {
-    const filings = this.props.filings.filter(f => f.due == null)
-    if (filings.length) {
-      return (<>
-        <h5>Need More Information</h5>
-        {this.renderFilings(filings)}
-      </>)
-    }
+    const filings =  this.props.filings.filter(f => f.due == null)
+    const f = filings.map((filing, index) => (
+      <FilingCard
+        filing={filing}
+        status={null}
+        due={filing.due}
+        companyFilingId={null}
+        key={index} />
+    ))
+
+    return this.renderFilingSection(filings.length, f, 'Need More Information')
   }
 
   renderInProgress = () => {
-    const filings = this.props.filings.filter(f => f.companyFilingId != null)
-    if (filings.length) {
-      return (<>
-        <h5>In Progress</h5>
-        {this.renderFilings(filings)}
-      </>)
-    }
+    const f = this.state.companyFilings.map((c, index) => (
+        <FilingCard
+          filing={c.filing}
+          status={c.status}
+          due={c.due_date}
+          companyFilingId={c.id}
+          key={index} />
+      ))
+
+    return this.renderFilingSection(this.state.companyFilings.length, f, 'In Progress')
   }
 
-  renderNext60Days = () => {
-    const future = moment().add(60, 'd').unix()
-    const now = moment().unix()
+  renderNext = () => {
+    const now = new Date()
+    console.log(now.toString())
+    const companyFilingMap = this.state.companyFilings.reduce((acc, item) => {
+      acc[item.filing.id] = item.due_date
+      return acc
+    }, {})
+
     const filings = this.props.filings.filter(f => {
+      // remove filings that need more info
       if (f.due == null) return false
-      if (f.companyFilingId != null) return false
+      // remove filings that have already been started
+      if (companyFilingMap[f.id] != null) return false
 
-      // Show SF Tax & Treasurer Buisness License for now
-      if (f.id === 15) return true
+      const due = new Date(f.due)
+      if (due.getTime() >= now.getTime()) {
+        return true
+      }
 
-      const due = moment(f.due).unix()
-      return due < future && due >= now;
+      return false
     })
 
-    if (filings.length) {
-      return (<>
-        <h5>Next 60 Days</h5>
-        {this.renderFilings(filings.sort(this.compareFilingsByDue))}
-      </>)
-    }
+    const f = filings
+      .sort(this.compareFilingsByDue)
+      .slice(0, 2)
+      .map((filing, index) => (
+        <FilingCard
+          filing={filing}
+          status={null}
+          due={filing.due}
+          companyFilingId={null}
+          key={index} />
+      ))
+
+    return this.renderFilingSection(filings.length, f, 'Next Filings')
+
+  }
+
+  renderFilingSection = (count, filings, title) => {
+    if (!count) return null;
+    return (<div className={listStyles.section}>
+      <div className={listStyles.title}>
+        <h5>{title}</h5>
+      </div>
+      <div className={listStyles.list}>
+        {filings}
+      </div>
+    </div>)
   }
 
 
   render() {
     return(
-      <div>
-        <h2>Filings</h2>
-        {this.renderNeedMoreInfo()}
-        {this.renderInProgress()}
-        {this.renderNext60Days()}
-      </div>
+      <>
+        <HeaderBar title="Filings"/>
+        <section className={style.container}>
+          <div className={style.content}>
+            {this.renderInProgress()}
+            {this.renderNext()}
+            {this.renderNeedMoreInfo()}
+          </div>
+        </section>
+      </>
     )
   }
-
 }
 
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    filings: state.filing.filings
+    filings: state.filing.filings,
+    agencies: state.company.agencies
   }
 }
 

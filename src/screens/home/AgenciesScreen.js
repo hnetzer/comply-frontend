@@ -10,20 +10,25 @@ import { toTitleCase } from 'utils';
 
 import { DatePicker } from '../../components/molecules';
 
+import { HeaderBar } from 'components/organisms'
+import style from './Screens.module.scss'
+
 class AgenciesScreen extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      activeEdit: null
+      activeEdit: null,
+      agencies: []
     }
     this.handleDateChange = this.handleDateChange.bind(this);
     this.showDatepicker = this.showDatepicker.bind(this);
   }
 
+
   async componentDidMount() {
     try {
       const agencies = await getCompanyAgencies(this.props.user.company_id)
-      this.props.dispatch(setAgencies(agencies))
+      this.setState({ agencies: agencies })
     } catch (err) {
       console.warn(err)
     }
@@ -32,7 +37,7 @@ class AgenciesScreen extends React.Component {
   async componentDidUpdate() {
     try {
       const agencies = await getCompanyAgencies(this.props.user.company_id)
-      this.props.dispatch(setAgencies(agencies))
+      this.setState({ agencies: agencies })
     } catch (err) {
       console.warn(err)
     }
@@ -48,6 +53,7 @@ class AgenciesScreen extends React.Component {
   }
 
   renderAgenciesTable = () => {
+    console.log(this.props.agencies)
     return (
       <Table striped bordered hover>
         <thead>
@@ -58,7 +64,7 @@ class AgenciesScreen extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.agencies.map((a,i) => {
+          {this.state.agencies.map((a,i) => {
             let regDate;
             if (a.registration) {
               regDate = new Date(a.registration)
@@ -70,11 +76,11 @@ class AgenciesScreen extends React.Component {
                 <td>{a.jurisdiction}</td>
                 <td className="td-reg-date">
                   { a.registration && this.state.activeEdit !== a.agency_id ?
-                    a.registration : 
+                    a.registration :
                     null
                   }
-                  { this.state.activeEdit === a.agency_id ? 
-                      <DatePicker onChange={this.handleDateChange} agencyId={a.agency_id} date={regDate} /> 
+                  { this.state.activeEdit === a.agency_id ?
+                      <DatePicker onChange={this.handleDateChange} agencyId={a.agency_id} date={regDate} />
                       :
                       <Button className="edit-date-btn" variant="link" onClick={() => this.showDatepicker(a.agency_id)}>Add/Edit date</Button>
                   }
@@ -90,14 +96,14 @@ class AgenciesScreen extends React.Component {
 
   render() {
     return(
-      <div>
-        <div className="agency-table-header">
-          <h2>Agencies</h2>
-        </div>
-        <div>
+      <>
+        <HeaderBar title="Agencies"/>
+        <section className={style.container}>
+          <div className={style.content}>
           {this.renderAgenciesTable()}
-        </div>
-      </div>
+          </div>
+        </section>
+      </>
     )
   }
 }

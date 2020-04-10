@@ -2,26 +2,24 @@ import React from 'react';
 import { navigate } from "@reach/router"
 import { connect } from 'react-redux';
 
-import { toTitleCase, getURLParam } from 'utils'
+import { getURLParam } from 'utils'
 
-import Alert from 'react-bootstrap/Alert'
 import Spinner from 'react-bootstrap/Spinner'
-import Card from 'react-bootstrap/Card';
+
+import { HeaderBar } from 'components/organisms'
+import screenStyle from './home/Screens.module.scss'
+import style from './FilingScreen.module.scss'
 
 import {
   getFiling,
   createCompanyFiling,
   getCompanyFiling,
-  updateCompanyFiling
+  updateCompanyFiling,
+  getCompanyFilingMessages
 } from 'network/api';
 
-import { FilingHeader, FilingDataList } from 'components/molecules'
-import { SanFrancisco } from 'forms/filings'
-
-import Breadcrumb from 'react-bootstrap/Breadcrumb'
-
-const DRAFT_SUCCESS_ALERT = 'Your draft has been saved successfully.';
-const SUBMIT_SUCCESS_ALERT = 'Thanks we are processing your filing and will be in touch soon';
+import { FilingHeader, FilingDataList, FilingAlertMessage } from 'components/molecules'
+import { CompanyFilingForm } from 'forms'
 
 class FilingScreen extends React.Component {
   constructor(props) {
@@ -48,26 +46,28 @@ class FilingScreen extends React.Component {
     if (this.props.companyFilingId) {
       const { user, companyFilingId } = this.props
       const companyFiling = await getCompanyFiling(user.company_id, companyFilingId)
-      const { filing, due_date, status } = companyFiling
+      const filing = await getFiling(companyFiling.filing_id)
+      const messages = await getCompanyFilingMessages(user.company_id, companyFilingId)
+      const { due_date, status } = companyFiling
       this.setState({
         filing: filing,
         due: due_date,
         companyFiling: companyFiling,
         status: status,
-        alert: status === 'submitted' ? SUBMIT_SUCCESS_ALERT : null
+        messages: messages
       })
     }
   }
 
   handleSubmit = async (values, status) => {
     try {
-      const { companyFilingId } = this.state
+      const { companyFiling } = this.state
       // Saving or submitting the first setDraft
-      if (!companyFilingId) {
+      if (!companyFiling) {
         this.createFiling(values, status)
       }
       // Updating an existing filing
-      if (companyFilingId) {
+      if (companyFiling) {
         this.updateFiling(values, status)
       }
     } catch (err) {
@@ -79,20 +79,19 @@ class FilingScreen extends React.Component {
     const { user } = this.props
     const { due, filing } = this.state
     const data = {
-      field_data: values,
+      fields: values.fields,
       status: formStatus,
       due_date: due,
       filing_id: filing.id
     };
     const filingId = getURLParam('filingId')
+
     const companyFiling = await createCompanyFiling(user.company_id, filingId, data);
-    const { field_data, status, id } = companyFiling
+    const { status } = companyFiling
 
     this.setState({
-      companyFilingId: id,
-      fieldData: field_data,
+      companyFiling: companyFiling,
       status: status,
-      alert: status === 'draft' ? DRAFT_SUCCESS_ALERT : SUBMIT_SUCCESS_ALERT
     })
 
     navigate(`/home/filings/${companyFiling.id}`)
@@ -100,19 +99,15 @@ class FilingScreen extends React.Component {
 
   updateFiling = async (values, status) => {
     const { user } = this.props
-    const { filing, due, companyFiling } = this.state
+    const { filing, companyFiling } = this.state
     const data = {
-      field_data: values,
+      fields: values.fields,
       status: status,
-      due_date: due,
       filing_id: filing.id
     };
 
     const updated = await updateCompanyFiling(user.company_id, companyFiling.id, data);
-    this.setState({
-      status: updated.status,
-      alert: status === 'draft' ? DRAFT_SUCCESS_ALERT : SUBMIT_SUCCESS_ALERT
-    });
+    this.setState({ status: updated.status });
   }
 
   formNotSupported = () => (<div>
@@ -122,43 +117,60 @@ class FilingScreen extends React.Component {
 
   renderForm = () => {
     const { filing, companyFiling } = this.state
-    const { jurisdiction, agency, name } = filing;
 
     let form = this.formNotSupported();
-    if (jurisdiction.name.toLowerCase() === 'san francisco' &&
-        agency.name.toLowerCase() === 'tax and treasurer' &&
-        name.toLowerCase() === 'business license') {
-      form = (<SanFrancisco.TaxAndTreasurer.BusinessLicenseForm
-        initialValues={companyFiling != null ? companyFiling.field_data : null}
-        handleSubmit={this.handleSubmit}
-        error={null}/>);
+    if (filing.fields.length > 0) {
+      return (
+        <CompanyFilingForm
+          filing={filing}
+          companyFiling={companyFiling}
+          handleSubmit={this.handleSubmit} />
+      )
     }
+
     return form;
   }
 
 
+  renderFilingData = () => {
+    const { companyFiling, status } = this.state
+    switch(status) {
+      case 'draft': return this.renderForm()
+      case 'submitted': return (<FilingDataList data={companyFiling.fields} />)
+      case 'needs-follow-up': return this.renderForm()
+      case 'needs-signature-payment': return (<FilingDataList data={companyFiling.fields} />)
+      case 'filed': return (<FilingDataList data={companyFiling.fields} />)
+      default: return this.renderForm()
+    }
+  }
+
+
   render() {
-    const { status, filing, companyFiling, alert } = this.state
+    const { status, filing, messages, due } = this.state
 
     // Loading state
     if (!filing) return (<Spinner animation="grow" variant="primary" />);
 
-    return (<>
-      <Breadcrumb>
-        <Breadcrumb.Item href="/home/filings">Filings</Breadcrumb.Item>
-        <Breadcrumb.Item active>{toTitleCase(filing.name)}</Breadcrumb.Item>
-      </Breadcrumb>
-      <FilingHeader filing={filing} status={status} />
-      <Alert show={alert != null} style={{ marginTop: 16 }} variant="info">
-        {alert}
-      </Alert>
-      <Card style={{ marginTop: 24 }}>
-        <Card.Body>
-          {status === 'submitted' ? <FilingDataList data={companyFiling.field_data} /> :
-            this.renderForm()
-          }
-        </Card.Body>
-      </Card>
+    return (
+    <>
+      <HeaderBar title={filing.name}/>
+      <section className={screenStyle.container}>
+        <div className={screenStyle.content}>
+          <div className={style.headerSection}>
+            <FilingHeader filing={filing} status={status} due={due} title={false} />
+          </div>
+          <div className={style.divider} />
+          <div className={style.alertSection}>
+            <FilingAlertMessage status={status} messages={messages} />
+          </div>
+          <div className={style.formContainer}>
+            <div className={style.formContent}>
+              {this.renderFilingData()}
+            </div>
+          </div>
+
+        </div>
+      </section>
     </>);
   }
 }

@@ -69,8 +69,12 @@ export const getCompany = async (companyId) => {
   return sendRequest('GET', `/company/${companyId}`);
 }
 
-export const getCompanyFilings = async (companyId) => {
+export const getFilingsForCompany = async (companyId) => {
   return sendRequest('GET', `/company/${companyId}/filings`);
+}
+
+export const getCompanyFilings = async (companyId) => {
+  return sendRequest('GET', `/company/${companyId}/companyfilings`);
 }
 
 export const getFiling = async (filingId) => {
@@ -78,15 +82,19 @@ export const getFiling = async (filingId) => {
 }
 
 export const createCompanyFiling = async (companyId, filingId, data) => {
-  return sendRequest('POST', `/company/${companyId}/filings`, data);
+  return sendRequest('POST', `/company/${companyId}/companyfilings`, data);
 }
 
 export const getCompanyFiling = async (companyId, companyFilingId) => {
-  return sendRequest('GET', `/company/${companyId}/filings/${companyFilingId}`);
+  return sendRequest('GET', `/company/${companyId}/companyfilings/${companyFilingId}`);
+}
+
+export const getCompanyFilingMessages = async (companyId, companyFilingId) => {
+  return sendRequest('GET', `/company/${companyId}/companyfilings/${companyFilingId}/messages`);
 }
 
 export const updateCompanyFiling = async (companyId, companyFilingId, data) => {
-  return sendRequest('PUT', `/company/${companyId}/filings/${companyFilingId}`, data);
+  return sendRequest('PUT', `/company/${companyId}/companyfilings/${companyFilingId}`, data);
 }
 
 export const getCompanyAgencies = async (companyId) => {
@@ -101,6 +109,53 @@ export const adminRejectCompanyFiling = async (companyFilingId, data) => {
   return sendRequest('PUT', `/admin/companyfilings/${companyFilingId}/reject`, data)
 }
 
+export const adminUpdateCompanyFilingStatus = async (companyFilingId, data) => {
+  return sendRequest('PUT', `/admin/companyfilings/${companyFilingId}`, data)
+}
+
+export const adminGetCompanyFiling = async (companyFilingId) => {
+  return sendRequest('GET', `/admin/companyfilings/${companyFilingId}`)
+}
+
+export const adminGetJurisdictions = async () => {
+  return sendRequest('GET', `/admin/jurisdictions`)
+}
+
+export const adminCreateJurisdiction = async (data) => {
+  return sendRequest('POST', `/admin/jurisdictions`, data)
+}
+
+export const adminUpdateJurisdiction = async (jurisdictionId, data) => {
+  return sendRequest('PUT', `/admin/jurisdictions/${jurisdictionId}`, data)
+}
+
+export const adminGetAgencies = async () => {
+  return sendRequest('GET', `/admin/agencies`)
+}
+
+export const adminCreateAgency = async (data) => {
+  return sendRequest('POST', `/admin/agencies`, data)
+}
+
+export const adminUpdateAgency = async (agencyId, data) => {
+  return sendRequest('PUT', `/admin/agencies/${agencyId}`, data)
+}
+
+export const adminGetFilings = async () => {
+  return sendRequest('GET', `/admin/filings/`)
+}
+
+export const adminGetFiling = async (id) => {
+  return sendRequest('GET', `/admin/filings/${id}`)
+}
+
+export const adminCreateFiling = async (data) => {
+  return sendRequest('POST', `/admin/filings/`, data)
+}
+
+export const adminUpdateFiling = async (filingId, data) => {
+  return sendRequest('PUT', `/admin/filings/${filingId}`, data)
+}
 
 export default {
   BASE_URI,
@@ -111,14 +166,28 @@ export default {
   getAgencies,
   getCompany,
   updateAgencies,
+  getFilingsForCompany,
   getCompanyFilings,
   getFiling,
   createCompanyFiling,
   getCompanyFiling,
+  getCompanyFilingMessages,
   updateCompanyFiling,
   getCompanyAgencies,
 
   // admin requests
   getAllCompanyFilings,
   adminRejectCompanyFiling,
+  adminUpdateCompanyFilingStatus,
+  adminGetCompanyFiling,
+  adminGetJurisdictions,
+  adminCreateJurisdiction,
+  adminUpdateJurisdiction,
+  adminGetAgencies,
+  adminCreateAgency,
+  adminUpdateAgency,
+  adminGetFilings,
+  adminCreateFiling,
+  adminGetFiling,
+  adminUpdateFiling
 }

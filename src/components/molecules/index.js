@@ -1,8 +1,9 @@
-import AccountMenu from './AccountMenu';
-import FilingCard from './FilingCard';
-import InfoPopover from './InfoPopover';
-import FilingHeader from './FilingHeader';
-import FilingDataList from './FilingDataList';
+import AccountMenu from './AccountMenu/AccountMenu';
+import FilingCard from './FilingCard/FilingCard';
+import InfoPopover from './InfoPopover/InfoPopover';
+import FilingHeader from './FilingHeader/FilingHeader';
+import FilingDataList from './FilingDataList/FilingDataList';
+import FilingAlertMessage from './FilingAlertMessage/FilingAlertMessage';
 import DatePicker from './DatePicker';
 
 // Admin
@@ -14,6 +15,7 @@ export {
   InfoPopover,
   FilingHeader,
   FilingDataList,
+  FilingAlertMessage,
   SideListItem,
   DatePicker
 }

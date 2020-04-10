@@ -5,7 +5,7 @@ import { navigate } from "@reach/router"
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
-import styles from './Website.module.css'
+import styles from './Website.module.scss'
 
 import { loginRequest } from 'network/api';
 import { login } from 'actions';
@@ -28,13 +28,13 @@ const LoginScreen = (props) => {
 
       const { user } = response
       // If admin, then go to admin
-      if (user.roles.indexOf('admin') !== -1) {
+      if (user.roles != null && user.roles.indexOf('admin') !== -1) {
         navigate('/admin')
         return
       }
 
       // Otherwise go to client home
-      navigate('/home')
+      navigate('/home/filings')
     } catch (err) {
       console.log(err)
       setError('Email and password are not valid.')

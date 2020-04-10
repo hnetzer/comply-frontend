@@ -1,0 +1,11 @@
+@import "styles/vars";
+
+.iconContainer {
+  margin: 0px 8px;
+  color: $gray-400;
+  font-size: 18px;
+}
+
+.iconContainer:hover {
+  color: $navy;
+}
