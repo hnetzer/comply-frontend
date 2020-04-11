@@ -1,26 +1,60 @@
 import React, { useState } from 'react';
-
 import { Formik, FieldArray } from 'formik';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-
-import style from './adminFilingForm.module.css'
-
-import AdminFilingDueDateSection from './adminFilingDueDateSection'
+import * as Yup from 'yup';
 
 // Bootstrap components
 import Form from 'react-bootstrap/Form';
+import FormControl from 'react-bootstrap/FormControl';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+
+import AdminFilingDueDateSection from './adminFilingDueDateSection'
+
+import style from './adminFilingForm.module.css'
+import { filingFieldSort } from 'utils'
+
+const FilingSchema = Yup.object().shape({
+  name: Yup.string().min(3, 'Too short!').required('Required'),
+  agency_id: Yup.number().integer().required('Required'),
+  agency: Yup.object().shape({
+    jurisdiction_id: Yup.number().integer().required('Required')
+  }),
+  fields: Yup.array().of(Yup.object().shape({
+    name: Yup.string().required('Required'),
+    helper_text: Yup.string().nullable(),
+    order: Yup.number().integer('Number must be an integer').nullable()
+  })),
+  occurence: Yup.mixed().oneOf(['annual', 'multiple', 'biennial']),
+  due_dates: Yup.array().of(Yup.object().shape({
+    fixed_month: Yup.number().integer().nullable(),
+    fixed_day: Yup.number().integer().nullable(),
+    month_offset: Yup.number().integer().nullable(),
+    day_offset: Yup.mixed().oneOf(['1', '15', 'end-of-month', null]),
+    offset_type: Yup.mixed().oneOf(['none', 'registration', 'year-end']),
+  }))
+});
+
+const FilingInitialValues = {
+  name: '',
+  agency_id: '',
+  agency: { jurisdiction_id: '' },
+  fields: [],
+  occurrence: 'annual',
+  due_dates: [{
+    fixed_month: null,
+    fixed_day: null,
+    month_offset: null,
+    day_offset: null,
+    offset_type: 'none'
+  }]
+};
+
 
 const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status }) => {
   const [validated] = useState(false);
 
   const submit = async (values, { setSubmitting }) => {
     await handleSubmit(values, { setSubmitting })
-  }
-
-  const validate = values => {
-    const errors = {};
-    return errors;
   }
 
   const renderAgencies = (values) => {
@@ -37,32 +71,21 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
       name: '',
       helper_text: '',
       type: 'text',
-      order: ''
+      order: null
     })
   }
 
-  const initial = filing != null ? filing :
-    {
-      name: '',
-      agency_id: '',
-      agency: { jurisdiction_id: '' },
-      fields: [],
-      occurrence: 'annual',
-      due_dates: [{
-        fixed_month: null,
-        fixed_day: null,
-        month_offset: null,
-        day_offset: null,
-        offset_type: 'none'
-      }]
-    };
+  // Let's sort the filing fields by order
+  if(filing) filing.fields.sort(filingFieldSort);
 
   return (
     <div className={style.container}>
       <Formik
-        initialValues={initial}
-        validate={validate}
+        initialValues={filing != null ? filing : FilingInitialValues}
         onSubmit={submit}
+        validationSchema={FilingSchema}
+        validateOnBlur={false}
+        validateOnChange={false}
         enableReinitialize={true}
       >
       {({
@@ -76,17 +99,19 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
         /* and other goodies */
       }) => (
           <Form validated={validated} onSubmit={handleSubmit} className={style.form}>
+            {console.log(errors)}
             <Form.Group controlId="name">
               <Form.Label>Filing Name</Form.Label>
               <Form.Control
-                required
                 onChange={handleChange}
                 type="text"
                 size="lg"
+                isInvalid={errors.name}
                 autoComplete="off"
                 style={{ width: 360 }}
                 placeholder=""
                 value={values.name} />
+              <FormControl.Feedback type='invalid'>{errors.name}</FormControl.Feedback>
             </Form.Group>
             <div className={style.cardRow}>
               <Card className={style.shortCard}>
@@ -95,9 +120,9 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
                   <Form.Group controlId="agency.jurisdiction_id">
                     <Form.Label>Jurisdiction</Form.Label>
                     <Form.Control
-                      required
                       onChange={handleChange}
                       value={values.agency.jurisdiction_id}
+                      isInvalid={errors.agency && errors.agency.jurisdiction_id}
                       as="select">
                       <option value=""></option>
                       {jurisdictions.map((j,i) =>
@@ -107,9 +132,9 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
                   <Form.Group controlId="agency_id">
                     <Form.Label>Agency</Form.Label>
                     <Form.Control
-                      required
                       onChange={handleChange}
                       value={values.agency_id}
+                      isInvalid={errors.agency_id}
                       as="select">
                       <option value=""></option>
                       {renderAgencies(values)}
@@ -143,33 +168,30 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
                       <Form.Row key={index}>
                         <Form.Group controlId={`fields[${index}].name`}>
                           <Form.Control
-                            required
                             onChange={handleChange}
                             type="text"
                             placeholder="Field name"
+                            isInvalid={errors.fields && errors.fields[index] && errors.fields[index].name}
                             style={{ width: 256, marginRight: 16 }}
                             autoComplete="off"
                             value={values.fields[index].name} />
                         </Form.Group>
                         <Form.Group controlId={`fields[${index}].helper_text`}>
                           <Form.Control
-                            required
                             onChange={handleChange}
                             type="text"
                             placeholder="Helper text"
-                            style={{ width: 376, marginRight: 16 }}
+                            style={{ width: 360, marginRight: 16 }}
                             autoComplete="off"
                             value={values.fields[index].helper_text || ''} />
                         </Form.Group>
                         <Form.Group controlId={`fields[${index}].order`}>
                           <Form.Control
-                            required
                             onChange={handleChange}
                             type="number"
-                            style={{ width: 48 }}
+                            style={{ width: 56, paddingRight: 8 }}
                             autoComplete="off"
-                            placeholder={index+1}
-                            value={values.fields[index].order} />
+                            value={values.fields[index].order || ''} />
                         </Form.Group>
                       </Form.Row>
                     ))}
@@ -182,8 +204,13 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
               {status != null ? (
                 <div style={{ color: 'green', marginRight: 16 }}>{status}</div>
               ) : null}
-              <Button className={style.submitButton} variant="secondary" type="submit">
-                { initial.id == null ? 'Create Filing' : 'Update Filing'}
+              <Button
+                className={style.submitButton}
+                variant="secondary"
+                type="submit"
+                disabled={isSubmitting}
+              >
+                { values.id == null ? 'Create Filing' : 'Update Filing'}
               </Button>
             </div>
           </Form>

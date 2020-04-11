@@ -6,7 +6,7 @@ import LoginForm from './loginForm';
 import AdminRejectFilingForm from './adminRejectFilingForm';
 import AdminJurisdictionForm from './adminJurisidictionForm';
 import AdminAgencyForm from './adminAgencyForm';
-import AdminFilingForm from './adminFilingForm';
+import AdminFilingForm from './AdminFilingForm/adminFilingForm';
 import CompanyFilingForm from './CompanyFilingForm/companyFilingForm';
 
 export {

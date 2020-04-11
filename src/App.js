@@ -18,7 +18,7 @@ import AdminScreen from "./screens/admin/AdminScreen"
 const App = (props) => {
 
   return (
-    <Router class="rootRouter">
+    <Router className="rootRouter">
       <WebsiteScreen path="/" />
       <LoginScreen path="/login" />
       <HomeScreen path="/home/*" />
