@@ -204,7 +204,12 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
               {status != null ? (
                 <div style={{ color: 'green', marginRight: 16 }}>{status}</div>
               ) : null}
-              <Button className={style.submitButton} variant="secondary" type="submit">
+              <Button
+                className={style.submitButton}
+                variant="secondary"
+                type="submit"
+                disabled={isSubmitting}
+              >
                 { values.id == null ? 'Create Filing' : 'Update Filing'}
               </Button>
             </div>

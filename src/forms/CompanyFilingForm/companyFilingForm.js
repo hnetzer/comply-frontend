@@ -46,6 +46,7 @@ const CompanyFilingForm = ({ filing, companyFiling, handleSubmit }) => {
         filing_field_id: f.id,
         name: f.name,
         order: f.order,
+        helper_text: f.helper_text,
         value: ''
       }
 
