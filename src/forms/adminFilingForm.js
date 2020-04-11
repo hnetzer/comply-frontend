@@ -11,6 +11,7 @@ import Button from 'react-bootstrap/Button';
 import AdminFilingDueDateSection from './adminFilingDueDateSection'
 
 import style from './adminFilingForm.module.css'
+import { filingFieldSort } from 'utils'
 
 const FilingSchema = Yup.object().shape({
   name: Yup.string().min(3, 'Too short!').required('Required'),
@@ -73,6 +74,9 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
       order: null
     })
   }
+
+  // Let's sort the filing fields by order
+  if(filing) filing.fields.sort(filingFieldSort);
 
   return (
     <div className={style.container}>

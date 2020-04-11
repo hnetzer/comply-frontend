@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import { Formik, FieldArray } from 'formik';
 
 // Bootstrap components
@@ -8,48 +7,68 @@ import Button from 'react-bootstrap/Button';
 
 import { InfoPopover } from 'components/molecules'
 
+import { filingFieldSort } from 'utils'
+
 import style from './companyFilingForm.module.scss'
 
-const CompanyFilingForm = (props) => {
+
+const CompanyFilingForm = ({ filing, companyFiling, handleSubmit }) => {
   const [draft, setDraft] = useState(true);
   const [validated] = useState(false);
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const doHandleSubmit = async (values, { setSubmitting }) => {
     const status = draft ? 'draft' : 'submitted'
-    await props.handleSubmit(values, status)
+    await handleSubmit(values, status)
   }
 
-  const handleValidation = values => {
+  const doHandleValidation = values => {
     const errors = {};
     return errors;
   }
 
-  const initializeCompanyFiling = () => {
-    const { fields } = props.filing;
-    return {
-      fields: fields.map(f => ({
-        filing_field_id: f.id,
-        value: "",
-      }))
-    };
+
+  let fieldValueMap = {}
+  const initializeValueMap = () => {
+    const { fields } = companyFiling;
+    fieldValueMap = fields.reduce((map, field) => {
+      map[field.filing_field.id] = { value: field.value, id: field.id }
+      return map
+    }, {})
   }
 
-  const getFieldsFromCompanyFiling = () => {
-    const { fields } = props.companyFiling;
+  const getInitialValues = () => {
+    initializeValueMap()
+    const { fields } = filing;
+    const initialFieldValues = fields.map(f => {
+      const fieldData = {
+        id: null, // NOTE: this is the company filing field id
+        filing_field_id: f.id,
+        name: f.name,
+        order: f.order,
+        value: ''
+      }
+
+      const companyFilingField = fieldValueMap[f.id]
+      if (companyFilingField) {
+        fieldData.value = companyFilingField.value;
+        fieldData.id = companyFilingField.id
+      }
+      return fieldData
+    })
+
+    initialFieldValues.sort(filingFieldSort)
+
     return {
-      fields: fields.map(f => ({
-        id: f.id,
-        filing_field_id: f.filing_field_id,
-        value: f.value,
-      }))
+      fields: initialFieldValues
     }
   }
 
+
   return (
     <Formik
-      initialValues={props.companyFiling != null ? getFieldsFromCompanyFiling() : initializeCompanyFiling()}
-      validate={handleValidation}
-      onSubmit={handleSubmit}
+      initialValues={getInitialValues()}
+      validate={doHandleValidation}
+      onSubmit={doHandleSubmit}
     >
     {({
       values,
@@ -66,7 +85,7 @@ const CompanyFilingForm = (props) => {
             name="fields"
             render={arrayHelpers => (
               <>
-                {props.filing.fields.map((field, index) => (
+                {values.fields.map((field, index) => (
                   <Form.Group key={index} controlId={`fields[${index}].value`}>
                     <Form.Label>{field.name}</Form.Label>
                     <div className={style.inputRow}>
@@ -74,8 +93,8 @@ const CompanyFilingForm = (props) => {
                         autoComplete="off"
                         onChange={handleChange}
                         type="text"
-                        value={values.fields[index] != null ? values.fields[index].value : ''} />
-                      <InfoPopover content={field.helper_text} />
+                        value={values.fields[index].value} />
+                      {field.helper_text && (<InfoPopover content={field.helper_text} />)}
                     </div>
                   </Form.Group>
                 ))}
