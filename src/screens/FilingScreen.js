@@ -140,6 +140,7 @@ class FilingScreen extends React.Component {
       case 'needs-follow-up': return this.renderForm()
       case 'needs-signature-payment': return (<FilingDataList data={companyFiling.fields} />)
       case 'filed': return (<FilingDataList data={companyFiling.fields} />)
+      case 'complete': return (<FilingDataList data={companyFiling.fields} />)
       default: return this.renderForm()
     }
   }
