@@ -35,9 +35,9 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
   const addFormField = (arrayHelpers) => {
     arrayHelpers.push({
       name: '',
-      helper_text: '',
+      helper_text: null,
       type: 'text',
-      order: ''
+      order: null
     })
   }
 
@@ -153,23 +153,21 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
                         </Form.Group>
                         <Form.Group controlId={`fields[${index}].helper_text`}>
                           <Form.Control
-                            required
                             onChange={handleChange}
                             type="text"
                             placeholder="Helper text"
-                            style={{ width: 376, marginRight: 16 }}
+                            style={{ width: 360, marginRight: 16 }}
                             autoComplete="off"
                             value={values.fields[index].helper_text || ''} />
                         </Form.Group>
                         <Form.Group controlId={`fields[${index}].order`}>
                           <Form.Control
-                            required
                             onChange={handleChange}
                             type="number"
-                            style={{ width: 48 }}
+                            style={{ width: 56, paddingRight: 8 }}
                             autoComplete="off"
                             placeholder={index+1}
-                            value={values.fields[index].order} />
+                            value={values.fields[index].order || ''} />
                         </Form.Group>
                       </Form.Row>
                     ))}

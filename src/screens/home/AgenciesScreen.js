@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { getCompanyAgencies, updateCompanyAgency } from 'network/api';
-import { setAgencies } from 'actions';
 
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
