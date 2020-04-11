@@ -107,7 +107,7 @@ class FilingScreen extends React.Component {
     };
 
     const updated = await updateCompanyFiling(user.company_id, companyFiling.id, data);
-    this.setState({ status: updated.status });
+    this.setState({ status: updated.status, companyFiling: updated });
   }
 
   formNotSupported = () => (<div>

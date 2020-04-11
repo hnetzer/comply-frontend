@@ -29,6 +29,7 @@ const CompanyFilingForm = ({ filing, companyFiling, handleSubmit }) => {
 
   let fieldValueMap = {}
   const initializeValueMap = () => {
+    if(!companyFiling) return
     const { fields } = companyFiling;
     fieldValueMap = fields.reduce((map, field) => {
       map[field.filing_field.id] = { value: field.value, id: field.id }
