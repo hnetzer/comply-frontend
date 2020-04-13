@@ -18,16 +18,10 @@ const AdminNavigation = ({ user, dispatch }) => {
     navigate('/')
   }
 
-  const handleNavSelect = (key, evt) => {
-    console.log('handleNavSelect')
-    console.log(key)
-    setKey(key)
-  }
-
   return (
     <div className={style.headerBar}>
       <h3>Admin</h3>
-      <Nav variant="pills" onSelect={handleNavSelect} activeKey={key}>
+      <Nav variant="pills" onSelect={(key, evt) => setKey(key)} activeKey={key}>
         <Nav.Link as={Link} to="/admin/companyfilings" eventKey="companyfilings">
           Company Filings
         </Nav.Link>

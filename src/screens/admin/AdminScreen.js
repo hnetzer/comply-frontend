@@ -1,7 +1,8 @@
 import React from 'react';
 import { Router } from "@reach/router"
 
-import AdminCompanyFilingsScreen from './AdminCompanyFilingsScreen'
+import AdminCompanyFilingsListScreen from './AdminCompanyFilingsListScreen'
+import AdminCompanyFilingScreen from './AdminCompanyFilingScreen'
 import AdminCompaniesScreen from './AdminCompaniesScreen'
 import AdminJurisdictionsScreen from './AdminJurisdictionsScreen'
 import AdminAgenciesScreen from './AdminAgenciesScreen'
@@ -18,8 +19,9 @@ const AdminScreen  = () => {
       <AdminNavigation />
       <main className={styles.main}>
         <Router style={{ width: '100%' }}>
-          <AdminCompanyFilingsScreen path="/" />
-          <AdminCompanyFilingsScreen path="/companyfilings" />
+          <AdminCompanyFilingsListScreen path="/" />
+          <AdminCompanyFilingsListScreen path="/companyfilings" />
+          <AdminCompanyFilingScreen path="/companyfilings/:companyFilingId" />
           <AdminCompaniesScreen path="/companies" />
           <AdminJurisdictionsScreen path="/platform/jurisdictions" />
           <AdminAgenciesScreen path="/platform/agencies" />
