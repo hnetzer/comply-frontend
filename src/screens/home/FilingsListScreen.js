@@ -71,7 +71,8 @@ class FilingsListScreen extends React.Component {
   }
 
   renderInProgress = () => {
-    const f = this.state.companyFilings.map((c, index) => (
+    const filings = this.state.companyFilings.filter(f => f.status != 'complete')
+    const f = filings.map((c, index) => (
         <FilingCard
           filing={c.filing}
           status={c.status}
@@ -85,7 +86,6 @@ class FilingsListScreen extends React.Component {
 
   renderNext = () => {
     const now = new Date()
-    console.log(now.toString())
     const companyFilingMap = this.state.companyFilings.reduce((acc, item) => {
       acc[item.filing.id] = item.due_date
       return acc
