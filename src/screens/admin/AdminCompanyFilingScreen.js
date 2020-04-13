@@ -83,7 +83,16 @@ class AdminCompanyFilingScreen extends React.Component {
     if (status === 'filed') {
       return (
         <div className={style.cta}>
+          <Button onClick={() => this.updateStatus('needs-signature-payment')} variant="secondary">Back to Sign & Pay</Button>
           <Button onClick={() => this.updateStatus('complete')} variant="success">Complete</Button>
+        </div>
+      )
+    }
+
+    if (status === 'complete') {
+      return (
+        <div className={style.cta}>
+          <Button onClick={() => this.updateStatus('filed')} variant="secondary">Back to Filed</Button>
         </div>
       )
     }
