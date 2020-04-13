@@ -58,22 +58,14 @@ const FilingAlertMessage = ({ status, messages, filing }) => {
   }
 
   const compareByCreatedDate = (a, b) => {
-    const dueA = moment(a.createdAt).unix()
-    const dueB = moment(b.createdAt).unix()
-    if (dueA > dueB) {
-      return 1
-    } else if (dueA < dueB) {
-      return -1
-    }
-    return 0
+    const dueA = new Date(a.createdAt)
+    const dueB = new Date(b.createdAt)
+    return dueB - dueA
   }
 
   const renderFollowUpMessage = () => {
     const sortedByMostRecent = messages.sort(compareByCreatedDate)
-    const message = sortedByMostRecent.find(message => {
-      return (message.user.roles.indexOf("admin") !== -1)
-    });
-
+    const message = sortedByMostRecent[0]
     if(!message) {
       return FOLLOW_UP_MESSAGE
     }
