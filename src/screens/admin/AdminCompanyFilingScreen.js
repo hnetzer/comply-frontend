@@ -1,8 +1,6 @@
 import React from 'react';
-import moment from 'moment';
 
 import Button from 'react-bootstrap/Button';
-import Badge from 'react-bootstrap/Badge';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 import { FilingHeader, FilingDataList } from 'components/molecules'
