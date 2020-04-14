@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 
-import { AccountMenu } from '../molecules'
+import { AccountMenu } from 'components/molecules'
 
 import { logout } from 'actions';
 

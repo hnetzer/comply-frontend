@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { connect } from 'react-redux';
+import { navigate } from "@reach/router"
 
 import Table from 'react-bootstrap/Table'
 
@@ -24,8 +24,8 @@ class AdminCompaniesScreen extends React.Component {
     }
   }
 
-  handleSelectCompany = () => {
-    
+  handleSelectCompany = (companyId) => {
+    navigate(`/admin/companies/${companyId}`)
   }
 
   render() {
@@ -49,7 +49,7 @@ class AdminCompaniesScreen extends React.Component {
                 {
                   return (
                     <tr
-                      onClick={() => this.handleSelectCompany()}
+                      onClick={() => this.handleSelectCompany(c.id)}
                       className={style.tableRow}
                       key={i}
                     >
@@ -73,8 +73,5 @@ class AdminCompaniesScreen extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {}
-}
 
-export default connect(mapStateToProps)(AdminCompaniesScreen);
+export default AdminCompaniesScreen;

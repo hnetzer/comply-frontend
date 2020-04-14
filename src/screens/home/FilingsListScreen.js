@@ -71,7 +71,7 @@ class FilingsListScreen extends React.Component {
   }
 
   renderInProgress = () => {
-    const filings = this.state.companyFilings.filter(f => f.status != 'complete')
+    const filings = this.state.companyFilings.filter(f => f.status !== 'complete')
     const f = filings.map((c, index) => (
         <FilingCard
           filing={c.filing}
