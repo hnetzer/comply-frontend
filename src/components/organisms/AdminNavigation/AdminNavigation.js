@@ -10,8 +10,11 @@ import Nav from 'react-bootstrap/Nav'
 
 import style from './AdminNavigation.module.css'
 
+
+const pathSegment = window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1)
+
 const AdminNavigation = ({ user, dispatch }) => {
-  const [key, setKey] = useState('companyfilings');
+  const [key, setKey] = useState(pathSegment);
 
   const handleLogout = () => {
     dispatch(logout())
@@ -25,7 +28,9 @@ const AdminNavigation = ({ user, dispatch }) => {
         <Nav.Link as={Link} to="/admin/companyfilings" eventKey="companyfilings">
           Company Filings
         </Nav.Link>
-        <Nav.Link disabled href="/admin/companies">Company Data</Nav.Link>
+        <Nav.Link as={Link} to="/admin/companies" eventKey="companies">
+          Companies
+        </Nav.Link>
         <Nav.Link as={Link} to="/admin/platform/jurisdictions" eventKey="jurisdictions">
           Jurisdictions
         </Nav.Link>

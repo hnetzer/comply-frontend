@@ -15,7 +15,7 @@ import style from './AdminCompanyFilingsListScreen.module.scss'
 class AdminCompanyFilingsListScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { selectedIndex: null, filter: 'all' };
+    this.state = { selectedIndex: null, filter: 'submitted' };
   }
 
   async componentDidMount() {
@@ -52,7 +52,6 @@ class AdminCompanyFilingsListScreen extends React.Component {
 
   renderCompanyFilingRows = () => {
     let { companyfilings } = this.props;
-    console.log(companyfilings)
     const { filter } = this.state
     if (filter !== 'all') {
       companyfilings = companyfilings.filter(f => f.status === filter)
@@ -65,6 +64,7 @@ class AdminCompanyFilingsListScreen extends React.Component {
         <tr
           onClick={() => this.handleSelectCompanyFiling(f.id)}
           className={style.tableRow}
+          key={i}
         >
           <td>{f.company.name}</td>
           <td>{f.filing.name}</td>

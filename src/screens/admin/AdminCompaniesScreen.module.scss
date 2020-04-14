@@ -1,0 +1,19 @@
+.container {
+   width: 100%;
+   display: flex;
+   justify-content: center;
+}
+
+.content {
+  margin-top: 32px;
+  width: 800px;
+}
+
+.table {
+  margin-top: 24px;
+  width: 100%;
+}
+
+.tableRow:hover {
+  cursor: pointer;
+}
