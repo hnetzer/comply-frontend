@@ -1,0 +1,15 @@
+@import "styles/vars";
+
+.accentNumber {
+  color: $accent;
+  font-weight: bold;
+}
+
+.filingSentence {
+  line-height: 38px;
+  margin-bottom: 16px;
+}
+
+.welcome {
+  margin-bottom: 16px;
+}

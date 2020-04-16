@@ -28,7 +28,7 @@ const OfficeDetailsScreen = (props) => {
     try {
       await updateOffices(values, props.company.id, props.token)
       // props.dispatch(createAccountResponse(response))
-      navigate('/home/filings')
+      navigate('/home')
     } catch (err) {
       alert(err.message)
     }
