@@ -34,7 +34,7 @@ const LoginScreen = (props) => {
       }
 
       // Otherwise go to client home
-      navigate('/home/filings')
+      navigate('/home')
     } catch (err) {
       console.log(err)
       setError('Email and password are not valid.')
