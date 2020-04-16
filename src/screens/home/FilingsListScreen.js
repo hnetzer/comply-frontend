@@ -107,7 +107,7 @@ class FilingsListScreen extends React.Component {
 
     const f = filings
       .sort(this.compareFilingsByDue)
-      .slice(0, 2)
+      .slice(0, 4)
       .map((filing, index) => (
         <FilingCard
           filing={filing}
