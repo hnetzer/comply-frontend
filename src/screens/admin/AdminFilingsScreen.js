@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Router, navigate } from "@reach/router";
+import { navigate } from "@reach/router";
 
 import { adminGetFilings } from 'network/api';
 
 import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table'
 
-import { SideListItem } from 'components/molecules'
-import { AdminEditFilingSection} from 'components/sections'
 
-import style from './AdminScreens.module.css';
+import style from './AdminFilingsScreen.module.scss';
 
 class AdminFilingsScreen extends React.Component {
   constructor(props) {
@@ -31,36 +30,36 @@ class AdminFilingsScreen extends React.Component {
     navigate(`/admin/platform/filings/${filing.id}`)
   }
 
+
+
   render() {
     return(
-      <main className={style.main}>
-        <section className={style.sideList}>
-          <div style={{ padding: 16 }}>
+      <main className={style.container}>
+        <section className={style.content}>
+          <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+            <h3>Filings</h3>
             <Button href="/admin/platform/filings/new" variant="link">+ New Filing</Button>
           </div>
-          <div>
-            <div className={style.companyFilingsHeader}>
-              Filings
-            </div>
-            <div className={style.filingsList}>
+          <Table hover bordered className={style.table}>
+            <thead>
+              <tr>
+                <th>Filing</th>
+                <th>Agency</th>
+                <th>Jurisdiction</th>
+              </tr>
+            </thead>
+            <tbody className={style.tableBody}>
               {
                 this.state.filings.map((f,i) =>
-                    (<SideListItem
-                      title={f.name}
-                      subtitle={f.agency.name}
-                      text={f.agency.jurisdiction.name}
-                      key={i}
-                      index={i}
-                      onSelect={this.onSelectFiling} />))
+                  (<tr className={style.tableRow} key={i} onClick={() => this.onSelectFiling(i)}>
+                    <td>{f.name}</td>
+                    <td>{f.agency.name}</td>
+                    <td>{f.agency.jurisdiction.name}</td>
+                  </tr>)
+                )
               }
-            </div>
-          </div>
-        </section>
-        <section className={style.rightContent}>
-          <Router style={{ display: 'flex', justifyContent: 'center' }}>
-            <AdminEditFilingSection path="/:filingId" filing={this.state.selected} />
-            <AdminEditFilingSection path="/new" filing={null} />
-          </Router>
+            </tbody>
+          </Table>
         </section>
       </main>
     )

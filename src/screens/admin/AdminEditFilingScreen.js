@@ -11,10 +11,11 @@ import {
   adminUpdateFiling
 } from 'network/api'
 
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
-// import style from './AdminEditFilingSection.module.css'
+import style from './AdminEditFilingScreen.module.css'
 
-class AdminEditFilingSection extends Component {
+class AdminEditFilingScreen extends Component {
   constructor(props) {
     super(props);
     this.state = { jurisdictions: [], agencies: [], filing: null, status: null };
@@ -56,17 +57,25 @@ class AdminEditFilingSection extends Component {
   }
 
   render() {
+    const { filing } = this.state;
+
     return (
-      <div>
-        <h3>
-          {this.state.filing != null ? 'Edit Filing' : 'Create Filing'}
-        </h3>
-        <AdminFilingForm
-          status={this.state.status}
-          handleSubmit={this.submitFiling}
-          filing={this.state.filing}
-          jurisdictions={this.state.jurisdictions}
-          agencies={this.state.agencies} />
+      <div className={style.container}>
+        <div className={style.content}>
+          <Breadcrumb>
+            <Breadcrumb.Item href="/admin/platform/filings">Filings</Breadcrumb.Item>
+            <Breadcrumb.Item active>{filing ? filing.name : 'new'}</Breadcrumb.Item>
+          </Breadcrumb>
+          <h3 className={style.title}>
+            {this.state.filing != null ? 'Edit Filing' : 'Create Filing'}
+          </h3>
+          <AdminFilingForm
+            status={this.state.status}
+            handleSubmit={this.submitFiling}
+            filing={this.state.filing}
+            jurisdictions={this.state.jurisdictions}
+            agencies={this.state.agencies} />
+        </div>
       </div>
     )
   }
@@ -78,4 +87,4 @@ const mapStateToProps = (state) => {
   return {}
 }
 
-export default connect(mapStateToProps)(AdminEditFilingSection);
+export default connect(mapStateToProps)(AdminEditFilingScreen);

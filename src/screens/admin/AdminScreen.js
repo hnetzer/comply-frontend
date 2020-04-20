@@ -8,6 +8,7 @@ import AdminCompanyScreen from './AdminCompanyScreen'
 import AdminJurisdictionsScreen from './AdminJurisdictionsScreen'
 import AdminAgenciesScreen from './AdminAgenciesScreen'
 import AdminFilingsScreen from './AdminFilingsScreen'
+import AdminEditFilingScreen from './AdminEditFilingScreen'
 
 import { AdminNavigation } from '../../components/organisms';
 
@@ -27,7 +28,9 @@ const AdminScreen  = () => {
           <AdminCompanyScreen path="/companies/:companyId" />
           <AdminJurisdictionsScreen path="/platform/jurisdictions" />
           <AdminAgenciesScreen path="/platform/agencies" />
-          <AdminFilingsScreen path="/platform/filings/*" />
+          <AdminFilingsScreen path="/platform/filings" />
+          <AdminEditFilingScreen path="/platform/filings/:filingId" />
+          <AdminEditFilingScreen path="/platform/filings/new" />
         </Router>
       </main>
     </div>
