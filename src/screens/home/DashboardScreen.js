@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment'
 
 import { HeaderBar } from 'components/organisms'
+import { FilingTimeline } from 'components/molecules'
 import { getFilingsForCompany, getCompanyAgencies } from 'network/api';
 
 import screenStyle from './Screens.module.scss'
@@ -11,7 +12,12 @@ import style from './DashboardScreen.module.scss'
 class DashboardScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { filingCount: null, agencyCount: null }
+    this.state = {
+      filingCount: null,
+      agencyCount: null,
+      nextDueDate: null,
+      timelineFilings: null
+    }
   }
 
   async componentDidMount() {
@@ -29,9 +35,12 @@ class DashboardScreen extends React.Component {
       const filings = await getFilingsForCompany(this.props.user.company_id)
       const agencies = await getCompanyAgencies(this.props.user.company_id)
       const nextDueDate = this.findNextDueDate(filings)
+      const timelineFilings = this.getTimelineFilings(filings)
+
       this.setState({
         filingCount: filings.length,
         agencyCount: agencies.length,
+        timelineFilings: timelineFilings,
         nextDueDate: nextDueDate
       })
     } catch (err) {
@@ -57,6 +66,11 @@ class DashboardScreen extends React.Component {
     return null
   }
 
+  getTimelineFilings = (filings) => {
+    const f = filings.filter(f => f.due != null)
+    return f.sort(this.compareFilingsByDue)
+  }
+
   compareFilingsByDue = (a, b) => {
     const dueA = moment(a.due).unix()
     const dueB = moment(b.due).unix()
@@ -68,9 +82,8 @@ class DashboardScreen extends React.Component {
     return 0
   }
 
-
   render() {
-    const { filingCount, agencyCount, nextDueDate } = this.state
+    const { filingCount, agencyCount, nextDueDate, timelineFilings } = this.state
     const { user } = this.props
 
     if (!user || !agencyCount) return null;
@@ -95,6 +108,7 @@ class DashboardScreen extends React.Component {
                 {`.`}
               </h4>)}
             </div>
+            <FilingTimeline filings={timelineFilings} />
           </div>
         </section>
       </>
