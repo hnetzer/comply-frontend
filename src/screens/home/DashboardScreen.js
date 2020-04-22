@@ -102,13 +102,15 @@ class DashboardScreen extends React.Component {
                 <span className={style.accentNumber}>{`${agencyCount} agencies`}</span>
                 {`.`}
               </h3>
+            </div>
+            <FilingTimeline filings={timelineFilings} />
+            <div style={{ width: '100%', textAlign: 'left'}}>
               {nextDueDate && (<h4 className={style.filingSentence}>
                 {`Your next filing is due `}
                 <span className={style.accentNumber}>{moment(nextDueDate).format('MMMM Do')}</span>
                 {`.`}
               </h4>)}
             </div>
-            <FilingTimeline filings={timelineFilings} />
           </div>
         </section>
       </>
