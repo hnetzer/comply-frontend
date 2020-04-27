@@ -1,6 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import _ from 'lodash';
+
+import { faSortUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { getAllCompanyFilings } from 'network/api';
 import { navigate } from "@reach/router"
 
@@ -15,7 +20,7 @@ import style from './AdminCompanyFilingsListScreen.module.scss'
 class AdminCompanyFilingsListScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { selectedIndex: null, filter: 'submitted' };
+    this.state = { selectedIndex: null, filter: 'all', sortBy: 'due_date' };
   }
 
   async componentDidMount() {
@@ -50,15 +55,33 @@ class AdminCompanyFilingsListScreen extends React.Component {
     return 0
   }
 
+  sortByProperty = (property) => {
+    return (a, b) => {
+      const propA = _.get(a, property)
+      const propB = _.get(b, property)
+      if (propA > propB) {
+        return 1;
+      } else if (propA < propB) {
+        return -1;
+      }
+      return 0;
+    }
+  }
+
   renderCompanyFilingRows = () => {
     let { companyfilings } = this.props;
-    const { filter } = this.state
+    const { filter, sortBy } = this.state
     if (filter !== 'all') {
       companyfilings = companyfilings.filter(f => f.status === filter)
     }
 
+    let sortFunc = this.sortByProperty(sortBy)
+    if (sortFunc === 'due_date') {
+      sortFunc = this.compareByDueDate
+    }
+
     return companyfilings
-      .sort(this.compareByDueDate)
+      .sort(sortFunc)
       .map((f,i) => {
         return (
         <tr
@@ -78,7 +101,7 @@ class AdminCompanyFilingsListScreen extends React.Component {
   }
 
   render() {
-    const { filter } = this.state
+    const { filter, sortBy } = this.state
     return(
       <main className={style.container}>
         <section className={style.content}>
@@ -132,12 +155,66 @@ class AdminCompanyFilingsListScreen extends React.Component {
           <Table hover bordered className={style.table}>
             <thead>
               <tr>
-                <th>Company</th>
-                <th>Filing</th>
-                <th>Agency</th>
-                <th>Jurisdiction</th>
-                <th>Due</th>
-                <th>Status</th>
+                <th
+                  className={style.columnHeader}
+                  onClick={() => this.setState({ sortBy: 'company.name' })}
+                >
+                  Company
+                  {sortBy === 'company.name' &&
+                    <FontAwesomeIcon
+                      className={style.sortIcon}
+                      icon={faSortUp} />}
+                </th>
+                <th
+                  className={style.columnHeader}
+                  onClick={() => this.setState({ sortBy: 'filing.name' })}
+                >
+                  Filing
+                  {sortBy === 'filing.name' &&
+                    <FontAwesomeIcon
+                      className={style.sortIcon}
+                      icon={faSortUp} />}
+                </th>
+                <th
+                  className={style.columnHeader}
+                  onClick={() => this.setState({ sortBy: 'filing.agency.name' })}
+                >
+                  Agency
+                  {sortBy === 'filing.agency.name' &&
+                    <FontAwesomeIcon
+                      className={style.sortIcon}
+                      icon={faSortUp} />}
+                </th>
+                <th
+                  className={style.columnHeader}
+                  onClick={() => this.setState({ sortBy: 'filing.agency.jurisdiction.name' })}
+                >
+                Jurisdiction
+                {sortBy === 'filing.agency.jurisdiction.name' &&
+                  <FontAwesomeIcon
+                    className={style.sortIcon}
+                    icon={faSortUp} />}
+                </th>
+                <th
+                  className={style.columnHeader}
+                  onClick={() => this.setState({ sortBy: 'due_date' })}
+                >
+                Due
+                {sortBy === 'due_date' &&
+                  <FontAwesomeIcon
+                    className={style.sortIcon}
+                    icon={faSortUp} />}
+                </th>
+                <th
+                  className={style.columnHeader}
+                  onClick={() => this.setState({ sortBy: 'status' })}
+                >
+                Status
+                {sortBy === 'status' &&
+                  <FontAwesomeIcon
+                    className={style.sortIcon}
+                    icon={faSortUp} />}
+                </th>
               </tr>
             </thead>
             <tbody className={style.tableBody}>
