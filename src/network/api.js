@@ -153,6 +153,10 @@ export const adminCreateFiling = async (data) => {
   return sendRequest('POST', `/admin/filings/`, data)
 }
 
+export const adminDeleteFiling = async (filingId) => {
+  return sendRequest('DELETE', `/admin/filings/${filingId}`)
+}
+
 export const adminUpdateFiling = async (filingId, data) => {
   return sendRequest('PUT', `/admin/filings/${filingId}`, data)
 }
@@ -199,5 +203,6 @@ export default {
   adminGetFiling,
   adminUpdateFiling,
   adminGetCompanies,
-  adminGetCompany
+  adminGetCompany,
+  adminDeleteFiling
 }

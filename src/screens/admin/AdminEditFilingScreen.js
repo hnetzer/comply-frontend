@@ -8,10 +8,12 @@ import {
   adminGetJurisdictions,
   adminCreateFiling,
   adminGetFiling,
-  adminUpdateFiling
+  adminUpdateFiling,
+  adminDeleteFiling
 } from 'network/api'
 
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import Button from 'react-bootstrap/Button';
 
 import style from './AdminEditFilingScreen.module.css'
 
@@ -56,6 +58,15 @@ class AdminEditFilingScreen extends Component {
     }
   }
 
+  deleteFiling = async () => {
+    const x = window.confirm('Are you sure you want to delete this filing?')
+    if(x) {
+      await adminDeleteFiling(this.props.filingId)
+      navigate('/admin/platform/filings')
+    }
+  }
+
+
   render() {
     const { filing } = this.state;
 
@@ -75,7 +86,11 @@ class AdminEditFilingScreen extends Component {
             filing={this.state.filing}
             jurisdictions={this.state.jurisdictions}
             agencies={this.state.agencies} />
+          <div>
+            <Button onClick={this.deleteFiling} variant="danger">Delete Filing</Button>
+          </div>
         </div>
+
       </div>
     )
   }
