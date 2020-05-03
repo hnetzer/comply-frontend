@@ -57,7 +57,7 @@ class AdminCompaniesScreen extends React.Component {
                       <td>{`${c.users[0].name} (${c.users[0].email})`}</td>
                       <td>{c.phone}</td>
                       <td>
-                        {`${moment().month(c.year_end_month).format("MMM")} ${c.year_end_day}`}
+                        {c.year_end_month != null ? `${moment().month(c.year_end_month).format("MMM")} ${c.year_end_day}` : ``}
                       </td>
                       <td>{c.agencies.length}</td>
                     </tr>

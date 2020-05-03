@@ -43,7 +43,7 @@ class AdminCompanyScreen extends React.Component {
           </tr>
           <tr>
             <td>Financial Year End</td>
-            <td>{`${moment().month(year_end_month).format("MMM")} ${year_end_day}`}</td>
+            <td>{year_end_month != null ? `${moment().month(year_end_month).format("MMM")} ${year_end_day}` : null}</td>
           </tr>
         </tbody>
       </Table>
