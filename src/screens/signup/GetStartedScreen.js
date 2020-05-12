@@ -15,25 +15,25 @@ import styles from './Signup.module.scss'
 const GetStartedScreen = (props) => {
 
   const initialFormValues = {
+    firstName: '',
+    lastName: '',
     companyName: '',
-    companyPhone: '',
-    yourName: '',
-    yourRole: '',
-    accountEmail: '',
-    accountPassword: ''
+    title: '',
+    email: '',
+    password: ''
   }
 
   const handleSubmit = async (values, { setSubmitting }) => {
     const data = {
       user: {
-        name: values.yourName,
-        role: values.yourRole,
-        email: values.accountEmail,
-        password: values.accountPassword,
+        firstName: values.yourName,
+        lastName: values.lastName,
+        title: values.title,
+        email: values.email,
+        password: values.password,
       },
       company: {
         name: values.companyName,
-        phone: values.companyPhone
       }
     }
 
@@ -49,7 +49,7 @@ const GetStartedScreen = (props) => {
   return (
     <Card className={styles.card}>
       <Card.Body className={styles.cardBody}>
-        <Card.Title><h1>Get started with Comply</h1></Card.Title>
+        <Card.Title style={{ marginBottom: 24 }}><h3>Get started with Comply</h3></Card.Title>
         <CreateAccountForm
           initialValues={initialFormValues}
           handleSubmit={handleSubmit} />
