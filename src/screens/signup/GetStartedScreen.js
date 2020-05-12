@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 
@@ -13,17 +13,18 @@ import Card from 'react-bootstrap/Card';
 import styles from './Signup.module.scss'
 
 const GetStartedScreen = (props) => {
-
-  const initialFormValues = {
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [formValues, setFormValues] = useState({
     firstName: '',
     lastName: '',
-    companyName: '',
+    company: '',
     title: '',
     email: '',
     password: ''
-  }
+  })
 
   const handleSubmit = async (values, { setSubmitting }) => {
+    setFormValues(values)
     const data = {
       user: {
         firstName: values.yourName,
@@ -33,7 +34,7 @@ const GetStartedScreen = (props) => {
         password: values.password,
       },
       company: {
-        name: values.companyName,
+        name: values.company,
       }
     }
 
@@ -42,7 +43,8 @@ const GetStartedScreen = (props) => {
       props.dispatch(createAccountResponse(response))
       navigate('/signup/company-details')
     } catch (err) {
-      alert(err.message)
+      console.log(err)
+      setErrorMessage(err.message)
     }
   }
 
@@ -51,8 +53,10 @@ const GetStartedScreen = (props) => {
       <Card.Body className={styles.cardBody}>
         <Card.Title style={{ marginBottom: 24 }}><h3>Get started with Comply</h3></Card.Title>
         <CreateAccountForm
-          initialValues={initialFormValues}
-          handleSubmit={handleSubmit} />
+          initialValues={formValues}
+          handleSubmit={handleSubmit}
+          errorMessage={errorMessage}
+          />
       </Card.Body>
     </Card>
   )
