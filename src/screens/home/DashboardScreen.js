@@ -85,7 +85,7 @@ class DashboardScreen extends React.Component {
   render() {
     const { filingCount, agencyCount, nextDueDate, timelineFilings } = this.state
     const { user } = this.props
-
+    console.log(user)
     if (!user || !agencyCount) return null;
 
     return(
@@ -94,7 +94,7 @@ class DashboardScreen extends React.Component {
         <section className={screenStyle.container}>
           <div className={screenStyle.content}>
             <div style={{ width: '100%', textAlign: 'left'}}>
-              <h2 className={style.welcome}>{`Welcome ${user.name}`}!</h2>
+              <h2 className={style.welcome}>{`Welcome ${user.first_name}`}!</h2>
               <h3 className={style.filingSentence}>
                 {`Comply is helping you keep track of `}
                 <span className={style.accentNumber}>{`${filingCount} annual filings`}</span>

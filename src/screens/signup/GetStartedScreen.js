@@ -26,17 +26,13 @@ const GetStartedScreen = (props) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     setFormValues(values)
     const data = {
-      user: {
-        firstName: values.yourName,
-        lastName: values.lastName,
-        title: values.title,
-        email: values.email,
-        password: values.password,
-      },
-      company: {
-        name: values.company,
-      }
-    }
+      first_name: values.firstName,
+      last_name: values.lastName,
+      title: values.title,
+      email: values.email,
+      password: values.password,
+      company: values.company
+    };
 
     try {
       const response = await createAccount(data)
