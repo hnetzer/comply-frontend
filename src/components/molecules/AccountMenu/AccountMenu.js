@@ -20,7 +20,6 @@ const Toggle = React.forwardRef(({ children, onClick, variant }, ref) => {
       }}
       className={buttonStyle}
     >
-      <FontAwesomeIcon className={iconStyle} icon={faUser}/>
       <span style={{ paddingLeft: 8, paddingRight: 8 }}>
         {children}
       </span>

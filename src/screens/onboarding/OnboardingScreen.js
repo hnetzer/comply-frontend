@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 import { logout } from 'actions';
 
+import Button from 'react-bootstrap/Button'
+
 import { AccountMenu } from 'components/molecules'
 
 import styles from './OnboardingScreen.module.scss'
@@ -28,7 +30,28 @@ const OnboardingScreen = ({ user, company, dispatch }) => {
           handleLogout={handleLogout} />
       </header>
       <main className={styles.main}>
-        <h4>Onboarding</h4>
+        <section className={styles.progressBarSection}>
+          <div>[progress bar]</div>
+        </section>
+        <section className={styles.mainContentSection}>
+          <img className={styles.image} src="https://comply-assets.s3-us-west-2.amazonaws.com/bliss.png" />
+          <div className={styles.content}>
+            <h3>Setting up your company</h3>
+            <br/>
+            <p>We'll ask you a few questions about your company and agency registrations.</p>
+            <p>
+              Setup should take about 10 minutes. Your progress is saved between steps
+              so you can leave and come back to complete the setup at any time.
+            </p>
+            <p>You will need the following documents</p>
+            <ul>
+              <li>Certificate of Incorporation</li>
+              <li>Agency Registrations</li>
+              <li>Business Licenses</li>
+            </ul>
+            <Button>Let's get started</Button>
+          </div>
+        </section>
       </main>
     </div>
   )
