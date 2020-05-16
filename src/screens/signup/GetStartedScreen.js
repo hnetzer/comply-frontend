@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 
@@ -13,46 +13,46 @@ import Card from 'react-bootstrap/Card';
 import styles from './Signup.module.scss'
 
 const GetStartedScreen = (props) => {
-
-  const initialFormValues = {
-    companyName: '',
-    companyPhone: '',
-    yourName: '',
-    yourRole: '',
-    accountEmail: '',
-    accountPassword: ''
-  }
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [formValues, setFormValues] = useState({
+    firstName: '',
+    lastName: '',
+    company: '',
+    title: '',
+    email: '',
+    password: ''
+  })
 
   const handleSubmit = async (values, { setSubmitting }) => {
+    setFormValues(values)
     const data = {
-      user: {
-        name: values.yourName,
-        role: values.yourRole,
-        email: values.accountEmail,
-        password: values.accountPassword,
-      },
-      company: {
-        name: values.companyName,
-        phone: values.companyPhone
-      }
-    }
+      first_name: values.firstName,
+      last_name: values.lastName,
+      title: values.title,
+      email: values.email,
+      password: values.password,
+      company: values.company
+    };
 
     try {
       const response = await createAccount(data)
       props.dispatch(createAccountResponse(response))
       navigate('/signup/company-details')
     } catch (err) {
-      alert(err.message)
+      console.log(err)
+      setErrorMessage(err.message)
     }
   }
 
   return (
     <Card className={styles.card}>
       <Card.Body className={styles.cardBody}>
-        <Card.Title><h1>Get started with Comply</h1></Card.Title>
+        <Card.Title style={{ marginBottom: 24 }}><h3>Get started with Comply</h3></Card.Title>
         <CreateAccountForm
-          initialValues={initialFormValues}
-          handleSubmit={handleSubmit} />
+          initialValues={formValues}
+          handleSubmit={handleSubmit}
+          errorMessage={errorMessage}
+          />
       </Card.Body>
     </Card>
   )

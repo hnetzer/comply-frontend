@@ -28,7 +28,8 @@ export const sendRequest = async (method, path, data, includeAuth = true) => {
       navigate('/')
     }
 
-    throw Error(response.message)
+    let error = await response.json()
+    throw error
   }
 
   let json = await response.json()

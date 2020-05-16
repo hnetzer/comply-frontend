@@ -26,14 +26,13 @@ const Toggle = React.forwardRef(({ children, onClick }, ref) => (
 
 
 const AccountMenu = (props) => {
-
-  const email = props.user != null ? props.user.email : '';
-  const name = props.user != null ? props.user.name : '';
+  if(!props.user) return null;
+  const { email, first_name, last_name } = props.user
 
   return (
     <Dropdown>
       <Dropdown.Toggle as={Toggle}>
-        {name}
+        {`${first_name} ${last_name}`}
       </Dropdown.Toggle>
       <Dropdown.Menu alignRight>
         <Dropdown.Header>{email}</Dropdown.Header>

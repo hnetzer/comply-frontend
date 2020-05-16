@@ -1,35 +1,44 @@
 import React, { useState } from 'react';
 
 import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 // Bootstrap components
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
+
+const formSchema = Yup.object().shape({
+  firstName: Yup.string().required('Required'),
+  lastName: Yup.string().required('Required'),
+  title: Yup.string().required('Required'),
+  company: Yup.string().required('Required'),
+  email: Yup.string().email('Invalid Email').required('Required'),
+  password: Yup.string().min(4, 'To short!').required('Required')
+});
+
 
 const CreateAccountForm = (props) => {
-  const [validated] = useState(false);
-
   const handleSubmit = async (values, { setSubmitting }) => {
     await props.handleSubmit(values, { setSubmitting })
   }
 
-  const handleValidation = values => {
-    const errors = {};
-    /* if (!values.email) {
-      errors.email = 'Required';
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-    ) {
-      errors.email = 'Invalid email address';
-    }*/
-    return errors;
+  const renderErrorMessage = () => {
+    if(!props.errorMessage) return null;
+
+    return (
+      <Alert style={{ width: '100%' }} variant="danger">
+        {props.errorMessage}
+      </Alert>
+    );
   }
 
   return (
     <Formik
       initialValues={props.initialValues}
-      validate={handleValidation}
+      validationSchema={formSchema}
+      validateOnMount={true}
       onSubmit={handleSubmit}
     >
     {({
@@ -40,82 +49,108 @@ const CreateAccountForm = (props) => {
       handleBlur,
       handleSubmit,
       isSubmitting,
+      isValid
       /* and other goodies */
-    }) => (
-        <Form validated={validated} onSubmit={handleSubmit}>
-          <Form.Group controlId="companyName">
-            <Form.Label>Company Name</Form.Label>
-            <Form.Control
-              required
-              onChange={handleChange}
-              type="text"
-              placeholder="Comply Inc."
-              value={values.companyName} />
-          </Form.Group>
-          <Form.Group controlId="companyPhone">
-            <Form.Label>Company Phone</Form.Label>
-            <Form.Control
-              required
-              onChange={handleChange}
-              type="text"
-              placeholder="(888) 888-8888"
-              value={values.companyPhone}/>
-          </Form.Group>
-          <Form.Row>
-            <Col>
-              <Form.Group controlId="yourName">
-                <Form.Label>Your Name</Form.Label>
-                <Form.Control
-                  required
-                  onChange={handleChange}
-                  type="text"
-                  placeholder="Mike Smith"
-                  value={values.yourName} />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group controlId="yourRole">
-                <Form.Label>Your Role</Form.Label>
-                <Form.Control
-                  required
-                  onChange={handleChange}
-                  value={values.yourRole}
-                  as="select">
-                  <option>CEO</option>
-                  <option>CFO</option>
-                  <option>Controller</option>
-                  <option>Executive Assistant</option>
-                  <option>Administrator</option>
-                  <option>Other</option>
-                </Form.Control>
-              </Form.Group>
-            </Col>
-          </Form.Row>
-          <Form.Group controlId="accountEmail">
-            <Form.Label>Account Email</Form.Label>
-            <Form.Control
-              required
-              onChange={handleChange}
-              type="email"
-              placeholder="mike@company.com"
-              value={values.accountEmail}
-              />
-          </Form.Group>
-          <Form.Group controlId="accountPassword">
-            <Form.Label>Account Password</Form.Label>
-            <Form.Control
-              required
-              onChange={handleChange}
-              type="password"
-              placeholder="******"
-              value={values.accountPassword}
-               />
-          </Form.Group>
-          <Button variant="primary" type="submit" block>
-            Next
-          </Button>
+    }) => {
+      return (
+        <>
+        {renderErrorMessage()}
+        <Form noValidate onSubmit={handleSubmit}>
+        <Form.Row>
+          <Col>
+            <Form.Group controlId="firstName">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="firstName"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.firstName}
+                isInvalid={touched.firstName && errors.firstName} />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="lastName">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                isInvalid={touched.lastName && errors.lastName}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                type="text"
+                value={values.lastName} />
+            </Form.Group>
+          </Col>
+        </Form.Row>
+        <Form.Row>
+          <Col>
+            <Form.Group controlId="title">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                isInvalid={touched.title && errors.title}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.title}
+                as="select">
+                <option value=""></option>
+                <option value="CEO">CEO</option>
+                <option value="CFO">CFO</option>
+                <option value="Controller">Controller</option>
+                <option value="Executive Assitant">Executive Assistant</option>
+                <option value="CPA">CPA</option>
+                <option value="Other">Other</option>
+              </Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="company">
+              <Form.Label>Company</Form.Label>
+              <Form.Control
+                isInvalid={touched.company && errors.company}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                type="text"
+                value={values.company} />
+            </Form.Group>
+          </Col>
+        </Form.Row>
+        <Form.Group controlId="email">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            isInvalid={touched.email && errors.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            type="email"
+            value={values.email}
+            />
+        </Form.Group>
+        <Form.Group controlId="password">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            isInvalid={touched.password && errors.password}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            type="password"
+            value={values.password}
+             />
+        </Form.Group>
+          <div style={{
+            marginTop: 32,
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+            <Button
+              disabled={!isValid}
+              variant="primary"
+              style={{ paddingLeft: 48, paddingRight: 48 }}
+              type="submit">
+              Get started
+            </Button>
+          </div>
         </Form>
+        </>
       )}
+    }
     </Formik>
   );
 }
