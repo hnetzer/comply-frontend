@@ -7,9 +7,14 @@ import CompanyDetailsScreen from "./screens/signup/CompanyDetailsScreen"
 import OfficeDetailsScreen from "./screens/signup/OfficeDetailsScreen"
 import SignupScreen from './screens/signup/SignupScreen'
 
+// Onboarding
+import OnboardingScreen from "./screens/onboarding/OnboardingScreen"
+
 import WebsiteScreen from "./screens/WebsiteScreen"
 import HomeScreen from "./screens/HomeScreen"
 import LoginScreen from './screens/LoginScreen'
+
+
 
 // Admin
 import AdminScreen from "./screens/admin/AdminScreen"
@@ -27,6 +32,7 @@ const App = (props) => {
         <CompanyDetailsScreen path="/company-details" />
         <OfficeDetailsScreen path="/office-details" />
       </SignupScreen>
+      <OnboardingScreen path="/onboarding" />
       <AdminScreen path="/admin/*" />
     </Router>
   )
