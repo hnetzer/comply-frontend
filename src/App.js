@@ -32,7 +32,7 @@ const App = (props) => {
         <CompanyDetailsScreen path="/company-details" />
         <OfficeDetailsScreen path="/office-details" />
       </SignupScreen>
-      <OnboardingScreen path="/onboarding" />
+      <OnboardingScreen path="/onboarding/*" />
       <AdminScreen path="/admin/*" />
     </Router>
   )

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Dropdown from 'react-bootstrap/Dropdown'
 
-import { faUser, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import style from './AccountMenu.module.scss'
