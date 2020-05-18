@@ -40,7 +40,7 @@ class OnboardingScreen extends Component {
           <div className={styles.leftHeaderSection}>
             <h3 className={styles.complyLogo}>Comply</h3>
             <span className={styles.accountText}>ACCOUNT</span>
-            <span className={styles.companyName}>{'' && company.name}</span>
+            {company && (<span className={styles.companyName}>{company.name}</span>)}
           </div>
           <AccountMenu
             variant="light"
