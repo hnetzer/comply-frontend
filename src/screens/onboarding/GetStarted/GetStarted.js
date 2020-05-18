@@ -5,13 +5,12 @@ import { Card } from 'components/atoms'
 import { VerticalProgressBar } from 'components/molecules'
 
 import styles from './GetStarted.module.scss'
+import onboardingStyle from '../OnboardingScreen.module.scss'
 
 const GetStarted = ({ user, company, dispatch }) => {
-
-
   return(
     <>
-      <Card className={styles.progressBarSection}>
+      <Card className={onboardingStyle.progressBarSection}>
         <VerticalProgressBar currentIndex={0}/>
       </Card>
       <Card className={styles.mainContentSection}>

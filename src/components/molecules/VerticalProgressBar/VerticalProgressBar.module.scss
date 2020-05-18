@@ -20,12 +20,22 @@
   color: $navy;
 }
 
-.name {
+.name, {
   position: relative;
   bottom: 2px;
   left: 6px;
   font-size: 14px;
   font-weight: 500;
+}
+
+.link {
+  @extend .name;
+  color: $navy;
+}
+
+.link:hover {
+  color: $navy;
+  text-decoration: none;
 }
 
 .circle {
