@@ -10,8 +10,8 @@ const Company = ({ user, company, dispatch }) => {
   const initialFormValues = {
     type: '',
     tax_class: '',
-    year_end_month: null,
-    year_end_day: null,
+    year_end_month: '',
+    year_end_day: '',
     formation_state: '',
   }
 
@@ -44,7 +44,7 @@ const Company = ({ user, company, dispatch }) => {
         <h3>Company</h3>
         <div style={{ marginTop: 16, marginBottom: 24 }}>
           <h6 style={{ fontSize: 16, fontWeight: 600, marginBottom: 0 }}>Add baseline information</h6>
-          <p>Provide information on your company so that we can generate your filing schedule.</p>
+          <p style={{ fontSize: 15 }}>Provide information on your company so that we can generate your filing schedule.</p>
         </div>
         <CompanyDetailsForm
           initialValues={initialFormValues}

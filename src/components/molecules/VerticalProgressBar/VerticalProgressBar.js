@@ -12,13 +12,13 @@ const VerticalProgressBar = ({ currentIndex }) => {
         const circleClass = index <= currentIndex ? style.circleEnabled : style.circleDisabled
 
         return (
-          <>
+          <div key={index}>
             {index ? (<div className={lineClass}></div>) : null }
-            <div key={index} className={stepClass}>
+            <div className={stepClass}>
               <div className={circleClass}></div>
               <div className={style.name}>{step}</div>
             </div>
-          </>
+          </div>
         )
       } )}
     </div>
