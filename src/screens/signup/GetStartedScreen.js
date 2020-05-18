@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { navigate } from "@reach/router"
+import { navigate, Redirect } from "@reach/router"
 
 import { createAccountResponse } from 'actions';
 import { createAccount } from 'network/api';
@@ -42,6 +42,10 @@ const GetStartedScreen = (props) => {
       console.log(err)
       setErrorMessage(err.message)
     }
+  }
+
+  if(props.token) {
+    return <Redirect to="/home" noThrow />;
   }
 
   return (

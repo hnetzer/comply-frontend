@@ -1,11 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from "@reach/router"
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 import styles from './Website.module.scss'
 
-const WebsiteScreen = (props) => {
+const WebsiteScreen = ({ token }) => {
+
+  // If the user is already logged in, then take them to home
+  if(token) {
+    return <Redirect to="/home" noThrow />;
+  }
+
   return(
     <div className={styles.container}>
       <Card className={styles.card}>
@@ -37,4 +45,10 @@ const WebsiteScreen = (props) => {
   )
 }
 
-export default WebsiteScreen;
+const mapStateToProps = state => {
+  return {
+    token: state.auth.token,
+  }
+}
+
+export default connect(mapStateToProps)(WebsiteScreen);

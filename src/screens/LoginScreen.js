@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { navigate } from "@reach/router"
+import { navigate, Redirect } from "@reach/router"
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -41,6 +41,10 @@ const LoginScreen = (props) => {
     }
   }
 
+  if(props.token) {
+    return <Redirect to="/home" noThrow />;
+  }
+
   return(
     <div className={styles.container}>
       <Card style={{
@@ -65,4 +69,10 @@ const LoginScreen = (props) => {
   )
 }
 
-export default connect()(LoginScreen);
+const mapStateToProps = state => {
+  return {
+    token: state.auth.token,
+  }
+}
+
+export default connect(mapStateToProps)(LoginScreen);
