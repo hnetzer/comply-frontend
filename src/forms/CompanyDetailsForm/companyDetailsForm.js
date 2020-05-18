@@ -38,9 +38,6 @@ const CompanyDetailsForm = (props) => {
       /* and other goodies */
     }) => (
         <Form className={style.formContainer}>
-          {console.log("isValid: ", isValid)}
-          {console.log("values: ", values)}
-          {console.log("errors: ", errors)}
           <div className={style.formRow}>
             <div className={style.labelGroup}>
               <label className={style.formLabel}>Fiscal Year End</label>
@@ -117,7 +114,6 @@ const CompanyDetailsForm = (props) => {
               <small>The state that your business formed in.</small>
             </div>
           </div>
-          <div style={{ borderTop: '1px solid #a9a9a9', width: '100%', marginTop: 16}}></div>
           <Button
             disabled={!isValid}
             variant="primary"
