@@ -1,0 +1,62 @@
+@import "styles/vars";
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.step {
+  display: flex;
+  flex-direction: row;
+}
+
+.stepDisabled {
+  @extend .step;
+  color: #a9a9a9;
+}
+
+.stepEnabled {
+  @extend .step;
+  color: $navy;
+}
+
+.name {
+  position: relative;
+  bottom: 2px;
+  left: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  margin: 4px;
+}
+
+.circleEnabled {
+  @extend .circle;
+  background-color: $navy;
+}
+
+.circleDisabled {
+  @extend .circle;
+  background-color: #a9a9a9;
+}
+
+.line {
+  margin-left: 7px;
+  height: 24px;
+  width: 2px;
+}
+
+.lineEnabled {
+  @extend .line;
+  background-color: $navy;
+}
+
+.lineDisabled {
+  @extend .line;
+  background-color: #a9a9a9;
+}

@@ -1,11 +1,27 @@
 @import "styles/vars";
 
-.button {
+.buttonDark {
   text-decoration: none;
   background: none;
   border: none;
+  color: $navy;
+  font-size: 14px;
+  font-weight: 500;
 }
 
-.icon {
+.buttonLight {
+  text-decoration: none;
+  background: none;
+  border: none;
+  color: $white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.iconLight {
+  color: $white;
+}
+
+.iconDark {
   color: $navy;
 }
