@@ -15,11 +15,11 @@ import styles from './Signup.module.scss'
 const CompanyDetailsScreen = (props) => {
 
   const initialFormValues = {
-    type: 'Corporation',
-    tax_class: 'C Corp',
-    year_end_month: 11,
-    year_end_day: 31,
-    formation_state: 'Delaware',
+    type: '',
+    tax_class: '',
+    year_end_month: '',
+    year_end_day: '',
+    formation_state: '',
   }
 
   const handleSubmit = async (values, { setSubmitting }) => {
@@ -28,9 +28,7 @@ const CompanyDetailsScreen = (props) => {
       tax_class: values.tax_class,
       year_end_month: values.year_end_month,
       year_end_day: values.year_end_day,
-      jurisdiction: {
-        name: values.formation_state,
-      }
+      formation_sate: values.formation_state
     }
 
     try {
