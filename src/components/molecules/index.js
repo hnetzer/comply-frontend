@@ -4,8 +4,9 @@ import InfoPopover from './InfoPopover/InfoPopover';
 import FilingHeader from './FilingHeader/FilingHeader';
 import FilingDataList from './FilingDataList/FilingDataList';
 import FilingAlertMessage from './FilingAlertMessage/FilingAlertMessage';
-import FilingTimeline from './FilingTimeline/FilingTimeline'
+import FilingTimeline from './FilingTimeline/FilingTimeline';
 import DatePicker from './DatePicker';
+import VerticalProgressBar from './VerticalProgressBar/VerticalProgressBar';
 
 // Admin
 import SideListItem from './SideListItem'
@@ -19,5 +20,6 @@ export {
   FilingAlertMessage,
   SideListItem,
   DatePicker,
-  FilingTimeline
+  FilingTimeline,
+  VerticalProgressBar
 }

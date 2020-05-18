@@ -2,14 +2,17 @@ import React from 'react';
 
 import Button from 'react-bootstrap/Button'
 import { Card } from 'components/atoms'
+import { VerticalProgressBar } from 'components/molecules'
 
 import styles from './GetStarted.module.scss'
 
 const GetStarted = ({ user, company, dispatch }) => {
+
+
   return(
     <>
       <Card className={styles.progressBarSection}>
-        <div>[progress bar]</div>
+        <VerticalProgressBar currentIndex={0}/>
       </Card>
       <Card className={styles.mainContentSection}>
         <img alt="bliss" className={styles.image} src="https://comply-assets.s3-us-west-2.amazonaws.com/bliss.png" />
