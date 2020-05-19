@@ -13,15 +13,6 @@ import screenStyle from './Offices.module.scss'
 
 const Offices = ({ user, offices, dispatch }) => {
 
-  const initialFormValues = {
-    offices: [{
-      address: '',
-      city: '',
-      state: '',
-      zip: '',
-    }]
-  }
-
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       await updateOffices(values, user.company_id)
