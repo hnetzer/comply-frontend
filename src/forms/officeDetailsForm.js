@@ -48,7 +48,7 @@ const OfficeDetailsForm = (props) => {
       isValid
       /* and other goodies */
     }) => (
-        <Form autocomplete="off" className={style.form}>
+        <Form autoComplete="off" className={style.form}>
           <FieldArray
             name="offices"
             render={arrayHelpers => (
@@ -92,7 +92,7 @@ const OfficeDetailsForm = (props) => {
                             type="text"
                             name={`offices[${index}].address`}
                             className={style.tableInput}
-                            autocomplete="off"
+                            autoComplete="off"
                           />
                         </td>
                         <td className={style.tableCell}>
@@ -100,7 +100,7 @@ const OfficeDetailsForm = (props) => {
                             type="text"
                             name={`offices[${index}].city`}
                             className={style.tableInput}
-                            autocomplete="off"
+                            autoComplete="off"
                           />
                         </td>
                         <td className={style.tableCell}>
@@ -118,7 +118,7 @@ const OfficeDetailsForm = (props) => {
                             type="text"
                             name={`offices[${index}].zip`}
                             className={style.tableInput}
-                            autocomplete="off"
+                            autoComplete="off"
                             style={{ width: 56 }}
                           />
                         </td>
