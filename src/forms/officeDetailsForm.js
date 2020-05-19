@@ -1,12 +1,20 @@
 import React from 'react';
+import * as Yup from 'yup';
 import { Formik, Form, Field, FieldArray } from 'formik';
 
-// Bootstrap components
 import Button from 'react-bootstrap/Button';
-
 import states from 'data/states.json';
-
 import style from './officeDetailsForm.module.scss';
+
+const formSchema = Yup.object().shape({
+  offices: Yup.array().of(Yup.object().shape({
+    type: Yup.mixed().oneOf(['Office', 'HQ', 'Remote']).required(),
+    address: Yup.string(),
+    city: Yup.string().required(),
+    state: Yup.mixed().oneOf(states.map(s => s.name)).required(),
+    zip: Yup.string().min(5).required()
+  }))
+});
 
 const OfficeDetailsForm = (props) => {
 
@@ -26,6 +34,8 @@ const OfficeDetailsForm = (props) => {
     <Formik
       initialValues={props.initialValues}
       onSubmit={handleSubmit}
+      validationSchema={formSchema}
+      validateOnMount={true}
     >
     {({
       values,
@@ -45,6 +55,7 @@ const OfficeDetailsForm = (props) => {
               <div style={{ width: '100%'}}>
                 <div className={style.addRowContainer}>
                   <Button
+                    variant="secondary"
                     className={style.addOfficeButton}
                     onClick={() => arrayHelpers.push(newOffice)}>
                     Add office
@@ -112,7 +123,13 @@ const OfficeDetailsForm = (props) => {
                           />
                         </td>
                         <td className={style.tableCell}>
-                          <Button variant="link">-</Button>
+                          <button
+                            className={style.removeButton}
+                            variant="secondary"
+                            onClick={() => arrayHelpers.remove(index)}
+                          >
+                            -
+                          </button>
                         </td>
                       </tr>
                     ))}

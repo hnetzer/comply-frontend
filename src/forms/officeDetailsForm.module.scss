@@ -73,8 +73,29 @@
 .addOfficeButton {
   font-size: 14px;
   padding: 4px 8px;
+  background-color: #e3e3e3;
+  border: 1px solid #cecfcf;
+  border-radius: 3px;
+  color: #535353;
 }
 
-.continueButton {
+.removeButton {
+  font-size: 14px;
+  height: 24px;
+  width: 24px;
+  background-color: #e3e3e3;
+  border: 1px solid #cecfcf;
+  border-radius: 3px;
+  color: #535353;
+  margin-left: 8px;
+}
 
+.removeButton:hover {
+  background-color: #d3d3d3;
+  color: #434343;
+  border: 1px solid #bebfbf;
+}
+
+.removeButton:focus {
+  outline:none;
 }
