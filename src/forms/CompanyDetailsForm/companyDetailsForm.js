@@ -108,7 +108,7 @@ const CompanyDetailsForm = (props) => {
             </div>
             <div className={style.fieldGroup}>
               <Field as="select" name="formation_state" className={style.field}>
-                <option value={null}></option>
+                <option value={''}></option>
                 {states.map((s,i) => <option key={i} value={s.name}>{s.name}</option>)}
               </Field>
               <small>The state that your business formed in.</small>

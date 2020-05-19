@@ -1,33 +1,30 @@
-import React, { useState } from 'react';
-
-import { Formik, FieldArray } from 'formik';
+import React from 'react';
+import { Formik, Form, Field, FieldArray } from 'formik';
 
 // Bootstrap components
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
+import states from 'data/states.json';
+
+import style from './officeDetailsForm.module.scss';
+
 const OfficeDetailsForm = (props) => {
-  const [validated] = useState(false);
+
+  const newOffice =  {
+    type: '',
+    address: '',
+    city: '',
+    state: '',
+    zip: ''
+  };
 
   const handleSubmit = async (values, { setSubmitting }) => {
     await props.handleSubmit(values, { setSubmitting })
   }
 
-  const handleValidation = values => {
-    const errors = {};
-    return errors;
-  }
-
-  const getOrdinal = (index) => {
-    const ordinals = ['Primary', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth'];
-    return ordinals[index]
-  }
-
   return (
     <Formik
       initialValues={props.initialValues}
-      validate={handleValidation}
       onSubmit={handleSubmit}
     >
     {({
@@ -38,95 +35,101 @@ const OfficeDetailsForm = (props) => {
       handleBlur,
       handleSubmit,
       isSubmitting,
+      isValid
       /* and other goodies */
     }) => (
-        <Form validated={validated} onSubmit={handleSubmit} style={{ width: '100%'}}>
-        <FieldArray
-          name="offices"
-          render={arrayHelpers => (
-          <>
-            {values.offices.map((office, index) => (
-              <div key={index}>
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', borderBottom: '1px solid #c0c0c0', marginBottom: 10}}>
-                <h5>{`${getOrdinal(index)} Office`}</h5>
-                {(index !== 0) ? (
-                  <Button variant="link" onClick={() => arrayHelpers.remove(index)}>
-                  Remove
-                  </Button>) : null}
+        <Form autocomplete="off" className={style.form}>
+          <FieldArray
+            name="offices"
+            render={arrayHelpers => (
+              <div style={{ width: '100%'}}>
+                <div className={style.addRowContainer}>
+                  <Button
+                    className={style.addOfficeButton}
+                    onClick={() => arrayHelpers.push(newOffice)}>
+                    Add office
+                  </Button>
                 </div>
-                <Form.Group controlId={`offices[${index}].address`}>
-                  <Form.Label>Address</Form.Label>
-                  <Form.Control
-                    required
-                    onChange={handleChange}
-                    type="text"
-                    value={values.offices[index].address} />
-                </Form.Group>
-                <Form.Row>
-                  <Col>
-                    <Form.Group controlId={`offices[${index}].city`}>
-                      <Form.Label>City</Form.Label>
-                      <Form.Control
-                        required
-                        onChange={handleChange}
-                        value={values.offices[index].city}
-                        as="select">
-                        <option value=""></option>
-                        <option value="Los Angeles">Los Angeles</option>
-                        <option value="New York">New York</option>
-                        <option value="San Francisco">San Francisco</option>
-                      </Form.Control>
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group controlId={`offices[${index}].state`}>
-                      <Form.Label>State</Form.Label>
-                      <Form.Control
-                        required
-                        onChange={handleChange}
-                        value={values.offices[index].state}
-                        as="select">
-                        <option value=""></option>
-                        <option value="California">California</option>
-                        <option value="New York">New York</option>
-                      </Form.Control>
-                    </Form.Group>
-                  </Col>
-                </Form.Row>
-                <Form.Row>
-                  <Col>
-                  <Form.Group controlId={`offices[${index}].zip`}>
-                    <Form.Label>Zip Code</Form.Label>
-                    <Form.Control
-                      required
-                      onChange={handleChange}
-                      type="text"
-                      placeholder=""
-                      value={values.offices[index].zip} />
-                  </Form.Group>
-                  </Col>
-                  <Col/>
-                </Form.Row>
+                <table className={style.table}>
+                  <thead>
+                    <tr className={style.tableHeaderRow}>
+                      <th className={style.tableHeader}>Type</th>
+                      <th className={style.tableHeader}>Address</th>
+                      <th className={style.tableHeader}>City</th>
+                      <th className={style.tableHeader}>State</th>
+                      <th className={style.tableHeader}>Zip</th>
+                      <th className={style.tableHeader}></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {values.offices.map((office, index) => (
+                      <tr key={index} className={style.tableBodyRow}>
+                        <td className={style.tableCell}>
+                          <Field
+                            as="select"
+                            name={`offices[${index}].type`}
+                            className={style.tableSelect}
+                          >
+                            <option value={''}></option>
+                            <option value="Office">Office</option>
+                            <option value="HQ">HQ</option>
+                            <option value="Remote">Remote</option>
+                          </Field>
+                        </td>
+                        <td className={style.tableCell}>
+                          <Field
+                            type="text"
+                            name={`offices[${index}].address`}
+                            className={style.tableInput}
+                            autocomplete="off"
+                          />
+                        </td>
+                        <td className={style.tableCell}>
+                          <Field
+                            type="text"
+                            name={`offices[${index}].city`}
+                            className={style.tableInput}
+                            autocomplete="off"
+                          />
+                        </td>
+                        <td className={style.tableCell}>
+                          <Field
+                            as="select"
+                            name={`offices[${index}].state`}
+                            className={style.tableSelect}
+                          >
+                            <option value={''}></option>
+                            {states.map((s,i) => <option key={i} value={s.name}>{s.abbreviation}</option>)}
+                          </Field>
+                        </td>
+                        <td className={style.tableCell} >
+                          <Field
+                            type="text"
+                            name={`offices[${index}].zip`}
+                            className={style.tableInput}
+                            autocomplete="off"
+                            style={{ width: 56 }}
+                          />
+                        </td>
+                        <td className={style.tableCell}>
+                          <Button variant="link">-</Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            ))}
+            )} />
             <Button
-              onClick={() => arrayHelpers.push({
-                address: '',
-                city: '',
-                state: '',
-                zip: ''
-              })}
-              variant="link">
-              + Add Another Office
+              disabled={!isValid}
+              variant="primary"
+              type="submit"
+              style={{ width: 232, marginTop: 56 }}
+             >
+              Continue
             </Button>
-            </>
-          )}
-        />
-        <Button variant="primary" type="submit" block>
-          Next
-        </Button>
-      </Form>
-    )}
+          </Form>
+        )}
     </Formik>
   );
 }
