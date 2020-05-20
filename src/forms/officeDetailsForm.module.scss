@@ -1,0 +1,101 @@
+.table {
+  border-radius: 3px;
+  font-variant-numeric: tabular-nums;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.tableHeader {
+  font-weight: 500;
+  padding: 6px 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.tableHeaderRow {
+  background-color: #f2f2f2;
+  border: 1px solid #e3e3e3;
+  color: #535353;
+  font-size: 14px;
+}
+
+.tableBodyRow {
+  background-color: #ffffff;
+  border: 1px solid #e3e3e3;
+}
+
+.tableCell {
+  line-height: 18px;
+  padding: 0px;
+  border-right: 1px dashed #a9a9a9;
+}
+
+.tableInput {
+  margin: 0px;
+  padding: 8px;
+  border: none;
+  font-size: 14px;
+}
+
+.tableInput:focus {
+  outline: none;
+}
+
+.tableSelect {
+  background: none;
+  border: none;
+  width: 100%;
+  font-size: 14px;
+}
+
+.tableSelect:focus {
+  outline:none;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.addRowContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.addOfficeButton {
+  font-size: 14px;
+  padding: 4px 8px;
+  background-color: #e3e3e3;
+  border: 1px solid #cecfcf;
+  border-radius: 3px;
+  color: #535353;
+}
+
+.removeButton {
+  font-size: 14px;
+  height: 24px;
+  width: 24px;
+  background-color: #e3e3e3;
+  border: 1px solid #cecfcf;
+  border-radius: 3px;
+  color: #535353;
+  margin-left: 8px;
+}
+
+.removeButton:hover {
+  background-color: #d3d3d3;
+  color: #434343;
+  border: 1px solid #bebfbf;
+}
+
+.removeButton:focus {
+  outline:none;
+}

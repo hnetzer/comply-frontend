@@ -1,5 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { navigate } from "@reach/router"
+
+import { OfficeDetailsForm } from 'forms'
+import { updateOffices } from 'network/api'
 
 import { VerticalProgressBar } from 'components/molecules'
 import { Card } from 'components/atoms'
@@ -7,7 +11,18 @@ import { Card } from 'components/atoms'
 import style from '../OnboardingScreen.module.scss'
 import screenStyle from './Offices.module.scss'
 
-const Offices = ({ user, dispatch }) => {
+const Offices = ({ user, offices, dispatch }) => {
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      await updateOffices(values, user.company_id)
+      navigate('/onboarding/agencies')
+    } catch (err) {
+      // TODO: Show error message if we get an error response
+      alert(err.message)
+    }
+  }
+
   return(
     <>
       <Card className={style.progressBarSection}>
@@ -21,6 +36,12 @@ const Offices = ({ user, dispatch }) => {
             Add your company office locations below. Make sure to also include the location of remote employees.
           </p>
         </div>
+        {!offices ? (<div>Loading...</div>) :
+          <OfficeDetailsForm
+            initialValues={{ offices: offices }}
+            handleSubmit={handleSubmit} />
+        }
+
       </Card>
     </>
   )

@@ -10,18 +10,19 @@ import { AccountMenu } from 'components/molecules'
 import GetStarted from './GetStarted/GetStarted'
 import Company from './Company/Company'
 import Offices from './Offices/Offices'
+import Agencies from './Agencies/Agencies'
 
 import styles from './OnboardingScreen.module.scss'
 
 class OnboardingScreen extends Component {
   constructor(props) {
     super(props)
-    this.state = { company: null }
+    this.state = { company: null, offices: null }
   }
 
   async componentDidMount() {
     const company = await getCompany(this.props.user.company_id);
-    this.setState({ company: company })
+    this.setState({ company: company, offices: company.offices })
   }
 
 
@@ -31,9 +32,8 @@ class OnboardingScreen extends Component {
   }
 
   render() {
-    const { company } = this.state
+    const { company, offices } = this.state
     const { user } = this.props
-
     return(
       <div className={styles.onboardingContainer}>
         <header className={styles.headerBar}>
@@ -51,7 +51,9 @@ class OnboardingScreen extends Component {
           <Router className={styles.main}>
             <GetStarted path="/" />
             <Company path="/company" company={company} />
-            <Offices path="/offices" />
+            <Offices path="/offices" offices={offices} />
+            <Agencies path="/agencies" />
+
           </Router>
         </main>
       </div>
