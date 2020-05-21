@@ -6,7 +6,7 @@ import { VerticalProgressBar } from 'components/molecules'
 import { Card } from 'components/atoms'
 import { AgenciesForm } from 'forms'
 import { updateAgencies, getCompanyFilings } from 'network/api';
-import { setFilings, setCompanyAgencies } from 'actions';
+import { setFilings, setCompanyAgencies, onboarded } from 'actions';
 
 import style from '../OnboardingScreen.module.scss'
 
@@ -25,6 +25,7 @@ const Agencies = ({ user, agencies, dispatch }) => {
       const filings = await getCompanyFilings(user.company_id)
       dispatch(setFilings(filings))
       dispatch(setCompanyAgencies(agencies))
+      dispatch(onboarded())
       navigate('/onboarding/done')
     } catch (err) {
       alert(err)

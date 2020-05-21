@@ -31,6 +31,14 @@ export default (state = initialState, action) => {
     }
   case 'LOGOUT':
     return initialState;
+  case 'ONBOARDED':
+    return {
+      ...state,
+      company: {
+        ...state.company,
+        onboarded: true
+      }
+    }
   default:
    return state
  }

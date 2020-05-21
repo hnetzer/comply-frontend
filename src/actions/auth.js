@@ -1,5 +1,6 @@
 const LOGOUT = "LOGOUT";
 const LOGIN = "LOGIN";
+const ONBOARDED = "ONBOARDED";
 
 const logout = (data) => {
   return {
@@ -18,7 +19,14 @@ const login = (data) => {
   }
 }
 
+const onboarded = () => {
+  return {
+    type: ONBOARDED
+  }
+}
+
 export {
   logout,
-  login
+  login,
+  onboarded
 }
