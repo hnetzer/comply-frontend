@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
 
-import { HeaderBar } from 'components/organisms'
 import { FilingTimeline } from 'components/molecules'
 import { getFilingsForCompany, getCompanyAgencies } from 'network/api';
 
@@ -90,7 +89,6 @@ class DashboardScreen extends React.Component {
 
     return(
       <>
-        <HeaderBar title="Home"/>
         <section className={screenStyle.container}>
           <div className={screenStyle.content}>
             <div style={{ width: '100%', textAlign: 'left'}}>

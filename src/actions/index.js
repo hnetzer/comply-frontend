@@ -1,6 +1,6 @@
 import { createAccountResponse } from './signup'
 import { setFilings, setCompanyAgencies } from './company'
-import { logout, login } from './auth'
+import { logout, login, onboarded } from './auth'
 import {
   setCompanyFilings,
   updateCompanyFiling,
@@ -17,6 +17,7 @@ export {
   setFilings,
   logout,
   login,
+  onboarded,
   setCompanyAgencies,
   setCompanyFilings,
   updateCompanyFiling,

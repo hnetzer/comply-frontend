@@ -6,7 +6,6 @@ import { getURLParam } from 'utils'
 
 import Spinner from 'react-bootstrap/Spinner'
 
-import { HeaderBar } from 'components/organisms'
 import screenStyle from './home/Screens.module.scss'
 import style from './FilingScreen.module.scss'
 
@@ -153,8 +152,6 @@ class FilingScreen extends React.Component {
     if (!filing) return (<Spinner animation="grow" variant="primary" />);
 
     return (
-    <>
-      <HeaderBar title={filing.name}/>
       <section className={screenStyle.container}>
         <div className={screenStyle.content}>
           <div className={style.headerSection}>
@@ -171,8 +168,7 @@ class FilingScreen extends React.Component {
           </div>
 
         </div>
-      </section>
-    </>);
+      </section>);
   }
 }
 

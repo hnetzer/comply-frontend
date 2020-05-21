@@ -26,22 +26,29 @@ const LoginScreen = (props) => {
       const response = await loginRequest(email, password)
       props.dispatch(login(response))
 
-      const { user } = response
+      const { user, company } = response
       // If admin, then go to admin
       if (user.roles != null && user.roles.indexOf('admin') !== -1) {
         navigate('/admin')
         return
       }
 
+      if (!company.onboarded) {
+        navigate('/onboarding')
+        return
+      }
+
       // Otherwise go to client home
       navigate('/home')
     } catch (err) {
-      console.log(err)
       setError('Email and password are not valid.')
     }
   }
 
   if(props.token) {
+    if(!props.company.onboarded) {
+      return <Redirect to="/onboarding" noThrow />;
+    }
     return <Redirect to="/home" noThrow />;
   }
 
@@ -72,6 +79,8 @@ const LoginScreen = (props) => {
 const mapStateToProps = state => {
   return {
     token: state.auth.token,
+    user: state.auth.user,
+    company: state.auth.company
   }
 }
 

@@ -11,6 +11,7 @@ import GetStarted from './GetStarted/GetStarted'
 import Company from './Company/Company'
 import Offices from './Offices/Offices'
 import Agencies from './Agencies/Agencies'
+import Done from './Done/Done'
 
 import styles from './OnboardingScreen.module.scss'
 
@@ -22,7 +23,10 @@ class OnboardingScreen extends Component {
 
   async componentDidMount() {
     const company = await getCompany(this.props.user.company_id);
-    this.setState({ company: company, offices: company.offices })
+    this.setState({
+      company: company,
+      offices: company.offices,
+    })
   }
 
 
@@ -53,7 +57,7 @@ class OnboardingScreen extends Component {
             <Company path="/company" company={company} />
             <Offices path="/offices" offices={offices} />
             <Agencies path="/agencies" />
-
+            <Done path="/done" />
           </Router>
         </main>
       </div>

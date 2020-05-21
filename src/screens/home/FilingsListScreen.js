@@ -5,8 +5,6 @@ import moment from 'moment'
 import { FilingCard } from '../../components/molecules'
 import { getFilingsForCompany, getCompanyFilings } from 'network/api';
 
-import { HeaderBar } from 'components/organisms'
-
 import { setFilings } from 'actions';
 
 import style from './Screens.module.scss'
@@ -136,16 +134,13 @@ class FilingsListScreen extends React.Component {
 
   render() {
     return(
-      <>
-        <HeaderBar title="Filings"/>
-        <section className={style.container}>
-          <div className={style.content}>
-            {this.renderInProgress()}
-            {this.renderNext()}
-            {this.renderNeedMoreInfo()}
-          </div>
-        </section>
-      </>
+      <section className={style.container}>
+        <div className={style.content}>
+          {this.renderInProgress()}
+          {this.renderNext()}
+          {this.renderNeedMoreInfo()}
+        </div>
+      </section>
     )
   }
 }

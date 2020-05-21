@@ -7,10 +7,13 @@ import Card from 'react-bootstrap/Card';
 
 import styles from './Website.module.scss'
 
-const WebsiteScreen = ({ token }) => {
+const WebsiteScreen = ({ token, company }) => {
 
   // If the user is already logged in, then take them to home
   if(token) {
+    if (!company.onboarded) {
+      return <Redirect to="/onboarding" noThrow />;
+    }
     return <Redirect to="/home" noThrow />;
   }
 
@@ -28,7 +31,7 @@ const WebsiteScreen = ({ token }) => {
               justifyContent: 'space-evenly'  }}>
             <Button
               variant="primary"
-              href="/signup/get-started"
+              href="/signup"
             >
               Sign Up
             </Button>
@@ -48,6 +51,8 @@ const WebsiteScreen = ({ token }) => {
 const mapStateToProps = state => {
   return {
     token: state.auth.token,
+    user: state.auth.user,
+    company: state.auth.company
   }
 }
 
