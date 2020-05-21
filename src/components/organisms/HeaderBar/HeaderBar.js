@@ -8,7 +8,7 @@ import { logout } from 'actions';
 
 import style from './HeaderBar.module.scss'
 
-const HeaderBar = ({ user, dispatch, title = ""}) => {
+const HeaderBar = ({ user, company, dispatch }) => {
 
   const handleLogout = () => {
     dispatch(logout())
@@ -16,18 +16,24 @@ const HeaderBar = ({ user, dispatch, title = ""}) => {
   }
 
   return (
-    <div className={style.headerBar}>
-      <h3>{title}</h3>
+    <header className={style.headerBar}>
+      <div className={style.leftHeaderSection}>
+        <h3 className={style.complyLogo}>Comply</h3>
+        <span className={style.accountText}>ACCOUNT</span>
+        {company && (<span className={style.companyName}>{company.name}</span>)}
+      </div>
       <AccountMenu
+        variant="light"
         user={user}
         handleLogout={handleLogout} />
-    </div>
+    </header>
   )
 }
 
 const mapStateToProps = state => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    company: state.auth.company,
   }
 }
 

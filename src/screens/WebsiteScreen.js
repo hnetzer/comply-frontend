@@ -28,7 +28,7 @@ const WebsiteScreen = ({ token }) => {
               justifyContent: 'space-evenly'  }}>
             <Button
               variant="primary"
-              href="/signup/get-started"
+              href="/signup"
             >
               Sign Up
             </Button>

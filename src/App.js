@@ -2,9 +2,6 @@ import React from 'react';
 import { Router } from "@reach/router"
 
 // Signup
-import GetStartedScreen from "./screens/signup/GetStartedScreen"
-import CompanyDetailsScreen from "./screens/signup/CompanyDetailsScreen"
-import OfficeDetailsScreen from "./screens/signup/OfficeDetailsScreen"
 import SignupScreen from './screens/signup/SignupScreen'
 
 // Onboarding
@@ -25,11 +22,7 @@ const App = (props) => {
       <WebsiteScreen path="/" />
       <LoginScreen path="/login" />
       <HomeScreen path="/home/*" />
-      <SignupScreen path="/signup">
-        <GetStartedScreen path="/get-started" />
-        <CompanyDetailsScreen path="/company-details" />
-        <OfficeDetailsScreen path="/office-details" />
-      </SignupScreen>
+      <SignupScreen path="/signup" />
       <OnboardingScreen path="/onboarding/*" />
       <AdminScreen path="/admin/*" />
     </Router>

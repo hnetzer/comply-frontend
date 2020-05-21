@@ -1,12 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { navigate } from "@reach/router"
 
 import { VerticalProgressBar } from 'components/molecules'
 import { Card } from 'components/atoms'
+import { AgenciesForm } from 'forms'
+import { updateAgencies, getCompanyFilings } from 'network/api';
+import { setFilings, setCompanyAgencies } from 'actions';
 
 import style from '../OnboardingScreen.module.scss'
 
-const Agencies = ({ user, offices, dispatch }) => {
+const Agencies = ({ user, agencies, dispatch }) => {
+
+  const getInitalFormValues = () => {
+    return agencies.reduce((acc, a) => {
+      acc[a.id] = true;
+      return acc
+    }, {})
+  }
+
+  const handleSubmit = async (agencyIds) => {
+    try {
+      const agencies = await updateAgencies({ agencies: agencyIds }, user.company_id)
+      const filings = await getCompanyFilings(user.company_id)
+      dispatch(setFilings(filings))
+      dispatch(setCompanyAgencies(agencies))
+      navigate('/onboarding/done')
+    } catch (err) {
+      alert(err)
+    }
+  }
+
   return(
     <>
       <Card className={style.progressBarSection}>
@@ -22,6 +46,12 @@ const Agencies = ({ user, offices, dispatch }) => {
             we will not track those filings for you.
           </p>
         </div>
+        {!agencies ? (<div>Loading...</div>) :
+          <AgenciesForm
+            agencies={agencies}
+            initialValues={getInitalFormValues()}
+            handleSubmit={handleSubmit} />
+        }
       </Card>
     </>
   )
