@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import moment from 'moment'
 
 import Table from 'react-bootstrap/Table'
-
-import { HeaderBar } from 'components/organisms'
 import style from './Screens.module.scss'
 
 const CompanyScreen = (props) => {
@@ -17,7 +15,6 @@ const CompanyScreen = (props) => {
     if (!props.company) return null;
     const {
       name,
-      phone,
       type,
       tax_class,
       year_end_month,
@@ -30,10 +27,6 @@ const CompanyScreen = (props) => {
           <tr>
             <td>Name</td>
             <td>{name}</td>
-          </tr>
-          <tr>
-            <td>Phone</td>
-            <td>{phone}</td>
           </tr>
           <tr>
             <td>Type</td>
@@ -53,14 +46,11 @@ const CompanyScreen = (props) => {
   }
 
   return(
-    <>
-      <HeaderBar title={props.company && props.company.name}/>
-      <section className={style.container}>
-        <div className={style.content}>
-          {renderDetailsTable()}
-        </div>
-      </section>
-    </>
+    <section className={style.container}>
+      <div className={style.content}>
+        {renderDetailsTable()}
+      </div>
+    </section>
   )
 }
 

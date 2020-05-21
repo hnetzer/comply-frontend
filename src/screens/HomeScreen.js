@@ -4,6 +4,8 @@ import { Router } from "@reach/router"
 
 import { getCompany } from 'network/api';
 
+import { HeaderBar } from 'components/organisms'
+
 import { SideNavigation } from 'components/organisms'
 
 // screens
@@ -36,17 +38,20 @@ class HomeScreen extends React.Component {
     const { company} = this.state;
     return(
       <>
-        <SideNavigation companyName={company && company.name} />
-        <main className={styles.main}>
-          <Router style={{ width: '100%' }}>
-            <FilingsListScreen path="/filings" />
-            <CompanyScreen path="/company" company={company} />
-            <AgenciesScreen path="/agencies" />
-            <FilingScreen path="/filings/new" />
-            <FilingScreen path="/filings/:companyFilingId" />
-            <DashboardScreen path="/" />
-          </Router>
-        </main>
+        <HeaderBar />
+        <div style={{ display: 'flex', flexDirection: 'row', minHeight: 'calc(100vh - 54px)'}}>
+          <SideNavigation />
+          <main className={styles.main}>
+            <Router style={{ width: '100%' }}>
+              <FilingsListScreen path="/filings" />
+              <CompanyScreen path="/company" company={company} />
+              <AgenciesScreen path="/agencies" />
+              <FilingScreen path="/filings/new" />
+              <FilingScreen path="/filings/:companyFilingId" />
+              <DashboardScreen path="/" />
+            </Router>
+          </main>
+        </div>
       </>
     )
   }
