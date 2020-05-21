@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Router, navigate } from "@reach/router"
 import { logout } from 'actions';
 
-import { getCompany, getAgencies } from 'network/api'
+import { getCompany } from 'network/api'
 
 import { AccountMenu } from 'components/molecules'
 
@@ -18,16 +18,14 @@ import styles from './OnboardingScreen.module.scss'
 class OnboardingScreen extends Component {
   constructor(props) {
     super(props)
-    this.state = { company: null, offices: null, agencies: null }
+    this.state = { company: null, offices: null }
   }
 
   async componentDidMount() {
     const company = await getCompany(this.props.user.company_id);
-    const agencies = await getAgencies(this.props.user.company_id);
     this.setState({
       company: company,
       offices: company.offices,
-      agencies: agencies
     })
   }
 
@@ -38,7 +36,7 @@ class OnboardingScreen extends Component {
   }
 
   render() {
-    const { company, offices, agencies } = this.state
+    const { company, offices } = this.state
     const { user } = this.props
     return(
       <div className={styles.onboardingContainer}>
@@ -58,7 +56,7 @@ class OnboardingScreen extends Component {
             <GetStarted path="/" />
             <Company path="/company" company={company} />
             <Offices path="/offices" offices={offices} />
-            <Agencies path="/agencies" agencies={agencies} />
+            <Agencies path="/agencies" />
             <Done path="/done" />
           </Router>
         </main>
