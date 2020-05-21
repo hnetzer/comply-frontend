@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
       error: null,
       user: action.data.user,
       token: action.data.token,
-      company: null
+      company: action.data.company,
     }
   case 'LOGOUT':
     return initialState;
