@@ -6,7 +6,7 @@ import { getCompany } from 'network/api';
 
 import { HeaderBar } from 'components/organisms'
 
-import { SideNavigation } from 'components/organisms'
+import { SubNav } from 'components/organisms'
 
 // screens
 import CompanyScreen from './home/CompanyScreen'
@@ -15,7 +15,7 @@ import AgenciesScreen from './home/AgenciesScreen'
 import DashboardScreen from './home/DashboardScreen'
 import FilingScreen from './FilingScreen'
 
-import styles from './Home.module.css'
+import styles from './Home.module.scss'
 
 // Maybe this should just be a functional component?
 class HomeScreen extends React.Component {
@@ -39,8 +39,8 @@ class HomeScreen extends React.Component {
     return(
       <>
         <HeaderBar />
+        <SubNav />
         <div style={{ display: 'flex', flexDirection: 'row', minHeight: 'calc(100vh - 54px)'}}>
-          <SideNavigation />
           <main className={styles.main}>
             <Router style={{ width: '100%' }}>
               <FilingsListScreen path="/filings" />

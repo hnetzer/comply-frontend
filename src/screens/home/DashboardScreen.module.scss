@@ -1,15 +1,25 @@
 @import "styles/vars";
 
-.accentNumber {
-  color: $accent;
-  font-weight: bold;
+
+.topSection {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 24px;
+  justify-content: space-between;
 }
 
-.filingSentence {
-  line-height: 38px;
-  margin-bottom: 16px;
+.topCard {
+  width: 450px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.welcome {
-  margin-bottom: 16px;
+.overviewCard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }

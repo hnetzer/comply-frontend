@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
 
+import Button from 'react-bootstrap/Button';
+import { Card } from 'components/atoms'
 import { FilingTimeline } from 'components/molecules'
-import { getFilingsForCompany, getCompanyAgencies } from 'network/api';
+import { getFilingsForCompany } from 'network/api';
 
 import screenStyle from './Screens.module.scss'
 import style from './DashboardScreen.module.scss'
@@ -12,9 +14,6 @@ class DashboardScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      filingCount: null,
-      agencyCount: null,
-      nextDueDate: null,
       timelineFilings: null
     }
   }
@@ -32,37 +31,10 @@ class DashboardScreen extends React.Component {
   loadPageData = async () => {
     try {
       const filings = await getFilingsForCompany(this.props.user.company_id)
-      const agencies = await getCompanyAgencies(this.props.user.company_id)
-      const nextDueDate = this.findNextDueDate(filings)
-      const timelineFilings = this.getTimelineFilings(filings)
-
-      this.setState({
-        filingCount: filings.length,
-        agencyCount: agencies.length,
-        timelineFilings: timelineFilings,
-        nextDueDate: nextDueDate
-      })
+      this.setState({ timelineFilings: this.getTimelineFilings(filings) })
     } catch (err) {
       console.log(err)
     }
-  }
-
-  findNextDueDate = (filings) => {
-    const now = new Date()
-    const f = filings.filter(f => {
-      if (f.due == null) return false
-      const due = new Date(f.due)
-      if (due.getTime() >= now.getTime()) {
-        return true
-      }
-      return false
-    })
-
-    f.sort(this.compareFilingsByDue)
-    if (f.length > 0) {
-      return f[0].due
-    }
-    return null
   }
 
   getTimelineFilings = (filings) => {
@@ -82,36 +54,28 @@ class DashboardScreen extends React.Component {
   }
 
   render() {
-    const { filingCount, agencyCount, nextDueDate, timelineFilings } = this.state
+    const { timelineFilings } = this.state
     const { user } = this.props
-    console.log(user)
-    if (!user || !agencyCount) return null;
+    if (!user) return null;
 
     return(
-      <>
-        <section className={screenStyle.container}>
-          <div className={screenStyle.content}>
-            <div style={{ width: '100%', textAlign: 'left'}}>
-              <h2 className={style.welcome}>{`Welcome ${user.first_name}`}!</h2>
-              <h3 className={style.filingSentence}>
-                {`Comply is helping you keep track of `}
-                <span className={style.accentNumber}>{`${filingCount} annual filings`}</span>
-                {` across `}
-                <span className={style.accentNumber}>{`${agencyCount} agencies`}</span>
-                {`.`}
-              </h3>
-            </div>
-            <FilingTimeline filings={timelineFilings} />
-            <div style={{ width: '100%', textAlign: 'left'}}>
-              {nextDueDate && (<h4 className={style.filingSentence}>
-                {`Your next filing is due `}
-                <span className={style.accentNumber}>{moment(nextDueDate).format('MMMM Do')}</span>
-                {`.`}
-              </h4>)}
-            </div>
+      <section className={screenStyle.container}>
+        <div className={screenStyle.content}>
+          <div className={style.topSection}>
+            <Card className={style.topCard}>
+              <h4>Upcoming Due Dates</h4>
+            </Card>
+            <Card className={style.topCard}>
+              <h4>We'll file for you</h4>
+              <Button style={{ width: 240 }}>Try Comply Premium</Button>
+            </Card>
           </div>
-        </section>
-      </>
+          <Card className={style.overviewCard}>
+            <h4>Overview</h4>
+            <FilingTimeline filings={timelineFilings} />
+          </Card>
+        </div>
+      </section>
     )
   }
 }

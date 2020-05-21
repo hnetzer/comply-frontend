@@ -1,8 +1,8 @@
 @import "styles/vars";
 
 .sidebar {
-  border-right: 1px solid #d4d4d4;
-  background-color: $chrome;
+  background-color: $white;
+  box-shadow: 2px -2px -2px 0px #cfcfcf;
   display: block;
   max-width: 200px;
   width: 100%;
