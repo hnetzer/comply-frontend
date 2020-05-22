@@ -2,9 +2,12 @@ import React from 'react';
 import * as Yup from 'yup';
 import { Formik, Form, Field, FieldArray } from 'formik';
 
+import { Table, Header, HeaderCell, Body, Row, Cell } from 'components/atoms'
+
 import Button from 'react-bootstrap/Button';
 import states from 'data/states.json';
 import style from './officeDetailsForm.module.scss';
+
 
 const formSchema = Yup.object().shape({
   offices: Yup.array().of(Yup.object().shape({
@@ -61,21 +64,19 @@ const OfficeDetailsForm = (props) => {
                     Add office
                   </Button>
                 </div>
-                <table className={style.table}>
-                  <thead>
-                    <tr className={style.tableHeaderRow}>
-                      <th className={style.tableHeader}>Type</th>
-                      <th className={style.tableHeader}>Address</th>
-                      <th className={style.tableHeader}>City</th>
-                      <th className={style.tableHeader}>State</th>
-                      <th className={style.tableHeader}>Zip</th>
-                      <th className={style.tableHeader}></th>
-                    </tr>
-                  </thead>
-                  <tbody>
+                <Table>
+                  <Header>
+                      <HeaderCell>Type</HeaderCell>
+                      <HeaderCell>Address</HeaderCell>
+                      <HeaderCell>City</HeaderCell>
+                      <HeaderCell>State</HeaderCell>
+                      <HeaderCell>Zip</HeaderCell>
+                      <HeaderCell></HeaderCell>
+                  </Header>
+                  <Body>
                     {values.offices.map((office, index) => (
-                      <tr key={index} className={style.tableBodyRow}>
-                        <td className={style.tableCell}>
+                      <Row key={index}>
+                        <Cell>
                           <Field
                             as="select"
                             name={`offices[${index}].type`}
@@ -86,24 +87,24 @@ const OfficeDetailsForm = (props) => {
                             <option value="HQ">HQ</option>
                             <option value="Remote">Remote</option>
                           </Field>
-                        </td>
-                        <td className={style.tableCell}>
+                        </Cell>
+                        <Cell>
                           <Field
                             type="text"
                             name={`offices[${index}].address`}
                             className={style.tableInput}
                             autoComplete="off"
                           />
-                        </td>
-                        <td className={style.tableCell}>
+                        </Cell>
+                        <Cell>
                           <Field
                             type="text"
                             name={`offices[${index}].city`}
                             className={style.tableInput}
                             autoComplete="off"
                           />
-                        </td>
-                        <td className={style.tableCell}>
+                        </Cell>
+                        <Cell>
                           <Field
                             as="select"
                             name={`offices[${index}].state`}
@@ -112,8 +113,8 @@ const OfficeDetailsForm = (props) => {
                             <option value={''}></option>
                             {states.map((s,i) => <option key={i} value={s.name}>{s.abbreviation}</option>)}
                           </Field>
-                        </td>
-                        <td className={style.tableCell} >
+                        </Cell>
+                        <Cell>
                           <Field
                             type="text"
                             name={`offices[${index}].zip`}
@@ -121,8 +122,8 @@ const OfficeDetailsForm = (props) => {
                             autoComplete="off"
                             style={{ width: 56 }}
                           />
-                        </td>
-                        <td className={style.tableCell}>
+                        </Cell>
+                        <Cell>
                           <button
                             className={style.removeButton}
                             variant="secondary"
@@ -130,11 +131,11 @@ const OfficeDetailsForm = (props) => {
                           >
                             -
                           </button>
-                        </td>
-                      </tr>
+                        </Cell>
+                      </Row>
                     ))}
-                  </tbody>
-                </table>
+                  </Body>
+                </Table>
               </div>
             )} />
             <Button

@@ -4,6 +4,7 @@ import FilingAgency from './FilingAgency/FilingAgency'
 import FilingStatus from './FilingStatus/FilingStatus'
 import FilingDueDate from './FilingDueDate/FilingDueDate'
 import Card from './Card/Card'
+import { Table, Body, Header, HeaderCell, Row, Cell } from './Table/Table';
 
 export {
   FilingName,
@@ -11,5 +12,11 @@ export {
   FilingAgency,
   FilingStatus,
   FilingDueDate,
-  Card
+  Card,
+  Table,
+  Body,
+  Header,
+  HeaderCell,
+  Row,
+  Cell
 }
