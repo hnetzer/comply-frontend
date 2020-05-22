@@ -1,63 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Formik, FieldArray } from 'formik';
+import { Formik, FieldArray, Field, Form } from 'formik';
+import { Table, Header, HeaderCell, Body, Row, Cell } from 'components/atoms'
 
 // Bootstrap components
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+import style from './officeDetailsForm.module.scss';
+
 const AgenciesForm = (props) => {
-  const [validated] = useState(false);
 
   const handleSubmit = async (values, { setSubmitting }) => {
-
     const selectedAgencyIds = [];
     for (let agencyId in values) {
       if (values[agencyId]) {
         selectedAgencyIds.push(parseInt(agencyId))
       }
     }
-
     await props.handleSubmit(selectedAgencyIds, { setSubmitting })
-  }
-
-  const handleValidation = values => {
-    const errors = {};
-    return errors;
-  }
-
-  const toTitleCase = (str) => {
-    return str.replace(/\w\S*/g, function(txt){
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-  }
-
-  const groupAgenciesByState = () => {
-    const groupedAgencies = props.agencies.reduce((acc, agency) => {
-      agency.selected = true;
-      if (agency.jurisdiction.state == null) {
-        acc['Federal'] = [ agency ]
-        return acc
-      }
-
-      if (acc[agency.jurisdiction.state] == null) {
-        acc[agency.jurisdiction.state] = [];
-      }
-      acc[agency.jurisdiction.state].push(agency);
-      return acc
-    }, {})
-
-    let agenciesByState = []
-    for (var key in groupedAgencies) {
-      if (groupedAgencies.hasOwnProperty(key)) {
-        agenciesByState.push({
-          name: key,
-          agencies: groupedAgencies[key]
-        });
-      }
-    }
-
-    return agenciesByState;
   }
 
   const initialValuesMap = () => {
@@ -67,18 +27,17 @@ const AgenciesForm = (props) => {
     }, {})
   }
 
-  const getAgencyLabel = (agency, state) => {
+  /*const getAgencyLabel = (agency, state) => {
     console.log(state)
     if (state.toLowerCase() === agency.jurisdiction.name.toLowerCase()) {
       return toTitleCase(agency.name)
     }
     return `${toTitleCase(agency.name)} (${toTitleCase(agency.jurisdiction.name)})`
-  }
+  }*/
 
   return (
     <Formik
       initialValues={initialValuesMap()}
-      validate={handleValidation}
       onSubmit={handleSubmit}
     >
     {({
@@ -89,49 +48,54 @@ const AgenciesForm = (props) => {
       handleBlur,
       handleSubmit,
       isSubmitting,
+      isValid
       /* and other goodies */
     }) => (
-        <Form validated={validated} onSubmit={handleSubmit}>
+        <Form className={style.form}>
           <FieldArray
-            name="states"
+            name="agencies"
             render={arrayHelpers => {
               return (
-                <div>
-                  {groupAgenciesByState(props.agencies).map((state, stateIndex) => {
-                    return (
-                      <div key={stateIndex}>
-                        <h3>{state.name}</h3>
-                        <FieldArray
-                          name="states"
-                          render={arrayHelpers => (
-                            <>
-                              {state.agencies.map((agency, agencyIndex) => {
-                                return (
-                                  <Form.Check
-                                    label={getAgencyLabel(agency, state.name)}
-                                    key={agencyIndex}
-                                    type="checkbox"
-                                    onChange={handleChange}
-                                    name={agency.id}
-                                    checked={values[agency.id]} />)
-                                })
-                              }
-                            </>
-                          )}
-                        />
-                        <hr />
-                      </div>)
-                    })
-                  }
-                </div>)
-              }
+                <Table>
+                  <Header>
+                    <HeaderCell>Jurisdiction</HeaderCell>
+                    <HeaderCell>Agency</HeaderCell>
+                    <HeaderCell>Are you registered?</HeaderCell>
+                    <HeaderCell>Registration Date</HeaderCell>
+                  </Header>
+                  <Body>
+                  {props.agencies.map((agency, index) => {
+                    return (<Row key={index}>
+                      <Cell>{agency.jurisdiction.name}</Cell>
+                      <Cell>{agency.name}</Cell>
+                      <Cell>
+                        <Field
+                          as="select"
+                          name={agency.id}
+                          onChange={handleChange}
+                          className={style.tableSelect}
+                        >
+                          <option value={null}></option>
+                          <option value={true}>Yes</option>
+                          <option value={false}>No</option>
+                        </Field>
+                      </Cell>
+                      <Cell></Cell>
+                    </Row>)
+                  })}
+                  </Body>
+                </Table>
+              )}
             }
           />
-          <div style={{ marginTop: 32 }}>
-            <Button variant="primary" type="submit" block>
-              Save Agencies
-            </Button>
-          </div>
+          <Button
+            disabled={!isValid}
+            variant="primary"
+            type="submit"
+            style={{ width: 232, marginTop: 56 }}
+           >
+            Continue
+          </Button>
         </Form>
       )}
     </Formik>
