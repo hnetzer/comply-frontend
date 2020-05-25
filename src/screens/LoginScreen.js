@@ -45,7 +45,7 @@ const LoginScreen = (props) => {
     }
   }
 
-  if(props.token) {
+  if(props.token && props.user.roles != null && props.user.roles.indexOf('admin') === -1) {
     if(!props.company.onboarded) {
       return <Redirect to="/onboarding" noThrow />;
     }
