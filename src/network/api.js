@@ -54,8 +54,8 @@ export const updateOffices = async (data, companyId) => {
   return sendRequest('PUT', `/company/${companyId}/offices`, data)
 }
 
-export const updateAgencies = async (data, companyId) => {
-  return sendRequest('PUT', `/company/${companyId}/agencies`, data)
+export const updateCompanyAgencies = async (data, companyId) => {
+  return sendRequest('PUT', `/company/${companyId}/companyagencies`, data)
 }
 
 export const updateCompanyAgency = async (data, companyId, agencyId) => {
@@ -99,7 +99,7 @@ export const updateCompanyFiling = async (companyId, companyFilingId, data) => {
 }
 
 export const getCompanyAgencies = async (companyId) => {
-  return sendRequest('GET', `/company/${companyId}/agencies`);
+  return sendRequest('GET', `/company/${companyId}/companyagencies`);
 }
 
 export const getAllCompanyFilings = async () => {
@@ -178,7 +178,7 @@ export default {
   loginRequest,
   getAgencies,
   getCompany,
-  updateAgencies,
+  updateCompanyAgencies,
   getFilingsForCompany,
   getCompanyFilings,
   getFiling,
