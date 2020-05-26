@@ -6,7 +6,7 @@ import { VerticalProgressBar } from 'components/molecules'
 import { Card } from 'components/atoms'
 import { AgenciesForm } from 'forms'
 
-import { updateAgencies, getCompanyFilings, getAgencies } from 'network/api';
+import { updateCompanyAgencies, getCompanyFilings, getAgencies, getCompanyAgencies } from 'network/api';
 import { setFilings, setCompanyAgencies, onboarded } from 'actions';
 
 import style from '../OnboardingScreen.module.scss'
@@ -21,24 +21,17 @@ class Agencies extends React.Component {
     const { user } = this.props
     try {
       const agencies = await getAgencies(user.company_id);
-      this.setState({ agencies: agencies })
+      const companyAgencies = await getCompanyAgencies(user.company_id)
+      this.setState({ agencies: agencies, companyAgencies: companyAgencies })
     } catch (err) {
       console.log(err)
     }
   }
 
-  getInitalFormValues = () => {
-    const { agencies } = this.state;
-    return agencies.reduce((acc, a) => {
-      acc[a.id] = true;
-      return acc
-    }, {})
-  }
-
-  handleSubmit = async (agencyIds) => {
+  handleSubmit = async (companyAgencies) => {
     const { user, dispatch } = this.props
     try {
-      const agencies = await updateAgencies({ agencies: agencyIds }, user.company_id)
+      const agencies = await updateCompanyAgencies(companyAgencies, user.company_id)
       const filings = await getCompanyFilings(user.company_id)
       dispatch(setFilings(filings))
       dispatch(setCompanyAgencies(agencies))
@@ -50,7 +43,7 @@ class Agencies extends React.Component {
   }
 
   render() {
-    const { agencies } = this.state
+    const { agencies, companyAgencies } = this.state
     return(
       <>
         <Card className={style.progressBarSection}>
@@ -69,7 +62,7 @@ class Agencies extends React.Component {
           {!agencies ? (<div>Loading...</div>) :
             <AgenciesForm
               agencies={agencies}
-              initialValues={this.getInitalFormValues()}
+              companyAgencies={companyAgencies}
               handleSubmit={this.handleSubmit} />
           }
         </Card>

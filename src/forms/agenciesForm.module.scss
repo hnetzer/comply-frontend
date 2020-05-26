@@ -1,0 +1,33 @@
+.tableSelect {
+  background: none;
+  border: none;
+  width: 100%;
+  font-size: 14px;
+}
+
+.tableSelect:focus {
+  outline:none;
+}
+
+.tableDatePicker {
+  background: none;
+  border: none;
+  width: 100%;
+  font-size: 14px;
+  padding: 8px;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cellText {
+  margin: 0px;
+  padding: 8px;
+  font-size: 14px;
+}
