@@ -18,7 +18,6 @@ const formSchema = Yup.object().shape({
 const AgenciesForm = (props) => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    console.log(values)
 
     const transform = values.agencies.map(a => {
       return {
@@ -40,8 +39,6 @@ const AgenciesForm = (props) => {
       return acc;
     }, {})
 
-
-    console.log('companyAgencyMap', companyAgencyMap)
     const values = props.agencies.map((agency, index) => {
       const companyAgency = companyAgencyMap[agency.id];
       if (companyAgency) {
@@ -58,8 +55,6 @@ const AgenciesForm = (props) => {
         registration_date: null
       }
     })
-
-    console.log('initial values:', values)
 
     return { agencies: values };
   }
@@ -91,9 +86,6 @@ const AgenciesForm = (props) => {
       /* and other goodies */
     }) => (
         <Form className={style.form}>
-          {console.log('Form values: ', values)}
-          {console.log('Is valid: ', isValid)}
-          {console.log('Errors: ', errors)}
           <FieldArray
             name="agencies"
             render={arrayHelpers => {
