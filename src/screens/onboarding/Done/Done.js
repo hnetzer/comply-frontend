@@ -12,7 +12,7 @@ const Done = ({ user, agencies, dispatch }) => {
       <Card className={style.progressBarSection}>
         <VerticalProgressBar currentIndex={4}/>
       </Card>
-      <Card style={{ width: 800, display: 'flex', flexDirection: 'column' }}>
+      <Card style={{ width: 800, display: 'flex', flexDirection: 'column', height: 264 }}>
         <h3>Done!</h3>
         <div className={style.descriptionSection}>
           <h6 className={style.descriptionHeader}>Your filing dashboard</h6>
@@ -21,7 +21,11 @@ const Done = ({ user, agencies, dispatch }) => {
             your filing dashboard to help you keep track of all of your filings!
           </p>
         </div>
-        <Button href="/home">Go to my Filing Dashboard</Button>
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <Button style={{ width: 232 }} href="/home">
+            Go to my Filing Dashboard
+          </Button>
+        </div>
       </Card>
     </>
   )
