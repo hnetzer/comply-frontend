@@ -12,6 +12,9 @@ import {
   adminDeleteFiling
 } from 'network/api'
 
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Button from 'react-bootstrap/Button';
 
@@ -77,8 +80,11 @@ class AdminEditFilingScreen extends Component {
             <Breadcrumb.Item href="/admin/platform/filings">Filings</Breadcrumb.Item>
             <Breadcrumb.Item active>{filing ? filing.name : 'new'}</Breadcrumb.Item>
           </Breadcrumb>
-          <h3 className={style.title}>
+          <h3 className={style.title} style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             {this.state.filing != null ? 'Edit Filing' : 'Create Filing'}
+            <Button onClick={this.deleteFiling} variant="danger">
+              <FontAwesomeIcon icon={faTrash}/>
+            </Button>
           </h3>
           <AdminFilingForm
             status={this.state.status}
@@ -86,9 +92,6 @@ class AdminEditFilingScreen extends Component {
             filing={this.state.filing}
             jurisdictions={this.state.jurisdictions}
             agencies={this.state.agencies} />
-          <div>
-            <Button onClick={this.deleteFiling} variant="danger">Delete Filing</Button>
-          </div>
         </div>
 
       </div>
