@@ -6,7 +6,7 @@ import Table from 'react-bootstrap/Table'
 
 import { adminGetCompanies } from 'network/api'
 
-import style from './AdminCompaniesScreen.module.scss'
+import style from './AdminScreens.module.scss'
 
 class AdminCompaniesScreen extends React.Component {
   constructor(props) {

@@ -25,9 +25,6 @@ const AdminNavigation = ({ user, dispatch }) => {
     <div className={style.headerBar}>
       <h3>Admin</h3>
       <Nav variant="pills" onSelect={(key, evt) => setKey(key)} activeKey={key}>
-        <Nav.Link as={Link} to="/admin/companyfilings" eventKey="companyfilings">
-          Company Filings
-        </Nav.Link>
         <Nav.Link as={Link} to="/admin/companies" eventKey="companies">
           Companies
         </Nav.Link>

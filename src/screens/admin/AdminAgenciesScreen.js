@@ -15,6 +15,8 @@ import { setAgencies, setJurisdictions, addAgency, updateAgency } from 'actions'
 
 import { AdminAgencyModal } from '../../components/organisms'
 
+import style from './AdminScreens.module.scss'
+
 class AdminAgenciesScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -88,13 +90,13 @@ class AdminAgenciesScreen extends React.Component {
     const { agencies } = this.props
     agencies.sort(this.sortBy)
     return(
-      <main style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <section style={{ paddingTop: 32 }}>
+      <main className={style.container}>
+        <section className={style.content}>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <h3>Agencies</h3>
             <Button onClick={this.showAddAgencyModal} variant="link">+ Add Agency</Button>
           </div>
-          <Table striped bordered hover size="sm" responsive style={{ width: 600, marginTop: 24 }}>
+          <Table hover bordered className={style.table}>
             <thead>
               <tr>
                 <th>Name</th>

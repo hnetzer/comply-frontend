@@ -1,8 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button';
+
+import style from './AdminScreens.module.scss'
 
 import {
   adminGetJurisdictions,
@@ -14,15 +17,16 @@ import { setJurisdictions, addJurisdiction, updateJurisdiction } from 'actions';
 
 import { AdminJurisdictionModal } from '../../components/organisms'
 
+
 class AdminJurisdictionsScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { showModal: false, selected: null };
+    this.state = { howModal: false, selected: null };
   }
 
   async componentDidMount() {
     try {
-      const jurisdictions = await adminGetJurisdictions();
+      const jurisdictions = await adminGetJurisdictions()
       this.props.dispatch(setJurisdictions(jurisdictions))
     } catch (err) {
       console.log(err)
@@ -30,15 +34,19 @@ class AdminJurisdictionsScreen extends React.Component {
   }
 
   sortBy = (a, b) => {
-    if (a.state > b.state) {
-      return 1
-    } else if (a.state < b.state) {
+    const aCreated = moment(a.createdAt).unix()
+    const bCreated = moment(b.createdAt).unix()
+    if (aCreated > bCreated) {
       return -1
-    } else if (a.state === b.state) {
-      if (a.name > b.name) {
+    } else if (aCreated < bCreated) {
+      return 1
+    } else if (aCreated === bCreated) {
+      if (a.agencies.length > b.agencies.length) {
         return 1
-      } else if (a.name < b.name) {
+      } else if (a.agencies.length < b.agencies.length) {
         return -1
+      } else {
+        return a.name > b.name ? 1 : -1;
       }
     }
     return 0
@@ -71,19 +79,27 @@ class AdminJurisdictionsScreen extends React.Component {
   render() {
     const { jurisdictions } = this.props
     jurisdictions.sort(this.sortBy)
+    console.log('jurisdictions: ', jurisdictions)
     return(
-      <main style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <section style={{ paddingTop: 32 }}>
+      <main className={style.container}>
+        <AdminJurisdictionModal
+          show={this.state.showModal}
+          jurisdiction={this.state.selected}
+          handleSubmit={this.handleJurisdictionFormSubmit}
+          handleHide={this.hideModal} />
+        <section className={style.content}>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <h3>Jurisdictions</h3>
             <Button onClick={this.showAddJurisdictionModal} variant="link">+ Add Jurisdiction</Button>
           </div>
-          <Table striped bordered hover size="sm" responsive style={{ width: 600, marginTop: 24 }}>
+          <Table hover bordered className={style.table}>
             <thead>
               <tr>
                 <th>Name</th>
                 <th>State</th>
                 <th>Type</th>
+                <th>Agencies</th>
+                <th>Created</th>
                 <th></th>
               </tr>
             </thead>
@@ -93,6 +109,8 @@ class AdminJurisdictionsScreen extends React.Component {
                   <td>{j.name}</td>
                   <td>{j.state}</td>
                   <td>{j.type}</td>
+                  <td>{j.agencies.length}</td>
+                  <td>{moment(j.createdAt).format('M/D/YYYY')}</td>
                   <td>
                     <Button
                       onClick={() => this.showEditJurisdictionModal(j)}
@@ -105,11 +123,7 @@ class AdminJurisdictionsScreen extends React.Component {
               ))}
             </tbody>
           </Table>
-          <AdminJurisdictionModal
-            show={this.state.showModal}
-            jurisdiction={this.state.selected}
-            handleSubmit={this.handleJurisdictionFormSubmit}
-            handleHide={this.hideModal} />
+
         </section>
       </main>
     )
