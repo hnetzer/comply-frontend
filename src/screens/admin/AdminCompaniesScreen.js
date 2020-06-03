@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { navigate } from "@reach/router"
 
 import Table from 'react-bootstrap/Table'
@@ -37,9 +36,8 @@ class AdminCompaniesScreen extends React.Component {
             <thead>
               <tr>
                 <th>Company</th>
-                <th>Contact</th>
-                <th>Phone</th>
-                <th>Year End</th>
+                <th>Name</th>
+                <th>Email</th>
                 <th>Agencies</th>
               </tr>
             </thead>
@@ -54,11 +52,8 @@ class AdminCompaniesScreen extends React.Component {
                       key={i}
                     >
                       <td>{c.name}</td>
-                      <td>{`${c.users[0].name} (${c.users[0].email})`}</td>
-                      <td>{c.phone}</td>
-                      <td>
-                        {c.year_end_month != null ? `${moment().month(c.year_end_month).format("MMM")} ${c.year_end_day}` : ``}
-                      </td>
+                      <td>{`${c.users[0].name}`}</td>
+                      <td>{`${c.users[0].email}`}</td>
                       <td>{c.agencies.length}</td>
                     </tr>
                   );

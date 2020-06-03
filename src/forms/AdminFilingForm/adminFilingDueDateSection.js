@@ -1,6 +1,6 @@
 import React from 'react';
-
 import { FieldArray } from 'formik';
+import _ from 'lodash';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -141,7 +141,7 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
             value={values.due_dates[0].month_offset || ''}
             size="sm"
             as="select">
-            <option value={null}>select month offset</option>
+            <option value={0}>select month offset</option>
             <option value={1}>+1 month</option>
             <option value={2}>+2 months</option>
             <option value={3}>+3 months</option>
@@ -159,13 +159,12 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
           <Form.Control
             required
             onChange={handleChange}
-            value={values.due_dates[0].day_offset || ''}
+            value={values.due_dates[0].day_offset}
             size="sm"
             as="select">
-            <option value={null}>select day</option>
-            <option value="1">1st of the month</option>
-            <option value="15">15th of the month</option>
-            <option value="end-of-month">last day the month</option>
+            {_.range(31).map(i => (
+                <option key={i} value={i}>{`+${i} days`}</option>
+            ))}
           </Form.Control>
         </Form.Group>
       </Form.Row>

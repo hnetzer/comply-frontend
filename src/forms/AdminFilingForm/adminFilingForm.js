@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Formik, FieldArray } from 'formik';
+import { Formik  } from 'formik';
 import * as Yup from 'yup';
 
 // Bootstrap components
@@ -11,7 +11,6 @@ import Button from 'react-bootstrap/Button';
 import AdminFilingDueDateSection from './adminFilingDueDateSection'
 
 import style from './adminFilingForm.module.css'
-import { filingFieldSort } from 'utils'
 
 const FilingSchema = Yup.object().shape({
   name: Yup.string().min(3, 'Too short!').required('Required'),
@@ -19,17 +18,12 @@ const FilingSchema = Yup.object().shape({
   agency: Yup.object().shape({
     jurisdiction_id: Yup.number().integer().required('Required')
   }),
-  fields: Yup.array().of(Yup.object().shape({
-    name: Yup.string().required('Required'),
-    helper_text: Yup.string().nullable(),
-    order: Yup.number().integer('Number must be an integer').nullable()
-  })),
   occurence: Yup.mixed().oneOf(['annual', 'multiple', 'biennial']),
   due_dates: Yup.array().of(Yup.object().shape({
     fixed_month: Yup.number().integer().nullable(),
     fixed_day: Yup.number().integer().nullable(),
     month_offset: Yup.number().integer().nullable(),
-    day_offset: Yup.mixed().oneOf(['1', '15', 'end-of-month', null]),
+    day_offset: Yup.number().integer().nullable(),
     offset_type: Yup.mixed().oneOf(['none', 'registration', 'year-end']),
   }))
 });
@@ -38,13 +32,12 @@ const FilingInitialValues = {
   name: '',
   agency_id: '',
   agency: { jurisdiction_id: '' },
-  fields: [],
   occurrence: 'annual',
   due_dates: [{
     fixed_month: null,
     fixed_day: null,
-    month_offset: null,
-    day_offset: null,
+    month_offset: 0,
+    day_offset: 0,
     offset_type: 'none'
   }]
 };
@@ -66,17 +59,6 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
     return a.map((a,i) => (<option key={i} value={a.id}>{a.name}</option>))
   }
 
-  const addFormField = (arrayHelpers) => {
-    arrayHelpers.push({
-      name: '',
-      helper_text: '',
-      type: 'text',
-      order: null
-    })
-  }
-
-  // Let's sort the filing fields by order
-  if(filing) filing.fields.sort(filingFieldSort);
 
   return (
     <div className={style.container}>
@@ -99,7 +81,6 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
         /* and other goodies */
       }) => (
           <Form validated={validated} onSubmit={handleSubmit} className={style.form}>
-            {console.log(errors)}
             <Form.Group controlId="name">
               <Form.Label>Filing Name</Form.Label>
               <Form.Control
@@ -151,55 +132,6 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
                 </Card.Body>
               </Card>
             </div>
-            <Card className={style.fieldsCard}>
-              <Card.Body>
-                <FieldArray
-                  name="fields"
-                  render={arrayHelpers => (
-                  <>
-                    <div className={style.fieldsCardTitleSection}>
-                      <Card.Title>Form Fields</Card.Title>
-                      <Button
-                        onClick={() => addFormField(arrayHelpers)}
-                        className={style.addFieldButton}
-                        variant="link">+ Add Field</Button>
-                    </div>
-                    {values.fields.map((field, index) => (
-                      <Form.Row key={index}>
-                        <Form.Group controlId={`fields[${index}].name`}>
-                          <Form.Control
-                            onChange={handleChange}
-                            type="text"
-                            placeholder="Field name"
-                            isInvalid={errors.fields && errors.fields[index] && errors.fields[index].name}
-                            style={{ width: 256, marginRight: 16 }}
-                            autoComplete="off"
-                            value={values.fields[index].name} />
-                        </Form.Group>
-                        <Form.Group controlId={`fields[${index}].helper_text`}>
-                          <Form.Control
-                            onChange={handleChange}
-                            type="text"
-                            placeholder="Helper text"
-                            style={{ width: 360, marginRight: 16 }}
-                            autoComplete="off"
-                            value={values.fields[index].helper_text || ''} />
-                        </Form.Group>
-                        <Form.Group controlId={`fields[${index}].order`}>
-                          <Form.Control
-                            onChange={handleChange}
-                            type="number"
-                            style={{ width: 56, paddingRight: 8 }}
-                            autoComplete="off"
-                            value={values.fields[index].order || ''} />
-                        </Form.Group>
-                      </Form.Row>
-                    ))}
-                    </>
-                  )}
-                />
-              </Card.Body>
-            </Card>
             <div className={style.ctaContainer}>
               {status != null ? (
                 <div style={{ color: 'green', marginRight: 16 }}>{status}</div>
