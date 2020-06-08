@@ -3,11 +3,17 @@ import { connect } from 'react-redux';
 import moment from 'moment'
 
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal'
+
+
 import { Card } from 'components/atoms'
 import { FilingTimeline } from 'components/molecules'
 import { getFilingsForCompany } from 'network/api';
 
 import { Table, Body, Row, Cell } from 'components/atoms'
+
+import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import screenStyle from './Screens.module.scss'
 import style from './DashboardScreen.module.scss'
@@ -17,7 +23,9 @@ class DashboardScreen extends React.Component {
     super(props)
     this.state = {
       timelineFilings: null,
-      upcomingFilings: null
+      upcomingFilings: null,
+      unscheduledFilings: false,
+      showModal: false
     }
   }
 
@@ -33,25 +41,33 @@ class DashboardScreen extends React.Component {
 
   loadPageData = async () => {
     try {
-      const filings = await getFilingsForCompany(this.props.user.company_id)
+      const companyId = this.props.user.company_id;
+      const yearFilings = await this.getFilingsForCurrentYear(companyId, true);
+      const upcomingFilings = await this.getUpcomingFilings(companyId);
+      const unscheduledFilings = yearFilings.filter(f => f.due == null)
+
       this.setState({
-        timelineFilings: this.getTimelineFilings(filings),
-        upcomingFilings: this.getUpcomingFilings(filings)
+        timelineFilings: yearFilings.filter(f => f.due != null).sort(this.compareFilingsByDue),
+        upcomingFilings: upcomingFilings,
+        unscheduledFilings: unscheduledFilings.length > 0
       })
     } catch (err) {
       console.log(err)
     }
   }
 
-  getTimelineFilings = (filings) => {
-    const f = filings.filter(f => f.due != null)
-    return f.sort(this.compareFilingsByDue)
+  getFilingsForCurrentYear = async (companyId, unscheduled) => {
+    const year = moment().format('YYYY')
+    const start = `${year}-01-01`;
+    const end = `${year}-12-31`;
+    return await getFilingsForCompany(companyId, start, end, unscheduled)
   }
 
-  getUpcomingFilings = (filings) => {
-    const now = moment().unix()
-    const f = filings.filter(f => now <= moment(f.due).unix());
-    return f.sort(this.compareFilingsByDue)
+  getUpcomingFilings = async (companyId) => {
+    const start = moment().format('YYYY-MM-DD')
+    const end = moment().add(2, 'M').format('YYYY-MM-DD')
+    const filings = await getFilingsForCompany(companyId, start, end)
+    return filings.sort(this.compareFilingsByDue)
   }
 
   compareFilingsByDue = (a, b) => {
@@ -66,7 +82,7 @@ class DashboardScreen extends React.Component {
   }
 
   render() {
-    const { timelineFilings, upcomingFilings } = this.state
+    const { timelineFilings, upcomingFilings, unscheduledFilings } = this.state
     const { user } = this.props
     if (!user) return null;
 
@@ -75,14 +91,24 @@ class DashboardScreen extends React.Component {
         <div className={screenStyle.content}>
           <div className={style.topSection}>
             <Card className={style.topCard}>
-              <h4>Upcoming Due Dates</h4>
-              <div style={{ height: 300, width: '100%', overflow: 'scroll'}}>
+              <div className={style.upcomingTitleContainer}>
+                <h4>Upcoming Due Dates</h4>
+                {unscheduledFilings &&
+                  (<FontAwesomeIcon
+                    onClick={() => this.setState({ showModal: true })}
+                    className={style.warningIcon}
+                    icon={faExclamationTriangle}
+                  />)
+                }
+              </div>
+              <div className={style.upcomingTableWrapper}>
                 <Table>
                   <Body>
-                    {upcomingFilings && upcomingFilings.map(f => (
-                      <Row style={{ fontSize: 14 }}>
-                        <Cell style={{ paddingLeft: 8 }}>{f.name}</Cell>
-                        <Cell style={{ paddingLeft: 8 }}>{moment(f.due).format("MMM, Do")}</Cell>
+                    {upcomingFilings && upcomingFilings.map((f,i) => (
+                      <Row key={i}>
+                        <Cell className={style.upcomingCell}>{f.name}</Cell>
+                        <Cell className={style.upcomingCell}>{f.agency.jurisdiction.name}</Cell>
+                        <Cell className={style.upcomingCell}>{moment(f.due).format("MMM Do, YYYY")}</Cell>
                       </Row>
                     ))}
                   </Body>
@@ -95,10 +121,22 @@ class DashboardScreen extends React.Component {
             </Card>
           </div>
           <Card className={style.overviewCard}>
-            <h4>Overview</h4>
+            <h4>{`${moment().format('YYYY')} Filing Overview`}</h4>
+            <p>A timeline of your next year of filing deadlines.</p>
             <FilingTimeline filings={timelineFilings} />
           </Card>
         </div>
+        <Modal show={this.state.showModal} onHide={() => this.setState({ showModal: false })}>
+          <Modal.Header closeButton>
+            <h3>Some deadlines cannot be determined</h3>
+          </Modal.Header>
+          <Modal.Body>
+            <p>
+              Some of your filing deadlines are based your company's registration date with the agency.
+              Please enter the registration dates of the agencies highlighed below to show all filing deadlines.
+            </p>
+          </Modal.Body>
+        </Modal>
       </section>
     )
   }

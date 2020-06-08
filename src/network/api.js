@@ -70,8 +70,16 @@ export const getCompany = async (companyId) => {
   return sendRequest('GET', `/company/${companyId}`);
 }
 
-export const getFilingsForCompany = async (companyId) => {
-  return sendRequest('GET', `/company/${companyId}/filings`);
+export const getFilingsForCompany = async (companyId, startDate, endDate, unscheduled) => {
+  let uri =  `/company/${companyId}/filings`
+  if (startDate && endDate) {
+    uri = `${uri}?startDate=${startDate}&endDate=${endDate}`
+  }
+
+  if (unscheduled) {
+    uri = `${uri}&unscheduled=${unscheduled}`
+  }
+  return sendRequest('GET', uri);
 }
 
 export const getCompanyFilings = async (companyId) => {
