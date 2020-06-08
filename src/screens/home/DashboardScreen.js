@@ -25,7 +25,8 @@ class DashboardScreen extends React.Component {
       timelineFilings: null,
       upcomingFilings: null,
       unscheduledFilings: false,
-      showModal: false
+      showModal: false,
+      showPremiumModal: false,
     }
   }
 
@@ -115,14 +116,15 @@ class DashboardScreen extends React.Component {
                 </Table>
               </div>
             </Card>
-            <Card className={style.topCard}>
-              <h4>We'll file for you</h4>
-              <Button style={{ width: 240 }}>Try Comply Premium</Button>
+            <Card className={style.topCard} style={{ padding: 24, textAlign: 'center' }}>
+              <h4>We file for you!</h4>
+              <p style={{ fontSize: 16 }}>Get peace of mind and confidence that your compliance is under control.</p>
+              <Button style={{ width: 240 }} onClick={() => this.setState({ showPremiumModal: true })}>Try Comply Premium</Button>
             </Card>
           </div>
           <Card className={style.overviewCard}>
-            <h4>{`${moment().format('YYYY')} Filing Overview`}</h4>
-            <p>A timeline of your next year of filing deadlines.</p>
+            <h4>Filing Overview</h4>
+            <p>{`A timeline of all of your filing due dates in ${moment().format('YYYY')}.`}</p>
             <FilingTimeline filings={timelineFilings} />
           </Card>
         </div>
@@ -136,6 +138,22 @@ class DashboardScreen extends React.Component {
               Please enter the registration dates of the agencies highlighed below to show all filing deadlines.
             </p>
           </Modal.Body>
+        </Modal>
+        <Modal show={this.state.showPremiumModal} onHide={() => this.setState({ showPremiumModal: false })}>
+          <Modal.Header closeButton>
+            <h3>Comply Premium</h3>
+          </Modal.Header>
+          <Modal.Body>
+            <p>
+              We are working on building a company that gives you complete peace of mind for all of your state and local compliance needs.
+              This means that we want to handle all of this nasty paper work for you.  Are you interested in a service where we would submit your filings for your business?
+              Let us know. Cheers!
+            </p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button>I'm interested</Button>
+            <Button variant="link">No thanks</Button>
+          </Modal.Footer>
         </Modal>
       </section>
     )
