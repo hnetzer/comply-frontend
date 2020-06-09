@@ -6,6 +6,8 @@ import AdminNavigation from './AdminNavigation/AdminNavigation'
 import AdminRejectFilingModal from './AdminRejectFilingModal'
 import AdminJurisdictionModal from './AdminJurisdictionModal'
 import AdminAgencyModal from './AdminAgencyModal'
+import UpcomingDatesCard from './UpcomingDatesCard/UpcomingDatesCard'
+import PremiumCard from './PremiumCard/PremiumCard'
 
 export {
   WelcomeModal,
@@ -15,5 +17,7 @@ export {
   AdminRejectFilingModal,
   AdminJurisdictionModal,
   AdminAgencyModal,
-  SubNav
+  SubNav,
+  UpcomingDatesCard,
+  PremiumCard
 }

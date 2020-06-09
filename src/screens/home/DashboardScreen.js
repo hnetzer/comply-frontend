@@ -2,18 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
 
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal'
-
-
 import { Card } from 'components/atoms'
+import { UpcomingDatesCard, PremiumCard } from 'components/organisms'
 import { FilingTimeline } from 'components/molecules'
 import { getFilingsForCompany } from 'network/api';
-
-import { Table, Body, Row, Cell } from 'components/atoms'
-
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import screenStyle from './Screens.module.scss'
 import style from './DashboardScreen.module.scss'
@@ -25,7 +17,6 @@ class DashboardScreen extends React.Component {
       timelineFilings: null,
       upcomingFilings: null,
       unscheduledFilings: false,
-      showModal: false,
       showPremiumModal: false,
     }
   }
@@ -91,36 +82,8 @@ class DashboardScreen extends React.Component {
       <section className={screenStyle.container}>
         <div className={screenStyle.content}>
           <div className={style.topSection}>
-            <Card className={style.topCard}>
-              <div className={style.upcomingTitleContainer}>
-                <h4>Upcoming Due Dates</h4>
-                {unscheduledFilings &&
-                  (<FontAwesomeIcon
-                    onClick={() => this.setState({ showModal: true })}
-                    className={style.warningIcon}
-                    icon={faExclamationTriangle}
-                  />)
-                }
-              </div>
-              <div className={style.upcomingTableWrapper}>
-                <Table>
-                  <Body>
-                    {upcomingFilings && upcomingFilings.map((f,i) => (
-                      <Row key={i}>
-                        <Cell className={style.upcomingCell}>{f.name}</Cell>
-                        <Cell className={style.upcomingCell}>{f.agency.jurisdiction.name}</Cell>
-                        <Cell className={style.upcomingCell}>{moment(f.due).format("MMM Do, YYYY")}</Cell>
-                      </Row>
-                    ))}
-                  </Body>
-                </Table>
-              </div>
-            </Card>
-            <Card className={style.topCard} style={{ padding: 24, textAlign: 'center' }}>
-              <h4>We file for you!</h4>
-              <p style={{ fontSize: 16 }}>Get peace of mind and confidence that your compliance is under control.</p>
-              <Button style={{ width: 240 }} onClick={() => this.setState({ showPremiumModal: true })}>Try Comply Premium</Button>
-            </Card>
+            <UpcomingDatesCard upcomingFilings={upcomingFilings} unscheduledFilings={unscheduledFilings} />
+            <PremiumCard />
           </div>
           <Card className={style.overviewCard}>
             <h4>Filing Overview</h4>
@@ -128,33 +91,6 @@ class DashboardScreen extends React.Component {
             <FilingTimeline filings={timelineFilings} />
           </Card>
         </div>
-        <Modal show={this.state.showModal} onHide={() => this.setState({ showModal: false })}>
-          <Modal.Header closeButton>
-            <h3>Some deadlines cannot be determined</h3>
-          </Modal.Header>
-          <Modal.Body>
-            <p>
-              Some of your filing deadlines are based your company's registration date with the agency.
-              Please enter the registration dates of the agencies highlighed below to show all filing deadlines.
-            </p>
-          </Modal.Body>
-        </Modal>
-        <Modal show={this.state.showPremiumModal} onHide={() => this.setState({ showPremiumModal: false })}>
-          <Modal.Header closeButton>
-            <h3>Comply Premium</h3>
-          </Modal.Header>
-          <Modal.Body>
-            <p>
-              We are working on building a company that gives you complete peace of mind for all of your state and local compliance needs.
-              This means that we want to handle all of this nasty paper work for you.  Are you interested in a service where we would submit your filings for your business?
-              Let us know. Cheers!
-            </p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button>I'm interested</Button>
-            <Button variant="link">No thanks</Button>
-          </Modal.Footer>
-        </Modal>
       </section>
     )
   }
