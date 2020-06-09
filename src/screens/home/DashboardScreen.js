@@ -2,12 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
 
-import Button from 'react-bootstrap/Button';
 import { Card } from 'components/atoms'
+import { UpcomingDatesCard, PremiumCard } from 'components/organisms'
 import { FilingTimeline } from 'components/molecules'
 import { getFilingsForCompany } from 'network/api';
-
-import { Table, Body, Row, Cell } from 'components/atoms'
 
 import screenStyle from './Screens.module.scss'
 import style from './DashboardScreen.module.scss'
@@ -17,7 +15,9 @@ class DashboardScreen extends React.Component {
     super(props)
     this.state = {
       timelineFilings: null,
-      upcomingFilings: null
+      upcomingFilings: null,
+      unscheduledFilings: false,
+      showPremiumModal: false,
     }
   }
 
@@ -33,25 +33,33 @@ class DashboardScreen extends React.Component {
 
   loadPageData = async () => {
     try {
-      const filings = await getFilingsForCompany(this.props.user.company_id)
+      const companyId = this.props.user.company_id;
+      const yearFilings = await this.getFilingsForCurrentYear(companyId, true);
+      const upcomingFilings = await this.getUpcomingFilings(companyId);
+      const unscheduledFilings = yearFilings.filter(f => f.due == null)
+
       this.setState({
-        timelineFilings: this.getTimelineFilings(filings),
-        upcomingFilings: this.getUpcomingFilings(filings)
+        timelineFilings: yearFilings.filter(f => f.due != null).sort(this.compareFilingsByDue),
+        upcomingFilings: upcomingFilings,
+        unscheduledFilings: unscheduledFilings.length > 0
       })
     } catch (err) {
       console.log(err)
     }
   }
 
-  getTimelineFilings = (filings) => {
-    const f = filings.filter(f => f.due != null)
-    return f.sort(this.compareFilingsByDue)
+  getFilingsForCurrentYear = async (companyId, unscheduled) => {
+    const year = moment().format('YYYY')
+    const start = `${year}-01-01`;
+    const end = `${year}-12-31`;
+    return await getFilingsForCompany(companyId, start, end, unscheduled)
   }
 
-  getUpcomingFilings = (filings) => {
-    const now = moment().unix()
-    const f = filings.filter(f => now <= moment(f.due).unix());
-    return f.sort(this.compareFilingsByDue)
+  getUpcomingFilings = async (companyId) => {
+    const start = moment().format('YYYY-MM-DD')
+    const end = moment().add(2, 'M').format('YYYY-MM-DD')
+    const filings = await getFilingsForCompany(companyId, start, end)
+    return filings.sort(this.compareFilingsByDue)
   }
 
   compareFilingsByDue = (a, b) => {
@@ -66,7 +74,7 @@ class DashboardScreen extends React.Component {
   }
 
   render() {
-    const { timelineFilings, upcomingFilings } = this.state
+    const { timelineFilings, upcomingFilings, unscheduledFilings } = this.state
     const { user } = this.props
     if (!user) return null;
 
@@ -74,28 +82,12 @@ class DashboardScreen extends React.Component {
       <section className={screenStyle.container}>
         <div className={screenStyle.content}>
           <div className={style.topSection}>
-            <Card className={style.topCard}>
-              <h4>Upcoming Due Dates</h4>
-              <div style={{ height: 300, width: '100%', overflow: 'scroll'}}>
-                <Table>
-                  <Body>
-                    {upcomingFilings && upcomingFilings.map(f => (
-                      <Row style={{ fontSize: 14 }}>
-                        <Cell style={{ paddingLeft: 8 }}>{f.name}</Cell>
-                        <Cell style={{ paddingLeft: 8 }}>{moment(f.due).format("MMM, Do")}</Cell>
-                      </Row>
-                    ))}
-                  </Body>
-                </Table>
-              </div>
-            </Card>
-            <Card className={style.topCard}>
-              <h4>We'll file for you</h4>
-              <Button style={{ width: 240 }}>Try Comply Premium</Button>
-            </Card>
+            <UpcomingDatesCard upcomingFilings={upcomingFilings} unscheduledFilings={unscheduledFilings} />
+            <PremiumCard />
           </div>
           <Card className={style.overviewCard}>
-            <h4>Overview</h4>
+            <h4>Filing Overview</h4>
+            <p>{`A timeline of all of your filing due dates in ${moment().format('YYYY')}.`}</p>
             <FilingTimeline filings={timelineFilings} />
           </Card>
         </div>

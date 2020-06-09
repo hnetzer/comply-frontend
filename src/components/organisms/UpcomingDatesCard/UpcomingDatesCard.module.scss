@@ -1,0 +1,46 @@
+@import "styles/vars";
+
+.topCard {
+  width: 450px;
+  height: 250px;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.upcomingTitleContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  padding-left: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid $navy;
+}
+
+.warningIcon {
+  font-size: 20px;
+  color: $primary;
+  position: relative;
+  top: 2px;
+}
+
+.warningIcon:hover {
+  cursor: pointer;
+  color: darken($primary, 8);
+}
+
+.upcomingTableWrapper {
+  height: 300px;
+  width: 100%;
+  overflow: scroll;
+}
+
+.upcomingCell {
+  border-right: none;
+  font-size: 15px;
+  padding-left: 8px;
+  height: 44px;
+}
