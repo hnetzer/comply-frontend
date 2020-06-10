@@ -9,12 +9,10 @@ import { HeaderBar } from 'components/organisms'
 import { SubNav } from 'components/organisms'
 
 // screens
-import CompanyScreen from './home/CompanyScreen'
-import FilingsListScreen from './home/FilingsListScreen'
-import DashboardScreen from './home/DashboardScreen'
-import FilingScreen from './FilingScreen'
+import CompanyScreen from './Company/CompanyScreen'
+import DashboardScreen from './Dashboard/DashboardScreen'
 
-import styles from './Home.module.scss'
+import styles from './HomeScreen.module.scss'
 
 // Maybe this should just be a functional component?
 class HomeScreen extends React.Component {
@@ -42,10 +40,7 @@ class HomeScreen extends React.Component {
         <div style={{ display: 'flex', flexDirection: 'row', minHeight: 'calc(100vh - 54px)'}}>
           <main className={styles.main}>
             <Router style={{ width: '100%' }}>
-              <FilingsListScreen path="/filings" />
               <CompanyScreen path="/company" company={company} />
-              <FilingScreen path="/filings/new" />
-              <FilingScreen path="/filings/:companyFilingId" />
               <DashboardScreen path="/" />
             </Router>
           </main>

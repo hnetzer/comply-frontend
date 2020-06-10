@@ -2,14 +2,14 @@ import React from 'react';
 import { Router } from "@reach/router"
 
 // Signup
-import SignupScreen from './screens/signup/SignupScreen'
+import SignupScreen from 'screens/signup/SignupScreen'
 
 // Onboarding
-import OnboardingScreen from "./screens/onboarding/OnboardingScreen"
+import OnboardingScreen from "screens/onboarding/OnboardingScreen"
 
-import WebsiteScreen from "./screens/WebsiteScreen"
-import HomeScreen from "./screens/HomeScreen"
-import LoginScreen from './screens/LoginScreen'
+import WebsiteScreen from "screens/public/Website/WebsiteScreen"
+import HomeScreen from "screens/home/HomeScreen"
+import LoginScreen from 'screens/public/Login/LoginScreen'
 
 // Admin
 import AdminScreen from "./screens/admin/AdminScreen"

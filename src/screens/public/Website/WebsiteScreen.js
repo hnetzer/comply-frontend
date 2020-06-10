@@ -5,7 +5,7 @@ import { Redirect } from "@reach/router"
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-import styles from './Website.module.scss'
+import styles from './WebsiteScreen.module.scss'
 
 const WebsiteScreen = ({ token, company }) => {
 

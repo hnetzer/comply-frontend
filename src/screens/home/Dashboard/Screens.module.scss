@@ -1,0 +1,15 @@
+.container {
+  // background-color: #fafbfc;
+  height: 100%;
+  padding-top: 40px;
+}
+
+.content {
+  margin: 0 auto;
+  padding: 0 30px 140px;
+  max-width: 1000px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

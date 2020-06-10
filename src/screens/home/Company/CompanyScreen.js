@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment'
 
 import Table from 'react-bootstrap/Table'
-import style from './Screens.module.scss'
+import style from './CompanyScreen.module.scss'
 
 const CompanyScreen = (props) => {
   const getYearEnd = (m, d) => {
