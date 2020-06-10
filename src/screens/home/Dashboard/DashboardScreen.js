@@ -87,8 +87,6 @@ class DashboardScreen extends React.Component {
     const { user } = this.props
     if (!user) return null;
 
-    console.log('Not supported jurisdictions', notSupportedJuris)
-
 
     return(
       <section className={screenStyle.container}>

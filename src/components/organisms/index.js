@@ -8,6 +8,7 @@ import AdminAgencyModal from './AdminAgencyModal'
 import UpcomingDatesCard from './UpcomingDatesCard/UpcomingDatesCard'
 import PremiumCard from './PremiumCard/PremiumCard'
 import AgencyRegAlert from './AgencyRegAlert/AgencyRegAlert'
+import NotSupportedModal from './NotSupportedModal/NotSupportedModal'
 
 export {
   HeaderBar,
@@ -19,5 +20,6 @@ export {
   SubNav,
   UpcomingDatesCard,
   PremiumCard,
-  AgencyRegAlert
+  AgencyRegAlert,
+  NotSupportedModal
 }

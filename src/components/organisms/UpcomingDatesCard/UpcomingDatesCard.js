@@ -1,32 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment'
 
-import Modal from 'react-bootstrap/Modal'
+
 import { Card } from 'components/atoms'
 import { Table, Body, Row, Cell } from 'components/atoms'
-
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { NotSupportedModal } from 'components/organisms'
 
 import style from './UpcomingDatesCard.module.scss';
 
 const UpcomingDatesCard = ({ upcomingFilings, notSupportedJuris }) => {
-  const [show, setShow] = useState(false);
-
-  console.log('Upcoming dates jurisdiction', notSupportedJuris)
 
   return (
     <>
       <Card className={style.topCard}>
         <div className={style.upcomingTitleContainer}>
           <h4>Upcoming Due Dates</h4>
-          { notSupportedJuris && notSupportedJuris.length &&
-            (<FontAwesomeIcon
-              onClick={() => setShow(true)}
-              className={style.warningIcon}
-              icon={faExclamationTriangle}
-            />)
-          }
+          <NotSupportedModal jurisdictions={notSupportedJuris} />
         </div>
         <div className={style.upcomingTableWrapper}>
           <Table>
@@ -42,13 +31,6 @@ const UpcomingDatesCard = ({ upcomingFilings, notSupportedJuris }) => {
           </Table>
         </div>
       </Card>
-      <Modal show={show} onHide={() => setShow(false)}>
-        <Modal.Header closeButton>
-          <h3>Sorry, locations not supported</h3>
-        </Modal.Header>
-        <Modal.Body>
-        </Modal.Body>
-      </Modal>
     </>
   )
 }

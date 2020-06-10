@@ -20,18 +20,6 @@
   border-bottom: 1px solid $navy;
 }
 
-.warningIcon {
-  font-size: 20px;
-  color: #299FEB;
-  position: relative;
-  top: 2px;
-}
-
-.warningIcon:hover {
-  cursor: pointer;
-  color: darken(#299FEB, 8);
-}
-
 .upcomingTableWrapper {
   height: 300px;
   width: 100%;

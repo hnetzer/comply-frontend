@@ -1,0 +1,47 @@
+
+.modal {
+  width: 50%;
+  max-width: none !important;
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 24px;
+}
+
+.table {
+  width: 300px;
+  margin: 24px 24px;
+}
+
+.text {
+  width: 500px;
+}
+
+.warningIcon {
+  font-size: 20px;
+  color: #299FEB;
+  position: relative;
+  top: 2px;
+}
+
+.warningIcon:hover {
+  cursor: pointer;
+  color: darken(#299FEB, 8);
+}
+
+.cell {
+  border-right: none;
+  font-size: 15px;
+  padding-left: 8px;
+  height: 44px;
+}
