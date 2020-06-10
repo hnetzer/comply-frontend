@@ -1,54 +1,42 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment'
+import { Link } from '@reach/router'
 
-import Table from 'react-bootstrap/Table'
 import style from './CompanyScreen.module.scss'
+import { Card } from 'components/atoms'
+
+
 
 const CompanyScreen = (props) => {
-  const getYearEnd = (m, d) => {
-    const month = moment().month(m).format('MMMM');
-    return `${month} ${d}`;
-  }
 
-  const renderDetailsTable = () => {
-    if (!props.company) return null;
-    const {
-      name,
-      type,
-      tax_class,
-      year_end_month,
-      year_end_day
-    } = props.company;
-
-    return (
-      <Table striped bordered hover>
-        <tbody>
-          <tr>
-            <td>Name</td>
-            <td>{name}</td>
-          </tr>
-          <tr>
-            <td>Type</td>
-            <td>{type}</td>
-          </tr>
-          <tr>
-            <td>Tax Class</td>
-            <td>{tax_class}</td>
-          </tr>
-          <tr>
-            <td>Financial Year End</td>
-            <td>{getYearEnd(year_end_month, year_end_day)}</td>
-          </tr>
-        </tbody>
-      </Table>
-    )
-  }
 
   return(
     <section className={style.container}>
       <div className={style.content}>
-        {renderDetailsTable()}
+        <div className={style.navCard}>
+          <h5>Company details</h5>
+          <Link
+            className={style.link}
+            to="/home/company/general"
+            disabled={false}>
+            General
+          </Link>
+          <Link
+            className={style.link}
+            to="/home/company/offices"
+            disabled={false}>
+            Offices
+          </Link>
+          <Link
+            className={style.link}
+            to="/home/company/agencies"
+            disabled={false}>
+            Agencies
+          </Link>
+        </div>
+        <Card className={style.mainContent}>
+
+        </Card>
       </div>
     </section>
   )

@@ -40,7 +40,7 @@ class HomeScreen extends React.Component {
         <div style={{ display: 'flex', flexDirection: 'row', minHeight: 'calc(100vh - 54px)'}}>
           <main className={styles.main}>
             <Router style={{ width: '100%' }}>
-              <CompanyScreen path="/company" company={company} />
+              <CompanyScreen path="/company/*" company={company} />
               <DashboardScreen path="/" />
             </Router>
           </main>
