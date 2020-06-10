@@ -43,6 +43,9 @@ const Offices = ({ user, offices, dispatch }) => {
         }
 
       </Card>
+      <div className={style.helpSection}>
+        <b>Need help?</b> Contact us <i>help@thinkcomply.com</i>
+      </div>
     </>
   )
 }

@@ -58,6 +58,9 @@ const Company = ({ user, company, dispatch }) => {
             handleSubmit={handleSubmit} />
         }
       </Card>
+      <div className={style.helpSection}>
+        <b>Need help?</b> Contact us <i>help@thinkcomply.com</i>
+      </div>
     </>
   )
 }

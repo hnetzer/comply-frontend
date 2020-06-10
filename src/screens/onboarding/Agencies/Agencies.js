@@ -66,6 +66,9 @@ class Agencies extends React.Component {
               handleSubmit={this.handleSubmit} />
           }
         </Card>
+        <div className={style.helpSection}>
+          <b>Need help?</b> Contact us <i>help@thinkcomply.com</i>
+        </div>
       </>
     )
   }

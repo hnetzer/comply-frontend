@@ -35,6 +35,9 @@ const GetStarted = ({ user, company, dispatch }) => {
           </div>
         </div>
       </Card>
+      <div className={onboardingStyle.helpSection}>
+        <b>Need help?</b> Contact us <i>help@thinkcomply.com</i>
+      </div>
     </>
   )
 }

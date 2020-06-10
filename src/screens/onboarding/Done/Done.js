@@ -27,6 +27,9 @@ const Done = ({ user, agencies, dispatch }) => {
           </Button>
         </div>
       </Card>
+      <div className={style.helpSection}>
+        <b>Need help?</b> Contact us <i>help@thinkcomply.com</i>
+      </div>
     </>
   )
 }
