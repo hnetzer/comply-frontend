@@ -1,0 +1,28 @@
+.question {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.questionSection {
+  display: flex;
+  flex-direction: row;
+}
+
+.questionSection:hover {
+  cursor: pointer;
+}
+
+.icon {
+  font-size: 18px;
+  line-height: 18px;
+  margin-right: 8px;
+  position: relative;
+  top: 2px;
+}
+
+.answer {
+  margin-left: 16px;
+  letter-spacing: 0.1em;
+  font-size: 15px;
+}

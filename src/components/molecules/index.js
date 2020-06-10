@@ -7,6 +7,7 @@ import FilingAlertMessage from './FilingAlertMessage/FilingAlertMessage';
 import FilingTimeline from './FilingTimeline/FilingTimeline';
 import DatePicker from './DatePicker';
 import VerticalProgressBar from './VerticalProgressBar/VerticalProgressBar';
+import QuestionToggle from './QuestionToggle/QuestionToggle';
 
 // Admin
 import SideListItem from './SideListItem'
@@ -21,5 +22,6 @@ export {
   SideListItem,
   DatePicker,
   FilingTimeline,
-  VerticalProgressBar
+  VerticalProgressBar,
+  QuestionToggle
 }
