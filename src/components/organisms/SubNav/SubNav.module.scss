@@ -16,6 +16,11 @@
   text-decoration: none;
 }
 
+.navLinkSelected {
+  @extend .navLink;
+  border-bottom: 2px solid $secondary;
+}
+
 .subNav {
   display: flex;
   flex-direction: row;
