@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import moment from 'moment'
 
 import { Card } from 'components/atoms'
-import { UpcomingDatesCard, PremiumCard } from 'components/organisms'
+import { UpcomingDatesCard, PremiumCard, AgencyRegAlert } from 'components/organisms'
 import { FilingTimeline } from 'components/molecules'
-import { getFilingsForCompany } from 'network/api';
+import { getFilingsForCompany, getCompanyJurisdictions } from 'network/api';
 
 import screenStyle from './Screens.module.scss'
 import style from './DashboardScreen.module.scss'
@@ -37,12 +37,15 @@ class DashboardScreen extends React.Component {
       const yearFilings = await this.getFilingsForCurrentYear(companyId, true);
       const upcomingFilings = await this.getUpcomingFilings(companyId);
       const unscheduledFilings = yearFilings.filter(f => f.due == null)
+      const jurisdictions = await getCompanyJurisdictions(companyId);
 
       this.setState({
         timelineFilings: yearFilings.filter(f => f.due != null).sort(this.compareFilingsByDue),
         upcomingFilings: upcomingFilings,
-        unscheduledFilings: unscheduledFilings.length > 0
+        unscheduledFilings: unscheduledFilings.length > 0,
+        notSupportedJuris: jurisdictions.filter(j => j.agencies.length === 0)
       })
+
     } catch (err) {
       console.log(err)
     }
@@ -74,15 +77,27 @@ class DashboardScreen extends React.Component {
   }
 
   render() {
-    const { timelineFilings, upcomingFilings, unscheduledFilings } = this.state
+    const {
+      timelineFilings,
+      upcomingFilings,
+      unscheduledFilings,
+      notSupportedJuris
+    } = this.state
+
     const { user } = this.props
     if (!user) return null;
+
+    console.log('Not supported jurisdictions', notSupportedJuris)
+
 
     return(
       <section className={screenStyle.container}>
         <div className={screenStyle.content}>
+          {unscheduledFilings && <AgencyRegAlert />}
           <div className={style.topSection}>
-            <UpcomingDatesCard upcomingFilings={upcomingFilings} unscheduledFilings={unscheduledFilings} />
+            <UpcomingDatesCard
+              upcomingFilings={upcomingFilings}
+              notSupportedJuris={notSupportedJuris} />
             <PremiumCard />
           </div>
           <Card className={style.overviewCard}>

@@ -10,15 +10,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import style from './UpcomingDatesCard.module.scss';
 
-const UpcomingDatesCard = ({ upcomingFilings, unscheduledFilings }) => {
+const UpcomingDatesCard = ({ upcomingFilings, notSupportedJuris }) => {
   const [show, setShow] = useState(false);
+
+  console.log('Upcoming dates jurisdiction', notSupportedJuris)
 
   return (
     <>
       <Card className={style.topCard}>
         <div className={style.upcomingTitleContainer}>
           <h4>Upcoming Due Dates</h4>
-          {unscheduledFilings &&
+          { notSupportedJuris && notSupportedJuris.length &&
             (<FontAwesomeIcon
               onClick={() => setShow(true)}
               className={style.warningIcon}
@@ -42,13 +44,9 @@ const UpcomingDatesCard = ({ upcomingFilings, unscheduledFilings }) => {
       </Card>
       <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
-          <h3>Some deadlines cannot be determined</h3>
+          <h3>Sorry, locations not supported</h3>
         </Modal.Header>
         <Modal.Body>
-          <p>
-            Some of your filing deadlines are based your company's registration date with the agency.
-            Please enter the registration dates of the agencies highlighed below to show all filing deadlines.
-          </p>
         </Modal.Body>
       </Modal>
     </>

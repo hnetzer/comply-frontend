@@ -22,14 +22,14 @@
 
 .warningIcon {
   font-size: 20px;
-  color: $primary;
+  color: #299FEB;
   position: relative;
   top: 2px;
 }
 
 .warningIcon:hover {
   cursor: pointer;
-  color: darken($primary, 8);
+  color: darken(#299FEB, 8);
 }
 
 .upcomingTableWrapper {

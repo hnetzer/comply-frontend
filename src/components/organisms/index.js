@@ -1,4 +1,3 @@
-import WelcomeModal from './WelcomeModal'
 import HeaderBar from './HeaderBar/HeaderBar'
 import SideNavigation from './SideNavigation/SideNavigation'
 import SubNav from './SubNav/SubNav'
@@ -8,9 +7,9 @@ import AdminJurisdictionModal from './AdminJurisdictionModal'
 import AdminAgencyModal from './AdminAgencyModal'
 import UpcomingDatesCard from './UpcomingDatesCard/UpcomingDatesCard'
 import PremiumCard from './PremiumCard/PremiumCard'
+import AgencyRegAlert from './AgencyRegAlert/AgencyRegAlert'
 
 export {
-  WelcomeModal,
   HeaderBar,
   SideNavigation,
   AdminNavigation,
@@ -19,5 +18,6 @@ export {
   AdminAgencyModal,
   SubNav,
   UpcomingDatesCard,
-  PremiumCard
+  PremiumCard,
+  AgencyRegAlert
 }

@@ -110,6 +110,10 @@ export const getCompanyAgencies = async (companyId) => {
   return sendRequest('GET', `/company/${companyId}/companyagencies`);
 }
 
+export const getCompanyJurisdictions = async (companyId) => {
+  return sendRequest('GET', `/company/${companyId}/jurisdictions`)
+}
+
 export const getAllCompanyFilings = async () => {
   return sendRequest('GET', `/admin/companyfilings`)
 }
@@ -195,6 +199,7 @@ export default {
   getCompanyFilingMessages,
   updateCompanyFiling,
   getCompanyAgencies,
+  getCompanyJurisdictions,
 
   // admin requests
   getAllCompanyFilings,
