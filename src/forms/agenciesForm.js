@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 
 import { Formik, FieldArray, Field, Form } from 'formik';
 import { Table, Header, HeaderCell, Body, Row, Cell } from 'components/atoms'
+import { QuestionToggle } from 'components/molecules'
 
 // Bootstrap components
 import Button from 'react-bootstrap/Button';
@@ -133,11 +134,36 @@ const AgenciesForm = (props) => {
               )}
             }
           />
+          <div style={{ marginTop: 32}}>
+            <QuestionToggle question="Do I need to register with a state secretary of state?">
+              <p>
+                {`The rules for determining if you need to register with a state
+                Secretary of State are written very broadly. Generally, a company is
+                required to obtain authorization to conduct business in the state if
+                it is “doing business” within the state borders. The definition of
+                what qualifies as doing business varies by state, but usually looks
+                at whether the company has a physical location, employees, or
+                regularly binds contracts in that state.`}
+              </p>
+            </QuestionToggle>
+            <QuestionToggle question="Do I need to register with a city agency or obtain a business license?">
+              <p>{`Nearly all cities (and some counties) require you to obtain a
+                business license to be authorized to conduct business within the
+                city. Generally, having a physical presence in the city is
+                sufficient to require a business license. `}</p>
+            </QuestionToggle>
+            <QuestionToggle
+              question="Do I need to register with the city agency that oversees business licenses for remote employees?">
+              <p>{`Yes. Having a remote employee work from home counts as sufficient
+                business nexus with the city to require a business license. This
+                requirement is often overlooked. `} </p>
+            </QuestionToggle>
+          </div>
           <Button
             disabled={!isValid}
             variant="primary"
             type="submit"
-            style={{ width: 232, marginTop: 56 }}
+            style={{ width: 232, marginTop: 24 }}
            >
             Continue
           </Button>
