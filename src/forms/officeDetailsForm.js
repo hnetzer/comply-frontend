@@ -16,7 +16,7 @@ const formSchema = Yup.object().shape({
     city: Yup.string().required(),
     state: Yup.mixed().oneOf(states.map(s => s.name)).required(),
     zip: Yup.string().min(5).required()
-  }))
+  })).min(1)
 });
 
 const OfficeDetailsForm = (props) => {
@@ -33,9 +33,15 @@ const OfficeDetailsForm = (props) => {
     await props.handleSubmit(values, { setSubmitting })
   }
 
+  const initialValues = props.offices.length ? {
+    offices: props.offices
+  } : {
+    offices: [ newOffice ]
+  }
+
   return (
     <Formik
-      initialValues={props.initialValues}
+      initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={formSchema}
       validateOnMount={true}

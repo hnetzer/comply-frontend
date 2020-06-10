@@ -38,7 +38,7 @@ const Offices = ({ user, offices, dispatch }) => {
         </div>
         {!offices ? (<div>Loading...</div>) :
           <OfficeDetailsForm
-            initialValues={{ offices: offices }}
+            offices={offices}
             handleSubmit={handleSubmit} />
         }
 
