@@ -11,6 +11,7 @@ import { SubNav } from 'components/organisms'
 // screens
 import CompanyScreen from './Company/CompanyScreen'
 import DashboardScreen from './Dashboard/DashboardScreen'
+import FAQScreen from './FAQ/FAQScreen'
 
 import styles from './HomeScreen.module.scss'
 
@@ -41,6 +42,7 @@ class HomeScreen extends React.Component {
           <main className={styles.main}>
             <Router style={{ width: '100%' }}>
               <CompanyScreen path="/company/*" company={company} />
+              <FAQScreen path="/faqs" />
               <DashboardScreen path="/" />
             </Router>
           </main>

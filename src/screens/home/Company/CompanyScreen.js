@@ -5,10 +5,7 @@ import { Link } from '@reach/router'
 import style from './CompanyScreen.module.scss'
 import { Card } from 'components/atoms'
 
-
-
 const CompanyScreen = (props) => {
-
 
   return(
     <section className={style.container}>

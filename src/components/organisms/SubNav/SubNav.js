@@ -10,10 +10,10 @@ const SubNav = () => {
       <a className={styles.navLink} href="/home/company">
         Company
       </a>
-      <a className={styles.navLink} href="/home/company">
+      <a className={styles.navLink} href="/home/guide">
         Guide to Filing
       </a>
-      <a className={styles.navLink} href="/home/company">
+      <a className={styles.navLink} href="/home/faqs">
         FAQs
       </a>
     </div>
