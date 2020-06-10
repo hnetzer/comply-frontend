@@ -41,7 +41,7 @@ class HomeScreen extends React.Component {
         <SubNav />
         <div style={{ display: 'flex', flexDirection: 'row', minHeight: 'calc(100vh - 54px)'}}>
           <main className={styles.main}>
-            <Router style={{ width: '100%' }}>
+            <Router primary={false} style={{ width: '100%' }}>
               <CompanyScreen path="/company/*" company={company} />
               <FAQScreen path="/faqs" />
               <GuideScreen path="/guide" />

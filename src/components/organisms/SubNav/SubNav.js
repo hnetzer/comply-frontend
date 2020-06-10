@@ -1,21 +1,23 @@
 import React from 'react';
+import { Link } from '@reach/router'
 import styles from './SubNav.module.scss';
 
-const SubNav = () => {
+const SubNav = ({ location }) => {
+  console.log('subnav', location)
   return (
     <div className={styles.subNav}>
-      <a className={styles.navLink} href="/home">
+      <Link className={styles.navLink} to="/home">
         Dashboard
-      </a>
-      <a className={styles.navLink} href="/home/company">
+      </Link>
+      <Link className={styles.navLink} to="/home/company">
         Company
-      </a>
-      <a className={styles.navLink} href="/home/guide">
+      </Link>
+      <Link className={styles.navLink} to="/home/guide">
         Guide to Filing
-      </a>
-      <a className={styles.navLink} href="/home/faqs">
+      </Link>
+      <Link className={styles.navLink} to="/home/faqs">
         FAQs
-      </a>
+      </Link>
     </div>
   )
 }
