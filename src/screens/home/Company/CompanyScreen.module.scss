@@ -17,6 +17,7 @@
 
 .navCard {
   width: 200px;
+  margin-right: 24px;
   display: flex;
   flex-direction: column;
 }
@@ -26,11 +27,19 @@
   font-weight: 500;
   color: $navy;
   padding: 8px 4px;
+  margin: 4px 0px;
   width: 100%;
+  border-radius: 2px;
 }
 
-.link:hover, .linkSelected {
-  background-color: #ededed;
+.linkSelected {
+  @extend .link;
+  background-color: #cdcdcd;
+  color: $navy;
+}
+
+.link:hover {
+  background-color: #cdcdcd;
   color: $navy;
   text-decoration: none;
 }
@@ -38,6 +47,4 @@
 .mainContent {
   margin-top: 24px;
   margin-left: 24px;
-  width: 696px;
-  height: 500px;
 }
