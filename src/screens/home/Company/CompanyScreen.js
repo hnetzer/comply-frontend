@@ -4,6 +4,8 @@ import { Router, Link } from '@reach/router'
 
 import style from './CompanyScreen.module.scss'
 import EditCompanyScreen from './General/EditCompanyScreen'
+import EditAgenciesScreen from './Agencies/EditAgenciesScreen'
+import EditOfficesScreen from './Offices/EditOfficesScreen'
 
 import { getCompany } from 'network/api'
 
@@ -21,12 +23,18 @@ class CompanyScreen extends Component {
     })
   }
 
-  getClassName = (path) => {
-    if (path === window.location.pathname) {
-      return style.linkSelected
+  getClassName = (paths) => {
+    const pathname = window.location.pathname
+    const match = paths.reduce((match, path) => {
+      return (match || (path === pathname))
+    }, false)
+
+    if (match) {
+      return style.linkSelected;
     }
-    return style.link
+    return style.link;
   }
+
 
   render() {
     return(
@@ -35,26 +43,28 @@ class CompanyScreen extends Component {
           <div className={style.navCard}>
             <h5>Company</h5>
             <Link
-              className={this.getClassName("/home/company/general")}
+              className={this.getClassName(["/home/company", "/home/company/general"])}
               to="/home/company/general"
               disabled={false}>
               General
             </Link>
             <Link
-              className={this.getClassName("/home/company/offices")}
+              className={this.getClassName(["/home/company/offices"])}
               to="/home/company/offices"
               disabled={false}>
               Offices
             </Link>
             <Link
-              className={this.getClassName("/home/company/agencies")}
+              className={this.getClassName(["/home/company/agencies"])}
               to="/home/company/agencies"
               disabled={false}>
               Agencies
             </Link>
           </div>
           <Router primary={false} style={{ width: '100%' }}>
-            <EditCompanyScreen path="/general" company={this.state.company} />
+            <EditCompanyScreen default path="/general" company={this.state.company} />
+            <EditAgenciesScreen path="/agencies" />
+            <EditOfficesScreen path="/offices" />
           </Router>
         </div>
       </section>
