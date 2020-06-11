@@ -16,7 +16,7 @@ class DashboardScreen extends React.Component {
     this.state = {
       timelineFilings: null,
       upcomingFilings: null,
-      unscheduledFilings: false,
+      showRegAlert: false,
       showPremiumModal: false,
     }
   }
@@ -25,11 +25,11 @@ class DashboardScreen extends React.Component {
     this.loadPageData()
   }
 
-  async componentDidUpdate(prevProps) {
+  /*componentDidUpdate(prevProps) {
     if (prevProps.agencies.length !== this.props.agencies.length) {
       await this.loadPageData()
     }
-  }
+  }*/
 
   loadPageData = async () => {
     try {
@@ -42,7 +42,7 @@ class DashboardScreen extends React.Component {
       this.setState({
         timelineFilings: yearFilings.filter(f => f.due != null).sort(this.compareFilingsByDue),
         upcomingFilings: upcomingFilings,
-        unscheduledFilings: unscheduledFilings.length > 0,
+        showRegAlert: unscheduledFilings.length > 0,
         notSupportedJuris: jurisdictions.filter(j => j.agencies.length === 0)
       })
 
@@ -80,7 +80,7 @@ class DashboardScreen extends React.Component {
     const {
       timelineFilings,
       upcomingFilings,
-      unscheduledFilings,
+      showRegAlert,
       notSupportedJuris
     } = this.state
 
@@ -91,7 +91,9 @@ class DashboardScreen extends React.Component {
     return(
       <section className={screenStyle.container}>
         <div className={screenStyle.content}>
-          {unscheduledFilings && <AgencyRegAlert />}
+          <AgencyRegAlert
+            show={showRegAlert}
+            onDismiss={() => this.setState({ showRegAlert: false})} />
           <div className={style.topSection}>
             <UpcomingDatesCard
               upcomingFilings={upcomingFilings}

@@ -2,6 +2,8 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
+import { updateCompany } from 'network/api'
+
 import states from 'data/states.json';
 import Button from 'react-bootstrap/Button';
 import style from './companyDetailsForm.module.scss';
@@ -14,14 +16,27 @@ const formSchema = Yup.object().shape({
   formation_state: Yup.mixed().oneOf(states.map(s => s.name)).required(),
 });
 
-const CompanyDetailsForm = (props) => {
+const CompanyDetailsForm = ({ companyId, cta, initialValues, onSuccess, onError }) => {
   const handleSubmit = async (values, { setSubmitting }) => {
-    await props.handleSubmit(values, { setSubmitting })
+    const data = {
+      type: values.type,
+      tax_class: values.tax_class,
+      year_end_month: values.year_end_month,
+      year_end_day: values.year_end_day,
+      formation_state: values.formation_state,
+    }
+
+    try {
+      await updateCompany(data, companyId)
+      onSuccess()
+    } catch (err) {
+      onError(err)
+    }
   }
 
   return (
     <Formik
-      initialValues={props.initialValues}
+      initialValues={initialValues}
       validationSchema={formSchema}
       validateOnMount={true}
       onSubmit={handleSubmit}
@@ -120,12 +135,18 @@ const CompanyDetailsForm = (props) => {
             type="submit"
             style={{ width: 232, marginTop: 36 }}
            >
-            Continue
+            {cta}
           </Button>
         </Form>
       )}
     </Formik>
   );
+}
+
+CompanyDetailsForm.defaultProps = {
+  onSuccess: () => {},
+  onError: () => {},
+  cat: 'Save'
 }
 
 export default CompanyDetailsForm;

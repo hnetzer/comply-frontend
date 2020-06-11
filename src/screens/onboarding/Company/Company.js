@@ -5,28 +5,11 @@ import { navigate } from "@reach/router"
 import { CompanyDetailsForm } from 'forms'
 import { VerticalProgressBar } from 'components/molecules'
 import { Card } from 'components/atoms'
-import { updateCompany } from 'network/api'
 
 import style from '../OnboardingScreen.module.scss'
 import screenStyle from './Company.module.scss'
 
 const Company = ({ user, company, dispatch }) => {
-  const handleSubmit = async (values, { setSubmitting }) => {
-    const data = {
-      type: values.type,
-      tax_class: values.tax_class,
-      year_end_month: values.year_end_month,
-      year_end_day: values.year_end_day,
-      formation_state: values.formation_state,
-    }
-
-    try {
-      await updateCompany(data, company.id)
-      navigate('/onboarding/offices')
-    } catch (err) {
-      alert(err.message)
-    }
-  }
 
   const getInitalValues = () => {
     return {
@@ -38,7 +21,15 @@ const Company = ({ user, company, dispatch }) => {
     }
   }
 
-  // TODO: Update loading with real loding spinner
+  const onSaveSuccess = () => {
+    navigate('/onboarding/offices')
+  }
+
+  const onSaveError = (err) => {
+    alert(err.message)
+  }
+
+
   return(
     <>
       <Card className={style.progressBarSection}>
@@ -54,8 +45,11 @@ const Company = ({ user, company, dispatch }) => {
         </div>
         {!company ? (<div>Loading...</div>) :
           <CompanyDetailsForm
-            initialValues={getInitalValues()}
-            handleSubmit={handleSubmit} />
+            companyId={company.id}
+            cta="Continue"
+            onSuccess={onSaveSuccess}
+            onError={onSaveError}
+            initialValues={getInitalValues()} />
         }
       </Card>
       <div className={style.helpSection}>
