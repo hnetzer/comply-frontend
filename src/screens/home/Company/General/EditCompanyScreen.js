@@ -5,7 +5,8 @@ import { Card, Alert } from 'components/atoms'
 
 const EditCompanyScreen= ({ company }) => {
   const [saved, setSaved] = useState(false)
-  const onSaveSuccess = () => {
+
+  const onSaveSuccess = (company) => {
     setSaved(true)
   }
 

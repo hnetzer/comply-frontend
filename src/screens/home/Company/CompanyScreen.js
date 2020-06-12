@@ -37,6 +37,9 @@ class CompanyScreen extends Component {
 
 
   render() {
+    const { user } = this.props;
+    const { company, offices } = this.state;
+
     return(
       <section className={style.container}>
         <div className={style.content}>
@@ -62,9 +65,9 @@ class CompanyScreen extends Component {
             </Link>
           </div>
           <Router primary={false} style={{ width: '100%' }}>
-            <EditCompanyScreen default path="/general" company={this.state.company} />
+            <EditCompanyScreen default path="/general" company={company} />
             <EditAgenciesScreen path="/agencies" />
-            <EditOfficesScreen path="/offices" />
+            <EditOfficesScreen path="/offices" offices={offices} companyId={user.company_id} />
           </Router>
         </div>
       </section>

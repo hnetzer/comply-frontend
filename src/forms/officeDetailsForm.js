@@ -1,7 +1,9 @@
 import React from 'react';
+
+import { updateOffices } from 'network/api'
+
 import * as Yup from 'yup';
 import { Formik, Form, Field, FieldArray } from 'formik';
-
 import { Table, Header, HeaderCell, Body, Row, Cell } from 'components/atoms'
 
 import Button from 'react-bootstrap/Button';
@@ -19,7 +21,15 @@ const formSchema = Yup.object().shape({
   })).min(1)
 });
 
-const OfficeDetailsForm = (props) => {
+const OfficeDetailsForm = ({ companyId, cta, offices, onSuccess, onError }) => {
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      await updateOffices(values, companyId)
+      onSuccess()
+    } catch (err) {
+      onError(err.message)
+    }
+  }
 
   const newOffice =  {
     type: '',
@@ -29,12 +39,8 @@ const OfficeDetailsForm = (props) => {
     zip: ''
   };
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    await props.handleSubmit(values, { setSubmitting })
-  }
-
-  const initialValues = props.offices.length ? {
-    offices: props.offices
+  const initialValues = offices.length ? {
+    offices: offices
   } : {
     offices: [ newOffice ]
   }
@@ -150,12 +156,18 @@ const OfficeDetailsForm = (props) => {
               type="submit"
               style={{ width: 232, marginTop: 56 }}
              >
-              Continue
+              {cta}
             </Button>
           </Form>
         )}
     </Formik>
   );
+}
+
+OfficeDetailsForm.defaultProps = {
+  onSuccess: () => {},
+  onError: () => {},
+  cta: 'Save'
 }
 
 export default OfficeDetailsForm;

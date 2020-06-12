@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 
 import { OfficeDetailsForm } from 'forms'
-import { updateOffices } from 'network/api'
 
 import { VerticalProgressBar } from 'components/molecules'
 import { Card } from 'components/atoms'
@@ -13,14 +12,13 @@ import screenStyle from './Offices.module.scss'
 
 const Offices = ({ user, offices, dispatch }) => {
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    try {
-      await updateOffices(values, user.company_id)
-      navigate('/onboarding/agencies')
-    } catch (err) {
-      // TODO: Show error message if we get an error response
-      alert(err.message)
-    }
+
+  const onSuccess = () => {
+    navigate('/onboarding/agencies')
+  }
+
+  const onError = (err) => {
+    alert(err.message)
   }
 
   return(
@@ -38,10 +36,12 @@ const Offices = ({ user, offices, dispatch }) => {
         </div>
         {!offices ? (<div>Loading...</div>) :
           <OfficeDetailsForm
+            companyId={user.company_id}
             offices={offices}
-            handleSubmit={handleSubmit} />
+            onSuccess={onSuccess}
+            onError={onError}
+            cta="Continue" />
         }
-
       </Card>
       <div className={style.helpSection}>
         <b>Need help?</b> Contact us <i>help@thinkcomply.com</i>
