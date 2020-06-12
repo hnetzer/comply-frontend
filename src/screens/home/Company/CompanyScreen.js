@@ -7,19 +7,25 @@ import EditCompanyScreen from './General/EditCompanyScreen'
 import EditAgenciesScreen from './Agencies/EditAgenciesScreen'
 import EditOfficesScreen from './Offices/EditOfficesScreen'
 
-import { getCompany } from 'network/api'
+import { getCompany, getAgencies, getCompanyAgencies } from 'network/api'
 
 class CompanyScreen extends Component {
   constructor(props) {
     super(props)
-    this.state = { company: null, offices: null }
+    this.state = { company: null, offices: null, agencies: null, companyAgencies: null }
   }
 
   async componentDidMount() {
-    const company = await getCompany(this.props.user.company_id);
+    const { user } = this.props;
+    const company = await getCompany(user.company_id);
+    const agencies = await getAgencies(user.company_id);
+    const companyAgencies = await getCompanyAgencies(user.company_id)
+
     this.setState({
       company: company,
       offices: company.offices,
+      agencies: agencies,
+      companyAgencies: companyAgencies,
     })
   }
 
@@ -38,7 +44,7 @@ class CompanyScreen extends Component {
 
   render() {
     const { user } = this.props;
-    const { company, offices } = this.state;
+    const { company, offices, agencies, companyAgencies } = this.state;
 
     return(
       <section className={style.container}>
@@ -65,9 +71,19 @@ class CompanyScreen extends Component {
             </Link>
           </div>
           <Router primary={false} style={{ width: '100%' }}>
-            <EditCompanyScreen default path="/general" company={company} />
-            <EditAgenciesScreen path="/agencies" />
-            <EditOfficesScreen path="/offices" offices={offices} companyId={user.company_id} />
+            <EditCompanyScreen
+              default
+              path="/general"
+              company={company} />
+            <EditAgenciesScreen
+              path="/agencies"
+              companyAgencies={companyAgencies}
+              agencies={agencies}
+              companyId={user.company_id} />
+            <EditOfficesScreen
+              path="/offices"
+              offices={offices}
+              companyId={user.company_id} />
           </Router>
         </div>
       </section>

@@ -6,7 +6,7 @@ import { VerticalProgressBar } from 'components/molecules'
 import { Card } from 'components/atoms'
 import { AgenciesForm } from 'forms'
 
-import { updateCompanyAgencies, getCompanyFilings, getAgencies, getCompanyAgencies } from 'network/api';
+import { getCompanyFilings, getAgencies, getCompanyAgencies } from 'network/api';
 import { setFilings, setCompanyAgencies, onboarded } from 'actions';
 
 import style from '../OnboardingScreen.module.scss'
@@ -28,18 +28,17 @@ class Agencies extends React.Component {
     }
   }
 
-  handleSubmit = async (companyAgencies) => {
-    const { user, dispatch } = this.props
-    try {
-      const agencies = await updateCompanyAgencies(companyAgencies, user.company_id)
-      const filings = await getCompanyFilings(user.company_id)
-      dispatch(setFilings(filings))
-      dispatch(setCompanyAgencies(agencies))
-      dispatch(onboarded())
-      navigate('/onboarding/done')
-    } catch (err) {
-      alert(err)
-    }
+  onSuccess = async (agencies) => {
+    const { user, dispatch } = this.props;
+    const filings = await getCompanyFilings(user.company_id)
+    dispatch(setFilings(filings))
+    dispatch(setCompanyAgencies(agencies))
+    dispatch(onboarded())
+    navigate('/onboarding/done')
+  }
+
+  onError = (err) => {
+    alert(err)
   }
 
   render() {
@@ -61,9 +60,12 @@ class Agencies extends React.Component {
           </div>
           {!agencies ? (<div>Loading...</div>) :
             <AgenciesForm
+              companyId={this.props.user.company_id}
               agencies={agencies}
               companyAgencies={companyAgencies}
-              handleSubmit={this.handleSubmit} />
+              onSuccess={this.onSuccess}
+              onError={this.onError}
+              cta="Continue" />
           }
         </Card>
         <div className={style.helpSection}>

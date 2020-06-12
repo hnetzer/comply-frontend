@@ -1,6 +1,8 @@
 import React from 'react';
 import * as Yup from 'yup';
 
+import { updateCompanyAgencies } from 'network/api';
+
 import { Formik, FieldArray, Field, Form } from 'formik';
 import { Table, Header, HeaderCell, Body, Row, Cell } from 'components/atoms'
 import { QuestionToggle } from 'components/molecules'
@@ -16,11 +18,9 @@ const formSchema = Yup.object().shape({
   }))
 });
 
-const AgenciesForm = (props) => {
-
+const AgenciesForm = ({ companyId, agencies, companyAgencies, cta, faqs, onSuccess, onError }) => {
   const handleSubmit = async (values, { setSubmitting }) => {
-
-    const transform = values.agencies.map(a => {
+    const data = values.agencies.map(a => {
       return {
         agency_id: a.agency_id,
         registered: a.registered === 'yes' ? true : false,
@@ -28,11 +28,17 @@ const AgenciesForm = (props) => {
       }
     })
 
-    await props.handleSubmit(transform, { setSubmitting })
+    try {
+      const agencies = await updateCompanyAgencies(data, companyId)
+      onSuccess(agencies)
+    } catch (err) {
+      onError(err)
+    }
   }
 
+
   const initialValuesMap = () => {
-    const companyAgencyMap = props.companyAgencies.reduce((acc, companyAgency) => {
+    const companyAgencyMap = companyAgencies.reduce((acc, companyAgency) => {
       acc[companyAgency.agency_id] = {
         registration_date: companyAgency.registration,
         registered: companyAgency.registered
@@ -40,13 +46,13 @@ const AgenciesForm = (props) => {
       return acc;
     }, {})
 
-    const values = props.agencies.map((agency, index) => {
+    const values = agencies.map((agency, index) => {
       const companyAgency = companyAgencyMap[agency.id];
       if (companyAgency) {
         return {
           agency_id: agency.id,
           registered: companyAgency.registered ? 'yes' : 'no',
-          registration_date: companyAgency.registration_date
+          registration_date: companyAgency.registration_date || ''
         }
       }
 
@@ -59,14 +65,6 @@ const AgenciesForm = (props) => {
 
     return { agencies: values };
   }
-
-  /*const getAgencyLabel = (agency, state) => {
-    console.log(state)
-    if (state.toLowerCase() === agency.jurisdiction.name.toLowerCase()) {
-      return toTitleCase(agency.name)
-    }
-    return `${toTitleCase(agency.name)} (${toTitleCase(agency.jurisdiction.name)})`
-  }*/
 
   return (
     <Formik
@@ -99,7 +97,7 @@ const AgenciesForm = (props) => {
                     <HeaderCell>Registration date</HeaderCell>
                   </Header>
                   <Body>
-                  {props.agencies.map((agency, index) => {
+                  {agencies.map((agency, index) => {
                     return (<Row key={index}>
                       <Cell className={style.cellText}>{agency.jurisdiction.name}</Cell>
                       <Cell className={style.cellText}>{agency.name}</Cell>
@@ -134,7 +132,7 @@ const AgenciesForm = (props) => {
               )}
             }
           />
-          <div style={{ marginTop: 32}}>
+          <div style={{ marginTop: 32, display: faqs ? 'auto' : 'none' }}>
             <QuestionToggle question="Do I need to register with a state secretary of state?">
               <p>
                 {`The rules for determining if you need to register with a state
@@ -165,12 +163,19 @@ const AgenciesForm = (props) => {
             type="submit"
             style={{ width: 232, marginTop: 24 }}
            >
-            Continue
+            {cta}
           </Button>
         </Form>
       )}
     </Formik>
   );
+}
+
+AgenciesForm.defaultProps = {
+  onSuccess: () => {},
+  onError: () => {},
+  cta: "Save",
+  faqs: true
 }
 
 export default AgenciesForm;
