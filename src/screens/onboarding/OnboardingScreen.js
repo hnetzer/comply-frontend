@@ -70,7 +70,6 @@ class OnboardingScreen extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
     user: state.auth.user,
     company: state.company.company

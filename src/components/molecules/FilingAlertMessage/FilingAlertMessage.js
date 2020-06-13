@@ -25,7 +25,6 @@ const FILED_MESSAGE = (<>
 const FilingAlertMessage = ({ status, messages, filing }) => {
 
   const show = () => {
-    console.log(status)
     switch(status) {
       case 'draft': return false
       case 'submitted': return true
