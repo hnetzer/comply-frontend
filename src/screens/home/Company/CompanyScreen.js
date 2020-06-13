@@ -7,6 +7,8 @@ import EditCompanyScreen from './General/EditCompanyScreen'
 import EditAgenciesScreen from './Agencies/EditAgenciesScreen'
 import EditOfficesScreen from './Offices/EditOfficesScreen'
 
+import { setCompanyDetails } from 'actions'
+
 import { getCompany, getAgencies, getCompanyAgencies } from 'network/api'
 
 class CompanyScreen extends Component {
@@ -16,8 +18,9 @@ class CompanyScreen extends Component {
   }
 
   async componentDidMount() {
-    const { user } = this.props;
+    const { user, dispatch } = this.props;
     const company = await getCompany(user.company_id);
+    dispatch(setCompanyDetails(company))
     const agencies = await getAgencies(user.company_id);
     const companyAgencies = await getCompanyAgencies(user.company_id)
 

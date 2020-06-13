@@ -6,8 +6,8 @@ import { VerticalProgressBar } from 'components/molecules'
 import { Card } from 'components/atoms'
 import { AgenciesForm } from 'forms'
 
-import { getCompanyFilings, getAgencies, getCompanyAgencies } from 'network/api';
-import { setFilings, setCompanyAgencies, onboarded } from 'actions';
+import { getAgencies, getCompanyAgencies } from 'network/api';
+import { setCompanyAgencies, onboarded } from 'actions';
 
 import style from '../OnboardingScreen.module.scss'
 
@@ -29,9 +29,9 @@ class Agencies extends React.Component {
   }
 
   onSuccess = async (agencies) => {
-    const { user, dispatch } = this.props;
-    const filings = await getCompanyFilings(user.company_id)
-    dispatch(setFilings(filings))
+    const { dispatch } = this.props;
+    // const filings = await getCompanyFilings(user.company_id)
+    // dispatch(setFilings(filings))
     dispatch(setCompanyAgencies(agencies))
     dispatch(onboarded())
     navigate('/onboarding/done')

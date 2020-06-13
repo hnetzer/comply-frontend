@@ -11,16 +11,6 @@ import screenStyle from './Company.module.scss'
 
 const Company = ({ user, company, dispatch }) => {
 
-  const getInitalValues = () => {
-    return {
-      year_end_day: company.year_end_day || '',
-      year_end_month: company.year_end_month || '',
-      type: company.type || '',
-      tax_class: company.tax_class || '',
-      formation_state: company.formation_state || '',
-    }
-  }
-
   const onSaveSuccess = () => {
     navigate('/onboarding/offices')
   }
@@ -45,11 +35,9 @@ const Company = ({ user, company, dispatch }) => {
         </div>
         {!company ? (<div>Loading...</div>) :
           <CompanyDetailsForm
-            companyId={company.id}
             cta="Continue"
             onSuccess={onSaveSuccess}
-            onError={onSaveError}
-            initialValues={getInitalValues()} />
+            onError={onSaveError} />
         }
       </Card>
       <div className={style.helpSection}>

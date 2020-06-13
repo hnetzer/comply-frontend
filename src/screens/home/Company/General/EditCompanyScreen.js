@@ -27,11 +27,9 @@ const EditCompanyScreen= ({ company }) => {
       </div>
       {!company ? (<div>Loading...</div>) :
         <CompanyDetailsForm
-          companyId={company.id}
           cta="Save"
           onSuccess={onSaveSuccess}
-          onError={onSaveError}
-          initialValues={company} />
+          onError={onSaveError} />
       }
     </Card>
   )
