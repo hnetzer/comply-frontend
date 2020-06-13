@@ -18,23 +18,23 @@ import { getCompany, getAgencies, getCompanyAgencies } from 'network/api'
 class CompanyScreen extends Component {
   constructor(props) {
     super(props)
-    this.state = { company: null, offices: null, agencies: null, companyAgencies: null }
+    this.state = { agencies: null }
   }
 
   async componentDidMount() {
     const { user, dispatch } = this.props;
+
     const company = await getCompany(user.company_id);
     dispatch(setCompanyDetails(company))
     dispatch(setCompanyOffices(company.offices))
-    
-    const agencies = await getAgencies(user.company_id);
+
     const companyAgencies = await getCompanyAgencies(user.company_id)
+    dispatch(setCompanyAgencies(companyAgencies))
+
+    const agencies = await getAgencies(user.company_id);
 
     this.setState({
-      company: company,
-      offices: company.offices,
       agencies: agencies,
-      companyAgencies: companyAgencies,
     })
   }
 
@@ -54,7 +54,7 @@ class CompanyScreen extends Component {
   render() {
     const { user } = this.props;
     if (!user) return;
-    const { company, offices, agencies, companyAgencies } = this.state;
+    const { agencies } = this.state;
 
     return(
       <section className={style.container}>
@@ -83,17 +83,12 @@ class CompanyScreen extends Component {
           <Router primary={false} style={{ width: '100%' }}>
             <EditCompanyScreen
               default
-              path="/general"
-              company={company} />
+              path="/general" />
             <EditAgenciesScreen
               path="/agencies"
-              companyAgencies={companyAgencies}
-              agencies={agencies}
-              companyId={user.company_id} />
+              agencies={agencies} />
             <EditOfficesScreen
-              path="/offices"
-              offices={offices}
-              companyId={user.company_id} />
+              path="/offices" />
           </Router>
         </div>
       </section>

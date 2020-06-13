@@ -41,7 +41,7 @@ const OfficeDetailsForm = ({ offices, user, cta, onSuccess, onError, dispatch })
     zip: ''
   };
 
-  const initialValues = offices ? {
+  const initialValues = offices && offices.length ? {
     offices: offices
   } : {
     offices: [ newOffice ]
