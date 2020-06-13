@@ -51,8 +51,6 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
     formation_state: '',
   };
 
-  console.log('initialValues', initialValues)
-
   return (
     <Formik
       initialValues={initialValues}
