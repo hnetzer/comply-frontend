@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, Alert } from 'components/atoms'
 import { OfficeDetailsForm } from 'forms'
 
-const EditOfficesScreen= ({ offices, companyId }) => {
+const EditOfficesScreen= () => {
   const [saved, setSaved] = useState(false)
   const onSuccess = () => {
     setSaved(true)
@@ -23,10 +23,8 @@ const EditOfficesScreen= ({ offices, companyId }) => {
           Saved successfully
         </Alert>
       </div>
-      {!offices ? (<div>Loading...</div>) :
-        <OfficeDetailsForm
-          companyId={companyId}
-          offices={offices}
+      { <OfficeDetailsForm
+          cta="Save"
           onSuccess={onSuccess}
           onError={onError} />
       }

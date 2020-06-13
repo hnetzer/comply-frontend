@@ -1,6 +1,7 @@
 import React from 'react';
-
+import { connect } from 'react-redux';
 import { updateOffices } from 'network/api'
+import { setCompanyOffices } from 'actions'
 
 import * as Yup from 'yup';
 import { Formik, Form, Field, FieldArray } from 'formik';
@@ -21,10 +22,11 @@ const formSchema = Yup.object().shape({
   })).min(1)
 });
 
-const OfficeDetailsForm = ({ companyId, cta, offices, onSuccess, onError }) => {
+const OfficeDetailsForm = ({ offices, user, cta, onSuccess, onError, dispatch }) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      await updateOffices(values, companyId)
+      const offices = await updateOffices(values, user.company_id)
+      dispatch(setCompanyOffices(offices))
       onSuccess()
     } catch (err) {
       onError(err.message)
@@ -39,7 +41,7 @@ const OfficeDetailsForm = ({ companyId, cta, offices, onSuccess, onError }) => {
     zip: ''
   };
 
-  const initialValues = offices.length ? {
+  const initialValues = offices ? {
     offices: offices
   } : {
     offices: [ newOffice ]
@@ -50,6 +52,7 @@ const OfficeDetailsForm = ({ companyId, cta, offices, onSuccess, onError }) => {
       initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={formSchema}
+      enableReinitialize={true}
       validateOnMount={true}
     >
     {({
@@ -170,4 +173,12 @@ OfficeDetailsForm.defaultProps = {
   cta: 'Save'
 }
 
-export default OfficeDetailsForm;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    company: state.company.company,
+    offices: state.company.offices
+  }
+}
+
+export default connect(mapStateToProps)(OfficeDetailsForm);
