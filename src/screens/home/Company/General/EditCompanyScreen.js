@@ -25,14 +25,10 @@ const EditCompanyScreen= ({ company }) => {
           Saved successfully
         </Alert>
       </div>
-      {!company ? (<div>Loading...</div>) :
-        <CompanyDetailsForm
-          companyId={company.id}
-          cta="Save"
-          onSuccess={onSaveSuccess}
-          onError={onSaveError}
-          initialValues={company} />
-      }
+      {<CompanyDetailsForm
+        cta="Save"
+        onSuccess={onSaveSuccess}
+        onError={onSaveError} />}
     </Card>
   )
 }

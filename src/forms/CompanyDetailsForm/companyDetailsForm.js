@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 import { updateCompany } from 'network/api'
+import { setCompanyDetails } from 'actions'
 
 import states from 'data/states.json';
 import Button from 'react-bootstrap/Button';
@@ -16,7 +18,7 @@ const formSchema = Yup.object().shape({
   formation_state: Yup.mixed().oneOf(states.map(s => s.name)).required(),
 });
 
-const CompanyDetailsForm = ({ companyId, cta, initialValues, onSuccess, onError }) => {
+const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     const data = {
       type: values.type,
@@ -27,18 +29,34 @@ const CompanyDetailsForm = ({ companyId, cta, initialValues, onSuccess, onError 
     }
 
     try {
-      await updateCompany(data, companyId)
+      const response = await updateCompany(data, user.company_id)
+      dispatch(setCompanyDetails(response))
       onSuccess()
     } catch (err) {
       onError(err)
     }
   }
 
+  const initialValues = company ? {
+    year_end_day: company.year_end_day,
+    year_end_month: company.year_end_month,
+    type: company.type,
+    tax_class:  company.tax_class,
+    formation_state: company.formation_state,
+    } : {
+    year_end_day: '',
+    year_end_month: '',
+    type: '',
+    tax_class:  '',
+    formation_state: '',
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={formSchema}
       validateOnMount={true}
+      enableReinitialize={true}
       onSubmit={handleSubmit}
     >
     {({
@@ -149,4 +167,11 @@ CompanyDetailsForm.defaultProps = {
   cat: 'Save'
 }
 
-export default CompanyDetailsForm;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    company: state.company.company
+  }
+}
+
+export default connect(mapStateToProps)(CompanyDetailsForm);

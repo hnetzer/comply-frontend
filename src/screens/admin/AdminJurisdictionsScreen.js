@@ -79,7 +79,6 @@ class AdminJurisdictionsScreen extends React.Component {
   render() {
     const { jurisdictions } = this.props
     jurisdictions.sort(this.sortBy)
-    console.log('jurisdictions: ', jurisdictions)
     return(
       <main className={style.container}>
         <AdminJurisdictionModal

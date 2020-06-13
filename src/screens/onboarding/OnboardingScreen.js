@@ -4,6 +4,7 @@ import { Router, navigate } from "@reach/router"
 import { logout } from 'actions';
 
 import { getCompany } from 'network/api'
+import { setCompanyDetails, setCompanyOffices } from 'actions'
 
 import { AccountMenu } from 'components/molecules'
 
@@ -27,6 +28,9 @@ class OnboardingScreen extends Component {
       company: company,
       offices: company.offices,
     })
+
+    this.props.dispatch(setCompanyDetails(company))
+    this.props.dispatch(setCompanyOffices(company.offices))
   }
 
 
@@ -68,7 +72,7 @@ class OnboardingScreen extends Component {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    company: state.auth.company,
+    company: state.company.company
   }
 }
 

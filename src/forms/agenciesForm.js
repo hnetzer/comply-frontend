@@ -1,7 +1,9 @@
 import React from 'react';
 import * as Yup from 'yup';
+import { connect } from 'react-redux';
 
 import { updateCompanyAgencies } from 'network/api';
+import { setCompanyAgencies } from 'actions'
 
 import { Formik, FieldArray, Field, Form } from 'formik';
 import { Table, Header, HeaderCell, Body, Row, Cell } from 'components/atoms'
@@ -18,19 +20,20 @@ const formSchema = Yup.object().shape({
   }))
 });
 
-const AgenciesForm = ({ companyId, agencies, companyAgencies, cta, faqs, onSuccess, onError }) => {
+const AgenciesForm = ({ user, agencies, companyAgencies, cta, faqs, onSuccess, onError, dispatch }) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     const data = values.agencies.map(a => {
       return {
         agency_id: a.agency_id,
         registered: a.registered === 'yes' ? true : false,
-        registration: a.registration_date
+        registration: a.registration_date || null
       }
     })
 
     try {
-      const agencies = await updateCompanyAgencies(data, companyId)
-      onSuccess(agencies)
+      const agencies = await updateCompanyAgencies(data, user.company_id)
+      dispatch(setCompanyAgencies(agencies))
+      onSuccess()
     } catch (err) {
       onError(err)
     }
@@ -38,13 +41,16 @@ const AgenciesForm = ({ companyId, agencies, companyAgencies, cta, faqs, onSucce
 
 
   const initialValuesMap = () => {
-    const companyAgencyMap = companyAgencies.reduce((acc, companyAgency) => {
-      acc[companyAgency.agency_id] = {
-        registration_date: companyAgency.registration,
-        registered: companyAgency.registered
-      }
-      return acc;
-    }, {})
+    let companyAgencyMap = {}
+    if(companyAgencies) {
+      companyAgencyMap = companyAgencies.reduce((acc, companyAgency) => {
+        acc[companyAgency.agency_id] = {
+          registration_date: companyAgency.registration,
+          registered: companyAgency.registered
+        }
+        return acc;
+      }, {})
+    }
 
     const values = agencies.map((agency, index) => {
       const companyAgency = companyAgencyMap[agency.id];
@@ -72,6 +78,7 @@ const AgenciesForm = ({ companyId, agencies, companyAgencies, cta, faqs, onSucce
       onSubmit={handleSubmit}
       validationSchema={formSchema}
       validateOnMount={true}
+      enableReinitialize={true}
     >
     {({
       values,
@@ -178,4 +185,12 @@ AgenciesForm.defaultProps = {
   faqs: true
 }
 
-export default AgenciesForm;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    companyAgencies: state.company.agencies
+  }
+}
+
+
+export default connect(mapStateToProps)(AgenciesForm);

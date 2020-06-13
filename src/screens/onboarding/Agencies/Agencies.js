@@ -6,8 +6,8 @@ import { VerticalProgressBar } from 'components/molecules'
 import { Card } from 'components/atoms'
 import { AgenciesForm } from 'forms'
 
-import { getCompanyFilings, getAgencies, getCompanyAgencies } from 'network/api';
-import { setFilings, setCompanyAgencies, onboarded } from 'actions';
+import { getAgencies, getCompanyAgencies } from 'network/api';
+import { setCompanyAgencies, onboarded } from 'actions';
 
 import style from '../OnboardingScreen.module.scss'
 
@@ -21,18 +21,18 @@ class Agencies extends React.Component {
     const { user } = this.props
     try {
       const agencies = await getAgencies(user.company_id);
+      this.setState({ agencies: agencies })
+
       const companyAgencies = await getCompanyAgencies(user.company_id)
-      this.setState({ agencies: agencies, companyAgencies: companyAgencies })
+      this.props.dispatch(setCompanyAgencies(companyAgencies))
+
     } catch (err) {
       console.log(err)
     }
   }
 
-  onSuccess = async (agencies) => {
-    const { user, dispatch } = this.props;
-    const filings = await getCompanyFilings(user.company_id)
-    dispatch(setFilings(filings))
-    dispatch(setCompanyAgencies(agencies))
+  onSuccess = async () => {
+    const { dispatch } = this.props;
     dispatch(onboarded())
     navigate('/onboarding/done')
   }
@@ -42,7 +42,7 @@ class Agencies extends React.Component {
   }
 
   render() {
-    const { agencies, companyAgencies } = this.state
+    const { agencies } = this.state
     return(
       <>
         <Card className={style.progressBarSection}>
@@ -60,9 +60,7 @@ class Agencies extends React.Component {
           </div>
           {!agencies ? (<div>Loading...</div>) :
             <AgenciesForm
-              companyId={this.props.user.company_id}
               agencies={agencies}
-              companyAgencies={companyAgencies}
               onSuccess={this.onSuccess}
               onError={this.onError}
               cta="Continue" />
