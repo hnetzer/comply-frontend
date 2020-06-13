@@ -24,7 +24,7 @@ const AgenciesForm = ({ companyId, agencies, companyAgencies, cta, faqs, onSucce
       return {
         agency_id: a.agency_id,
         registered: a.registered === 'yes' ? true : false,
-        registration: a.registration_date
+        registration: a.registration_date || null
       }
     })
 

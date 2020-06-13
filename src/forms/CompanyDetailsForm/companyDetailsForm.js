@@ -58,6 +58,7 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
       initialValues={initialValues}
       validationSchema={formSchema}
       validateOnMount={true}
+      enableReinitialize={true}
       onSubmit={handleSubmit}
     >
     {({
