@@ -1,0 +1,74 @@
+[
+    {
+        "question": "Do I need to register with a state secretary of state?",
+        "answer": "Generally speaking, you are required to obtain authorization to conduct business in a state if it is “doing business” in the state. The definition of 'doing business' varies by state, but usually looks at whether the company has a physical location, employees, or regularly binds contracts within the state borders."
+    },
+    {
+        "question": "Do I need to register with a city agency or obtain a business license?",
+        "answer": "Nearly all cities (and some counties) require you to obtain a business license to be authorized to conduct business within the city. Generally, having a physical presence in the city is sufficient to require a business license."
+    },
+    {
+        "question": "Do I need to obtain a business license where I have remote employees?",
+        "answer": "In some cases, yes. Having a remote employee work from home may count as a sufficient business connection with the city to require a business license. "
+    },
+    {
+        "question": "What is a registered agent and do I need one?",
+        "answer": "A registered agent has a physical address in the state where you are registered and receives legal documents on your behalf. Registered agents usually charge around $100 per year to act as a registered agent for your company."
+    },
+    {
+        "question": "Do I need to comply with employee and labor rules?",
+        "answer": "Any required employee and labor obligations should be considered in each state you have offices and remote employees. Broadly, these obligations include registering with the department that oversees labor regulations, obtaining a withholding and unemployment insurance IDs, and obtaining workers compensation insurance. This is not an exhaustive list and you should consult with your employment attorney or payroll provider."
+    },
+    {
+        "question": "Do I need to comply with sales tax obligations?",
+        "answer": "If you sell a taxable product within a state you may be required to register for a sales tax permit and comply with the sales tax collection, remittance, and reporting requirements. You should speak with your advisors to determine if you have sales tax obligations."
+    },
+    {
+        "question": "Does Comply support specialized business licenses and permits?",
+        "answer": "We support general business registrations. We don’t support specialized business licenses, registrations, and permits at the federal and state and local level for businesses engaged in: agriculture, the sale of alcohol and tobacco, transportation and a host of other specialized businesses.  Speak with your advisor to determine if a specialized license applies to your business."
+    },
+    {
+        "question": "Do you track ‘doing business as’ (DBA) renewals?",
+        "answer": "If you operate your business under a name different from your entity’s legal name, you may be required to obtain a DBA from your county or local jurisdiction. A DBA must be renewed. We don’t track DBA renewals."
+    },
+    {
+        "question": "How are my filings determined?",
+        "answer": "Comply determines your filing obligations based on your registrations and where you are located. If you add a new location, Comply assumes that you are registered (or intend to register) with each agency. If the agency does not apply to your business, you can remove the agency by de-selecting it on the Company Section of the website. Once de-selected, the agency filing obligations will not appear in your filing list."
+    },
+    {
+        "question": "What if I open up a new location or hire a remote employee in a new location?",
+        "answer": "Your business might have additional obligations if it is physically located in, or if it “does business” in, a state, county, or city jurisdiction. Your business might need to register in the jurisdiction and the jurisdiction may require some combination of registration fees, periodic reporting, and payment of annual taxes. \nComply recommends that you consult your legal or accounting advisor about whether or not your company is required to register in a particular jurisdiction. Currently, Comply does not offer registration services but we can refer you to a registered agent for assistance. \n If you register in a new jurisdiction, you will need to update your registration information in the Company Section of the website. Once updated, Comply will track your ongoing filing obligations."
+    },
+    {
+        "question": "How do I report personal property?",
+        "answer": "Property tax reporting is complex and requires detailed asset schedules. The reported assets include business property like computers, equipment, office furniture, and supplies. Not surprisingly, most businesses do not keep accurate records of all their asset purchases and disposals. In advance of the deadline, we recommend that you start an inventory of your assets. Review Amazon, Apple purchases, and other vendors to identify purchases.  "
+    },
+    {
+        "question": "When do I ask my advisors about compliance?",
+        "answer": "There may be compliance issues that require the advice of an attorney or accountant/CPA. We will let you know if we identify any issues for your consideration and refer you to an attorney or CPA. Note that we are not attorneys or CPA’s."
+    },
+    {
+        "question": "What is a State Registration Renewal?",
+        "answer": "A registration renewal is a filing to keep the entity in good standing with the state and maintain authorization to conduct business. Registration renewals go by many names but are usually handled by the Secretary of State or equivalent agency.  The registration renewal filing names include: Annual Report, Annual Registration, and Bi-ennial Statement. "
+    },
+    {
+        "question": "What are the City Requirements?",
+        "answer": "Cities generally have both license requirements and city tax obligations. "
+    },
+    {
+        "question": "What happens if I am audited?",
+        "answer": "If you are subject to an audit, you should seek the advice of an attorney or CPA. Our platform tracks all upcoming and past filings. Amended filings will not be reflected in our system and should be tracked separately. "
+    },
+    {
+        "question": "What happens if I miss a Filing deadline?",
+        "answer": "If you find that prior period filings are due, you will need to work with an attorney or CPA to process the overdue filings. These should be retained with your records."
+    },
+    {
+        "question": "How many Jurisdictions are there?",
+        "answer": "There are 160,000 agencies in the US and we are working hard to cover all jurisdictions. If you are located in a jurisdiction we do not cover, we will let you know. We will endeavor to update your compliance calendar with the relevant filings as quickly as possible. Sorry about that!"
+    },
+    {
+        "question": "What is my fiscal year end?",
+        "answer": "A company’s fiscal year end is usually December 31. However, some companies elect to have a different year end, commonly: March 31, June 30, September 30. You can find your year end in your By-Laws or Operating Agreement. However, companies can change year ends without updating these documents. Note: the year end you input may impact your filing due dates."
+    }
+]
