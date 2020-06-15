@@ -27,6 +27,8 @@ class AdminFilingsScreen extends React.Component {
   }
 
   sortByJurisdiction = (a, b) => {
+    if (a.agency.jurisdiction.state > b.agency.jurisdiction.state) return 1;
+    if (a.agency.jurisdiction.state < b.agency.jurisdiction.state) return -1
     if (a.agency.jurisdiction.name > b.agency.jurisdiction.name) return 1;
     if (a.agency.jurisdiction.name < b.agency.jurisdiction.name) return -1
     if (a.agency.name > b.agency.name) return 1;
@@ -52,18 +54,20 @@ class AdminFilingsScreen extends React.Component {
           <Table hover bordered className={style.table}>
             <thead>
               <tr>
-                <th>Filing</th>
-                <th>Agency</th>
+                <th>State</th>
                 <th>Jurisdiction</th>
+                <th>Agency</th>
+                <th>Filing</th>
               </tr>
             </thead>
             <tbody className={style.tableBody}>
               {
                 this.state.filings.map((f,i) =>
                   (<tr className={style.tableRow} key={i} onClick={() => this.onSelectFiling(i)}>
-                    <td>{f.name}</td>
-                    <td>{f.agency.name}</td>
+                    <td>{f.agency.jurisdiction.state}</td>
                     <td>{f.agency.jurisdiction.name}</td>
+                    <td>{f.agency.name}</td>
+                    <td>{f.name}</td>
                   </tr>)
                 )
               }

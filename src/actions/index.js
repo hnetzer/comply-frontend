@@ -2,14 +2,14 @@ import { createAccountResponse } from './signup'
 import { setCompanyDetails, setCompanyAgencies, setCompanyOffices } from './company'
 import { logout, login, onboarded } from './auth'
 import {
-  setCompanyFilings,
-  updateCompanyFiling,
   setJurisdictions,
   addJurisdiction,
   updateJurisdiction,
+  deleteJurisdiction,
   setAgencies,
   addAgency,
   updateAgency,
+  deleteAgency
 } from './admin'
 
 export {
@@ -25,12 +25,12 @@ export {
   onboarded,
 
   // admin
-  setCompanyFilings,
-  updateCompanyFiling,
   setJurisdictions,
   addJurisdiction,
   updateJurisdiction,
+  deleteJurisdiction,
   setAgencies,
   addAgency,
-  updateAgency
+  updateAgency,
+  deleteAgency
 }

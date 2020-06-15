@@ -9,9 +9,10 @@ import {
   adminGetJurisdictions,
   adminCreateAgency,
   adminUpdateAgency,
+  adminDeleteAgency,
 } from 'network/api';
 
-import { setAgencies, setJurisdictions, addAgency, updateAgency } from 'actions';
+import { setAgencies, setJurisdictions, addAgency, updateAgency, deleteAgency} from 'actions';
 
 import { AdminAgencyModal } from '../../components/organisms'
 
@@ -37,23 +38,12 @@ class AdminAgenciesScreen extends React.Component {
   }
 
   sortBy = (a, b) => {
-    if (a.jurisdiction.state > b.jurisdiction.state) {
-      return 1
-    } else if (a.jurisdiction.state < b.jurisdiction.state) {
-      return -1
-    } else if (a.jurisdiction.state === b.jurisdiction.state) {
-      if (a.jurisdiction.name > b.jurisdiction.name) {
-        return 1
-      } else if (a.jurisdiction.name < b.jurisdiction.name) {
-        return -1
-      } else if (a.jurisdiction.name === b.jurisdiction.name) {
-        if (a.name > b.name) {
-          return 1
-        } else if (a.name < b.name) {
-          return -1
-        }
-      }
-    }
+    if (a.jurisdiction.state > b.jurisdiction.state) return 1;
+    if (a.jurisdiction.state < b.jurisdiction.state) return -1;
+    if (a.jurisdiction.name > b.jurisdiction.name) return 1;
+    if (a.jurisdiction.name < b.jurisdiction.name) return -1;
+    if (a.name > b.name) return 1;
+    if (a.name < b.name) return -1;
     return 0
   }
 
@@ -86,6 +76,12 @@ class AdminAgenciesScreen extends React.Component {
     }
   }
 
+  handleDeleteAgency = async (agencyId) => {
+    await adminDeleteAgency(agencyId)
+    this.props.dispatch(deleteAgency(agencyId))
+    this.hideModal()
+  }
+
   render() {
     const { agencies } = this.props
     agencies.sort(this.sortBy)
@@ -99,9 +95,9 @@ class AdminAgenciesScreen extends React.Component {
           <Table hover bordered className={style.table}>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Jurisdiction</th>
                 <th>State</th>
+                <th>Jurisdiction</th>
+                <th>Agency</th>
                 <th>Filings</th>
                 <th></th>
               </tr>
@@ -109,9 +105,9 @@ class AdminAgenciesScreen extends React.Component {
             <tbody>
               {agencies.map((a,i) => (
                 <tr key={i}>
-                  <td>{a.name}</td>
-                  <td>{a.jurisdiction.name}</td>
                   <td>{a.jurisdiction.state}</td>
+                  <td>{a.jurisdiction.name}</td>
+                  <td>{a.name}</td>
                   <td>{a.filings.length}</td>
                   <td>
                     <Button
@@ -130,7 +126,8 @@ class AdminAgenciesScreen extends React.Component {
             agency={this.state.selected}
             jurisdictions={this.props.jurisdictions}
             handleSubmit={this.handleAgencyFormSubmit}
-            handleHide={this.hideModal} />
+            handleHide={this.hideModal}
+            handleDelete={this.handleDeleteAgency} />
         </section>
       </main>
     )

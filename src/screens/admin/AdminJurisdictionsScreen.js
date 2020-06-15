@@ -9,11 +9,11 @@ import style from './AdminScreens.module.scss'
 
 import {
   adminGetJurisdictions,
-  adminCreateJurisdiction,
-  adminUpdateJurisdiction
+  adminUpdateJurisdiction,
+  adminDeleteJurisdiction,
 } from 'network/api';
 
-import { setJurisdictions, addJurisdiction, updateJurisdiction } from 'actions';
+import { setJurisdictions, updateJurisdiction, deleteJurisdiction } from 'actions';
 
 import { AdminJurisdictionModal } from '../../components/organisms'
 
@@ -69,11 +69,13 @@ class AdminJurisdictionsScreen extends React.Component {
       const jurisdiction = await adminUpdateJurisdiction(values.id, values)
       this.props.dispatch(updateJurisdiction(jurisdiction))
       this.hideModal()
-    } else {
-      const jurisdiction = await adminCreateJurisdiction(values)
-      this.props.dispatch(addJurisdiction(jurisdiction))
-      this.hideModal()
     }
+  }
+
+  handleDeleteJurisdiction = async (jurisdictionId) => {
+    await adminDeleteJurisdiction(jurisdictionId)
+    this.props.dispatch(deleteJurisdiction(jurisdictionId))
+    this.hideModal()
   }
 
   render() {
@@ -85,11 +87,11 @@ class AdminJurisdictionsScreen extends React.Component {
           show={this.state.showModal}
           jurisdiction={this.state.selected}
           handleSubmit={this.handleJurisdictionFormSubmit}
-          handleHide={this.hideModal} />
+          handleHide={this.hideModal}
+          handleDelete={this.handleDeleteJurisdiction} />
         <section className={style.content}>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <h3>Jurisdictions</h3>
-            <Button onClick={this.showAddJurisdictionModal} variant="link">+ Add Jurisdiction</Button>
           </div>
           <Table hover bordered className={style.table}>
             <thead>

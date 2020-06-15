@@ -12,6 +12,13 @@ function updateObjectInArray(array, action) {
   })
 }
 
+function removeObjectFromArray(array, objectId) {
+  return array.filter((item, index) => {
+    if (item.id !== objectId) return true;
+    return false;
+  })
+}
+
 function insertItem(array, action) {
   let newArray = array.slice()
   newArray.splice(0, 0, action.data)
@@ -20,25 +27,12 @@ function insertItem(array, action) {
 
 
 const initialState = {
-  companyfilings: [],
   jurisdictions: [],
   agencies: []
 }
 
 export default (state = initialState, action) => {
  switch (action.type) {
-  case 'SET_COMPANY_FILINGS':
-   return {
-     ...state,
-     jurisdictions: state.jurisdictions,
-     companyfilings: action.data
-   }
-  case 'UPDATE_COMPANY_FILING':
-    return {
-      ...state,
-      jurisdictions: state.jurisdictions,
-      companyfilings: updateObjectInArray(state.companyfilings, action)
-    }
   case 'SET_JURISDICTIONS':
     return {
       ...state,
@@ -54,6 +48,12 @@ export default (state = initialState, action) => {
       ...state,
       jurisdictions: insertItem(state.jurisdictions, action)
     }
+  case 'DELETE_JURISDICTION': {
+    return {
+      ...state,
+      jurisdictions: removeObjectFromArray(state.jurisdictions, action.data)
+    }
+  }
   case 'SET_AGENCIES':
     return {
       ...state,
@@ -68,6 +68,12 @@ export default (state = initialState, action) => {
     return {
       ...state,
       agencies: updateObjectInArray(state.agencies, action)
+    }
+    case 'DELETE_AGENCY': {
+      return {
+        ...state,
+        agencies: removeObjectFromArray(state.agencies, action.data)
+      }
     }
   default:
    return state
