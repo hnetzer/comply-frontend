@@ -1,5 +1,6 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
+import _ from 'lodash';
 
 const DueDayPicker = ({ value, handleChange, month }) => {
   const getLastDayOfMonth = () => {
@@ -25,17 +26,6 @@ const DueDayPicker = ({ value, handleChange, month }) => {
     }
   }
 
-  const suffix = (value) => {
-    switch(value) {
-      case 31:
-        return 'st';
-      case 30:
-      case 28:
-        return 'th';
-      default:
-        return 'th';
-    }
-  }
 
 
   return (<Form.Control
@@ -45,11 +35,7 @@ const DueDayPicker = ({ value, handleChange, month }) => {
     size="sm"
     as="select">
     <option value={null}>select day</option>
-    <option value={1}>1st</option>
-    <option value={15}>15th</option>
-    <option value={getLastDayOfMonth()}>
-    {`${getLastDayOfMonth()}${suffix(getLastDayOfMonth())}`}
-    </option>
+    {_.range(1, getLastDayOfMonth() + 1).map(day =>(<option value={day}>{day}</option>))}
   </Form.Control>)
 
 }
