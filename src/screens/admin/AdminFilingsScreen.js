@@ -19,18 +19,27 @@ class AdminFilingsScreen extends React.Component {
   async componentDidMount() {
     try {
       const filings = await adminGetFilings()
+      filings.sort(this.sortByJurisdiction)
       this.setState({ filings: filings })
     } catch (err) {
       console.log(err)
     }
   }
 
+  sortByJurisdiction = (a, b) => {
+    if (a.agency.jurisdiction.name > b.agency.jurisdiction.name) return 1;
+    if (a.agency.jurisdiction.name < b.agency.jurisdiction.name) return -1
+    if (a.agency.name > b.agency.name) return 1;
+    if (a.agency.name < b.agency.name) return -1;
+    if (a.name > b.name) return 1;
+    if (a.name < b.name) return 1;
+    return 0;
+  }
+
   onSelectFiling = (index) => {
     const filing = this.state.filings[index]
     navigate(`/admin/platform/filings/${filing.id}`)
   }
-
-
 
   render() {
     return(

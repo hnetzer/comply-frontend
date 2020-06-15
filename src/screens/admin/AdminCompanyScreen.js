@@ -25,14 +25,10 @@ class AdminCompanyScreen extends React.Component {
   }
 
   renderBasic = (company) => {
-    const { phone, type, tax_class, year_end_month, year_end_day } = company;
+    const { type, tax_class, year_end_month, year_end_day } = company;
     return (
       <Table bordered>
         <tbody>
-          <tr>
-            <td>Phone</td>
-            <td>{phone}</td>
-          </tr>
           <tr>
             <td>Type</td>
             <td>{type}</td>
@@ -63,7 +59,7 @@ class AdminCompanyScreen extends React.Component {
         <tbody>
           {users.map((user, index) => (
             <tr key={index}>
-              <td>{user.name}</td>
+              <td>{`${user.first_name} ${user.last_name}`}</td>
               <td>{user.title}</td>
               <td>{user.email}</td>
             </tr>

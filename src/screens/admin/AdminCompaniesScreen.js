@@ -52,7 +52,7 @@ class AdminCompaniesScreen extends React.Component {
                       key={i}
                     >
                       <td>{c.name}</td>
-                      <td>{`${c.users[0].name}`}</td>
+                      <td>{`${c.users[0].first_name} ${c.users[0].last_name}`}</td>
                       <td>{`${c.users[0].email}`}</td>
                       <td>{c.agencies.length}</td>
                     </tr>

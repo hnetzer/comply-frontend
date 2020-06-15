@@ -102,6 +102,7 @@ class AdminAgenciesScreen extends React.Component {
                 <th>Name</th>
                 <th>Jurisdiction</th>
                 <th>State</th>
+                <th>Filings</th>
                 <th></th>
               </tr>
             </thead>
@@ -111,6 +112,7 @@ class AdminAgenciesScreen extends React.Component {
                   <td>{a.name}</td>
                   <td>{a.jurisdiction.name}</td>
                   <td>{a.jurisdiction.state}</td>
+                  <td>{a.filings.length}</td>
                   <td>
                     <Button
                       onClick={() => this.showEditAgencyModal(a)}
