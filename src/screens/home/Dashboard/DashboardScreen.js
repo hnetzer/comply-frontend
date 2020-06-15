@@ -96,7 +96,7 @@ class DashboardScreen extends React.Component {
             onDismiss={() => this.setState({ showRegAlert: false})} />
           <div className={style.topSection}>
             <UpcomingDatesCard
-              upcomingFilings={upcomingFilings}
+              upcomingFilings={timelineFilings}
               notSupportedJuris={notSupportedJuris} />
             <PremiumCard />
           </div>
