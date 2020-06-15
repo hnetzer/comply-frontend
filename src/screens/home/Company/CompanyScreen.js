@@ -53,7 +53,7 @@ class CompanyScreen extends Component {
 
   render() {
     const { user } = this.props;
-    if (!user) return;
+    if (!user) return null;
     const { agencies } = this.state;
 
     return(
