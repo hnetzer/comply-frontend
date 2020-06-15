@@ -142,6 +142,11 @@ export const adminUpdateJurisdiction = async (jurisdictionId, data) => {
   return sendRequest('PUT', `/admin/jurisdictions/${jurisdictionId}`, data)
 }
 
+export const adminDeleteJurisdiction = async (jurisdictionId) => {
+  return sendRequest('DELETE', `/admin/jurisdictions/${jurisdictionId}`)
+}
+
+
 export const adminGetAgencies = async () => {
   return sendRequest('GET', `/admin/agencies`)
 }
@@ -212,6 +217,7 @@ export default {
   adminGetJurisdictions,
   adminCreateJurisdiction,
   adminUpdateJurisdiction,
+  adminDeleteJurisdiction,
   adminGetAgencies,
   adminCreateAgency,
   adminUpdateAgency,

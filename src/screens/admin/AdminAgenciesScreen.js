@@ -95,9 +95,9 @@ class AdminAgenciesScreen extends React.Component {
           <Table hover bordered className={style.table}>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Jurisdiction</th>
                 <th>State</th>
+                <th>Jurisdiction</th>
+                <th>Agency</th>
                 <th>Filings</th>
                 <th></th>
               </tr>
@@ -105,9 +105,9 @@ class AdminAgenciesScreen extends React.Component {
             <tbody>
               {agencies.map((a,i) => (
                 <tr key={i}>
-                  <td>{a.name}</td>
-                  <td>{a.jurisdiction.name}</td>
                   <td>{a.jurisdiction.state}</td>
+                  <td>{a.jurisdiction.name}</td>
+                  <td>{a.name}</td>
                   <td>{a.filings.length}</td>
                   <td>
                     <Button
