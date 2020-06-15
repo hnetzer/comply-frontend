@@ -9,9 +9,10 @@ import {
   adminGetJurisdictions,
   adminCreateAgency,
   adminUpdateAgency,
+  adminDeleteAgency,
 } from 'network/api';
 
-import { setAgencies, setJurisdictions, addAgency, updateAgency } from 'actions';
+import { setAgencies, setJurisdictions, addAgency, updateAgency, deleteAgency} from 'actions';
 
 import { AdminAgencyModal } from '../../components/organisms'
 
@@ -37,23 +38,12 @@ class AdminAgenciesScreen extends React.Component {
   }
 
   sortBy = (a, b) => {
-    if (a.jurisdiction.state > b.jurisdiction.state) {
-      return 1
-    } else if (a.jurisdiction.state < b.jurisdiction.state) {
-      return -1
-    } else if (a.jurisdiction.state === b.jurisdiction.state) {
-      if (a.jurisdiction.name > b.jurisdiction.name) {
-        return 1
-      } else if (a.jurisdiction.name < b.jurisdiction.name) {
-        return -1
-      } else if (a.jurisdiction.name === b.jurisdiction.name) {
-        if (a.name > b.name) {
-          return 1
-        } else if (a.name < b.name) {
-          return -1
-        }
-      }
-    }
+    if (a.jurisdiction.state > b.jurisdiction.state) return 1;
+    if (a.jurisdiction.state < b.jurisdiction.state) return -1;
+    if (a.jurisdiction.name > b.jurisdiction.name) return 1;
+    if (a.jurisdiction.name < b.jurisdiction.name) return -1;
+    if (a.name > b.name) return 1;
+    if (a.name < b.name) return -1;
     return 0
   }
 
@@ -84,6 +74,12 @@ class AdminAgenciesScreen extends React.Component {
     } catch (err) {
       console.log(err)
     }
+  }
+
+  handleDeleteAgency = async (agencyId) => {
+    await adminDeleteAgency(agencyId)
+    this.props.dispatch(deleteAgency(agencyId))
+    this.hideModal()
   }
 
   render() {
@@ -130,7 +126,8 @@ class AdminAgenciesScreen extends React.Component {
             agency={this.state.selected}
             jurisdictions={this.props.jurisdictions}
             handleSubmit={this.handleAgencyFormSubmit}
-            handleHide={this.hideModal} />
+            handleHide={this.hideModal}
+            handleDelete={this.handleDeleteAgency} />
         </section>
       </main>
     )

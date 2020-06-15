@@ -153,6 +153,9 @@ export const adminCreateAgency = async (data) => {
 export const adminUpdateAgency = async (agencyId, data) => {
   return sendRequest('PUT', `/admin/agencies/${agencyId}`, data)
 }
+export const adminDeleteAgency = async (agencyId) => {
+  return sendRequest('DELETE', `/admin/agencies/${agencyId}`)
+}
 
 export const adminGetFilings = async () => {
   return sendRequest('GET', `/admin/filings/`)
@@ -212,6 +215,7 @@ export default {
   adminGetAgencies,
   adminCreateAgency,
   adminUpdateAgency,
+  adminDeleteAgency,
   adminGetFilings,
   adminCreateFiling,
   adminGetFiling,
