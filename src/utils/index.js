@@ -20,8 +20,16 @@ const filingFieldSort = (a, b) => {
   return 0
 }
 
+const checkForAdmin = (user) => {
+  if(user.roles != null && user.roles.indexOf('admin') !== -1) {
+    return true
+  }
+  return false;
+}
+
 export {
   getURLParam,
   toTitleCase,
-  filingFieldSort
+  filingFieldSort,
+  checkForAdmin
 }

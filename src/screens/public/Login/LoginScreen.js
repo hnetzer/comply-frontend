@@ -9,6 +9,7 @@ import styles from './LoginScreen.module.scss'
 
 import { loginRequest } from 'network/api';
 import { login } from 'actions';
+import { checkForAdmin } from 'utils';
 
 import { LoginForm } from 'forms'
 
@@ -28,7 +29,7 @@ const LoginScreen = (props) => {
 
       const { user, company } = response
       // If admin, then go to admin
-      if (user.roles != null && user.roles.indexOf('admin') !== -1) {
+      if (checkForAdmin(user)) {
         navigate('/admin')
         return
       }

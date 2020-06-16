@@ -2,15 +2,22 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from "@reach/router"
 
+import { checkForAdmin } from 'utils';
+
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 import styles from './WebsiteScreen.module.scss'
 
-const WebsiteScreen = ({ token, company }) => {
+const WebsiteScreen = ({ token, company, user }) => {
 
   // If the user is already logged in, then take them to home
   if(token) {
+
+    if (checkForAdmin(user)) {
+      return <Redirect to="/admin" noThrow />;
+    }
+
     if (!company.onboarded) {
       return <Redirect to="/onboarding" noThrow />;
     }
