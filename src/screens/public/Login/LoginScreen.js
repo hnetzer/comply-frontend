@@ -69,7 +69,7 @@ const LoginScreen = (props) => {
             />
 
         </Card.Body>
-        <Button variant="link" href="/signup/get-started" style={{ marginBottom: 16 }}>
+        <Button variant="link" href="/signup" style={{ marginBottom: 16 }}>
           Create account
         </Button>
       </Card>

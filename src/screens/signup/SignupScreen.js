@@ -48,7 +48,7 @@ const GetStartedScreen = (props) => {
     <div className={styles.container}>
       <Card className={styles.card}>
         <Card.Body className={styles.cardBody}>
-          <Card.Title style={{ marginBottom: 24 }}><h3>Get started with Comply</h3></Card.Title>
+          <Card.Title style={{ marginBottom: 24 }}><h3>Get Started With Comply</h3></Card.Title>
           <CreateAccountForm
             initialValues={formValues}
             handleSubmit={handleSubmit}
