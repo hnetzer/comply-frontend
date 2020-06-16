@@ -118,6 +118,7 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
               offset_type: 'none',
               month_offset: null,
               day_offset: null,
+              month_end: false
             })}
             size="sm"
             variant="link">+ Add Date</Button>
@@ -141,7 +142,7 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
             value={values.due_dates[0].month_offset || ''}
             size="sm"
             as="select">
-            <option value={0}>select month offset</option>
+            <option value={0}>+0 months</option>
             <option value={1}>+1 month</option>
             <option value={2}>+2 months</option>
             <option value={3}>+3 months</option>
@@ -159,7 +160,7 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
           <Form.Control
             required
             onChange={handleChange}
-            value={values.due_dates[0].day_offset}
+            value={values.due_dates[0].day_offset || ''}
             size="sm"
             as="select">
             {_.range(31).map(i => (
@@ -167,12 +168,23 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
             ))}
           </Form.Control>
         </Form.Group>
+        {dependency === "registration" &&
+          (<Form.Group style={{ width: 154 }} controlId="due_dates[0].month_end">
+            <Form.Check
+              inline
+              label="month end"
+              type="checkbox"
+              onChange={handleChange}
+              checked={values.due_dates[0].month_end}/>
+          </Form.Group>)
+        }
       </Form.Row>
     )
   }
 
 
   return (<>
+    {/*console.log('due_dates', values.due_dates)*/}
     {renderOccurrenceOptions()}
     {renderMultipleTimesFields()}
     {renderDependencyOptions()}
