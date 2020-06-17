@@ -43,7 +43,7 @@ class DashboardScreen extends React.Component {
         timelineFilings: yearFilings.filter(f => f.due != null).sort(this.compareFilingsByDue),
         upcomingFilings: upcomingFilings,
         showRegAlert: unscheduledFilings.length > 0,
-        notSupportedJuris: jurisdictions.filter(j => j.agencies.length === 0)
+        notSupportedJuris: jurisdictions.filter(j => !j.supported)
       })
 
     } catch (err) {

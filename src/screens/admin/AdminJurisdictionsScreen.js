@@ -34,22 +34,15 @@ class AdminJurisdictionsScreen extends React.Component {
   }
 
   sortBy = (a, b) => {
-    const aCreated = moment(a.createdAt).unix()
-    const bCreated = moment(b.createdAt).unix()
-    if (aCreated > bCreated) {
-      return -1
-    } else if (aCreated < bCreated) {
-      return 1
-    } else if (aCreated === bCreated) {
-      if (a.agencies.length > b.agencies.length) {
-        return 1
-      } else if (a.agencies.length < b.agencies.length) {
-        return -1
-      } else {
-        return a.name > b.name ? 1 : -1;
-      }
-    }
-    return 0
+    if (a.supported && !b.supported) return 1;
+    if (!a.supported && b.supported) return -1;
+    if (a.state > b.state) return 1;
+    if (a.state < b.state) return -1;
+    if (a.type > b.type) return -1;
+    if (a.type < b.type) return -1;
+    if (a.name > b.name) return 1;
+    if (a.name < b.name) return -1;
+    return 0;
   }
 
   showAddJurisdictionModal = () => {
@@ -99,6 +92,7 @@ class AdminJurisdictionsScreen extends React.Component {
                 <th>Name</th>
                 <th>State</th>
                 <th>Type</th>
+                <th>Supported</th>
                 <th>Agencies</th>
                 <th>Created</th>
                 <th></th>
@@ -110,6 +104,7 @@ class AdminJurisdictionsScreen extends React.Component {
                   <td>{j.name}</td>
                   <td>{j.state}</td>
                   <td>{j.type}</td>
+                  <td style={{ textAlign: 'center'}}>{j.supported ? '✅' : '❌'}</td>
                   <td>{j.agencies.length}</td>
                   <td>{moment(j.createdAt).format('M/D/YYYY')}</td>
                   <td>

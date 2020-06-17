@@ -39,6 +39,14 @@ const AdminJurisdictionForm = (props) => {
       /* and other goodies */
     }) => (
         <Form validated={validated} onSubmit={handleSubmit}>
+          <Form.Group controlId="supported">
+            <Form.Label></Form.Label>
+            <Form.Check
+              label="Supported"
+              type="checkbox"
+              onChange={handleChange}
+              checked={values.supported}/>
+          </Form.Group>
           <Form.Group controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
