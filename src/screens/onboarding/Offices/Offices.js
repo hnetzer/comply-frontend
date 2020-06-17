@@ -29,9 +29,9 @@ const Offices = ({ user, offices, dispatch }) => {
       <Card className={screenStyle.mainCard}>
         <h3>Offices</h3>
         <div className={style.descriptionSection}>
-          <h6 className={style.descriptionHeader}>Where are your company offices located?</h6>
+          <h6 className={style.descriptionHeader}>Where are your offices?</h6>
           <p className={style.descriptionText}>
-            Add your company office locations below. Make sure to also include the location of remote employees.
+            Add your company office locations. Make sure to also include the location of remote employees. 
           </p>
         </div>
         {!offices ? (<div>Loading...</div>) :

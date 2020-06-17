@@ -73,6 +73,49 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
         <Form className={style.formContainer}>
           <div className={style.formRow}>
             <div className={style.labelGroup}>
+              <label className={style.formLabel}>Formation State</label>
+              <small className={style.required}>required</small>
+            </div>
+            <div className={style.fieldGroup}>
+              <Field as="select" name="formation_state" className={style.field}>
+                <option value={''}></option>
+                {states.map((s,i) => <option key={i} value={s.name}>{s.name}</option>)}
+              </Field>
+              <small>The state where your company was formed. Startups are often formed in Delaware.</small>
+            </div>
+          </div>
+          <div className={style.formRow}>
+            <div className={style.labelGroup}>
+              <label className={style.formLabel}>Entity Type</label>
+              <small className={style.required}>required</small>
+            </div>
+            <div className={style.fieldGroup}>
+              <Field as="select" name="type" className={style.field} style={{ width: 120 }}>
+                <option value={''}></option>
+                <option value="Corporation">Corporation</option>
+                <option value="LLC">LLC</option>
+                <option value="LP">LP</option>
+                <option value="LLP">LLP</option>
+              </Field>
+              <small>The entity you formed under state law.</small>
+            </div>
+          </div>
+          <div className={style.formRow}>
+            <div className={style.labelGroup}>
+              <label className={style.formLabel}>Tax Classification</label>
+              <small className={style.required}>required</small>
+            </div>
+            <div className={style.fieldGroup}>
+              <Field as="select" name="tax_class" className={style.field} style={{ width: 80 }}>
+                <option value={''}></option>
+                <option value="C Corp">C Corp</option>
+                <option value="S Corp">S Corp</option>
+              </Field>
+              <small>The tax classification of your company. Most startups are C Corps.</small>
+            </div>
+          </div>
+          <div className={style.formRow}>
+            <div className={style.labelGroup}>
               <label className={style.formLabel}>Fiscal Year End</label>
               <small className={style.required}>required</small>
             </div>
@@ -101,50 +144,7 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
                   <option value={31}>31st</option>
                 </Field>
               </div>
-              <small>The end of your year for financial reporting.</small>
-            </div>
-          </div>
-          <div className={style.formRow}>
-            <div className={style.labelGroup}>
-              <label className={style.formLabel}>Entity Type</label>
-              <small className={style.required}>required</small>
-            </div>
-            <div className={style.fieldGroup}>
-              <Field as="select" name="type" className={style.field} style={{ width: 120 }}>
-                <option value={''}></option>
-                <option value="Corporation">Corporation</option>
-                <option value="LLC">LLC</option>
-                <option value="LP">LP</option>
-                <option value="LLP">LLP</option>
-              </Field>
-              <small>The type of entity that your company formed under law.</small>
-            </div>
-          </div>
-          <div className={style.formRow}>
-            <div className={style.labelGroup}>
-              <label className={style.formLabel}>Tax Classification</label>
-              <small className={style.required}>required</small>
-            </div>
-            <div className={style.fieldGroup}>
-              <Field as="select" name="tax_class" className={style.field} style={{ width: 80 }}>
-                <option value={''}></option>
-                <option value="C Corp">C Corp</option>
-                <option value="S Corp">S Corp</option>
-              </Field>
-              <small>C Corps are taxed seperately from their owners while S Corps are not.</small>
-            </div>
-          </div>
-          <div className={style.formRow}>
-            <div className={style.labelGroup}>
-              <label className={style.formLabel}>Formation State</label>
-              <small className={style.required}>required</small>
-            </div>
-            <div className={style.fieldGroup}>
-              <Field as="select" name="formation_state" className={style.field}>
-                <option value={''}></option>
-                {states.map((s,i) => <option key={i} value={s.name}>{s.name}</option>)}
-              </Field>
-              <small>The state that your business formed in.</small>
+              <small>The year you use for financial reporting.</small>
             </div>
           </div>
           <Button

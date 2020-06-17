@@ -28,9 +28,9 @@ const Company = ({ user, company, dispatch }) => {
       <Card className={screenStyle.mainCard}>
         <h3>Company</h3>
         <div className={style.descriptionSection}>
-          <h6 className={style.descriptionHeader}>Add baseline information</h6>
+          <h6 className={style.descriptionHeader}>Add basic information</h6>
           <p className={style.descriptionText}>
-            Provide information on your company so that we can generate your filing schedule.
+            Provide information about your company so we can generate a filing schedule.
           </p>
         </div>
         {!company ? (<div>Loading...</div>) :

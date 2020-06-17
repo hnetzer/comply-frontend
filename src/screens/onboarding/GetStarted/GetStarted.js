@@ -18,16 +18,14 @@ const GetStarted = ({ user, company, dispatch }) => {
         <div className={styles.content}>
           <h3>Setting up your company</h3>
           <div>
-            <p>We'll ask you a few questions about your company and agency registrations.</p>
+            <p>We'll ask you a few questions about your company.</p>
             <p>
-              Setup should take about 10 minutes. Your progress is saved between steps
-              so you can leave and come back to complete the setup at any time.
+              Setup should take about 5-10 minutes. Your progress is saved between steps.
             </p>
-            <p>You will need the following documents</p>
+            <p>You will need the following documents:</p>
             <ul>
               <li>Certificate of Incorporation</li>
               <li>Agency Registrations</li>
-              <li>Business Licenses</li>
             </ul>
           </div>
           <div>

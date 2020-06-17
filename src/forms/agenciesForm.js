@@ -20,7 +20,7 @@ const formSchema = Yup.object().shape({
   }))
 });
 
-const AgenciesForm = ({ user, agencies, companyAgencies, cta, faqs, onSuccess, onError, dispatch }) => {
+const AgenciesForm = ({ user, agencies, companyAgencies, cta, faqs, hideReg, onSuccess, onError, dispatch }) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     const data = values.agencies.map(a => {
       return {
@@ -101,7 +101,7 @@ const AgenciesForm = ({ user, agencies, companyAgencies, cta, faqs, onSuccess, o
                     <HeaderCell>Jurisdiction</HeaderCell>
                     <HeaderCell>Agency</HeaderCell>
                     <HeaderCell>Are you registered?</HeaderCell>
-                    <HeaderCell>Registration date</HeaderCell>
+                    {!hideReg && (<HeaderCell>Registration date</HeaderCell>)}
                   </Header>
                   <Body>
                   {agencies.map((agency, index) => {
@@ -120,18 +120,17 @@ const AgenciesForm = ({ user, agencies, companyAgencies, cta, faqs, onSuccess, o
                           <option value={'no'}>No</option>
                         </Field>
                       </Cell>
-                      <Cell>
-                        {
-                          values.agencies[index].registered === 'yes' ?
+                      {!hideReg && (
+                        <Cell>
+                        {values.agencies[index].registered === 'yes' ?
                             (<Field
                               as="input"
                               type="date"
                               name={`agencies[${index}].registration_date`}
                               className={style.tableDatePicker} />)
-                            : null
-                        }
-
-                      </Cell>
+                            : null}
+                        </Cell>
+                      )}
                     </Row>)
                   })}
                   </Body>

@@ -53,9 +53,9 @@ class Agencies extends React.Component {
           <div className={style.descriptionSection}>
             <h6 className={style.descriptionHeader}>Add agency information</h6>
             <p className={style.descriptionText}>
-              Based on your company offices, we believe you should be registered with the agencies listed below.
-              Please confirm which agencies that your company is registered with. If your company is not registered with an agency,
-              we will not track those filings for you.
+              Based on your locations, we believe you should be registered with
+              the agencies listed below. The agency deadlines won’t appear on your
+              filing schedule if you mark No.
             </p>
           </div>
           {!agencies ? (<div>Loading...</div>) :
@@ -63,6 +63,7 @@ class Agencies extends React.Component {
               agencies={agencies}
               onSuccess={this.onSuccess}
               onError={this.onError}
+              hideReg={true}
               cta="Continue" />
           }
         </Card>
