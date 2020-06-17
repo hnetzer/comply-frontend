@@ -35,7 +35,7 @@ const DueDayPicker = ({ value, handleChange, month }) => {
     size="sm"
     as="select">
     <option value={null}>select day</option>
-    {_.range(1, getLastDayOfMonth() + 1).map(day =>(<option value={day}>{day}</option>))}
+    {_.range(1, getLastDayOfMonth() + 1).map((day,i) =>(<option key={i} value={day}>{day}</option>))}
   </Form.Control>)
 
 }

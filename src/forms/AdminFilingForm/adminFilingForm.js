@@ -25,6 +25,7 @@ const FilingSchema = Yup.object().shape({
     month_offset: Yup.number().integer().nullable(),
     day_offset: Yup.number().integer().nullable(),
     offset_type: Yup.mixed().oneOf(['none', 'registration', 'year-end']),
+    month_end: Yup.boolean().nullable(),
   }))
 });
 
@@ -38,7 +39,8 @@ const FilingInitialValues = {
     fixed_day: null,
     month_offset: 0,
     day_offset: 0,
-    offset_type: 'none'
+    offset_type: 'none',
+    month_end: false,
   }]
 };
 
