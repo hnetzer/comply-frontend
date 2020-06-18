@@ -5,7 +5,7 @@ import moment from 'moment'
 import { Card } from 'components/atoms'
 import { UpcomingDatesCard, PremiumCard, AgencyRegAlert } from 'components/organisms'
 import { FilingTimeline } from 'components/molecules'
-import { getFilingsForCompany, getCompanyJurisdictions } from 'network/api';
+import { getFilingsForCompany, getCompanyJurisdictions, updateCompanyPremium } from 'network/api';
 
 import screenStyle from './Screens.module.scss'
 import style from './DashboardScreen.module.scss'
@@ -76,6 +76,10 @@ class DashboardScreen extends React.Component {
     return 0
   }
 
+  submitWantsPremium = () => {
+    updateCompanyPremium(this.props.user.company_id)
+  }
+
   render() {
     const {
       timelineFilings,
@@ -98,7 +102,9 @@ class DashboardScreen extends React.Component {
             <UpcomingDatesCard
               upcomingFilings={timelineFilings}
               notSupportedJuris={notSupportedJuris} />
-            <PremiumCard />
+            <PremiumCard
+              wantsPremium={this.submitWantsPremium}
+             />
           </div>
           <Card className={style.overviewCard}>
             <h4>Filing Overview</h4>

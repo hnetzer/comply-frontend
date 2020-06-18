@@ -6,8 +6,13 @@ import { Card } from 'components/atoms'
 
 import style from './PremiumCard.module.scss';
 
-const PremiumCard = ({ upcomingFilings, unscheduledFilings }) => {
+const PremiumCard = ({ upcomingFilings, unscheduledFilings, wantsPremium }) => {
   const [show, setShow] = useState(false);
+
+  const handleInterestedClick = () => {
+    wantsPremium()
+    setShow(false)
+  }
 
   return (
     <>
@@ -21,20 +26,37 @@ const PremiumCard = ({ upcomingFilings, unscheduledFilings }) => {
         </Button>
       </Card>
       <Modal show={show} onHide={() => setShow(false)}>
-        <Modal.Header closeButton>
-          <h3>Comply Premium</h3>
-        </Modal.Header>
-        <Modal.Body>
-          <p>
-            We are working on building a company that gives you complete peace of mind for all of your state and local compliance needs.
-            This means that we want to handle all of this nasty paper work for you.  Are you interested in a service where we would submit your filings for your business?
-            Let us know. Cheers!
-          </p>
+        <Modal.Header closeButton style={{ border: 'none' }} />
+        <Modal.Body className={style.premiumModal}>
+          <div className={style.premiumDetails}>
+            <h3 className={style.title}>Comply Premium</h3>
+            <ul>
+              <li>
+                <div>Automated filings</div>
+                <div><small><i>We do the work</i></small></div>
+              </li>
+              <li>
+                <div>Electronic signature</div>
+                <div><small><i>You signoff</i></small></div>
+              </li>
+              <li>
+                <div>Document storage</div>
+                <div><small><i>We keep you organized</i></small></div>
+              </li>
+            </ul>
+            <div className={style.priceContainer}>
+              <span className={style.price}>{`$100 `}</span>
+              <small className={style.perFiling} >per filing</small>
+            </div>
+            <Button
+              onClick={handleInterestedClick}
+              className={style.button}
+            >
+              I'm interested
+            </Button>
+          </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button>I'm interested</Button>
-          <Button variant="link">No thanks</Button>
-        </Modal.Footer>
+        <Modal.Footer style={{ border: 'none' }} />
     </Modal>
     </>
   )

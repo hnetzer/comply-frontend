@@ -1,3 +1,5 @@
+@import "styles/vars";
+
 .topCard {
   width: 450px;
   height: 250px;
@@ -6,4 +8,45 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+
+.title {
+  color: $accent;
+}
+
+.premiumDetails {
+  display: flex;
+  flex-Direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #acacac;
+  border-radius: 5px;
+  width: 260px;
+  height: 340px;
+  padding: 15px 0px;
+}
+
+.premiumModal {
+  display: flex;
+  justify-content: center;
+}
+
+.price {
+  font-size: 26px;
+  font-weight: 500;
+  color: $accent;
+}
+
+.perFiling {
+  font-size: 16px;
+  color: $accent;
+}
+
+.priceContainer {
+  margin-bottom: 16px;
+}
+
+.button {
+  padding: 8px 24px;
+  font-size: 16px
 }
