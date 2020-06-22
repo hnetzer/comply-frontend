@@ -31,7 +31,7 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
     try {
       const response = await updateCompany(data, user.company_id)
       dispatch(setCompanyDetails(response))
-      onSuccess()
+      onSuccess(response)
     } catch (err) {
       onError(err)
     }

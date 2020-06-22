@@ -11,7 +11,12 @@ import screenStyle from './Company.module.scss'
 
 const Company = ({ user, company, dispatch }) => {
 
-  const onSaveSuccess = () => {
+  const onSaveSuccess = (c) => {
+    if (c.type.toLowerCase() !== 'corporation') {
+      navigate('/onboarding/not-supported')
+      return
+    }
+
     navigate('/onboarding/offices')
   }
 

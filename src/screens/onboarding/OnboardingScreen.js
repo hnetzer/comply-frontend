@@ -13,6 +13,7 @@ import Company from './Company/Company'
 import Offices from './Offices/Offices'
 import Agencies from './Agencies/Agencies'
 import Done from './Done/Done'
+import NotSupported from './NotSupported/NotSupported'
 
 import styles from './OnboardingScreen.module.scss'
 
@@ -62,6 +63,7 @@ class OnboardingScreen extends Component {
             <Offices path="/offices" offices={offices} />
             <Agencies path="/agencies" />
             <Done path="/done" />
+            <NotSupported path="/not-supported" />
           </Router>
         </main>
       </div>

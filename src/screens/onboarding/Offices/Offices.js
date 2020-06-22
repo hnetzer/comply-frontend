@@ -11,8 +11,6 @@ import style from '../OnboardingScreen.module.scss'
 import screenStyle from './Offices.module.scss'
 
 const Offices = ({ user, offices, dispatch }) => {
-
-
   const onSuccess = () => {
     navigate('/onboarding/agencies')
   }
@@ -21,7 +19,10 @@ const Offices = ({ user, offices, dispatch }) => {
     alert(err.message)
   }
 
+  if(!user) return null;
+
   return(
+
     <>
       <Card className={style.progressBarSection}>
         <VerticalProgressBar currentIndex={2}/>
@@ -31,7 +32,7 @@ const Offices = ({ user, offices, dispatch }) => {
         <div className={style.descriptionSection}>
           <h6 className={style.descriptionHeader}>Where are your offices?</h6>
           <p className={style.descriptionText}>
-            Add your company office locations. Make sure to also include the location of remote employees. 
+            Add your company office locations. Make sure to also include the location of remote employees.
           </p>
         </div>
         {!offices ? (<div>Loading...</div>) :
