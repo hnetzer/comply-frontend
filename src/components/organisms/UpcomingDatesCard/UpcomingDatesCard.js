@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment'
 
-
 import { Card } from 'components/atoms'
 import { Table, Body, Row, Cell } from 'components/atoms'
 import { NotSupportedModal } from 'components/organisms'
@@ -14,7 +13,7 @@ const UpcomingDatesCard = ({ upcomingFilings, notSupportedJuris }) => {
     <>
       <Card className={style.topCard}>
         <div className={style.upcomingTitleContainer}>
-          <h4>Upcoming Due Dates</h4>
+          <h4>Filing Due Dates</h4>
           <NotSupportedModal jurisdictions={notSupportedJuris} />
         </div>
         <div className={style.upcomingTableWrapper}>

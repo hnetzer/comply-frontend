@@ -6,7 +6,7 @@ import { Card } from 'components/atoms'
 
 import style from './PremiumCard.module.scss';
 
-const PremiumCard = ({ upcomingFilings, unscheduledFilings, wantsPremium }) => {
+const PremiumCard = ({ annualFilingCount, wantsPremium }) => {
   const [show, setShow] = useState(false);
 
   const handleInterestedClick = () => {
@@ -45,8 +45,8 @@ const PremiumCard = ({ upcomingFilings, unscheduledFilings, wantsPremium }) => {
               </li>
             </ul>
             <div className={style.priceContainer}>
-              <span className={style.price}>{`$100 `}</span>
-              <small className={style.perFiling} >per filing</small>
+              <span className={style.price}>{`$${Math.ceil((annualFilingCount * 100) / 12)} `}</span>
+              <small className={style.perFiling}>per month</small>
             </div>
             <Button
               onClick={handleInterestedClick}

@@ -103,6 +103,7 @@ class DashboardScreen extends React.Component {
               upcomingFilings={timelineFilings}
               notSupportedJuris={notSupportedJuris} />
             <PremiumCard
+              annualFilingCount={timelineFilings != null ? timelineFilings.length : 0}
               wantsPremium={this.submitWantsPremium}
              />
           </div>
