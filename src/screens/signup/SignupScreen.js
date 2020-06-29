@@ -38,6 +38,17 @@ const GetStartedScreen = (props) => {
       const response = await createAccount(data)
       props.dispatch(createAccountResponse(response))
       navigate('/onboarding')
+
+      if (window.FS) {
+        // Send the user info to full story
+        const FS = window.FS;
+        const user = response.user
+        FS.identify(user.id, {
+          displayName: `${user.first_name} ${user.last_name}`,
+          email: user.email,
+        })
+      }
+
     } catch (err) {
       console.log(err)
       setErrorMessage(err.message)

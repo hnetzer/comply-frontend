@@ -28,6 +28,16 @@ const LoginScreen = (props) => {
       props.dispatch(login(response))
 
       const { user, company } = response
+
+      if (window.FS) {
+        // Send the user info to full story
+        const FS = window.FS;
+        FS.identify(user.id, {
+          displayName: `${user.first_name} ${user.last_name}`,
+          email: user.email,
+        })
+      }
+
       // If admin, then go to admin
       if (checkForAdmin(user)) {
         navigate('/admin')
