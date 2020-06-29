@@ -30,7 +30,6 @@ const EditAgenciesScreen= ({ companyId, agencies, companyAgencies }) => {
           faqs={false}
           companyId={companyId}
           agencies={agencies}
-          companyAgencies={companyAgencies}
           onSuccess={onSuccess}
           onError={onError}/>
       }
