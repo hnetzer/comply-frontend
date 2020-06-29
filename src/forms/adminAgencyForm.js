@@ -18,11 +18,10 @@ const AdminAgencyForm = (props) => {
     return errors;
   }
 
-
   return (
     <>
     <Formik
-      initialValues={props.initialValues === null ? { name: '' } : props.initialValues}
+      initialValues={props.initialValues === null ? { name: '', website: ' ' } : props.initialValues}
       validate={handleValidation}
       onSubmit={handleSubmit}
     >
@@ -45,6 +44,15 @@ const AdminAgencyForm = (props) => {
               type="text"
               placeholder=""
               value={values.name} />
+          </Form.Group>
+          <Form.Group controlId="website">
+            <Form.Label>Website</Form.Label>
+            <Form.Control
+              required
+              onChange={handleChange}
+              type="text"
+              placeholder=""
+              value={values.website} />
           </Form.Group>
           <Form.Group controlId="jurisdiction_id">
             <Form.Label>Jurisdiction</Form.Label>
