@@ -62,7 +62,7 @@ class AdminAgenciesScreen extends React.Component {
   handleAgencyFormSubmit = async (values) => {
     try {
       if (values.id) {
-        const data = { name: values.name, jurisdiction_id: values.jurisdiction_id }
+        const data = { name: values.name, website: values.website, jurisdiction_id: values.jurisdiction_id }
         const agency = await adminUpdateAgency(values.id, data)
         this.props.dispatch(updateAgency(agency))
         this.hideModal()
@@ -98,6 +98,7 @@ class AdminAgenciesScreen extends React.Component {
                 <th>State</th>
                 <th>Jurisdiction</th>
                 <th>Agency</th>
+                <th>Website</th>
                 <th>Filings</th>
                 <th></th>
               </tr>
@@ -108,6 +109,7 @@ class AdminAgenciesScreen extends React.Component {
                   <td>{a.jurisdiction.state}</td>
                   <td>{a.jurisdiction.name}</td>
                   <td>{a.name}</td>
+                  <td>{a.website != null ? (<a target="_blank" href={a.website}>Link</a>) : null}</td>
                   <td>{a.filings.length}</td>
                   <td>
                     <Button
