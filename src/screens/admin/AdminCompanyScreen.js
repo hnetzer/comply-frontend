@@ -105,15 +105,45 @@ class AdminCompanyScreen extends React.Component {
           <tr>
             <th>Agency</th>
             <th>Jurisdiction</th>
+            <th>Registered</th>
+            <th>Reg Date</th>
           </tr>
         </thead>
         <tbody>
-          {agencies.map((agency, index) => (
-            <tr key={index}>
-              <td>{agency.name}</td>
-              <td>{agency.jurisdiction.name}</td>
-            </tr>
-          ))}
+          {agencies.map((agency, index) => {
+            const { registered, registration } = agency.company_agency;
+            return (
+              <tr key={index}>
+                <td>{agency.name}</td>
+                <td>{agency.jurisdiction.name}</td>
+                <td>{registered ? 'Yes' : 'No'}</td>
+                <td>{registration != null ? moment(registration).format('YYYY-MM-DD') : null}</td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </Table>
+    )
+  }
+
+  renderJurisdictions = (jurisdictions) => {
+    return (
+      <Table bordered>
+        <thead>
+          <tr>
+            <th>Jurisdiction</th>
+            <th>Supported</th>
+          </tr>
+        </thead>
+        <tbody>
+          {jurisdictions.map((j, index) => {
+            return (
+              <tr key={index}>
+                <td>{j.name}</td>
+                <td style={{ textAlign: 'center'}}>{j.supported ? '✅' : '❌'}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </Table>
     )
@@ -122,7 +152,7 @@ class AdminCompanyScreen extends React.Component {
   render() {
     const { company } = this.state
     if (!company) return null;
-    const { users, offices, agencies } = company
+    const { users, offices, agencies, jurisdictions } = company
 
     return (
       <main className={style.container}>
@@ -147,6 +177,10 @@ class AdminCompanyScreen extends React.Component {
           <section>
             <h4>Agencies</h4>
             {this.renderAgencies(agencies)}
+          </section>
+          <section>
+            <h4>Jurisdictions</h4>
+            {this.renderJurisdictions(jurisdictions)}
           </section>
         </div>
       </main>
