@@ -25,10 +25,14 @@ class AdminCompanyScreen extends React.Component {
   }
 
   renderBasic = (company) => {
-    const { type, tax_class, year_end_month, year_end_day } = company;
+    const { type, tax_class, year_end_month, year_end_day, formation_state } = company;
     return (
       <Table bordered>
         <tbody>
+          <tr>
+            <td>Formation State</td>
+            <td>{formation_state}</td>
+          </tr>
           <tr>
             <td>Type</td>
             <td>{type}</td>
