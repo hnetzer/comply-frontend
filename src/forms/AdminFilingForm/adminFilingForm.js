@@ -61,6 +61,16 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
     return a.map((a,i) => (<option key={i} value={a.id}>{a.name}</option>))
   }
 
+  const jurisdictionSortBy = (a, b) => {
+    if (a.state > b.state) return 1;
+    if (a.state < b.state) return -1;
+    if (a.type > b.type) return -1;
+    if (a.type < b.type) return -1;
+    if (a.name > b.name) return 1;
+    if (a.name < b.name) return -1;
+    return 0;
+  }
+
 
   return (
     <div className={style.container}>
@@ -108,7 +118,7 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
                       isInvalid={errors.agency && errors.agency.jurisdiction_id}
                       as="select">
                       <option value=""></option>
-                      {jurisdictions.map((j,i) =>
+                      {jurisdictions.sort(jurisdictionSortBy).map((j,i) =>
                         <option key={i} value={j.id}>{`${j.name} (${j.state})`}</option>)}
                     </Form.Control>
                   </Form.Group>
