@@ -4,7 +4,7 @@ import moment from 'moment'
 
 import { Card } from 'components/atoms'
 import { UpcomingDatesCard, PremiumCard, AgencyRegAlert } from 'components/organisms'
-import { FilingTimeline } from 'components/molecules'
+import { FilingTimeline, CustomFilingTimeline } from 'components/molecules'
 import { getFilingsForCompany, getCompanyJurisdictions, updateCompanyPremium } from 'network/api';
 
 import screenStyle from './Screens.module.scss'
@@ -111,6 +111,7 @@ class DashboardScreen extends React.Component {
             <h4>Filing Overview</h4>
             <p>{`A timeline of all of your filing due dates in ${moment().format('YYYY')}.`}</p>
             <FilingTimeline filings={timelineFilings} />
+            <CustomFilingTimeline filings={timelineFilings} />
           </Card>
         </div>
       </section>

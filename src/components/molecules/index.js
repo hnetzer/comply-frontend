@@ -3,6 +3,7 @@ import InfoPopover from './InfoPopover/InfoPopover';
 import FilingTimeline from './FilingTimeline/FilingTimeline';
 import VerticalProgressBar from './VerticalProgressBar/VerticalProgressBar';
 import QuestionToggle from './QuestionToggle/QuestionToggle';
+import CustomFilingTimeline from './CustomFilingTimeline/CustomFilingTimeline';
 
 
 export {
@@ -10,5 +11,6 @@ export {
   InfoPopover,
   FilingTimeline,
   VerticalProgressBar,
-  QuestionToggle
+  QuestionToggle,
+  CustomFilingTimeline
 }
