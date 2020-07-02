@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment'
 
+import Button from 'react-bootstrap/Button';
 import style from './CustomFilingTimeline.module.scss';
 
 const CustomFilingTimeline = ({ filings }) => {
@@ -29,7 +30,25 @@ const CustomFilingTimeline = ({ filings }) => {
         {months.map((month, index) => {
           const files = groups[index] != null ? groups[index] : [];
           return (<div className={style.month}>
-            {files.map(f => <div className={style.node} />)}
+            {files.map(f =>
+              (<>
+                <div className={style.node}>
+                  <div className={style.hover}>
+                    <h5>{f.name}</h5>
+                    <div>{f.agency.name}</div>
+                    <div>{f.agency.jurisdiction.name}</div>
+                    <div>
+                      <small>Due:</small>
+                      <span>{moment(f.due).format('MMMM Do, YYYY')}</span>
+                    </div>
+                    <div>
+                      <Button size="sm">Filing Details</Button>
+                      <Button size="sm" variant="link">Agency Website</Button>
+                    </div>
+                  </div>
+                </div>
+              </>)
+            )}
           </div>)
         })}
       </div>

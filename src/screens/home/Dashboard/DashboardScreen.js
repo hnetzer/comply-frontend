@@ -110,7 +110,7 @@ class DashboardScreen extends React.Component {
           <Card className={style.overviewCard}>
             <h4>Filing Overview</h4>
             <p>{`A timeline of all of your filing due dates in ${moment().format('YYYY')}.`}</p>
-            <FilingTimeline filings={timelineFilings} />
+            {/* <FilingTimeline filings={timelineFilings} /> */}
             <CustomFilingTimeline filings={timelineFilings} />
           </Card>
         </div>

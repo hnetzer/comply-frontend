@@ -2,7 +2,7 @@
 
 .container {
   padding: 0px;
-  margin: 0px;
+  margin: 100px 0px;
   display: flex;
   flex-direction: column;
 }
@@ -41,4 +41,28 @@
   padding: 8px 4px;
   font-size: 14px;
   color: #666;
+}
+
+.node .hover {
+  position: absolute;
+  bottom: 200px;
+  z-index: 1;
+  width: 300px;
+  height: 160px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  visibility: hidden;
+  padding: 8px;
+}
+
+.node:hover {
+  cursor: pointer;
+}
+
+.node .hover:hover {
+  visibility: visible;
+}
+
+.node:hover .hover {
+  visibility: visible;
 }
