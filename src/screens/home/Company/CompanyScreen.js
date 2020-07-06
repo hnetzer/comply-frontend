@@ -10,16 +10,13 @@ import EditOfficesScreen from './Offices/EditOfficesScreen'
 import {
   setCompanyDetails,
   setCompanyOffices,
-  setCompanyAgencies
+  setCompanyAgencies,
+  setAgencies
 } from 'actions'
 
 import { getCompany, getAgencies, getCompanyAgencies } from 'network/api'
 
 class CompanyScreen extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { agencies: null }
-  }
 
   async componentDidMount() {
     const { user, dispatch } = this.props;
@@ -32,10 +29,7 @@ class CompanyScreen extends Component {
     dispatch(setCompanyAgencies(companyAgencies))
 
     const agencies = await getAgencies(user.company_id);
-
-    this.setState({
-      agencies: agencies,
-    })
+    dispatch(setAgencies(agencies))
   }
 
   getClassName = (paths) => {
@@ -54,7 +48,6 @@ class CompanyScreen extends Component {
   render() {
     const { user } = this.props;
     if (!user) return null;
-    const { agencies } = this.state;
 
     return(
       <section className={style.container}>
@@ -85,8 +78,7 @@ class CompanyScreen extends Component {
               default
               path="/general" />
             <EditAgenciesScreen
-              path="/agencies"
-              agencies={agencies} />
+              path="/agencies" />
             <EditOfficesScreen
               path="/offices" />
           </Router>

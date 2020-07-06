@@ -7,21 +7,17 @@ import { Card } from 'components/atoms'
 import { AgenciesForm } from 'forms'
 
 import { getAgencies, getCompanyAgencies } from 'network/api';
-import { setCompanyAgencies, onboarded } from 'actions';
+import { setCompanyAgencies, setAgencies, onboarded } from 'actions';
 
 import style from '../OnboardingScreen.module.scss'
 
 class Agencies extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { agencies: null }
-  }
 
   async componentDidMount() {
     const { user } = this.props
     try {
       const agencies = await getAgencies(user.company_id);
-      this.setState({ agencies: agencies })
+      this.props.dispatch(setAgencies(agencies))
 
       const companyAgencies = await getCompanyAgencies(user.company_id)
       this.props.dispatch(setCompanyAgencies(companyAgencies))
@@ -42,7 +38,6 @@ class Agencies extends React.Component {
   }
 
   render() {
-    const { agencies } = this.state
     return(
       <>
         <Card className={style.progressBarSection}>
@@ -58,14 +53,11 @@ class Agencies extends React.Component {
               filing schedule if you mark No.
             </p>
           </div>
-          {!agencies ? (<div>Loading...</div>) :
-            <AgenciesForm
-              agencies={agencies}
-              onSuccess={this.onSuccess}
-              onError={this.onError}
-              hideReg={true}
-              cta="Continue" />
-          }
+          <AgenciesForm
+            onSuccess={this.onSuccess}
+            onError={this.onError}
+            hideReg={true}
+            cta="Continue" />
         </Card>
         <div className={style.helpSection}>
           <b>Need help?</b> Contact us <i>help@thinkcomply.com</i>

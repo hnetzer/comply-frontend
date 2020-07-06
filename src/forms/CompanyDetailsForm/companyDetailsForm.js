@@ -14,7 +14,6 @@ const formSchema = Yup.object().shape({
   year_end_month: Yup.number().required(),
   year_end_day: Yup.number().required(),
   type: Yup.mixed().oneOf(['Corporation', 'LLC', 'LP', 'LLP']).required(),
-  tax_class: Yup.mixed().oneOf(['C Corp', 'S Corp']).required(),
   formation_state: Yup.mixed().oneOf(states.map(s => s.name)).required(),
 });
 
@@ -41,13 +40,11 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
     year_end_day: company.year_end_day,
     year_end_month: company.year_end_month,
     type: company.type,
-    tax_class:  company.tax_class,
     formation_state: company.formation_state,
     } : {
     year_end_day: '',
     year_end_month: '',
     type: '',
-    tax_class:  '',
     formation_state: '',
   };
 
@@ -98,20 +95,6 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
                 <option value="LLP">LLP</option>
               </Field>
               <small>The entity you formed under state law.</small>
-            </div>
-          </div>
-          <div className={style.formRow}>
-            <div className={style.labelGroup}>
-              <label className={style.formLabel}>Tax Classification</label>
-              <small className={style.required}>required</small>
-            </div>
-            <div className={style.fieldGroup}>
-              <Field as="select" name="tax_class" className={style.field} style={{ width: 80 }}>
-                <option value={''}></option>
-                <option value="C Corp">C Corp</option>
-                <option value="S Corp">S Corp</option>
-              </Field>
-              <small>The tax classification of your company. Most startups are C Corps.</small>
             </div>
           </div>
           <div className={style.formRow}>

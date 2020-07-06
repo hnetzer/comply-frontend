@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Card, Alert } from 'components/atoms'
 import { OfficeDetailsForm } from 'forms'
 
-const EditOfficesScreen= () => {
+import { setAgencies } from 'actions'
+import { getAgencies } from 'network/api'
+
+const EditOfficesScreen= ({ user, dispatch }) => {
   const [saved, setSaved] = useState(false)
-  const onSuccess = () => {
+
+  const onSuccess = async () => {
     setSaved(true)
+
+    // Make sure the agencies are updated after updating offices
+    const agencies = await getAgencies(user.company_id);
+    dispatch(setAgencies(agencies))
   }
 
   const onError = () => {
@@ -32,4 +41,10 @@ const EditOfficesScreen= () => {
   )
 }
 
-export default EditOfficesScreen;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+  }
+}
+
+export default connect(mapStateToProps)(EditOfficesScreen);

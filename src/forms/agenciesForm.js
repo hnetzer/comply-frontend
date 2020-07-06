@@ -41,6 +41,7 @@ const AgenciesForm = ({ user, agencies, companyAgencies, cta, faqs, hideReg, onS
 
 
   const initialValuesMap = () => {
+    console.log('Setting initial values map...')
     let companyAgencyMap = {}
     if(companyAgencies) {
       companyAgencyMap = companyAgencies.reduce((acc, companyAgency) => {
@@ -70,6 +71,10 @@ const AgenciesForm = ({ user, agencies, companyAgencies, cta, faqs, hideReg, onS
     })
 
     return { agencies: values };
+  }
+
+  if (!agencies || !companyAgencies) {
+    return (<div>Loading...</div>);
   }
 
   return (
@@ -187,7 +192,8 @@ AgenciesForm.defaultProps = {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    companyAgencies: state.company.agencies
+    companyAgencies: state.company.agencies,
+    agencies: state.agency.agencies
   }
 }
 
