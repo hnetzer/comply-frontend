@@ -13,10 +13,13 @@ import {
   adminDeleteJurisdiction,
 } from 'network/api';
 
-import { setJurisdictions, updateJurisdiction, deleteJurisdiction } from 'actions';
+import {
+  adminSetJurisdictionsAction,
+  adminUpdateJurisdictionAction,
+  adminDeleteJurisdictionAction
+} from 'actions';
 
 import { AdminJurisdictionModal } from '../../components/organisms'
-
 
 class AdminJurisdictionsScreen extends React.Component {
   constructor(props) {
@@ -27,7 +30,7 @@ class AdminJurisdictionsScreen extends React.Component {
   async componentDidMount() {
     try {
       const jurisdictions = await adminGetJurisdictions()
-      this.props.dispatch(setJurisdictions(jurisdictions))
+      this.props.dispatch(adminSetJurisdictionsAction(jurisdictions))
     } catch (err) {
       console.log(err)
     }
@@ -60,14 +63,14 @@ class AdminJurisdictionsScreen extends React.Component {
   handleJurisdictionFormSubmit = async (values) => {
     if (values.id) {
       const jurisdiction = await adminUpdateJurisdiction(values.id, values)
-      this.props.dispatch(updateJurisdiction(jurisdiction))
+      this.props.dispatch(adminUpdateJurisdictionAction(jurisdiction))
       this.hideModal()
     }
   }
 
   handleDeleteJurisdiction = async (jurisdictionId) => {
     await adminDeleteJurisdiction(jurisdictionId)
-    this.props.dispatch(deleteJurisdiction(jurisdictionId))
+    this.props.dispatch(adminDeleteJurisdictionAction(jurisdictionId))
     this.hideModal()
   }
 

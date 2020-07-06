@@ -41,6 +41,7 @@ const AgenciesForm = ({ user, agencies, companyAgencies, cta, faqs, hideReg, onS
 
 
   const initialValuesMap = () => {
+    console.log('Setting initial values map...')
     let companyAgencyMap = {}
     if(companyAgencies) {
       companyAgencyMap = companyAgencies.reduce((acc, companyAgency) => {

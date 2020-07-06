@@ -1,17 +1,16 @@
 
 const initialState = {
-  filings: [],
+  agencies: null,
 }
 
 export default (state = initialState, action) => {
  switch (action.type) {
-  case 'SET_FILINGS':
+  case 'SET_AGENCIES':
    return {
-     filings: action.data
+     agencies: action.data
    }
-  case 'LOGOUT': {
+  case 'LOGOUT':
     return initialState;
-  }
   default:
    return state
  }

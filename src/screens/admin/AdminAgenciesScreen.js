@@ -12,7 +12,13 @@ import {
   adminDeleteAgency,
 } from 'network/api';
 
-import { setAgencies, setJurisdictions, addAgency, updateAgency, deleteAgency} from 'actions';
+import {
+  adminSetAgenciesAction,
+  adminSetJurisdictionsAction,
+  adminAddAgencyAction,
+  adminUpdateAgencyAction,
+  adminDeleteAgencyAction
+} from 'actions';
 
 import { AdminAgencyModal } from '../../components/organisms'
 
@@ -27,10 +33,10 @@ class AdminAgenciesScreen extends React.Component {
   async componentDidMount() {
     try {
       const agencies = await adminGetAgencies();
-      this.props.dispatch(setAgencies(agencies))
+      this.props.dispatch(adminSetAgenciesAction(agencies))
       if (this.props.jurisdictions.length === 0) {
         const jurisdictions = await adminGetJurisdictions();
-        this.props.dispatch(setJurisdictions(jurisdictions))
+        this.props.dispatch(adminSetJurisdictionsAction(jurisdictions))
       }
     } catch (err) {
       console.log(err)
@@ -64,11 +70,11 @@ class AdminAgenciesScreen extends React.Component {
       if (values.id) {
         const data = { name: values.name, website: values.website, jurisdiction_id: values.jurisdiction_id }
         const agency = await adminUpdateAgency(values.id, data)
-        this.props.dispatch(updateAgency(agency))
+        this.props.dispatch(adminUpdateAgencyAction(agency))
         this.hideModal()
       } else {
         const agency = await adminCreateAgency(values)
-        this.props.dispatch(addAgency(agency))
+        this.props.dispatch(adminAddAgencyAction(agency))
         this.hideModal()
       }
     } catch (err) {
@@ -78,7 +84,7 @@ class AdminAgenciesScreen extends React.Component {
 
   handleDeleteAgency = async (agencyId) => {
     await adminDeleteAgency(agencyId)
-    this.props.dispatch(deleteAgency(agencyId))
+    this.props.dispatch(adminDeleteAgencyAction(agencyId))
     this.hideModal()
   }
 
