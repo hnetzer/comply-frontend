@@ -73,6 +73,10 @@ const AgenciesForm = ({ user, agencies, companyAgencies, cta, faqs, hideReg, onS
     return { agencies: values };
   }
 
+  if (!agencies || !companyAgencies) {
+    return (<div>Loading...</div>);
+  }
+
   return (
     <Formik
       initialValues={initialValuesMap()}
@@ -186,9 +190,11 @@ AgenciesForm.defaultProps = {
 }
 
 const mapStateToProps = state => {
+  console.log('agencies form state:', state)
   return {
     user: state.auth.user,
-    companyAgencies: state.company.agencies
+    companyAgencies: state.company.agencies,
+    agencies: state.agency.agencies
   }
 }
 
