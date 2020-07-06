@@ -17,9 +17,6 @@ import {
 import { getCompany, getAgencies, getCompanyAgencies } from 'network/api'
 
 class CompanyScreen extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   async componentDidMount() {
     const { user, dispatch } = this.props;

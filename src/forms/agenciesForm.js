@@ -190,7 +190,6 @@ AgenciesForm.defaultProps = {
 }
 
 const mapStateToProps = state => {
-  console.log('agencies form state:', state)
   return {
     user: state.auth.user,
     companyAgencies: state.company.agencies,

@@ -115,7 +115,7 @@ class AdminAgenciesScreen extends React.Component {
                   <td>{a.jurisdiction.state}</td>
                   <td>{a.jurisdiction.name}</td>
                   <td>{a.name}</td>
-                  <td>{a.website != null ? (<a target="_blank" href={a.website}>Link</a>) : null}</td>
+                  <td>{a.website != null ? (<a target="_blank" rel="noopener noreferrer" href={a.website}>Link</a>) : null}</td>
                   <td>{a.filings.length}</td>
                   <td>
                     <Button
