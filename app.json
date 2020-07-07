@@ -3,7 +3,7 @@
   "env": {
     "REACT_APP_API_BASE_URL": {
       "description": "URL for the Comply API",
-      "value": "https://comply-api.herokuapp.com"
+      "value": "https://comply-staging-api.herokuapp.com"
     },
     "SASS_PATH": {
       "value": "node_modules:src"
@@ -12,7 +12,7 @@
   "environments": {
     "review": {
       "env": {
-        "REACT_APP_API_BASE_URL": "https://comply-api.herokuapp.com",
+        "REACT_APP_API_BASE_URL": "https://comply-staging-api.herokuapp.com",
         "SASS_PATH": "node_modules:src"
       }
     }
