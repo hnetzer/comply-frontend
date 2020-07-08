@@ -2,39 +2,28 @@
   display: flex;
   justify-content: space-between;
 }
-
-.shortCard {
-  width: 360px;
-}
-
-.cardRow {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 24px;
-}
-
 .form {
   width: 100%
 }
 
-.fieldsCard {
+.field {
+  padding: 4px 8px;
+  margin: 8px 0px;
+  width: 400px;
+}
+
+.textArea {
   width: 100%;
-  margin-top: 16px;
-  margin-bottom: 16px;
 }
 
-.fieldsCardTitleSection {
-   display: flex;
-   flex-direction: row;
-   justify-content: space-between;
-   margin-bottom: 24px;
+.label {
+  font-weight: 500;
 }
 
-.addFieldButton {
-  position: relative;
-  bottom: 8px;
-  left: 16px;
+.divider {
+  border-top: 1px solid #ccc;
+  width: 100%;
+  margin: 16px 0px;
 }
 
 .ctaContainer {
