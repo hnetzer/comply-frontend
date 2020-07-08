@@ -1,30 +1,29 @@
-import React, { useState } from 'react';
-import { Formik  } from 'formik';
+import React from 'react';
+import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 // Bootstrap components
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
 import AdminFilingDueDateSection from './adminFilingDueDateSection'
 
 import style from './adminFilingForm.module.css'
 
-const FilingSchema = Yup.object().shape({
-  name: Yup.string().min(3, 'Too short!').required('Required'),
-  agency_id: Yup.number().integer().required('Required'),
+const filingSchema = Yup.object().shape({
+  name: Yup.string().min(3, 'Too short!').required(),
+  agency_id: Yup.number().integer().required(),
   agency: Yup.object().shape({
-    jurisdiction_id: Yup.number().integer().required('Required')
+    jurisdiction_id: Yup.number().integer().required()
   }),
-  occurence: Yup.mixed().oneOf(['annual', 'multiple', 'biennial']),
+  website: Yup.string(),
+  description: Yup.string(),
+  occurrence: Yup.mixed().oneOf(['annual', 'multiple', 'biennial']).required(),
   due_dates: Yup.array().of(Yup.object().shape({
     fixed_month: Yup.number().integer().nullable(),
     fixed_day: Yup.number().integer().nullable(),
     month_offset: Yup.number().integer().nullable(),
     day_offset: Yup.number().integer().nullable(),
-    offset_type: Yup.mixed().oneOf(['none', 'registration', 'year-end']),
+    offset_type: Yup.mixed().oneOf(['none', 'registration', 'year-end']).required(),
     month_end: Yup.boolean().nullable(),
   }))
 });
@@ -33,6 +32,8 @@ const FilingInitialValues = {
   name: '',
   agency_id: '',
   agency: { jurisdiction_id: '' },
+  website: '',
+  description: '',
   occurrence: 'annual',
   due_dates: [{
     fixed_month: null,
@@ -46,8 +47,6 @@ const FilingInitialValues = {
 
 
 const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status }) => {
-  const [validated] = useState(false);
-
   const submit = async (values, { setSubmitting }) => {
     await handleSubmit(values, { setSubmitting })
   }
@@ -77,10 +76,9 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
       <Formik
         initialValues={filing != null ? filing : FilingInitialValues}
         onSubmit={submit}
-        validationSchema={FilingSchema}
-        validateOnBlur={false}
-        validateOnChange={false}
+        validationSchema={filingSchema}
         enableReinitialize={true}
+        validateOnMount={true}
       >
       {({
         values,
@@ -90,70 +88,58 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
         handleBlur,
         handleSubmit,
         isSubmitting,
+        isValid
         /* and other goodies */
       }) => (
-          <Form validated={validated} onSubmit={handleSubmit} className={style.form}>
-            <Form.Group controlId="name">
-              <Form.Label>Filing Name</Form.Label>
-              <Form.Control
-                onChange={handleChange}
-                type="text"
-                size="lg"
-                isInvalid={errors.name}
-                autoComplete="off"
-                style={{ width: 360 }}
-                placeholder=""
-                value={values.name} />
-              <FormControl.Feedback type='invalid'>{errors.name}</FormControl.Feedback>
-            </Form.Group>
-            <div className={style.cardRow}>
-              <Card className={style.shortCard}>
-                <Card.Body>
-                  <Card.Title>Agency</Card.Title>
-                  <Form.Group controlId="agency.jurisdiction_id">
-                    <Form.Label>Jurisdiction</Form.Label>
-                    <Form.Control
-                      onChange={handleChange}
-                      value={values.agency.jurisdiction_id}
-                      isInvalid={errors.agency && errors.agency.jurisdiction_id}
-                      as="select">
-                      <option value=""></option>
-                      {jurisdictions.sort(jurisdictionSortBy).map((j,i) =>
-                        <option key={i} value={j.id}>{`${j.name} (${j.state})`}</option>)}
-                    </Form.Control>
-                  </Form.Group>
-                  <Form.Group controlId="agency_id">
-                    <Form.Label>Agency</Form.Label>
-                    <Form.Control
-                      onChange={handleChange}
-                      value={values.agency_id}
-                      isInvalid={errors.agency_id}
-                      as="select">
-                      <option value=""></option>
-                      {renderAgencies(values)}
-                    </Form.Control>
-                  </Form.Group>
-                </Card.Body>
-              </Card>
-              <Card className={style.shortCard}>
-                <Card.Body>
-                  <Card.Title>Due Dates</Card.Title>
-                  <AdminFilingDueDateSection
-                    handleChange={handleChange}
-                    values={values} />
-                </Card.Body>
-              </Card>
-            </div>
+          <Form autoComplete="off" className={style.form}>
+            {console.log('Admin filing form is valid:', isValid)}
+            {console.log("Errors", errors)}
+            {console.log('Values', values)}
+            <div className={style.label}>Filing Name*</div>
+            <Field type="text" name="name" autoComplete="off" className={style.field} />
+            <div className={style.divider} />
+            <div className={style.label}>Jurisdiction*</div>
+            <Field as="select" name="agency.jurisdiction_id" className={style.field}>
+              <option value=""></option>
+              {jurisdictions.sort(jurisdictionSortBy).map((j,i) =>
+                <option key={i} value={j.id}>{`${j.name} (${j.state})`}</option>)}
+            </Field>
+            <div className={style.label}>Agency*</div>
+            <Field as="select" name="agency_id" className={style.field} >
+              <option value=""></option>
+              {renderAgencies(values)}
+            </Field>
+            <div className={style.divider} />
+            <div className={style.label}>Website URL</div>
+            <Field
+              type="text"
+              name="website"
+              value={values.website || ''}
+              autoComplete="off"
+              style={{ width: '100%'}}
+              className={style.field} />
+            <div className={style.label}>Description</div>
+            <Field
+              component="textarea"
+              value={values.description || ''}
+              name="description"
+              autoComplete="off"
+              rows={5}
+              className={style.textArea} />
+            <div className={style.divider} />
+            <AdminFilingDueDateSection
+              handleChange={handleChange}
+              values={values} />
+            <div className={style.divider} />
             <div className={style.ctaContainer}>
               {status != null ? (
                 <div style={{ color: 'green', marginRight: 16 }}>{status}</div>
               ) : null}
               <Button
+                disabled={!isValid || isSubmitting}
                 className={style.submitButton}
                 variant="secondary"
-                type="submit"
-                disabled={isSubmitting}
-              >
+                type="submit">
                 { values.id == null ? 'Create Filing' : 'Update Filing'}
               </Button>
             </div>

@@ -33,43 +33,43 @@ const initialState = {
 
 export default (state = initialState, action) => {
  switch (action.type) {
-  case 'SET_JURISDICTIONS':
+  case 'ADMIN_SET_JURISDICTIONS':
     return {
       ...state,
       jurisdictions: action.data
     }
-  case 'UPDATE_JURISDICTION':
+  case 'ADMIN_UPDATE_JURISDICTION':
     return {
       ...state,
       jurisdictions: updateObjectInArray(state.jurisdictions, action)
     }
-  case 'ADD_JURISDICTION':
+  case 'ADMIN_ADD_JURISDICTION':
     return {
       ...state,
       jurisdictions: insertItem(state.jurisdictions, action)
     }
-  case 'DELETE_JURISDICTION': {
+  case 'ADMIN_DELETE_JURISDICTION': {
     return {
       ...state,
       jurisdictions: removeObjectFromArray(state.jurisdictions, action.data)
     }
   }
-  case 'SET_AGENCIES':
+  case 'ADMIN_SET_AGENCIES':
     return {
       ...state,
       agencies: action.data
     }
-  case 'ADD_AGENCY':
+  case 'ADMIN_ADD_AGENCY':
     return {
       ...state,
       agencies: insertItem(state.agencies, action)
     }
-  case 'UPDATE_AGENCY':
+  case 'ADMIN_UPDATE_AGENCY':
     return {
       ...state,
       agencies: updateObjectInArray(state.agencies, action)
     }
-    case 'DELETE_AGENCY': {
+    case 'ADMIN_DELETE_AGENCY': {
       return {
         ...state,
         agencies: removeObjectFromArray(state.agencies, action.data)

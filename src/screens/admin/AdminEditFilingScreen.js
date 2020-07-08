@@ -58,6 +58,7 @@ class AdminEditFilingScreen extends Component {
       this.setState({ status: 'saving...' })
       const filing = await adminCreateFiling(values)
       navigate(`/admin/platform/filings/${filing.id}`)
+      this.setState({ status: null, filing: filing})
     }
   }
 

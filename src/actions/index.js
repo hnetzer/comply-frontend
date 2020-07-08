@@ -1,15 +1,16 @@
 import { createAccountResponse } from './signup'
 import { setCompanyDetails, setCompanyAgencies, setCompanyOffices } from './company'
 import { logout, login, onboarded } from './auth'
+import { setAgencies } from './agency'
 import {
-  setJurisdictions,
-  addJurisdiction,
-  updateJurisdiction,
-  deleteJurisdiction,
-  setAgencies,
-  addAgency,
-  updateAgency,
-  deleteAgency
+  adminSetJurisdictionsAction,
+  adminAddJurisdictionAction,
+  adminUpdateJurisdictionAction,
+  adminDeleteJurisdictionAction,
+  adminSetAgenciesAction,
+  adminAddAgencyAction,
+  adminUpdateAgencyAction,
+  adminDeleteAgencyAction
 } from './admin'
 
 export {
@@ -18,6 +19,9 @@ export {
   setCompanyOffices,
   setCompanyAgencies,
 
+  // agency
+  setAgencies,
+
   // signup & auth
   createAccountResponse,
   logout,
@@ -25,12 +29,12 @@ export {
   onboarded,
 
   // admin
-  setJurisdictions,
-  addJurisdiction,
-  updateJurisdiction,
-  deleteJurisdiction,
-  setAgencies,
-  addAgency,
-  updateAgency,
-  deleteAgency
+  adminSetJurisdictionsAction,
+  adminAddJurisdictionAction,
+  adminUpdateJurisdictionAction,
+  adminDeleteJurisdictionAction,
+  adminSetAgenciesAction,
+  adminAddAgencyAction,
+  adminUpdateAgencyAction,
+  adminDeleteAgencyAction
 }

@@ -81,11 +81,11 @@ const OfficeDetailsForm = ({ offices, user, cta, onSuccess, onError, dispatch })
                 </div>
                 <Table>
                   <Header>
-                      <HeaderCell>Type</HeaderCell>
+                      <HeaderCell>Type*</HeaderCell>
                       <HeaderCell>Address</HeaderCell>
-                      <HeaderCell>City</HeaderCell>
-                      <HeaderCell>State</HeaderCell>
-                      <HeaderCell>Zip</HeaderCell>
+                      <HeaderCell>City*</HeaderCell>
+                      <HeaderCell>State*</HeaderCell>
+                      <HeaderCell>Zip*</HeaderCell>
                       <HeaderCell></HeaderCell>
                   </Header>
                   <Body>
