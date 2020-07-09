@@ -112,6 +112,9 @@ class DashboardScreen extends React.Component {
               annualFilingCount={timelineFilings != null ? timelineFilings.length : 0}
               wantsPremium={this.submitWantsPremium}
              />
+           <Card style={{ height: 256, width: 264, marginTop: 16}}>
+             <h4>Feedback</h4>
+           </Card>
           </div>
         </div>
       </section>

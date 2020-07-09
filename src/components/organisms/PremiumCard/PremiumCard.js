@@ -16,12 +16,12 @@ const PremiumCard = ({ annualFilingCount, wantsPremium }) => {
 
   return (
     <>
-      <Card className={style.topCard} style={{ padding: 24, textAlign: 'center' }}>
+      <Card className={style.topCard}>
         <h4>We file for you!</h4>
         <p style={{ fontSize: 16 }}>
           Get peace of mind and confidence that your compliance is under control.
         </p>
-        <Button style={{ width: 240 }} onClick={() => setShow(true)}>
+        <Button variant="secondary" onClick={() => setShow(true)}>
           Try Comply Premium
         </Button>
       </Card>
@@ -51,6 +51,7 @@ const PremiumCard = ({ annualFilingCount, wantsPremium }) => {
             <Button
               onClick={handleInterestedClick}
               className={style.button}
+              variant="secondary"
             >
               I'm interested
             </Button>
