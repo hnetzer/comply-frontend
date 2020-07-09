@@ -98,6 +98,12 @@ class DashboardScreen extends React.Component {
           <AgencyRegAlert
             show={showRegAlert}
             onDismiss={() => this.setState({ showRegAlert: false})} />
+          <Card className={style.overviewCard}>
+            <h4>Filing Overview</h4>
+            <p>{`A timeline of all of your filing due dates in ${moment().format('YYYY')}.`}</p>
+            {/* <FilingTimeline filings={timelineFilings} /> */}
+            <CustomFilingTimeline filings={timelineFilings} />
+          </Card>
           <div className={style.topSection}>
             <UpcomingDatesCard
               upcomingFilings={timelineFilings}
@@ -107,12 +113,6 @@ class DashboardScreen extends React.Component {
               wantsPremium={this.submitWantsPremium}
              />
           </div>
-          <Card className={style.overviewCard}>
-            <h4>Filing Overview</h4>
-            <p>{`A timeline of all of your filing due dates in ${moment().format('YYYY')}.`}</p>
-            {/* <FilingTimeline filings={timelineFilings} /> */}
-            <CustomFilingTimeline filings={timelineFilings} />
-          </Card>
         </div>
       </section>
     )

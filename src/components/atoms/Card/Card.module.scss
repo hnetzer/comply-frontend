@@ -1,10 +1,20 @@
 @import "styles/vars";
 
-.card {
+/*.card {
   background-color: $white;
   box-shadow: 0 1px 3px 0 #e3e8ed;
   padding: 24px;
   display: flex;
   flex-direction: row;
   border: none;
+} */
+
+.card {
+  background: $white;
+  border: 2px solid rgba(8, 16, 74, 0.08);
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 24px;
+  display: flex;
+  flex-direction: row;
 }

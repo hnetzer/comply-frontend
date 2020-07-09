@@ -8,8 +8,9 @@ $timeline-border-color: rgba(8,16,74, .08);
 }
 
 .container {
+  min-width: 1040px;
   padding: 0px;
-  margin: 100px 0px;
+  margin: 24px 0px;
   display: flex;
   flex-direction: column;
 }
@@ -19,7 +20,6 @@ $timeline-border-color: rgba(8,16,74, .08);
 }
 
 .monthCountSection {
-  // height: 20px;
   width: 100%;
   padding: 4px;
   border-bottom: 1px solid $timeline-border-color;
@@ -41,8 +41,6 @@ $timeline-border-color: rgba(8,16,74, .08);
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  //flex-wrap: nowrap;
-  // padding: 6px 0px;
 }
 
 .monthNodeSection {
