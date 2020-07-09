@@ -3,27 +3,23 @@ import moment from 'moment'
 
 import { Card } from 'components/atoms'
 import { Table, Body, Row, Cell } from 'components/atoms'
-import { NotSupportedModal } from 'components/organisms'
 
 import style from './UpcomingDatesCard.module.scss';
 
-const UpcomingDatesCard = ({ upcomingFilings, notSupportedJuris }) => {
+const UpcomingDatesCard = ({ upcomingFilings }) => {
 
   return (
     <>
       <Card className={style.topCard}>
-        <div className={style.upcomingTitleContainer}>
-          <h4>Filing Due Dates</h4>
-          <NotSupportedModal jurisdictions={notSupportedJuris} />
-        </div>
+        <h4>Upcoming Due Dates</h4>
         <div className={style.upcomingTableWrapper}>
           <Table>
             <Body>
               {upcomingFilings && upcomingFilings.map((f,i) => (
-                <Row key={i}>
-                  <Cell className={style.upcomingCell}>{f.name}</Cell>
-                  <Cell className={style.upcomingCell}>{f.agency.jurisdiction.name}</Cell>
-                  <Cell className={style.upcomingCell}>{moment(f.due).format("MMM Do, YYYY")}</Cell>
+                <Row key={i} style={{ border: 'none' }} >
+                  <Cell className={style.filingName}>{f.name}</Cell>
+                  <Cell className={style.filingJurisdiction}>{f.agency.jurisdiction.name}</Cell>
+                  <Cell className={style.filingDueDate}>{moment(f.due).format("MMM Do, YYYY")}</Cell>
                 </Row>
               ))}
             </Body>

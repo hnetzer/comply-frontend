@@ -1,3 +1,15 @@
+.link {
+  color: #30749F;
+}
+
+.link:hover {
+  cursor: pointer;
+  color: darken(#30749F, 8);
+}
+
+.icon {
+  margin-right: 4px;
+}
 
 .modal {
   width: 50%;
@@ -25,18 +37,6 @@
 
 .text {
   width: 500px;
-}
-
-.warningIcon {
-  font-size: 20px;
-  color: #299FEB;
-  position: relative;
-  top: 2px;
-}
-
-.warningIcon:hover {
-  cursor: pointer;
-  color: darken(#299FEB, 8);
 }
 
 .cell {

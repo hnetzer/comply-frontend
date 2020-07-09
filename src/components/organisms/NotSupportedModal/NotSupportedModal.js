@@ -16,18 +16,19 @@ const NotSupportedModal = ({ jurisdictions }) => {
     jurisdictions = []
   }
 
-  const renderWarningIcon = () => {
+  const renderLink = () => {
     if (jurisdictions.length === 0) return null
-    return (<FontAwesomeIcon
-      onClick={() => setShow(true)}
-      className={style.warningIcon}
-      icon={faExclamationTriangle}
-    />);
+    return (
+      <Button className={style.link} onClick={() => setShow(true)} variant="link">
+        <FontAwesomeIcon className={style.icon} icon={faExclamationTriangle}/>
+        <span>Jurisdictions</span>
+      </Button>
+    );
   }
 
   return (
     <>
-      <div>{renderWarningIcon()}</div>
+      {renderLink()}
       <Modal show={show} onHide={() => setShow(false)} dialogClassName={style.modal}>
         <Modal.Header closeButton>
           <h4 className={style.title}>Sorry, some locations are not supported yet</h4>

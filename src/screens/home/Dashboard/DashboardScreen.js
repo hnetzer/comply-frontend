@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
 
+import Button from 'react-bootstrap/Button';
 import { Card } from 'components/atoms'
-import { UpcomingDatesCard, PremiumCard, AgencyRegAlert } from 'components/organisms'
+import { UpcomingDatesCard, PremiumCard, AgencyRegAlert, NotSupportedModal } from 'components/organisms'
 import { FilingTimeline, CustomFilingTimeline } from 'components/molecules'
 import { getFilingsForCompany, getCompanyJurisdictions, updateCompanyPremium } from 'network/api';
 
@@ -60,7 +61,7 @@ class DashboardScreen extends React.Component {
 
   getUpcomingFilings = async (companyId) => {
     const start = moment().format('YYYY-MM-DD')
-    const end = moment().add(2, 'M').format('YYYY-MM-DD')
+    const end = moment().add(3, 'M').format('YYYY-MM-DD')
     const filings = await getFilingsForCompany(companyId, start, end)
     return filings.sort(this.compareFilingsByDue)
   }
@@ -99,14 +100,22 @@ class DashboardScreen extends React.Component {
             show={showRegAlert}
             onDismiss={() => this.setState({ showRegAlert: false})} />
           <Card className={style.overviewCard}>
-            <h4>Filing Overview</h4>
-            <p>{`A timeline of all of your filing due dates in ${moment().format('YYYY')}.`}</p>
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+              <div>
+                <h4>Filing Overview</h4>
+                <p>{`A timeline of all of your filing due dates in ${moment().format('YYYY')}.`}</p>
+              </div>
+              <div>
+                <NotSupportedModal jurisdictions={notSupportedJuris} />
+                <Button>Incomplete Fillings</Button>
+              </div>
+            </div>
             {/* <FilingTimeline filings={timelineFilings} /> */}
             <CustomFilingTimeline filings={timelineFilings} />
           </Card>
           <div className={style.topSection}>
             <UpcomingDatesCard
-              upcomingFilings={timelineFilings}
+              upcomingFilings={upcomingFilings}
               notSupportedJuris={notSupportedJuris} />
             <PremiumCard
               annualFilingCount={timelineFilings != null ? timelineFilings.length : 0}
