@@ -30,6 +30,11 @@ const CustomFilingTimeline = ({ filings }) => {
         {months.map((month, index) => {
           const files = groups[index] != null ? groups[index] : [];
           return (<div className={style.month}>
+            <div className={style.monthCountSection}>
+              <span className={style.monthCount}>{files.length}</span>
+              <span className={style.dueLabel}>{` due`}</span>
+            </div>
+            <div className={style.monthNodeSection}>
             {files.map(f =>
               (<>
                 <div className={style.node}>
@@ -49,12 +54,14 @@ const CustomFilingTimeline = ({ filings }) => {
                 </div>
               </>)
             )}
+            </div>
+            <div className={style.monthLabelSection}>
+              {month}
+            </div>
           </div>)
         })}
       </div>
-      <div className={style.monthLabelSection}>
-        {months.map(month => (<div className={style.monthLabel}>{month}</div>))}
-      </div>
+
     </div>
   )
 }
