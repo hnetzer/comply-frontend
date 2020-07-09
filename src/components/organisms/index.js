@@ -9,6 +9,7 @@ import UpcomingDatesCard from './UpcomingDatesCard/UpcomingDatesCard'
 import PremiumCard from './PremiumCard/PremiumCard'
 import AgencyRegAlert from './AgencyRegAlert/AgencyRegAlert'
 import NotSupportedModal from './NotSupportedModal/NotSupportedModal'
+import IncompleteFilingsModal from './IncompleteFilingsModal/IncompleteFilingsModal'
 
 export {
   HeaderBar,
@@ -21,5 +22,6 @@ export {
   UpcomingDatesCard,
   PremiumCard,
   AgencyRegAlert,
-  NotSupportedModal
+  NotSupportedModal,
+  IncompleteFilingsModal
 }

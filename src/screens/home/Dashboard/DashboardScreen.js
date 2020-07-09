@@ -4,8 +4,8 @@ import moment from 'moment'
 
 import Button from 'react-bootstrap/Button';
 import { Card } from 'components/atoms'
-import { UpcomingDatesCard, PremiumCard, AgencyRegAlert, NotSupportedModal } from 'components/organisms'
-import { FilingTimeline, CustomFilingTimeline } from 'components/molecules'
+import { UpcomingDatesCard, PremiumCard, NotSupportedModal, IncompleteFilingsModal } from 'components/organisms'
+import { CustomFilingTimeline } from 'components/molecules'
 import { getFilingsForCompany, getCompanyJurisdictions, updateCompanyPremium } from 'network/api';
 
 import screenStyle from './Screens.module.scss'
@@ -43,7 +43,7 @@ class DashboardScreen extends React.Component {
       this.setState({
         timelineFilings: yearFilings.filter(f => f.due != null).sort(this.compareFilingsByDue),
         upcomingFilings: upcomingFilings,
-        showRegAlert: unscheduledFilings.length > 0,
+        needRegAgencies: unscheduledFilings.map(f => f.agency),
         notSupportedJuris: jurisdictions.filter(j => !j.supported)
       })
 
@@ -85,7 +85,7 @@ class DashboardScreen extends React.Component {
     const {
       timelineFilings,
       upcomingFilings,
-      showRegAlert,
+      needRegAgencies,
       notSupportedJuris
     } = this.state
 
@@ -96,9 +96,6 @@ class DashboardScreen extends React.Component {
     return(
       <section className={screenStyle.container}>
         <div className={screenStyle.content}>
-          <AgencyRegAlert
-            show={showRegAlert}
-            onDismiss={() => this.setState({ showRegAlert: false})} />
           <Card className={style.overviewCard}>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
               <div>
@@ -107,7 +104,7 @@ class DashboardScreen extends React.Component {
               </div>
               <div>
                 <NotSupportedModal jurisdictions={notSupportedJuris} />
-                <Button>Incomplete Fillings</Button>
+                <IncompleteFilingsModal agencies={needRegAgencies} />
               </div>
             </div>
             {/* <FilingTimeline filings={timelineFilings} /> */}
