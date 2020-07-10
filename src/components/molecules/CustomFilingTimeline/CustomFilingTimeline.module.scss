@@ -75,26 +75,59 @@ $timeline-border-color: rgba(8,16,74, .08);
 
 }
 
-.node .hover {
-  position: absolute;
-  bottom: 200px;
-  z-index: 1;
-  width: 300px;
-  height: 160px;
-  border: 1px solid #ccc;
-  background-color: #fff;
+.node .filingHover {
   visibility: hidden;
-  padding: 8px;
+  position: relative;
+  z-index: 1;
+  bottom: 180px;
+  left: 16px;
+  min-width: 250px;
+  padding: 24px;
+  background-color: #fff;
+  border: 2px solid rgba(8, 16, 74, 0.08);
+  border-radius: 4px;
+  color: #08104A;
 }
 
 .node:hover {
   cursor: pointer;
 }
 
-.node .hover:hover {
+.node .filingHover:hover {
   visibility: visible;
 }
 
-.node:hover .hover {
+.node:hover .filingHover {
   visibility: visible;
+}
+
+.filingHover .filingName {
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 20px;
+  margin-bottom: 8px;
+  color: #08104A;
+}
+
+.filingHover .agencyName {
+  font-size: 12px;
+  line-height: 12px;
+  opacity: 0.5;
+}
+
+.filingHover .jurisdictionName {
+  margin: 16px 0px;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #2A6995;
+}
+
+.filingHover .filingDueDate {
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 20px;
 }
