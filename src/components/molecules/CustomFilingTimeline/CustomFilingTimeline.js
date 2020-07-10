@@ -19,8 +19,6 @@ const CustomFilingTimeline = ({ filings }) => {
     return map
   }, {})
 
-  console.log("filngs groups:", groups)
-
   const months = moment.monthsShort();
 
   return (
