@@ -1,12 +1,12 @@
 $primary: #13C296;
+$white: #ffffff;
+$secondary: #2A6995;
 
 @mixin button {
-  width: initial;
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 500;
   box-sizing: border-box;
   border-radius: 4px;
-  border: 2px solid $primary;
   padding: 6px 24px;
 
   &:focus {
@@ -14,8 +14,38 @@ $primary: #13C296;
   }
 }
 
+.disabled {
+  @include button;
+  background: #F7F9FC;
+  border: 1px solid #DFE5EA;
+  border-radius: 6px;
+  color: #B0BDC8;
+}
+
+.primary {
+  @include button;
+  background: $primary;
+  color: $white;
+  border: 2px solid $primary;
+}
+
 .primaryOutline {
   @include button;
-  background: #FFFFFF;
+  border: 2px solid $primary;
+  background: $white;
   color: $primary;
+}
+
+.secondary {
+  @include button;
+  border: 2px solid $secondary;
+  background: $secondary;
+  color: $white;
+}
+
+.secondaryOutline {
+  @include button;
+  background: $white;
+  color: $secondary;
+  border: 2px solid $secondary;
 }
