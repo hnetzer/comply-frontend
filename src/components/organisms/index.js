@@ -7,9 +7,9 @@ import AdminJurisdictionModal from './AdminJurisdictionModal'
 import AdminAgencyModal from './AdminAgencyModal'
 import UpcomingDatesCard from './UpcomingDatesCard/UpcomingDatesCard'
 import PremiumCard from './PremiumCard/PremiumCard'
-import AgencyRegAlert from './AgencyRegAlert/AgencyRegAlert'
 import NotSupportedModal from './NotSupportedModal/NotSupportedModal'
 import IncompleteFilingsModal from './IncompleteFilingsModal/IncompleteFilingsModal'
+import FeedbackCard from './FeedbackCard/FeedbackCard'
 
 export {
   HeaderBar,
@@ -21,7 +21,7 @@ export {
   SubNav,
   UpcomingDatesCard,
   PremiumCard,
-  AgencyRegAlert,
   NotSupportedModal,
-  IncompleteFilingsModal
+  IncompleteFilingsModal,
+  FeedbackCard
 }

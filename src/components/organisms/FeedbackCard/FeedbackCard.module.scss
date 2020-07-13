@@ -1,0 +1,26 @@
+@import "styles/vars";
+
+.card {
+  height: 256px;
+  width: 264px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  width: 100%;
+}
+
+.iconSection {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.icon {
+  color: $secondary;
+  font-size: 56px;
+}

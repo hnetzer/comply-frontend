@@ -3,8 +3,15 @@ import { connect } from 'react-redux';
 import moment from 'moment'
 
 import { Card } from 'components/atoms'
-import { UpcomingDatesCard, PremiumCard, NotSupportedModal, IncompleteFilingsModal } from 'components/organisms'
-import { CustomFilingTimeline } from 'components/molecules'
+import {
+  UpcomingDatesCard,
+  PremiumCard,
+  FeedbackCard,
+  NotSupportedModal,
+  IncompleteFilingsModal
+} from 'components/organisms'
+
+import { FilingTimeline } from 'components/molecules'
 import { getFilingsForCompany, getCompanyJurisdictions, updateCompanyPremium } from 'network/api';
 
 import screenStyle from './Screens.module.scss'
@@ -106,8 +113,7 @@ class DashboardScreen extends React.Component {
                 <IncompleteFilingsModal agencies={needRegAgencies} />
               </div>
             </div>
-            {/* <FilingTimeline filings={timelineFilings} /> */}
-            <CustomFilingTimeline filings={timelineFilings} />
+            <FilingTimeline filings={timelineFilings} />
           </Card>
           <div className={style.topSection}>
             <UpcomingDatesCard
@@ -117,9 +123,7 @@ class DashboardScreen extends React.Component {
               annualFilingCount={timelineFilings != null ? timelineFilings.length : 0}
               wantsPremium={this.submitWantsPremium}
              />
-           <Card style={{ height: 256, width: 264, marginTop: 16}}>
-             <h4>Feedback</h4>
-           </Card>
+           <FeedbackCard />
           </div>
         </div>
       </section>

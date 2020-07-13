@@ -1,0 +1,21 @@
+$primary: #13C296;
+
+@mixin button {
+  width: initial;
+  font-size: 16px;
+  font-weight: 800;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 2px solid $primary;
+  padding: 6px 24px;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.primaryOutline {
+  @include button;
+  background: #FFFFFF;
+  color: $primary;
+}
