@@ -32,8 +32,13 @@ export const sendRequest = async (method, path, data, includeAuth = true) => {
     throw error
   }
 
-  let json = await response.json()
-  return json;
+  try {
+    let json = await response.json()
+    return json;
+  } catch (err) {
+    console.error(err)
+    return null;
+  }
 }
 
 
@@ -194,6 +199,10 @@ export const adminGetCompany = async (companyId) => {
   return sendRequest('GET', `/admin/companies/${companyId}`)
 }
 
+export const sendFeedback = async (feedback) => {
+  return sendRequest('POST', `/feedback`, feedback)
+}
+
 export default {
   BASE_URI,
   createAccount,
@@ -213,6 +222,7 @@ export default {
   updateCompanyFiling,
   getCompanyAgencies,
   getCompanyJurisdictions,
+  sendFeedback,
 
   // admin requests
   getAllCompanyFilings,

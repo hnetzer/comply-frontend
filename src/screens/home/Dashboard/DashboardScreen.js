@@ -3,7 +3,14 @@ import { connect } from 'react-redux';
 import moment from 'moment'
 
 import { Card } from 'components/atoms'
-import { UpcomingDatesCard, PremiumCard, AgencyRegAlert } from 'components/organisms'
+import {
+  UpcomingDatesCard,
+  PremiumCard,
+  FeedbackCard,
+  NotSupportedModal,
+  IncompleteFilingsModal
+} from 'components/organisms'
+
 import { FilingTimeline } from 'components/molecules'
 import { getFilingsForCompany, getCompanyJurisdictions, updateCompanyPremium } from 'network/api';
 
@@ -42,7 +49,7 @@ class DashboardScreen extends React.Component {
       this.setState({
         timelineFilings: yearFilings.filter(f => f.due != null).sort(this.compareFilingsByDue),
         upcomingFilings: upcomingFilings,
-        showRegAlert: unscheduledFilings.length > 0,
+        needRegAgencies: unscheduledFilings.map(f => f.agency),
         notSupportedJuris: jurisdictions.filter(j => !j.supported)
       })
 
@@ -60,7 +67,7 @@ class DashboardScreen extends React.Component {
 
   getUpcomingFilings = async (companyId) => {
     const start = moment().format('YYYY-MM-DD')
-    const end = moment().add(2, 'M').format('YYYY-MM-DD')
+    const end = moment().add(3, 'M').format('YYYY-MM-DD')
     const filings = await getFilingsForCompany(companyId, start, end)
     return filings.sort(this.compareFilingsByDue)
   }
@@ -84,7 +91,7 @@ class DashboardScreen extends React.Component {
     const {
       timelineFilings,
       upcomingFilings,
-      showRegAlert,
+      needRegAgencies,
       notSupportedJuris
     } = this.state
 
@@ -95,23 +102,29 @@ class DashboardScreen extends React.Component {
     return(
       <section className={screenStyle.container}>
         <div className={screenStyle.content}>
-          <AgencyRegAlert
-            show={showRegAlert}
-            onDismiss={() => this.setState({ showRegAlert: false})} />
+          <Card className={style.overviewCard}>
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+              <div>
+                <h4>Filing Overview</h4>
+                <p>{`A timeline of all of your filing due dates in ${moment().format('YYYY')}.`}</p>
+              </div>
+              <div>
+                <NotSupportedModal jurisdictions={notSupportedJuris} />
+                <IncompleteFilingsModal agencies={needRegAgencies} />
+              </div>
+            </div>
+            <FilingTimeline filings={timelineFilings} />
+          </Card>
           <div className={style.topSection}>
             <UpcomingDatesCard
-              upcomingFilings={timelineFilings}
+              upcomingFilings={upcomingFilings}
               notSupportedJuris={notSupportedJuris} />
             <PremiumCard
               annualFilingCount={timelineFilings != null ? timelineFilings.length : 0}
               wantsPremium={this.submitWantsPremium}
              />
+           <FeedbackCard />
           </div>
-          <Card className={style.overviewCard}>
-            <h4>Filing Overview</h4>
-            <p>{`A timeline of all of your filing due dates in ${moment().format('YYYY')}.`}</p>
-            <FilingTimeline filings={timelineFilings} />
-          </Card>
         </div>
       </section>
     )

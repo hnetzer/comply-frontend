@@ -1,85 +1,66 @@
 import React from 'react';
 import moment from 'moment'
 
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
-
-require("highcharts/modules/timeline")(Highcharts);
-
+import style from './FilingTimeline.module.scss';
 
 const FilingTimeline = ({ filings }) => {
   if(!filings) return null;
 
+  const sortByDate = (a, b) => (moment(a.due).isSameOrBefore(b.due) ? -1 : 1);
 
-  function dataLabelFormat(x = this.x, point = this.point)  {
-    return (`
-       <div style="font-size: 14px;">${point.name}</div><br/><br/>
-       <div style="font-size: 11px;">${point.jurisdiction}</div><br/>
-       <div style="font-size: 11px; font-weight: bold;">${point.date}</div>
-   `)
-  }
+  const groups = filings.reduce((map, filing) => {
+    const monthDue = moment(filing.due).month();
+    if(!map[monthDue]) {
+      map[monthDue] = [];
+    }
+
+    map[monthDue].push(filing);
+    map[monthDue].sort(sortByDate);
+    return map
+  }, {})
+
+  const months = moment.monthsShort();
 
   return (
-    <div style={{ width: '100%', padding: 0, margin: 0}}>
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={{
-          chart: {
-            type: 'timeline'
-          },
-          pane: {
-            size: '100%'
-          },
-          colors: ['#309F76', '#299FEB', '#30749F', '#112532'],
-          title: {
-            text: '',
-          },
-          credits: {
-            enabled: false
-          },
-          xAxis: {
-            type: 'datetime',
-            visible: false
-          },
-          yAxis: {
-            gridLineWidth: 1,
-            title: null,
-            labels: {
-              enabled: false
-            }
-          },
-          legend: {
-            enabled: false
-          },
-          tooltip: {
-            enabled: false
-          },
-          series: [{
-            type: 'timeline',
-            dataLabels: {
-              //align: 'left',
-              allowOverlap: false,
-              backgroundColor: '#F1F2F3',
-              color: '#112532',
-              borderRadius: 2,
-              style: { "font-family": "'Avenir', sans-serif" },
-              formatter: dataLabelFormat
-            },
-            marker: {
-              symbol: 'circle'
-            },
-            data: filings.map(f => {
-              return {
-                x: new Date(f.due),
-                date: moment(f.due).format('MMM Do, YYYY'),
-                name: f.name,
-                agency: f.agency.name,
-                jurisdiction: f.agency.jurisdiction.name
-              }
-            })
-          }]
-        }}
-      />
+    <div className={style.container}>
+      <div className={style.nodeSection}>
+        {months.map((month, index) => {
+          const files = groups[index] != null ? groups[index] : [];
+          return (<div className={style.month} key={index}>
+            <div className={style.monthCountSection}>
+              <span className={style.monthCount}>{files.length}</span>
+              <span className={style.dueLabel}>{` due`}</span>
+            </div>
+            <div className={style.monthNodeSection}>
+            {files.map((f,i) =>
+              (
+                <div className={style.node} key={i}>
+                  <div className={style.filingHover}>
+                    <div className={style.filingName}>{f.name}</div>
+                    <div className={style.agencyName}>{f.agency.name}</div>
+                    <div className={style.jurisdictionName}>{f.agency.jurisdiction.name}</div>
+                    <div>
+                      <small>Due:</small>
+                      <div className={style.filingDueDate}>
+                        {moment(f.due).format('MMM Do, YYYY')}
+                      </div>
+                    </div>
+                    {/*<div>
+                      <Button size="sm">Filing Details</Button>
+                      <Button size="sm" variant="link">Agency Website</Button>
+                    </div>*/}
+                  </div>
+                </div>
+              )
+            )}
+            </div>
+            <div className={style.monthLabelSection}>
+              {month}
+            </div>
+          </div>)
+        })}
+      </div>
+
     </div>
   )
 }
