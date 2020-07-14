@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-
+import { navigate } from "@reach/router"
 import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
-import { Table, Body, Row, Cell, Header, HeaderCell } from 'components/atoms'
+import { Table, Body, Row, Cell, Header, HeaderCell, Button } from 'components/atoms'
 
 import style from './IncompleteFilingsModal.module.scss'
 
 const IncompleteFilingsModal = ({ agencies }) => {
   const [show, setShow] = useState(false);
+
+  const updateAgenciesClick = () => {
+    setShow(false)
+    navigate('/home/company/agencies')
+  }
 
   if (!agencies || !agencies.length) return null;
 
@@ -39,7 +43,7 @@ const IncompleteFilingsModal = ({ agencies }) => {
           </Table>
         </Modal.Body>
         <Modal.Footer style={{ display: 'flex', justifyContent: 'center'}}>
-          <Button style={{ width: 200 }} onClick={() => setShow(false)}>Update Agencies</Button>
+          <Button style={{ width: 200 }} onClick={updateAgenciesClick}>Update Agencies</Button>
         </Modal.Footer>
       </Modal>
     </>

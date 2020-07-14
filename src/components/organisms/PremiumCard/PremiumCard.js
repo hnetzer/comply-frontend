@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
-import { Card } from 'components/atoms'
+import { Card, Button } from 'components/atoms'
 
 import style from './PremiumCard.module.scss';
 
