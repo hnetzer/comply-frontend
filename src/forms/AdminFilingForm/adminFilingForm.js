@@ -15,8 +15,8 @@ const filingSchema = Yup.object().shape({
   agency: Yup.object().shape({
     jurisdiction_id: Yup.number().integer().required()
   }),
-  website: Yup.string(),
-  description: Yup.string(),
+  website: Yup.string().nullable(),
+  description: Yup.string().nullable(),
   occurrence: Yup.mixed().oneOf(['annual', 'multiple', 'biennial']).required(),
   due_dates: Yup.array().of(Yup.object().shape({
     fixed_month: Yup.number().integer().nullable(),
