@@ -12,12 +12,14 @@ const Button = ({ children, onClick, type, variant, outline, disabled }) => {
       switch(variant) {
         case "primary": return style.primary;
         case "secondary": return style.secondary;
+        case "dark": return style.dark;
         default: return style.primary;
       }
     } else {
       switch(variant) {
         case "primary": return style.primaryOutline;
         case "secondary": return style.secondaryOutline;
+        case "dark": return style.darkOutline;
         default: return style.primaryOutline;
       }
     }

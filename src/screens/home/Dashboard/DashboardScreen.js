@@ -8,7 +8,7 @@ import {
   PremiumCard,
   FeedbackCard,
   NotSupportedModal,
-  IncompleteFilingsModal
+  IncompleteFilingRow,
 } from 'components/organisms'
 
 import { FilingTimeline } from 'components/molecules'
@@ -23,6 +23,7 @@ class DashboardScreen extends React.Component {
     this.state = {
       timelineFilings: null,
       upcomingFilings: null,
+      incompleteFilings: null,
       showRegAlert: false,
       showPremiumModal: false,
     }
@@ -43,14 +44,15 @@ class DashboardScreen extends React.Component {
       const companyId = this.props.user.company_id;
       const yearFilings = await this.getFilingsForCurrentYear(companyId, true);
       const upcomingFilings = await this.getUpcomingFilings(companyId);
-      const unscheduledFilings = yearFilings.filter(f => f.due == null)
+      const incompleteFilings = yearFilings.filter(f => f.due == null)
       const jurisdictions = await getCompanyJurisdictions(companyId);
 
       this.setState({
         timelineFilings: yearFilings.filter(f => f.due != null).sort(this.compareFilingsByDue),
         upcomingFilings: upcomingFilings,
-        needRegAgencies: unscheduledFilings.map(f => f.agency),
-        notSupportedJuris: jurisdictions.filter(j => !j.supported)
+        // needRegAgencies: incompleteFilings.map(f => f.agency),
+        notSupportedJuris: jurisdictions.filter(j => !j.supported),
+        incompleteFilings: incompleteFilings
       })
 
     } catch (err) {
@@ -91,8 +93,9 @@ class DashboardScreen extends React.Component {
     const {
       timelineFilings,
       upcomingFilings,
-      needRegAgencies,
-      notSupportedJuris
+      // needRegAgencies,
+      notSupportedJuris,
+      incompleteFilings
     } = this.state
 
     const { user } = this.props
@@ -110,10 +113,15 @@ class DashboardScreen extends React.Component {
               </div>
               <div>
                 <NotSupportedModal jurisdictions={notSupportedJuris} />
-                <IncompleteFilingsModal agencies={needRegAgencies} />
               </div>
             </div>
             <FilingTimeline filings={timelineFilings} />
+            <div style={{ marginTop: 16 }}>
+              <h5>Incomplete Filings</h5>
+              {incompleteFilings && incompleteFilings.map(f => (
+                <IncompleteFilingRow filing={f} />
+              ))}
+            </div>
           </Card>
           <div className={style.topSection}>
             <UpcomingDatesCard

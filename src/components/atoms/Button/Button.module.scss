@@ -1,6 +1,7 @@
 $primary: #13C296;
 $white: #ffffff;
 $secondary: #2A6995;
+$dark: #08104A;
 
 @mixin button {
   font-size: 16px;
@@ -8,6 +9,7 @@ $secondary: #2A6995;
   box-sizing: border-box;
   border-radius: 4px;
   padding: 6px 24px;
+  height: 40px;
 
   &:focus {
     outline: 0;
@@ -48,4 +50,18 @@ $secondary: #2A6995;
   background: $white;
   color: $secondary;
   border: 2px solid $secondary;
+}
+
+.dark {
+  @include button;
+  border: 2px solid $dark;
+  background: $dark;
+  color: $white;
+}
+
+.darkOutline {
+  @include button;
+  background: $white;
+  color: $dark;
+  border: 2px solid $dark;
 }
