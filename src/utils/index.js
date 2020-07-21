@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 const toTitleCase = (str) => {
   return str.replace(/\w\S*/g, function(txt){
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
@@ -27,9 +29,25 @@ const checkForAdmin = (user) => {
   return false;
 }
 
+const compareFilingsByDue = (a, b) => {
+  if(!a.due && !b.due) return 0;
+  if(!a.due) return -1;
+  if(!b.due) return 1;
+
+  const dueA = moment(a.due).unix()
+  const dueB = moment(b.due).unix()
+  if (dueA > dueB) {
+    return 1
+  } else if (dueA < dueB) {
+    return -1
+  }
+  return 0
+}
+
 export {
   getURLParam,
   toTitleCase,
   filingFieldSort,
-  checkForAdmin
+  checkForAdmin,
+  compareFilingsByDue
 }
