@@ -203,6 +203,18 @@ export const sendFeedback = async (feedback) => {
   return sendRequest('POST', `/feedback`, feedback)
 }
 
+export const adminGetFilingsForCompany = async (companyId, startDate, endDate, unscheduled) => {
+  let uri =  `/admin/companies/${companyId}/filings`
+  if (startDate && endDate) {
+    uri = `${uri}?startDate=${startDate}&endDate=${endDate}`
+  }
+
+  if (unscheduled) {
+    uri = `${uri}&unscheduled=${unscheduled}`
+  }
+  return sendRequest('GET', uri);
+}
+
 export default {
   BASE_URI,
   createAccount,
@@ -243,5 +255,6 @@ export default {
   adminUpdateFiling,
   adminGetCompanies,
   adminGetCompany,
+  adminGetFilingsForCompany,
   adminDeleteFiling
 }

@@ -4,7 +4,8 @@ import moment from 'moment';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Table from 'react-bootstrap/Table';
 
-import { adminGetCompany } from 'network/api';
+import { adminGetCompany, adminGetFilingsForCompany } from 'network/api';
+import { compareFilingsByDue } from 'utils'
 
 
 import style from './AdminScreens.module.scss'
@@ -12,13 +13,16 @@ import style from './AdminScreens.module.scss'
 class AdminCompanyScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { company: null };
+    this.state = { company: null, filings: [] };
   }
 
   async componentDidMount() {
     try {
+      const companyId = this.props.companyId;
+      const year = moment().format('YYYY');
       const data = await adminGetCompany(this.props.companyId)
-      this.setState({ company: data })
+      const filings = await adminGetFilingsForCompany(companyId, `${year}-01-01`, `${year}-12-31`, true);
+      this.setState({ company: data, filings: filings })
     } catch (err) {
       console.log(err)
     }
@@ -149,8 +153,35 @@ class AdminCompanyScreen extends React.Component {
     )
   }
 
+  renderFilings = (filings) => {
+    return (
+      <Table bordered>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Agency</th>
+            <th>Jurisdiction</th>
+            <th>Due Date</th>
+          </tr>
+        </thead>
+        <tbody>
+        {filings.sort(compareFilingsByDue).map((f, index) => {
+          return (
+            <tr key={index}>
+              <td>{f.name}</td>
+              <td>{f.agency.name}</td>
+              <td>{f.agency.jurisdiction.name}</td>
+              <td>{f.due != null ? moment(f.due).format('MM/DD/YYYY') : 'N/A'}</td>
+            </tr>
+          )
+        })}
+        </tbody>
+      </Table>
+    )
+  }
+
   render() {
-    const { company } = this.state
+    const { company, filings } = this.state
     if (!company) return null;
     const { users, offices, agencies, jurisdictions } = company
 
@@ -175,13 +206,18 @@ class AdminCompanyScreen extends React.Component {
             {this.renderOffices(offices)}
           </section>
           <section>
+            <h4>Jurisdictions</h4>
+            {this.renderJurisdictions(jurisdictions)}
+          </section>
+          <section>
             <h4>Agencies</h4>
             {this.renderAgencies(agencies)}
           </section>
           <section>
-            <h4>Jurisdictions</h4>
-            {this.renderJurisdictions(jurisdictions)}
+            <h4>{`${moment().format('YYYY')} Filings`}</h4>
+            {this.renderFilings(filings)}
           </section>
+
         </div>
       </main>
     )
