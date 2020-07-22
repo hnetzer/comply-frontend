@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
 
-import { Card } from 'components/atoms'
+import { Card, Drawer } from 'components/atoms'
 import {
   UpcomingDatesCard,
   PremiumCard,
@@ -26,6 +26,7 @@ class DashboardScreen extends React.Component {
       incompleteFilings: null,
       showRegAlert: false,
       showPremiumModal: false,
+      showDrawer: false
     }
   }
 
@@ -119,7 +120,7 @@ class DashboardScreen extends React.Component {
             <div style={{ marginTop: 16 }}>
               <h5>Incomplete Filings</h5>
               {incompleteFilings && incompleteFilings.map(f => (
-                <IncompleteFilingRow filing={f} />
+                <IncompleteFilingRow filing={f} ctaClick={() => this.setState({ showDrawer: true })} />
               ))}
             </div>
           </Card>
@@ -134,6 +135,7 @@ class DashboardScreen extends React.Component {
            <FeedbackCard />
           </div>
         </div>
+        <Drawer show={this.state.showDrawer} />
       </section>
     )
   }

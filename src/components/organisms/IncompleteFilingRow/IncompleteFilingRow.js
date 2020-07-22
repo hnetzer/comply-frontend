@@ -4,7 +4,7 @@ import { Button } from 'components/atoms'
 
 import style from './IncompleteFilingRow.module.scss';
 
-const IncompleteFilingRow = ({ filing }) => {
+const IncompleteFilingRow = ({ filing, ctaClick }) => {
 
   return (
     <div className={style.row}>
@@ -15,7 +15,7 @@ const IncompleteFilingRow = ({ filing }) => {
       <div className={style.description}>
         <div>You must add your companies registration date with the <b>{filing.agency.name}</b> of <b>{filing.agency.jurisdiction.name}</b> in order to determine this filing's due date.</div>
       </div>
-      <Button variant="dark">Add Date</Button>
+      <Button onClick={ctaClick} variant="dark">Add Date</Button>
     </div>
   )
 }
