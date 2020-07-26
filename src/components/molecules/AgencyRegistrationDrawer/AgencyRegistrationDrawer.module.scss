@@ -1,0 +1,17 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.title {
+
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  height: 200px;
+}

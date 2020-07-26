@@ -4,6 +4,7 @@ import InfoPopover from './InfoPopover/InfoPopover';
 import VerticalProgressBar from './VerticalProgressBar/VerticalProgressBar';
 import QuestionToggle from './QuestionToggle/QuestionToggle';
 import FilingTimeline from './FilingTimeline/FilingTimeline';
+import AgencyRegistrationDrawer from './AgencyRegistrationDrawer/AgencyRegistrationDrawer';
 
 
 export {
@@ -12,4 +13,5 @@ export {
   FilingTimeline,
   VerticalProgressBar,
   QuestionToggle,
+  AgencyRegistrationDrawer
 }

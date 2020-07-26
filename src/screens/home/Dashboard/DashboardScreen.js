@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
 
-import { Card, Drawer } from 'components/atoms'
+import { Card } from 'components/atoms'
 import {
   UpcomingDatesCard,
   PremiumCard,
@@ -11,7 +11,7 @@ import {
   IncompleteFilingRow,
 } from 'components/organisms'
 
-import { FilingTimeline } from 'components/molecules'
+import { FilingTimeline, AgencyRegistrationDrawer } from 'components/molecules'
 import { getFilingsForCompany, getCompanyJurisdictions, updateCompanyPremium } from 'network/api';
 
 import screenStyle from './Screens.module.scss'
@@ -24,9 +24,9 @@ class DashboardScreen extends React.Component {
       timelineFilings: null,
       upcomingFilings: null,
       incompleteFilings: null,
-      showRegAlert: false,
       showPremiumModal: false,
-      showDrawer: false
+      showDrawer: false,
+      selectedAgency: null,
     }
   }
 
@@ -51,7 +51,6 @@ class DashboardScreen extends React.Component {
       this.setState({
         timelineFilings: yearFilings.filter(f => f.due != null).sort(this.compareFilingsByDue),
         upcomingFilings: upcomingFilings,
-        // needRegAgencies: incompleteFilings.map(f => f.agency),
         notSupportedJuris: jurisdictions.filter(j => !j.supported),
         incompleteFilings: incompleteFilings
       })
@@ -94,9 +93,10 @@ class DashboardScreen extends React.Component {
     const {
       timelineFilings,
       upcomingFilings,
-      // needRegAgencies,
       notSupportedJuris,
-      incompleteFilings
+      incompleteFilings,
+      showDrawer,
+      selectedAgency
     } = this.state
 
     const { user } = this.props
@@ -117,12 +117,20 @@ class DashboardScreen extends React.Component {
               </div>
             </div>
             <FilingTimeline filings={timelineFilings} />
-            <div style={{ marginTop: 16 }}>
-              <h5>Incomplete Filings</h5>
-              {incompleteFilings && incompleteFilings.map(f => (
-                <IncompleteFilingRow filing={f} ctaClick={() => this.setState({ showDrawer: true })} />
-              ))}
-            </div>
+            {incompleteFilings && incompleteFilings.length > 0 &&
+              (
+                <div style={{ marginTop: 16 }}>
+                  <h5>Filings Not Shown</h5>
+                  {incompleteFilings.map((f,i) => (
+                    <IncompleteFilingRow
+                      key={i}
+                      filing={f}
+                      ctaClick={() => this.setState({ showDrawer: true, selectedAgency: f.agency })}
+                      />
+                  ))}
+                </div>
+              )
+          }
           </Card>
           <div className={style.topSection}>
             <UpcomingDatesCard
@@ -135,7 +143,11 @@ class DashboardScreen extends React.Component {
            <FeedbackCard />
           </div>
         </div>
-        <Drawer show={this.state.showDrawer} />
+        <AgencyRegistrationDrawer
+          agency={selectedAgency}
+          show={showDrawer}
+          refreshDashboard={() => this.loadPageData()}
+          onHide={() => this.setState({ showDrawer: false, selectedAgency: null })} />
       </section>
     )
   }
