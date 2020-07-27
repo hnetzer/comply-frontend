@@ -2,16 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
 
-import { Card } from 'components/atoms'
+import { Card, Divider } from 'components/atoms'
 import {
   UpcomingDatesCard,
   PremiumCard,
   FeedbackCard,
   NotSupportedModal,
-  IncompleteFilingsModal
+  IncompleteFilingRow,
 } from 'components/organisms'
 
-import { FilingTimeline } from 'components/molecules'
+import { FilingTimeline, AgencyRegistrationDrawer } from 'components/molecules'
 import { getFilingsForCompany, getCompanyJurisdictions, updateCompanyPremium } from 'network/api';
 
 import screenStyle from './Screens.module.scss'
@@ -23,8 +23,10 @@ class DashboardScreen extends React.Component {
     this.state = {
       timelineFilings: null,
       upcomingFilings: null,
-      showRegAlert: false,
+      incompleteFilings: null,
       showPremiumModal: false,
+      showDrawer: false,
+      selectedAgency: null,
     }
   }
 
@@ -43,14 +45,14 @@ class DashboardScreen extends React.Component {
       const companyId = this.props.user.company_id;
       const yearFilings = await this.getFilingsForCurrentYear(companyId, true);
       const upcomingFilings = await this.getUpcomingFilings(companyId);
-      const unscheduledFilings = yearFilings.filter(f => f.due == null)
+      const incompleteFilings = yearFilings.filter(f => f.due == null)
       const jurisdictions = await getCompanyJurisdictions(companyId);
 
       this.setState({
         timelineFilings: yearFilings.filter(f => f.due != null).sort(this.compareFilingsByDue),
         upcomingFilings: upcomingFilings,
-        needRegAgencies: unscheduledFilings.map(f => f.agency),
-        notSupportedJuris: jurisdictions.filter(j => !j.supported)
+        notSupportedJuris: jurisdictions.filter(j => !j.supported),
+        incompleteFilings: incompleteFilings
       })
 
     } catch (err) {
@@ -91,8 +93,10 @@ class DashboardScreen extends React.Component {
     const {
       timelineFilings,
       upcomingFilings,
-      needRegAgencies,
-      notSupportedJuris
+      notSupportedJuris,
+      incompleteFilings,
+      showDrawer,
+      selectedAgency
     } = this.state
 
     const { user } = this.props
@@ -110,10 +114,26 @@ class DashboardScreen extends React.Component {
               </div>
               <div>
                 <NotSupportedModal jurisdictions={notSupportedJuris} />
-                <IncompleteFilingsModal agencies={needRegAgencies} />
               </div>
             </div>
             <FilingTimeline filings={timelineFilings} />
+            {incompleteFilings && incompleteFilings.length > 0 &&
+              (
+                <div style={{ marginTop: 16 }}>
+                  <h5>Filings Not Included</h5>
+                  {incompleteFilings.map((f,i) => (
+                    <>
+                    <IncompleteFilingRow
+                      key={i}
+                      filing={f}
+                      ctaClick={() => this.setState({ showDrawer: true, selectedAgency: f.agency })}
+                      />
+                    {((incompleteFilings.length - 1) !== i) && <Divider />}
+                    </>
+                  ))}
+                </div>
+              )
+          }
           </Card>
           <div className={style.topSection}>
             <UpcomingDatesCard
@@ -126,6 +146,11 @@ class DashboardScreen extends React.Component {
            <FeedbackCard />
           </div>
         </div>
+        <AgencyRegistrationDrawer
+          agency={selectedAgency}
+          show={showDrawer}
+          refreshDashboard={() => this.loadPageData()}
+          onHide={() => this.setState({ showDrawer: false, selectedAgency: null })} />
       </section>
     )
   }

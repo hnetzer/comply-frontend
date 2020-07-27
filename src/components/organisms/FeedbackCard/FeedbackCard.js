@@ -62,11 +62,11 @@ const FeedbackCard = () => {
   return (
   <>
     <Card className={style.card}>
-      <h4 className={style.title}>Feedback</h4>
+      <h4 className={style.title}>Questions?</h4>
       <div className={style.iconSection}>
         <FontAwesomeIcon className={style.icon} icon={faComments} />
      </div>
-     <Button outline onClick={() => setShowModal(true)}>Let Us Know</Button>
+     <Button outline onClick={() => setShowModal(true)}>Ask Us Anything</Button>
     </Card>
     <Modal show={showModal} onHide={onHideModal}>
       <Modal.Header closeButton>

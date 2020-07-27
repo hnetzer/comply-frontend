@@ -9,6 +9,7 @@ import UpcomingDatesCard from './UpcomingDatesCard/UpcomingDatesCard'
 import PremiumCard from './PremiumCard/PremiumCard'
 import NotSupportedModal from './NotSupportedModal/NotSupportedModal'
 import IncompleteFilingsModal from './IncompleteFilingsModal/IncompleteFilingsModal'
+import IncompleteFilingRow from './IncompleteFilingRow/IncompleteFilingRow'
 import FeedbackCard from './FeedbackCard/FeedbackCard'
 
 export {
@@ -23,5 +24,6 @@ export {
   PremiumCard,
   NotSupportedModal,
   IncompleteFilingsModal,
-  FeedbackCard
+  FeedbackCard,
+  IncompleteFilingRow
 }
