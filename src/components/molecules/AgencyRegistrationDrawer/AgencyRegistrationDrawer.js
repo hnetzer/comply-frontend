@@ -25,20 +25,20 @@ const AgencyRegistrationDrawer = ({ agency, show, onHide, user, refreshDashboard
   return (
     <Drawer show={show} onHide={onHide}>
       <div className={style.content}>
-        <div className={style.title}>
-          <h4>{agency.name}</h4>
-          <h5>{agency.jurisdiction.name}</h5>
+        <div >
+          <h4 className={style.agency}>{agency.name}</h4>
+          <h5 className={style.jurisdiction}>{agency.jurisdiction.name}</h5>
         </div>
-        <p>Enter the date that your company registered.</p>
+        <p className={style.description}>Enter the date that your company registered with this agency:</p>
         <Formik initialValues={{ registration_date: agency.registration || '' }} onSubmit={handleSubmit}>
           {({ values, errors, isValid }) =>
             (
               <Form className={style.form}>
                 <div>
-                  <div><small>Regitration Date</small></div>
+                  <div className={style.formLabel}>Registration Date</div>
                   <Field as="input" type="date" name="registration_date" />
                 </div>
-                <Button disabled={!isValid} variant="primary" type="submit">
+                <Button className={style.submit} disabled={!isValid} variant="primary" type="submit">
                   Save
                 </Button>
               </Form>

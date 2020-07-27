@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
 
-import { Card } from 'components/atoms'
+import { Card, Divider } from 'components/atoms'
 import {
   UpcomingDatesCard,
   PremiumCard,
@@ -122,11 +122,14 @@ class DashboardScreen extends React.Component {
                 <div style={{ marginTop: 16 }}>
                   <h5>Filings Not Shown</h5>
                   {incompleteFilings.map((f,i) => (
+                    <>
                     <IncompleteFilingRow
                       key={i}
                       filing={f}
                       ctaClick={() => this.setState({ showDrawer: true, selectedAgency: f.agency })}
                       />
+                    {((incompleteFilings.length - 1) != i) && <Divider />}
+                    </>
                   ))}
                 </div>
               )
