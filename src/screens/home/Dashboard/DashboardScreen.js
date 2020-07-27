@@ -120,7 +120,7 @@ class DashboardScreen extends React.Component {
             {incompleteFilings && incompleteFilings.length > 0 &&
               (
                 <div style={{ marginTop: 16 }}>
-                  <h5>Filings Not Shown</h5>
+                  <h5>Filings Not Included</h5>
                   {incompleteFilings.map((f,i) => (
                     <>
                     <IncompleteFilingRow
@@ -128,7 +128,7 @@ class DashboardScreen extends React.Component {
                       filing={f}
                       ctaClick={() => this.setState({ showDrawer: true, selectedAgency: f.agency })}
                       />
-                    {((incompleteFilings.length - 1) != i) && <Divider />}
+                    {((incompleteFilings.length - 1) !== i) && <Divider />}
                     </>
                   ))}
                 </div>

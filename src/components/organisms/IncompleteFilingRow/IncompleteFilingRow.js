@@ -13,7 +13,7 @@ const IncompleteFilingRow = ({ filing, ctaClick }) => {
         <div className={style.jurisdiction}>{filing.agency.jurisdiction.name}</div>
       </div>
       <div className={style.description}>
-        <div>You must add your companies registration date with the <b>{filing.agency.name}</b> of <b>{filing.agency.jurisdiction.name}</b> in order to determine this filing's due date.</div>
+        <div>Add your registration date with the {filing.agency.name} of {filing.agency.jurisdiction.name} to include this due date in your filing calendar.</div>
       </div>
       <Button onClick={ctaClick} variant="dark">Add Date</Button>
     </div>

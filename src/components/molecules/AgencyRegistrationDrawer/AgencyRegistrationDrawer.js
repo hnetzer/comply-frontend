@@ -29,7 +29,7 @@ const AgencyRegistrationDrawer = ({ agency, show, onHide, user, refreshDashboard
           <h4 className={style.agency}>{agency.name}</h4>
           <h5 className={style.jurisdiction}>{agency.jurisdiction.name}</h5>
         </div>
-        <p className={style.description}>Enter the date that your company registered with this agency:</p>
+        <p className={style.description}>Add your registration date to include this agency's filing deadlines in your calendar.</p>
         <Formik initialValues={{ registration_date: agency.registration || '' }} onSubmit={handleSubmit}>
           {({ values, errors, isValid }) =>
             (
