@@ -11,7 +11,7 @@ const UpcomingDatesCard = ({ upcomingFilings }) => {
   return (
     <>
       <Card className={style.topCard}>
-        <h4>Upcoming Due Dates</h4>
+        <h4>Upcoming Deadlines</h4>
         <div className={style.upcomingTableWrapper}>
           <Table>
             <Body>

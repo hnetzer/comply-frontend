@@ -1,32 +1,33 @@
 import React from 'react';
 
-import style from './Button.module.scss';
+import classNames from 'classnames'
+import stylesheet from './Button.module.scss';
 
-const Button = ({ children, onClick, type, variant, outline, disabled }) => {
+const Button = ({ children, onClick, type, variant, outline, disabled, className }) => {
   const getButtonStyle = () => {
     if (disabled) {
-      return style.disabled;
+      return stylesheet.disabled;
     }
 
     if (!outline) {
       switch(variant) {
-        case "primary": return style.primary;
-        case "secondary": return style.secondary;
-        default: return style.primary;
+        case "primary": return stylesheet.primary;
+        case "secondary": return stylesheet.secondary;
+        case "dark": return stylesheet.dark;
+        default: return stylesheet.primary;
       }
     } else {
       switch(variant) {
-        case "primary": return style.primaryOutline;
-        case "secondary": return style.secondaryOutline;
-        default: return style.primaryOutline;
+        case "primary": return stylesheet.primaryOutline;
+        case "secondary": return stylesheet.secondaryOutline;
+        case "dark": return stylesheet.darkOutline;
+        default: return stylesheet.primaryOutline;
       }
     }
   }
 
-
-
   return (
-    <button type={type} onClick={onClick} className={getButtonStyle()}>
+    <button type={type} onClick={onClick} className={classNames(getButtonStyle(), className)}>
       {children}
     </button>
   )

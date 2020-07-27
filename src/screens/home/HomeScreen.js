@@ -37,18 +37,18 @@ class HomeScreen extends React.Component {
     const { company} = this.state;
     return(
       <>
-        <HeaderBar />
-        <SubNav />
-        <div style={{ display: 'flex', flexDirection: 'row', minHeight: 'calc(100vh - 54px)'}}>
-          <main className={styles.main}>
-            <Router primary={false} style={{ width: '100%' }}>
-              <CompanyScreen path="/company/*" company={company} />
-              <FAQScreen path="/faqs" />
-              <GuideScreen path="/guide" />
-              <DashboardScreen path="/" />
-            </Router>
-          </main>
+        <div style={{ position: 'fixed', width: '100%', zIndex: 1}}>
+          <HeaderBar />
+          <SubNav />
         </div>
+        <main className={styles.main}>
+          <Router primary={false} style={{ width: '100%' }}>
+            <CompanyScreen path="/company/*" company={company} />
+            <FAQScreen path="/faqs" />
+            <GuideScreen path="/guide" />
+            <DashboardScreen path="/" />
+          </Router>
+        </main>
       </>
     )
   }

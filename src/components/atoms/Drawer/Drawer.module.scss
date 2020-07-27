@@ -1,0 +1,38 @@
+@import "styles/vars";
+
+$gray-blue-color: rgba(8,16,74, .3);
+
+.drawer {
+  height: 100%;
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 112px;
+  right: 0;
+  background-color: #fff;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  transition: 1s;
+  padding: 24px;
+  filter: drop-shadow(0px 16px 16px rgba(0, 0, 0, 0.16));
+  display: flex;
+  flex-direction: column;
+}
+
+.closeIcon {
+  color: $gray-blue-color;
+}
+
+.closeIcon:hover {
+  color: $navy;
+  cursor: pointer;
+}
+
+.topSection {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mainSection {
+  height: 100%;
+}
