@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Card, Alert } from 'components/atoms'
 import { OfficeDetailsForm } from 'forms'
 
-import { setAgencies } from 'actions'
-import { getAgencies } from 'network/api'
+import { setAgencies, setCompanyAgencies } from 'actions'
+import { getAgencies, getCompanyAgencies } from 'network/api'
 
 const EditOfficesScreen= ({ user, dispatch }) => {
   const [saved, setSaved] = useState(false)
@@ -15,6 +15,9 @@ const EditOfficesScreen= ({ user, dispatch }) => {
     // Make sure the agencies are updated after updating offices
     const agencies = await getAgencies(user.company_id);
     dispatch(setAgencies(agencies))
+
+    const companyAgencies = await getCompanyAgencies(user.company_id)
+    dispatch(setCompanyAgencies(companyAgencies))
   }
 
   const onError = () => {
