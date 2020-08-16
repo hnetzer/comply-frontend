@@ -122,14 +122,14 @@ class DashboardScreen extends React.Component {
                 <div style={{ marginTop: 16 }}>
                   <h5>Filings Not Included</h5>
                   {incompleteFilings.map((f,i) => (
-                    <>
+                    <div key={i}>
                     <IncompleteFilingRow
                       key={i}
                       filing={f}
                       ctaClick={() => this.setState({ showDrawer: true, selectedAgency: f.agency })}
                       />
                     {((incompleteFilings.length - 1) !== i) && <Divider />}
-                    </>
+                    </div>
                   ))}
                 </div>
               )

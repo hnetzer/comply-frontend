@@ -4,7 +4,20 @@ export const loadState = () => {
     if (serializedState === null) {
       return undefined;
     }
-    return JSON.parse(serializedState);
+
+    const state = JSON.parse(serializedState);
+
+    if (window.FS) {
+      // Send the user info to full story
+      const FS = window.FS;
+      const user = state.auth.user
+      FS.identify(user.id, {
+        displayName: `${user.first_name} ${user.last_name}`,
+        email: user.email,
+      })
+    }
+
+    return state;
   } catch (err) {
     return undefined;
   }
