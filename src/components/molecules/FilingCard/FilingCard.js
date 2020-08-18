@@ -1,6 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import classNames from 'classnames'
+
+import { Button } from 'components/atoms'
 import style from './FilingCard.module.scss'
 
 const FilingCard = ({ name, agency, jurisdiction, dueDate, className }) => {
@@ -8,18 +10,13 @@ const FilingCard = ({ name, agency, jurisdiction, dueDate, className }) => {
   return (
     <div className={classes}>
       <div className={style.name}>{name}</div>
-      <div className={style.agency}>{agency}</div>
-      <div className={style.jurisdiction}>{jurisdiction}</div>
-      <div>
-        <small>Due:</small>
-        <div className={style.dueDate}>
-          {moment(dueDate).format('MMM Do, YYYY')}
-        </div>
+      <div className={style.dueDate}>
+        {`Due ${moment(dueDate).format('MMM Do, YYYY')}`}
       </div>
-      {/*<div>
-        <Button size="sm">Filing Details</Button>
-        <Button size="sm" variant="link">Agency Website</Button>
-      </div>*/}
+      <div className={style.jurisdiction}>{`${agency}, ${jurisdiction}`}</div>
+      <div className={style.actionContainer}>
+        <Button variant="secondary">View Details</Button>
+      </div>
     </div>
   )
 }
