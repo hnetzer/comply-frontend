@@ -1,0 +1,41 @@
+$gray-blue-color: rgba(8,16,74, .08);
+
+.card {
+  min-width: 240px;
+  padding: 24px;
+  background-color: #fff;
+  border: 2px solid $gray-blue-color;
+  border-radius: 4px;
+  color: #08104A;
+}
+
+.name {
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 16px;
+  margin-bottom: 8px;
+  color: #08104A;
+}
+
+.agency {
+  font-size: 10px;
+  line-height: 10px;
+  opacity: 0.5;
+}
+
+.jurisdiction {
+  margin: 16px 0px;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #2A6995;
+}
+
+.dueDate {
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 20px;
+}
