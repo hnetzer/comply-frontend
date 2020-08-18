@@ -45,6 +45,7 @@ class FilingsScreen extends React.Component {
             <div style={{ paddingTop: 16, display: 'flex', flexDirection: 'row' }}>
               {this.state.upcoming.map((f, index) => (
                 <FilingCard
+                  filingId={f.id}
                   name={f.name}
                   agency={f.agency.name}
                   jurisdiction={f.agency.jurisdiction.name}

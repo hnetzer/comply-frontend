@@ -1,11 +1,17 @@
 import React from 'react';
 import moment from 'moment';
 import classNames from 'classnames'
+import { navigate } from "@reach/router"
 
 import { Button } from 'components/atoms'
 import style from './FilingCard.module.scss'
 
-const FilingCard = ({ name, agency, jurisdiction, dueDate, className }) => {
+const FilingCard = ({ filingId, name, agency, jurisdiction, dueDate, className }) => {
+
+  const goToDetails = () => {
+    navigate(`/home/filings/${filingId}`);
+  }
+
   const classes = classNames(style.card, className)
   return (
     <div className={classes}>
@@ -15,7 +21,7 @@ const FilingCard = ({ name, agency, jurisdiction, dueDate, className }) => {
       </div>
       <div className={style.jurisdiction}>{`${agency}, ${jurisdiction}`}</div>
       <div className={style.actionContainer}>
-        <Button variant="secondary">View Details</Button>
+        <Button onClick={goToDetails} variant="secondary">View Details</Button>
       </div>
     </div>
   )

@@ -37,6 +37,7 @@ const FilingTimeline = ({ filings }) => {
               (
                 <div className={style.node} key={i}>
                   <FilingCard
+                    filingId={f.id}
                     name={f.name}
                     agency={f.agency.name}
                     jurisdiction={f.agency.jurisdiction.name}
