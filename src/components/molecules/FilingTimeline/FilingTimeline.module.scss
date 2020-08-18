@@ -101,12 +101,6 @@ $gray-blue-color: rgba(8,16,74, .08);
   z-index: 1;
   bottom: 166px;
   left: 16px;
-  min-width: 240px;
-  padding: 24px;
-  background-color: #fff;
-  border: 2px solid $gray-blue-color;
-  border-radius: 4px;
-  color: #08104A;
 }
 
 .node:hover {
@@ -119,35 +113,4 @@ $gray-blue-color: rgba(8,16,74, .08);
 
 .node:hover .filingHover {
   visibility: visible;
-}
-
-.filingHover .filingName {
-  font-weight: 800;
-  font-size: 16px;
-  line-height: 16px;
-  margin-bottom: 8px;
-  color: #08104A;
-}
-
-.filingHover .agencyName {
-  font-size: 10px;
-  line-height: 10px;
-  opacity: 0.5;
-}
-
-.filingHover .jurisdictionName {
-  margin: 16px 0px;
-  font-weight: 800;
-  font-size: 16px;
-  line-height: 16px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  color: #2A6995;
-}
-
-.filingHover .filingDueDate {
-  font-weight: 800;
-  font-size: 16px;
-  line-height: 20px;
 }

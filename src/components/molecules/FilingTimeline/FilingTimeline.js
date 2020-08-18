@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment'
 
+import { FilingCard } from 'components/molecules'
 import style from './FilingTimeline.module.scss';
 
 const FilingTimeline = ({ filings }) => {
@@ -35,21 +36,12 @@ const FilingTimeline = ({ filings }) => {
             {files.map((f,i) =>
               (
                 <div className={style.node} key={i}>
-                  <div className={style.filingHover}>
-                    <div className={style.filingName}>{f.name}</div>
-                    <div className={style.agencyName}>{f.agency.name}</div>
-                    <div className={style.jurisdictionName}>{f.agency.jurisdiction.name}</div>
-                    <div>
-                      <small>Due:</small>
-                      <div className={style.filingDueDate}>
-                        {moment(f.due).format('MMM Do, YYYY')}
-                      </div>
-                    </div>
-                    {/*<div>
-                      <Button size="sm">Filing Details</Button>
-                      <Button size="sm" variant="link">Agency Website</Button>
-                    </div>*/}
-                  </div>
+                  <FilingCard
+                    name={f.name}
+                    agency={f.agency.name}
+                    jurisdiction={f.agency.jurisdiction.name}
+                    dueDate={f.due}
+                    className={style.filingHover} />
                 </div>
               )
             )}
