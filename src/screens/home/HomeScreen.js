@@ -50,7 +50,7 @@ class HomeScreen extends React.Component {
             <GuideScreen path="/guide" />
             <DashboardScreen path="/" />
             <FilingsScreen path="/filings" />
-            <FilingDetailsScreen path="/filings/:filingId" />
+            <FilingDetailsScreen path="/filings/:filingId/:dueDate" />
           </Router>
         </main>
       </>

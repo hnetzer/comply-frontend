@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
+import moment from 'moment'
 
 import { getFiling } from 'network/api'
 
@@ -13,12 +14,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 class FilingDetailsScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { filing: null }
+    this.state = { filing: null, dueDate: null }
   }
 
   async componentDidMount() {
     const filing = await getFiling(this.props.filingId);
-    this.setState({ filing: filing })
+    this.setState({ filing: filing, dueDate: this.props.dueDate })
   }
 
   goToAllFilings = () => {
@@ -26,10 +27,8 @@ class FilingDetailsScreen extends React.Component {
   }
 
 
-
-
   render() {
-    const { filing } = this.state
+    const { filing, dueDate } = this.state
     if (!filing) return 'loading...'
     return (
       <section className={style.container}>
@@ -43,6 +42,9 @@ class FilingDetailsScreen extends React.Component {
             <div>
               <FontAwesomeIcon style={{ height: 32, width: 24 }} icon={faFileAlt} />
               <span className={style.title}>{filing.name}</span>
+              <span style={{ fontWeight: 800, fontSize: 24, color: '#309F76', marginLeft: 16 }}>
+                {`Due ${moment(dueDate).format('MMM Do, YYYY')}`}
+              </span>
             </div>
             <div>
               <div>

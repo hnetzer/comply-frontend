@@ -9,7 +9,7 @@ import style from './FilingCard.module.scss'
 const FilingCard = ({ filingId, name, agency, jurisdiction, dueDate, className }) => {
 
   const goToDetails = () => {
-    navigate(`/home/filings/${filingId}`);
+    navigate(`/home/filings/${filingId}/${dueDate}`);
   }
 
   const classes = classNames(style.card, className)
