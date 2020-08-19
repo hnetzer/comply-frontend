@@ -7,3 +7,49 @@
   flex-direction: column;
   align-items: flex-start;
 }
+
+.titleCard {
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 24px 0px;
+  padding: 24px 40px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 500;
+  margin-left: 16px;
+}
+
+.agency, .jurisdiction {
+  font-size: 24px;
+  font-weight: 800;
+  margin-left: 16px;
+}
+
+.descriptionCard {
+  padding: 40px;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.descriptionTitle {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.descriptionText {
+  white-space: pre-wrap;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+.descriptionFooter {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
