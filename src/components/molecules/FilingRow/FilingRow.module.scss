@@ -1,0 +1,46 @@
+
+.row {
+  width: 100%;
+  padding: 16px;
+  margin: 8px 0px;
+  background-color: #fff;
+  border: 2px solid #f1f2f3;
+  border-radius: 3px;
+  color: #112532;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.name {
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 28px;
+  width: 250px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
+}
+
+.dueDate {
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 24px;
+  opacity: .75;
+  width: 140px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.jurisdiction {
+  font-size: 14px;
+  line-height: 22px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 250px;
+}

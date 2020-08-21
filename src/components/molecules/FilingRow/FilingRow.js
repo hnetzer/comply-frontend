@@ -4,20 +4,20 @@ import classNames from 'classnames'
 import { navigate } from "@reach/router"
 
 import { Button } from 'components/atoms'
-import style from './FilingCard.module.scss'
+import style from './FilingRow.module.scss'
 
-const FilingCard = ({ filingId, name, agency, jurisdiction, dueDate, className }) => {
+const FilingRow= ({ filingId, name, agency, jurisdiction, dueDate, className }) => {
 
   const goToDetails = () => {
     navigate(`/home/filings/${filingId}/${dueDate}`);
   }
 
-  const classes = classNames(style.card, className)
+  const classes = classNames(style.row, className)
   return (
     <div className={classes}>
       <div className={style.name}>{name}</div>
       <div className={style.dueDate}>
-        {`Due ${moment(dueDate).format('MMM Do, YYYY')}`}
+        {`${moment(dueDate).format('MMM Do, YYYY')}`}
       </div>
       <div className={style.jurisdiction}>{`${agency}, ${jurisdiction}`}</div>
       <div className={style.actionContainer}>
@@ -28,4 +28,4 @@ const FilingCard = ({ filingId, name, agency, jurisdiction, dueDate, className }
 }
 
 
-export default FilingCard
+export default FilingRow

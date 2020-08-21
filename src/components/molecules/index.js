@@ -5,6 +5,7 @@ import VerticalProgressBar from './VerticalProgressBar/VerticalProgressBar';
 import QuestionToggle from './QuestionToggle/QuestionToggle';
 import FilingTimeline from './FilingTimeline/FilingTimeline';
 import FilingCard from './FilingCard/FilingCard';
+import FilingRow from './FilingRow/FilingRow';
 import AgencyRegistrationDrawer from './AgencyRegistrationDrawer/AgencyRegistrationDrawer';
 
 
@@ -15,5 +16,6 @@ export {
   VerticalProgressBar,
   QuestionToggle,
   AgencyRegistrationDrawer,
-  FilingCard
+  FilingCard,
+  FilingRow
 }

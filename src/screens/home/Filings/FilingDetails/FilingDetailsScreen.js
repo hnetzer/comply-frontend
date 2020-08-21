@@ -8,7 +8,7 @@ import { getFiling } from 'network/api'
 import style from './FilingDetailsScreen.module.scss'
 import { Card, Button } from 'components/atoms'
 
-import { faFileAlt, faMapMarkerAlt, faLandmark, faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faFileAlt, faMapMarkerAlt, faLandmark, faArrowRight, faArrowLeft, faTools } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class FilingDetailsScreen extends React.Component {
@@ -24,6 +24,21 @@ class FilingDetailsScreen extends React.Component {
 
   goToAllFilings = () => {
     navigate('/home/filings')
+  }
+
+  renderEmpty = () => {
+    return (<div className={style.emptyContainer}>
+      <FontAwesomeIcon style={{ height: 48, width: 48 }} icon={faTools} />
+      <span style={{ fontSize: 20, fontWeight: 800 }}>Coming soon...</span>
+    </div>)
+  }
+
+  renderDescription = () => {
+    return (
+      <p className={style.descriptionText}>
+        {this.state.filing.description}
+      </p>
+    )
   }
 
 
@@ -47,21 +62,20 @@ class FilingDetailsScreen extends React.Component {
               </span>
             </div>
             <div>
-              <div>
+              <div className={style.jurisdictionContainer}>
                 <FontAwesomeIcon style={{ height: 16, width: 16 }} icon={faMapMarkerAlt} />
-                <span className={style.jurisdiction}>{filing.agency.jurisdiction.name}</span>
+                <div className={style.jurisdiction}>{filing.agency.jurisdiction.name}</div>
               </div>
-              <div>
+              <div className={style.agencyContainer}>
                 <FontAwesomeIcon style={{ height: 16, width: 16 }} icon={faLandmark} />
-                <span className={style.agency}>{filing.agency.name}</span>
+                <div className={style.agency}>{filing.agency.name}</div>
               </div>
             </div>
           </Card>
           <Card className={style.descriptionCard}>
             <h4 className={style.descriptionTitle}>Description</h4>
-            <p className={style.descriptionText} style={{ }}>
-              {filing.description}
-            </p>
+            {(filing.description && (filing.description.length > 0)) ?
+              this.renderDescription() : this.renderEmpty()}
             <div className={style.descriptionFooter}>
             {filing.website != null ?
               (<Button onClick={() => window.open(filing.website)} variant="secondary" outline>

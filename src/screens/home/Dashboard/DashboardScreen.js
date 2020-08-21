@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment'
+import { compareFilingsByDue } from 'utils'
 
 import { Card, Divider } from 'components/atoms'
 import {
@@ -49,7 +50,7 @@ class DashboardScreen extends React.Component {
       const jurisdictions = await getCompanyJurisdictions(companyId);
 
       this.setState({
-        timelineFilings: yearFilings.filter(f => f.due != null).sort(this.compareFilingsByDue),
+        timelineFilings: yearFilings.filter(f => f.due != null).sort(compareFilingsByDue),
         upcomingFilings: upcomingFilings,
         notSupportedJuris: jurisdictions.filter(j => !j.supported),
         incompleteFilings: incompleteFilings
@@ -71,19 +72,9 @@ class DashboardScreen extends React.Component {
     const start = moment().format('YYYY-MM-DD')
     const end = moment().add(3, 'M').format('YYYY-MM-DD')
     const filings = await getFilingsForCompany(companyId, start, end)
-    return filings.sort(this.compareFilingsByDue)
+    return filings.sort(compareFilingsByDue)
   }
 
-  compareFilingsByDue = (a, b) => {
-    const dueA = moment(a.due).unix()
-    const dueB = moment(b.due).unix()
-    if (dueA > dueB) {
-      return 1
-    } else if (dueA < dueB) {
-      return -1
-    }
-    return 0
-  }
 
   submitWantsPremium = () => {
     updateCompanyPremium(this.props.user.company_id)
