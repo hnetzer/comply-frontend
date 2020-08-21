@@ -1,0 +1,75 @@
+.container {
+  margin: 40px auto;
+  padding: 0 30px 140px;
+  max-width: 1180px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.titleCard {
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 24px 0px;
+  padding: 24px 40px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 500;
+  margin-left: 16px;
+}
+
+.jurisdictionContainer, .agencyContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.agency, .jurisdiction {
+  font-size: 24px;
+  font-weight: 800;
+  margin-left: 16px;
+  max-width: 300px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.descriptionCard {
+  padding: 40px;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.descriptionTitle {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.descriptionText {
+  white-space: pre-wrap;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+.descriptionFooter {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.emptyContainer {
+  margin: 24px 0px;
+  width: 100%;
+  color: #cbcbcb;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

@@ -24,6 +24,11 @@ const SubNav = ({ location }) => {
         Dashboard
       </Link>
       <Link
+        className={getClassName(["/home/filings"])}
+        to="/home/filings">
+        Filings
+      </Link>
+      <Link
         className={getClassName([
           "/home/company",
           "/home/company/general",

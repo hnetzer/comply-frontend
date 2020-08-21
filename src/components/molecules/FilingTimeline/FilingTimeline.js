@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment'
 
+import { FilingCard } from 'components/molecules'
 import style from './FilingTimeline.module.scss';
 
 const FilingTimeline = ({ filings }) => {
@@ -20,13 +21,19 @@ const FilingTimeline = ({ filings }) => {
   }, {})
 
   const months = moment.monthsShort();
+  const now = moment();
 
   return (
     <div className={style.container}>
       <div className={style.nodeSection}>
         {months.map((month, index) => {
           const files = groups[index] != null ? groups[index] : [];
-          return (<div className={style.month} key={index}>
+          return (
+          <div
+            className={style.month}
+            style={{ borderLeft: index === now.month() ? '3px solid #112532': null }}
+            key={index}
+          >
             <div className={style.monthCountSection}>
               <span className={style.monthCount}>{files.length}</span>
               <span className={style.dueLabel}>{` due`}</span>
@@ -34,22 +41,18 @@ const FilingTimeline = ({ filings }) => {
             <div className={style.monthNodeSection}>
             {files.map((f,i) =>
               (
-                <div className={style.node} key={i}>
-                  <div className={style.filingHover}>
-                    <div className={style.filingName}>{f.name}</div>
-                    <div className={style.agencyName}>{f.agency.name}</div>
-                    <div className={style.jurisdictionName}>{f.agency.jurisdiction.name}</div>
-                    <div>
-                      <small>Due:</small>
-                      <div className={style.filingDueDate}>
-                        {moment(f.due).format('MMM Do, YYYY')}
-                      </div>
-                    </div>
-                    {/*<div>
-                      <Button size="sm">Filing Details</Button>
-                      <Button size="sm" variant="link">Agency Website</Button>
-                    </div>*/}
-                  </div>
+                <div
+                  className={style.node}
+                  style={{ backgroundColor: moment(f.due).isAfter(now) ? '#13C296' : '#cbcbcb' }}
+                  key={i}
+                >
+                  <FilingCard
+                    filingId={f.id}
+                    name={f.name}
+                    agency={f.agency.name}
+                    jurisdiction={f.agency.jurisdiction.name}
+                    dueDate={f.due}
+                    className={style.filingHover} />
                 </div>
               )
             )}
