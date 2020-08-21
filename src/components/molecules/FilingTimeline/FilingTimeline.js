@@ -21,13 +21,19 @@ const FilingTimeline = ({ filings }) => {
   }, {})
 
   const months = moment.monthsShort();
+  const now = moment();
 
   return (
     <div className={style.container}>
       <div className={style.nodeSection}>
         {months.map((month, index) => {
           const files = groups[index] != null ? groups[index] : [];
-          return (<div className={style.month} key={index}>
+          return (
+          <div
+            className={style.month}
+            style={{ borderLeft: index === now.month() ? '3px solid #112532': null }}
+            key={index}
+          >
             <div className={style.monthCountSection}>
               <span className={style.monthCount}>{files.length}</span>
               <span className={style.dueLabel}>{` due`}</span>
@@ -35,7 +41,11 @@ const FilingTimeline = ({ filings }) => {
             <div className={style.monthNodeSection}>
             {files.map((f,i) =>
               (
-                <div className={style.node} key={i}>
+                <div
+                  className={style.node}
+                  style={{ backgroundColor: moment(f.due).isAfter(now) ? '#13C296' : '#cbcbcb' }}
+                  key={i}
+                >
                   <FilingCard
                     filingId={f.id}
                     name={f.name}
