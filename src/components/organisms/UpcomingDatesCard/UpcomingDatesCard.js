@@ -17,9 +17,9 @@ const UpcomingDatesCard = ({ upcomingFilings }) => {
             <Body>
               {upcomingFilings && upcomingFilings.map((f,i) => (
                 <Row key={i} style={{ border: 'none' }} >
-                  <Cell className={style.filingName}>{f.name}</Cell>
-                  <Cell className={style.filingJurisdiction}>{f.agency.jurisdiction.name}</Cell>
-                  <Cell className={style.filingDueDate}>{moment(f.due).format("MMM Do, YYYY")}</Cell>
+                  <Cell className={style.filingName}>{f.filing.name}</Cell>
+                  <Cell className={style.filingJurisdiction}>{f.filing.agency.jurisdiction.name}</Cell>
+                  <Cell className={style.filingDueDate}>{moment(f.due_date).format("MMM Do, YYYY")}</Cell>
                 </Row>
               ))}
             </Body>

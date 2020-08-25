@@ -7,10 +7,10 @@ import style from './FilingTimeline.module.scss';
 const FilingTimeline = ({ filings }) => {
   if(!filings) return null;
 
-  const sortByDate = (a, b) => (moment(a.due).isSameOrBefore(b.due) ? -1 : 1);
+  const sortByDate = (a, b) => (moment(a.due_date).isSameOrBefore(b.due_date) ? -1 : 1);
 
   const groups = filings.reduce((map, filing) => {
-    const monthDue = moment(filing.due).month();
+    const monthDue = moment(filing.due_date).month();
     if(!map[monthDue]) {
       map[monthDue] = [];
     }
@@ -43,15 +43,15 @@ const FilingTimeline = ({ filings }) => {
               (
                 <div
                   className={style.node}
-                  style={{ backgroundColor: moment(f.due).isAfter(now) ? '#13C296' : '#cbcbcb' }}
+                  style={{ backgroundColor: moment(f.due_date).isAfter(now) ? '#13C296' : '#cbcbcb' }}
                   key={i}
                 >
                   <FilingCard
                     filingId={f.id}
-                    name={f.name}
-                    agency={f.agency.name}
-                    jurisdiction={f.agency.jurisdiction.name}
-                    dueDate={f.due}
+                    name={f.filing.name}
+                    agency={f.filing.agency.name}
+                    jurisdiction={f.filing.agency.jurisdiction.name}
+                    dueDate={f.due_date}
                     className={style.filingHover} />
                 </div>
               )

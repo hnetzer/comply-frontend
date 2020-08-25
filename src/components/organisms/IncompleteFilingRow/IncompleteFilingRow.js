@@ -4,8 +4,8 @@ import { Button } from 'components/atoms'
 
 import style from './IncompleteFilingRow.module.scss';
 
-const IncompleteFilingRow = ({ filing, ctaClick }) => {
-
+const IncompleteFilingRow = ({ companyFiling, ctaClick }) => {
+  const filing = companyFiling.filing;
   return (
     <div className={style.row}>
       <div style={{ width: 260 }}>
