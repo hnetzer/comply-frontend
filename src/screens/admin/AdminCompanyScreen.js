@@ -4,7 +4,7 @@ import moment from 'moment';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Table from 'react-bootstrap/Table';
 
-import { adminGetCompany, adminGetFilingsForCompany } from 'network/api';
+import { adminGetCompany, adminGetCompanyFilings } from 'network/api';
 import { compareFilingsByDue } from 'utils'
 
 
@@ -21,7 +21,7 @@ class AdminCompanyScreen extends React.Component {
       const companyId = this.props.companyId;
       const year = moment().format('YYYY');
       const data = await adminGetCompany(this.props.companyId)
-      const filings = await adminGetFilingsForCompany(companyId, `${year}-01-01`, `${year}-12-31`, true);
+      const filings = await adminGetCompanyFilings(companyId, `${year}-01-01`, `${year}-12-31`, true);
       this.setState({ company: data, filings: filings })
     } catch (err) {
       console.log(err)
@@ -168,10 +168,10 @@ class AdminCompanyScreen extends React.Component {
         {filings.sort(compareFilingsByDue).map((f, index) => {
           return (
             <tr key={index}>
-              <td>{f.name}</td>
-              <td>{f.agency.name}</td>
-              <td>{f.agency.jurisdiction.name}</td>
-              <td>{f.due != null ? moment(f.due).format('MM/DD/YYYY') : 'N/A'}</td>
+              <td>{f.filing.name}</td>
+              <td>{f.filing.agency.name}</td>
+              <td>{f.filing.agency.jurisdiction.name}</td>
+              <td>{f.due_date != null ? moment(f.due_date).format('MM/DD/YYYY') : 'N/A'}</td>
             </tr>
           )
         })}
