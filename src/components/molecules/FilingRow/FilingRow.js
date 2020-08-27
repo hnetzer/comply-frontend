@@ -6,10 +6,10 @@ import { navigate } from "@reach/router"
 import { Button } from 'components/atoms'
 import style from './FilingRow.module.scss'
 
-const FilingRow= ({ filingId, name, agency, jurisdiction, dueDate, className }) => {
+const FilingRow= ({ companyFilingId, name, agency, jurisdiction, dueDate, className }) => {
 
   const goToDetails = () => {
-    navigate(`/home/filings/${filingId}/${dueDate}`);
+    navigate(`/home/filings/${companyFilingId}`);
   }
 
   const classes = classNames(style.row, className)
