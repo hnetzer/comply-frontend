@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { getFilingsForCompany } from 'network/api';
+import { getCompanyFilings } from 'network/api';
 import { compareFilingsByDue } from 'utils'
 
 import style from './FilingsScreen.module.scss'
@@ -30,14 +30,14 @@ class FilingsScreen extends React.Component {
   getUpcomingFilings = async (companyId) => {
     const start = moment().format('YYYY-MM-DD')
     const end = moment().add(3, 'M').format('YYYY-MM-DD')
-    const filings = await getFilingsForCompany(companyId, start, end)
+    const filings = await getCompanyFilings(companyId, start, end)
     return filings.sort(compareFilingsByDue)
   }
 
   getPastFilings = async (companyId) => {
     const start = '2020-01-01'
     const end = moment().subtract(1, 'days').format('YYYY-MM-DD')
-    const filings = await getFilingsForCompany(companyId, start, end)
+    const filings = await getCompanyFilings(companyId, start, end)
     return filings.sort(compareFilingsByDue)
   }
 
@@ -55,22 +55,22 @@ class FilingsScreen extends React.Component {
             <div style={{ paddingTop: 16, display: 'flex', flexDirection: 'row' }}>
               {this.state.upcoming.map((f, index) => (
                 <FilingCard
-                  filingId={f.id}
-                  name={f.name}
-                  agency={f.agency.name}
-                  jurisdiction={f.agency.jurisdiction.name}
-                  dueDate={f.due} />))}
+                  companyFilingId={f.id}
+                  name={f.filing.name}
+                  agency={f.filing.agency.name}
+                  jurisdiction={f.filing.agency.jurisdiction.name}
+                  dueDate={f.due_date} />))}
             </div>
           </div>
           <div style={{ marginTop: 40, width: '100%' }}>
             <h3>Previous</h3>
             {this.state.past.map((f, index) => (
               <FilingRow
-                filingId={f.id}
-                name={f.name}
-                agency={f.agency.name}
-                jurisdiction={f.agency.jurisdiction.name}
-                dueDate={f.due} />))}
+                companyFilingId={f.id}
+                name={f.filing.name}
+                agency={f.filing.agency.name}
+                jurisdiction={f.filing.agency.jurisdiction.name}
+                dueDate={f.due_date} />))}
           </div>
 
         </Card>

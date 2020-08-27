@@ -30,12 +30,12 @@ const checkForAdmin = (user) => {
 }
 
 const compareFilingsByDue = (a, b) => {
-  if(!a.due && !b.due) return 0;
-  if(!a.due) return -1;
-  if(!b.due) return 1;
+  if(!a.due_date && !b.due_date) return 0;
+  if(!a.due_date) return -1;
+  if(!b.due_date) return 1;
 
-  const dueA = moment(a.due).unix()
-  const dueB = moment(b.due).unix()
+  const dueA = moment(a.due_date).unix()
+  const dueB = moment(b.due_date).unix()
   if (dueA > dueB) {
     return 1
   } else if (dueA < dueB) {

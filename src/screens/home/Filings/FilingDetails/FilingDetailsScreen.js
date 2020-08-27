@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 import moment from 'moment'
 
-import { getFiling } from 'network/api'
+import { getCompanyFiling } from 'network/api'
 
 import style from './FilingDetailsScreen.module.scss'
 import { Card, Button } from 'components/atoms'
@@ -18,8 +18,10 @@ class FilingDetailsScreen extends React.Component {
   }
 
   async componentDidMount() {
-    const filing = await getFiling(this.props.filingId);
-    this.setState({ filing: filing, dueDate: this.props.dueDate })
+    const { user, companyFilingId } = this.props
+    console.log(`About to get company filing for company ${user.company_id} and companyFiling ${companyFilingId}`)
+    const companyFiling = await getCompanyFiling(user.company_id, companyFilingId);
+    this.setState({ filing: companyFiling.filing, dueDate: companyFiling.due_date })
   }
 
   goToAllFilings = () => {

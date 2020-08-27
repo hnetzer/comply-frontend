@@ -13,7 +13,11 @@ import {
 } from 'components/organisms'
 
 import { FilingTimeline, AgencyRegistrationDrawer } from 'components/molecules'
-import { getFilingsForCompany, getCompanyJurisdictions, updateCompanyPremium } from 'network/api';
+import {
+  getCompanyFilings,
+  getCompanyJurisdictions,
+  updateCompanyPremium
+} from 'network/api';
 
 import screenStyle from './Screens.module.scss'
 import style from './DashboardScreen.module.scss'
@@ -35,22 +39,17 @@ class DashboardScreen extends React.Component {
     this.loadPageData()
   }
 
-  /*componentDidUpdate(prevProps) {
-    if (prevProps.agencies.length !== this.props.agencies.length) {
-      await this.loadPageData()
-    }
-  }*/
 
   loadPageData = async () => {
     try {
       const companyId = this.props.user.company_id;
       const yearFilings = await this.getFilingsForCurrentYear(companyId, true);
       const upcomingFilings = await this.getUpcomingFilings(companyId);
-      const incompleteFilings = yearFilings.filter(f => f.due == null)
+      const incompleteFilings = yearFilings.filter(f => f.due_date == null)
       const jurisdictions = await getCompanyJurisdictions(companyId);
 
       this.setState({
-        timelineFilings: yearFilings.filter(f => f.due != null).sort(compareFilingsByDue),
+        timelineFilings: yearFilings.filter(f => f.due_date != null).sort(compareFilingsByDue),
         upcomingFilings: upcomingFilings,
         notSupportedJuris: jurisdictions.filter(j => !j.supported),
         incompleteFilings: incompleteFilings
@@ -65,13 +64,13 @@ class DashboardScreen extends React.Component {
     const year = moment().format('YYYY')
     const start = `${year}-01-01`;
     const end = `${year}-12-31`;
-    return await getFilingsForCompany(companyId, start, end, unscheduled)
+    return await getCompanyFilings(companyId, start, end, unscheduled)
   }
 
   getUpcomingFilings = async (companyId) => {
     const start = moment().format('YYYY-MM-DD')
     const end = moment().add(3, 'M').format('YYYY-MM-DD')
-    const filings = await getFilingsForCompany(companyId, start, end)
+    const filings = await getCompanyFilings(companyId, start, end)
     return filings.sort(compareFilingsByDue)
   }
 
@@ -116,8 +115,8 @@ class DashboardScreen extends React.Component {
                     <div key={i}>
                     <IncompleteFilingRow
                       key={i}
-                      filing={f}
-                      ctaClick={() => this.setState({ showDrawer: true, selectedAgency: f.agency })}
+                      companyFiling={f}
+                      ctaClick={() => this.setState({ showDrawer: true, selectedAgency: f.filing.agency })}
                       />
                     {((incompleteFilings.length - 1) !== i) && <Divider />}
                     </div>
