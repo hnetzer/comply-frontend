@@ -6,10 +6,10 @@ import { navigate } from "@reach/router"
 import { Button } from 'components/atoms'
 import style from './FilingCard.module.scss'
 
-const FilingCard = ({ filingId, name, agency, jurisdiction, dueDate, className }) => {
+const FilingCard = ({ companyFilingId, name, agency, jurisdiction, dueDate, className }) => {
 
   const goToDetails = () => {
-    navigate(`/home/filings/${filingId}/${dueDate}`);
+    navigate(`/home/filings/${companyFilingId}`);
   }
 
   const classes = classNames(style.card, className)
