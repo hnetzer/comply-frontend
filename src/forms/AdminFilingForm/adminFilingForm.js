@@ -9,6 +9,15 @@ import AdminFilingDueDateSection from './adminFilingDueDateSection'
 
 import style from './adminFilingForm.module.css'
 
+const dueDateSchema = Yup.object().shape({
+  fixed_month: Yup.number().integer().nullable(),
+  fixed_day: Yup.number().integer().nullable(),
+  month_offset: Yup.number().integer().nullable(),
+  day_offset: Yup.number().integer().nullable(),
+  offset_type: Yup.mixed().oneOf(['none', 'registration', 'year-end']).required(),
+  month_end: Yup.boolean().nullable(),
+});
+
 const filingSchema = Yup.object().shape({
   name: Yup.string().min(3, 'Too short!').required(),
   agency_id: Yup.number().integer().required(),
@@ -18,15 +27,18 @@ const filingSchema = Yup.object().shape({
   website: Yup.string().nullable(),
   description: Yup.string().nullable(),
   occurrence: Yup.mixed().oneOf(['annual', 'multiple', 'biennial']).required(),
-  due_dates: Yup.array().of(Yup.object().shape({
-    fixed_month: Yup.number().integer().nullable(),
-    fixed_day: Yup.number().integer().nullable(),
-    month_offset: Yup.number().integer().nullable(),
-    day_offset: Yup.number().integer().nullable(),
-    offset_type: Yup.mixed().oneOf(['none', 'registration', 'year-end']).required(),
-    month_end: Yup.boolean().nullable(),
-  }))
+  due_date: dueDateSchema,
+  due_dates: Yup.array().of(dueDateSchema)
 });
+
+const DateInitialValues = {
+  fixed_month: null,
+  fixed_day: null,
+  month_offset: 0,
+  day_offset: 0,
+  offset_type: 'none',
+  month_end: false,
+}
 
 const FilingInitialValues = {
   name: '',
@@ -35,19 +47,17 @@ const FilingInitialValues = {
   website: '',
   description: '',
   occurrence: 'annual',
-  due_dates: [{
-    fixed_month: null,
-    fixed_day: null,
-    month_offset: 0,
-    day_offset: 0,
-    offset_type: 'none',
-    month_end: false,
-  }]
+  due_date: DateInitialValues,
+  due_dates: [DateInitialValues]
 };
 
 
 const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status }) => {
   const submit = async (values, { setSubmitting }) => {
+    if (values.occurrence !== 'multiple') {
+      values.due_dates = [values.due_date];
+    }
+
     await handleSubmit(values, { setSubmitting })
   }
 
@@ -70,11 +80,22 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
     return 0;
   }
 
+  const getInitalValues = () => {
+    if (filing) {
+      return {
+        ...filing,
+        due_date: filing.occurrence !== 'multiple' ? filing.due_dates[0] : DateInitialValues,
+        due_dates: filing.occurrence === 'multiple' ? filing.due_dates : []
+      }
+    }
+    return FilingInitialValues;
+  }
+
 
   return (
     <div className={style.container}>
       <Formik
-        initialValues={filing != null ? filing : FilingInitialValues}
+        initialValues={getInitalValues()}
         onSubmit={submit}
         validationSchema={filingSchema}
         enableReinitialize={true}

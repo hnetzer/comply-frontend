@@ -12,22 +12,22 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
   const renderFixedDateFields = () => {
     const occurrence = values.occurrence
     if (occurrence === "multiple") return null;
-    const dependency = values.due_dates[0].offset_type
+    const dependency = values.due_date.offset_type
     if (dependency !== "none") return null;
     return (
       <div>
         <Form.Label>Date</Form.Label>
         <div style={{ display: 'flex', flexDirection: 'row'}}>
-          <Form.Group style={{ width: 154, marginRight: 16 }} controlId="due_dates[0].fixed_month">
+          <Form.Group style={{ width: 154, marginRight: 16 }} controlId="due_date.fixed_month">
             <MonthPicker
               handleChange={handleChange}
-              value={values.due_dates[0].fixed_month} />
+              value={values.due_date.fixed_month} />
           </Form.Group>
-          <Form.Group style={{ width: 154 }} controlId="due_dates[0].fixed_day">
+          <Form.Group style={{ width: 154 }} controlId="due_date.fixed_day">
             <DueDayPicker
               handleChange={handleChange}
-              value={values.due_dates[0].fixed_day}
-              month={values.due_dates[0].fixed_month}/>
+              value={values.due_date.fixed_day}
+              month={values.due_date.fixed_month}/>
           </Form.Group>
         </div>
       </div>
@@ -64,7 +64,7 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
     const occurrence = values.occurrence
     if (occurrence === "multiple") return null;
     return (
-      <Form.Group controlId="due_dates[0].offset_type">
+      <Form.Group controlId="due_date.offset_type">
         <Form.Label>Dependency</Form.Label>
         <div>
           <Form.Check
@@ -72,19 +72,19 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
              type="radio"
              value="none"
              onChange={handleChange}
-             checked={values.due_dates[0].offset_type === "none"}/>
+             checked={values.due_date.offset_type === "none"}/>
            <Form.Check
               label="registration"
               type="radio"
               value="registration"
               onChange={handleChange}
-              checked={values.due_dates[0].offset_type === "registration"}/>
+              checked={values.due_date.offset_type === "registration"}/>
           <Form.Check
              label="year end"
              type="radio"
              value="year-end"
              onChange={handleChange}
-             checked={values.due_dates[0].offset_type === "year-end"}/>
+             checked={values.due_date.offset_type === "year-end"}/>
         </div>
       </Form.Group>
     )
@@ -136,17 +136,17 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
   const renderOffsetFields = () => {
     const occurrence = values.occurrence
     if (occurrence === "multiple") return null;
-    const dependency = values.due_dates[0].offset_type
+    const dependency = values.due_date.offset_type
     if (dependency === "none") return null;
     return (
       <div>
         <Form.Label>Date Offset</Form.Label>
         <div style={{ display: 'flex', flexDirection: 'row'}}>
-          <Form.Group style={{ width: 154, marginRight: 16 }} controlId="due_dates[0].month_offset">
+          <Form.Group style={{ width: 154, marginRight: 16 }} controlId="due_date.month_offset">
             <Form.Control
               required
               onChange={handleChange}
-              value={values.due_dates[0].month_offset || ''}
+              value={values.due_date.month_offset || ''}
               size="sm"
               as="select">
               <option value={0}>+0 months</option>
@@ -163,11 +163,11 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
               <option value={11}>+11 months</option>
             </Form.Control>
           </Form.Group>
-          <Form.Group style={{ width: 154, marginRight: 16 }} controlId="due_dates[0].day_offset">
+          <Form.Group style={{ width: 154, marginRight: 16 }} controlId="due_date.day_offset">
             <Form.Control
               required
               onChange={handleChange}
-              value={values.due_dates[0].day_offset || ''}
+              value={values.due_date.day_offset || ''}
               size="sm"
               as="select">
               {_.range(31).map(i => (
@@ -176,13 +176,13 @@ const AdminFilingDueDateSection = ({ values, handleChange }) => {
             </Form.Control>
           </Form.Group>
           {dependency === "registration" &&
-            (<Form.Group style={{ width: 154 }} controlId="due_dates[0].month_end">
+            (<Form.Group style={{ width: 154 }} controlId="due_date.month_end">
               <Form.Check
                 inline
                 label="month end"
                 type="checkbox"
                 onChange={handleChange}
-                checked={values.due_dates[0].month_end}/>
+                checked={values.due_date.month_end}/>
             </Form.Group>)
           }
         </div>
