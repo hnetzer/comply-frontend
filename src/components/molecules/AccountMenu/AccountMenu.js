@@ -1,11 +1,12 @@
 import React from 'react';
-
+import { navigate } from "@reach/router"
 import Dropdown from 'react-bootstrap/Dropdown'
+import { checkForAdmin } from 'utils'
 
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import style from './AccountMenu.module.scss'
+
 
 const Toggle = React.forwardRef(({ children, onClick, variant }, ref) => {
 
@@ -32,6 +33,7 @@ const Toggle = React.forwardRef(({ children, onClick, variant }, ref) => {
 const AccountMenu = (props) => {
   if(!props.user) return null;
   const { email, first_name, last_name } = props.user
+  const isAdmin = checkForAdmin(props.user)
 
   return (
     <Dropdown>
@@ -40,7 +42,8 @@ const AccountMenu = (props) => {
       </Dropdown.Toggle>
       <Dropdown.Menu alignRight>
         <Dropdown.Header>{email}</Dropdown.Header>
-        <Dropdown.Item onClick={props.handleLogout}>Logout</Dropdown.Item>
+        <Dropdown.Item onClick={() => navigate('/home/settings')}>Account Settings</Dropdown.Item>
+        {!isAdmin && (<Dropdown.Item onClick={props.handleLogout}>Logout</Dropdown.Item>)}
       </Dropdown.Menu>
     </Dropdown>
   )

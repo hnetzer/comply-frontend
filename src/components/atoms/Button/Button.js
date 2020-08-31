@@ -3,7 +3,7 @@ import React from 'react';
 import classNames from 'classnames'
 import stylesheet from './Button.module.scss';
 
-const Button = ({ children, onClick, type, variant, outline, disabled, className }) => {
+const Button = ({ children, onClick, type, variant, outline, disabled, className, style }) => {
   const getButtonStyle = () => {
     if (disabled) {
       return stylesheet.disabled;
@@ -27,7 +27,11 @@ const Button = ({ children, onClick, type, variant, outline, disabled, className
   }
 
   return (
-    <button type={type} onClick={onClick} className={classNames(getButtonStyle(), className)}>
+    <button
+      style={style}
+      type={type}
+      onClick={onClick}
+      className={classNames(getButtonStyle(), className)}>
       {children}
     </button>
   )
