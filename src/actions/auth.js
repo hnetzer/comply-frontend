@@ -1,6 +1,7 @@
 const LOGOUT = "LOGOUT";
 const LOGIN = "LOGIN";
 const ONBOARDED = "ONBOARDED";
+const UPDATE_USER_SETTINGS = "UPDATE_USER_SETTINGS";
 
 const logout = (data) => {
   return {
@@ -25,8 +26,16 @@ const onboarded = () => {
   }
 }
 
+const updateUserSettings = (settings) => {
+  return {
+    type: UPDATE_USER_SETTINGS,
+    data: settings
+  }
+}
+
 export {
   logout,
   login,
-  onboarded
+  onboarded,
+  updateUserSettings,
 }

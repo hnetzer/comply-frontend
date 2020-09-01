@@ -3,22 +3,24 @@ import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
+import api from 'network/api'
+import { updateUserSettings } from 'actions';
 import { Switch, Button } from 'components/atoms'
 
-import style from './accountSettingsForm.module.scss'
+import style from './userSettingsForm.module.scss'
 
 const formSchema = Yup.object().shape({
   notifications: Yup.boolean().required(),
 });
 
-const AccountSettingsForm = ({ settings, onSuccess, onError, dispatch }) => {
+const UserSettingsForm = ({ user, settings, onSuccess, onError, dispatch }) => {
   const handleSubmit = async (values, { setSubmitting }) => {
 
     console.log(values)
     try {
-      // const response = await updateCompany(data, user.company_id)
-      // dispatch(setCompanyDetails(response))
-      //onSuccess(response)
+      const response = await api.updateUserSettings(user.id, values)
+      dispatch(updateUserSettings(response))
+      onSuccess(response)
     } catch (err) {
       onError(err)
     }
@@ -65,16 +67,19 @@ const AccountSettingsForm = ({ settings, onSuccess, onError, dispatch }) => {
   );
 }
 
-AccountSettingsForm.defaultProps = {
+UserSettingsForm.defaultProps = {
   onSuccess: () => {},
   onError: () => {},
 }
 
 const mapStateToProps = state => {
+  const user = state.auth.user
+  const settings = user != null ? user.settings : null;
   return {
-    settings: { notifications: false },
+    user: user,
+    settings: settings != null ? settings : { notifications: false },
     company: state.company.company
   }
 }
 
-export default connect(mapStateToProps)(AccountSettingsForm);
+export default connect(mapStateToProps)(UserSettingsForm);

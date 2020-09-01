@@ -7,7 +7,7 @@ import AdminRejectFilingForm from './adminRejectFilingForm';
 import AdminJurisdictionForm from './adminJurisidictionForm';
 
 import CompanyDetailsForm from './CompanyDetailsForm/companyDetailsForm';
-import AccountSettingsForm from './AccountSettingsForm/accountSettingsForm'
+import UserSettingsForm from './UserSettingsForm/userSettingsForm'
 
 import AdminAgencyForm from './adminAgencyForm';
 import AdminFilingForm from './AdminFilingForm/adminFilingForm';
@@ -24,5 +24,5 @@ export {
   AdminAgencyForm,
   AdminFilingForm,
   CompanyFilingForm,
-  AccountSettingsForm
+  UserSettingsForm
 }

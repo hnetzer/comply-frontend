@@ -22,6 +22,14 @@ export default (state = initialState, action) => {
      user: null,
      token: null,
    }
+  case 'UPDATE_USER_SETTINGS':
+    return {
+      ...state,
+      user: {
+        ...state.user,
+        settings: action.data
+      }
+    }
   case 'LOGIN':
     return {
       error: null,
