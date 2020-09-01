@@ -55,6 +55,7 @@ class FilingsScreen extends React.Component {
             <div style={{ paddingTop: 16, display: 'flex', flexDirection: 'row' }}>
               {this.state.upcoming.map((f, index) => (
                 <FilingCard
+                  key={index}
                   companyFilingId={f.id}
                   name={f.filing.name}
                   agency={f.filing.agency.name}
@@ -66,6 +67,7 @@ class FilingsScreen extends React.Component {
             <h3>Previous</h3>
             {this.state.past.map((f, index) => (
               <FilingRow
+                key={index}
                 companyFilingId={f.id}
                 name={f.filing.name}
                 agency={f.filing.agency.name}

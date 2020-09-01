@@ -1,6 +1,6 @@
 import { createAccountResponse } from './signup'
 import { setCompanyDetails, setCompanyAgencies, setCompanyOffices } from './company'
-import { logout, login, onboarded } from './auth'
+import { logout, login, onboarded, updateUserSettings } from './auth'
 import { setAgencies } from './agency'
 import {
   adminSetJurisdictionsAction,
@@ -27,6 +27,7 @@ export {
   logout,
   login,
   onboarded,
+  updateUserSettings,
 
   // admin
   adminSetJurisdictionsAction,

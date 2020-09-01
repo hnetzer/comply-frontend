@@ -211,6 +211,10 @@ export const sendFeedback = async (feedback) => {
   return sendRequest('POST', `/feedback`, feedback)
 }
 
+export const updateUserSettings = async (userId, settings) => {
+  return sendRequest('PUT', `/users/${userId}/settings`, settings)
+}
+
 export const adminGetCompanyFilings = async (companyId, startDate, endDate, unscheduled) => {
   let uri =  `/admin/companies/${companyId}/filings`
   if (startDate && endDate) {
@@ -243,6 +247,7 @@ export default {
   getCompanyAgencies,
   getCompanyJurisdictions,
   sendFeedback,
+  updateUserSettings,
 
   // admin requests
   getAllCompanyFilings,
