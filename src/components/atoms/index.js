@@ -4,6 +4,7 @@ import Button from './Button/Button'
 import Switch from './Switch/Switch'
 import Drawer from './Drawer/Drawer'
 import Divider from './Divider/Divider'
+import Input from './Input/Input'
 import { Table, Body, Header, HeaderCell, Row, Cell } from './Table/Table';
 
 export {
@@ -18,5 +19,6 @@ export {
   Cell,
   Alert,
   Divider,
-  Switch
+  Switch,
+  Input
 }

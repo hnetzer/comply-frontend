@@ -1,4 +1,4 @@
-import CreateAccountForm from './createAccountForm';
+import CreateAccountForm from './CreateAccountForm/createAccountForm';
 import OfficeDetailsForm from './officeDetailsForm';
 import AgenciesForm from './agenciesForm';
 

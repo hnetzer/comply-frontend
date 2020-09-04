@@ -7,9 +7,6 @@ import { createAccount } from 'network/api';
 
 import { CreateAccountForm } from 'forms'
 
-// React Bootstrap components
-import Card from 'react-bootstrap/Card';
-
 import styles from './Signup.module.scss'
 
 const GetStartedScreen = (props) => {
@@ -56,17 +53,28 @@ const GetStartedScreen = (props) => {
   }
 
   return (
-    <div className={styles.container}>
-      <Card className={styles.card}>
-        <Card.Body className={styles.cardBody}>
-          <Card.Title style={{ marginBottom: 24 }}><h3>Get Started With Comply</h3></Card.Title>
+    <div className={styles.wrapper}>
+      <section className={styles.leftPanel}>
+        <div className={styles.leftContent}>
+          <div className={styles.titleSection}>
+            <h5>Comply</h5>
+            <h3>Get started for free!</h3>
+          </div>
           <CreateAccountForm
             initialValues={formValues}
             handleSubmit={handleSubmit}
             errorMessage={errorMessage}
             />
-        </Card.Body>
-      </Card>
+          <div className={styles.bottomSection}>
+            <p>Already have an account? <a href="/login">Log In</a></p>
+          </div>
+        </div>
+
+      </section>
+      <section className={styles.rightPanel}>
+
+
+      </section>
     </div>
   )
 }

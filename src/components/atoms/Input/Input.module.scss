@@ -1,0 +1,25 @@
+.input {
+  border: 2px solid #C4CED6;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 22px;
+  margin-right: 8px;
+}
+
+.input:focus, .input:active {
+  outline-color: #309F76;
+}
+
+.fieldLabel {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  color: #4B5D6B;
+  margin-bottom: 12px;
+}
