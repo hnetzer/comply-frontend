@@ -95,7 +95,8 @@ class AdminJurisdictionsScreen extends React.Component {
                 <th>Name</th>
                 <th>State</th>
                 <th>Type</th>
-                <th>Supported</th>
+                <th>Corp</th>
+                <th>LLC</th>
                 <th>Agencies</th>
                 <th>Created</th>
                 <th></th>
@@ -107,7 +108,8 @@ class AdminJurisdictionsScreen extends React.Component {
                   <td>{j.name}</td>
                   <td>{j.state}</td>
                   <td>{j.type}</td>
-                  <td style={{ textAlign: 'center'}}>{j.supported ? '✅' : '❌'}</td>
+                  <td style={{ textAlign: 'center'}}>{j.corp_supported ? '✅' : '❌'}</td>
+                  <td style={{ textAlign: 'center'}}>{j.llc_supported ? '✅' : '❌'}</td>
                   <td>{j.agencies.length}</td>
                   <td>{moment(j.createdAt).format('M/D/YYYY')}</td>
                   <td>

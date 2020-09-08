@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Formik } from 'formik';
 
-import states from '../data/states.json'
+import states from 'data/states.json'
 
 // Bootstrap components
 import Form from 'react-bootstrap/Form';
@@ -39,13 +39,19 @@ const AdminJurisdictionForm = (props) => {
       /* and other goodies */
     }) => (
         <Form validated={validated} onSubmit={handleSubmit}>
-          <Form.Group controlId="supported">
-            <Form.Label></Form.Label>
+          <Form.Group controlId="corp_supported">
             <Form.Check
-              label="Supported"
+              label="Corporation Supported"
               type="checkbox"
               onChange={handleChange}
-              checked={values.supported}/>
+              checked={values.corp_supported}/>
+          </Form.Group>
+          <Form.Group controlId="llc_supported">
+            <Form.Check
+              label="LLC Supported"
+              type="checkbox"
+              onChange={handleChange}
+              checked={values.llc_supported}/>
           </Form.Group>
           <Form.Group controlId="name">
             <Form.Label>Name</Form.Label>
@@ -54,6 +60,7 @@ const AdminJurisdictionForm = (props) => {
               onChange={handleChange}
               type="text"
               placeholder=""
+              disabled={true}
               value={values.name} />
           </Form.Group>
           <Form.Group controlId="state">
@@ -62,6 +69,7 @@ const AdminJurisdictionForm = (props) => {
               required
               onChange={handleChange}
               value={values.state}
+              disabled={true}
               as="select">
               <option value={null}></option>
               {states.map((s,i) => <option key={i} value={s.name}>{s.name}</option>)}
@@ -73,6 +81,7 @@ const AdminJurisdictionForm = (props) => {
               required
               onChange={handleChange}
               value={values.type}
+              disabled={true}
               as="select">
               <option value={null}></option>
               <option value="state">State</option>
