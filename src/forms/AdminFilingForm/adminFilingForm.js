@@ -28,7 +28,9 @@ const filingSchema = Yup.object().shape({
   description: Yup.string().nullable(),
   occurrence: Yup.mixed().oneOf(['annual', 'multiple', 'biennial']).required(),
   due_date: dueDateSchema,
-  due_dates: Yup.array().of(dueDateSchema)
+  due_dates: Yup.array().of(dueDateSchema),
+  for_corp: Yup.boolean(),
+  for_llc: Yup.boolean()
 });
 
 const DateInitialValues = {
@@ -48,7 +50,9 @@ const FilingInitialValues = {
   description: '',
   occurrence: 'annual',
   due_date: DateInitialValues,
-  due_dates: [DateInitialValues]
+  due_dates: [DateInitialValues],
+  for_corp: false,
+  for_llc: false
 };
 
 
@@ -130,6 +134,15 @@ const AdminFilingForm = ({ filing, jurisdictions, agencies, handleSubmit, status
               <option value=""></option>
               {renderAgencies(values)}
             </Field>
+            <div className={style.divider} />
+            <div>
+              <Field type="checkbox" name="for_corp" />
+              <div  className={style.checkboxLabel}>Corporation</div>
+            </div>
+            <div>
+              <Field type="checkbox" name="for_llc" />
+              <div className={style.checkboxLabel}>LLC</div>
+            </div>
             <div className={style.divider} />
             <div className={style.label}>Website URL</div>
             <Field

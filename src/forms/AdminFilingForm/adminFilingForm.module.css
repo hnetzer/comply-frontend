@@ -20,6 +20,15 @@
   font-weight: 500;
 }
 
+.checkboxLabel {
+  display: inline-block;
+  font-weight: 500;
+  margin-left: 8px;
+  margin-bottom: 16px;
+  line-height: 20px;
+}
+
+
 .divider {
   border-top: 1px solid #ccc;
   width: 100%;
