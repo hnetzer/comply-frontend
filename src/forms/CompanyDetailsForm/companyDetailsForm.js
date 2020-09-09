@@ -15,6 +15,8 @@ const formSchema = Yup.object().shape({
   year_end_day: Yup.number().required(),
   type: Yup.mixed().oneOf(['Corporation', 'LLC', 'LP', 'LLP']).required(),
   formation_state: Yup.mixed().oneOf(states.map(s => s.name)).required(),
+  tax_class: Yup.mixed().oneOf(['C Corp', 'S Corp'])
+    .when('type', { is: 'LLC', then: Yup.string().required() })
 });
 
 const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }) => {
@@ -47,6 +49,26 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
     type: '',
     formation_state: '',
   };
+
+  const renderTaxClass = () => {
+    return (
+      <div className={style.formRow}>
+       <div className={style.labelGroup}>
+         <label className={style.formLabel}>Tax Classification</label>
+         <small className={style.required}>required</small>
+       </div>
+       <div className={style.fieldGroup}>
+         <Field as="select" name="tax_class" className={style.field} style={{ width: 80 }}>
+           <option value={''}></option>
+           <option value="C Corp">C Corp</option>
+           <option value="S Corp">S Corp</option>
+         </Field>
+         <small>Most for-profit companies are C Corps.</small>
+       </div>
+     </div>
+   );
+  }
+
 
   return (
     <Formik
@@ -97,6 +119,7 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
               <small>The entity you formed under state law.</small>
             </div>
           </div>
+          {values.type.toLowerCase() === 'llc' ? renderTaxClass() : null}
           <div className={style.formRow}>
             <div className={style.labelGroup}>
               <label className={style.formLabel}>Fiscal Year End</label>

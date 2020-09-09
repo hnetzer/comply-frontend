@@ -16,12 +16,12 @@ const NotSupported = ({ user, company, dispatch }) => {
         <h3>Sorry, your company type is not supported</h3>
         <div className={style.descriptionSection}>
           <p className={style.descriptionText}>
-            We currently are only supporting <b>corporation</b> entities at this point.
+            We currently are only supporting <b>corporation</b> and <b>LLC</b> entities at this point.
           </p>
           <p className={style.descriptionText}>
             We appreciate you exploring our product and we have your information.
-            We will reach out to you via email when we start to support LLC, LP
-            and LLP company types.
+            We will reach out to you via email when we start to support LP
+            and LLP entity types.
           </p>
           <p>
             Thanks for you patience!
