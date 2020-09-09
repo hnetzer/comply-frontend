@@ -9,14 +9,15 @@ import {
   PremiumCard,
   FeedbackCard,
   NotSupportedModal,
-  IncompleteFilingRow,
+  IncompleteFilingRow
 } from 'components/organisms'
 
 import { FilingTimeline, AgencyRegistrationDrawer } from 'components/molecules'
 import {
   getCompanyFilings,
   getCompanyJurisdictions,
-  updateCompanyPremium
+  updateCompanyPremium,
+  getCompany
 } from 'network/api';
 
 import screenStyle from './Screens.module.scss'
@@ -47,16 +48,27 @@ class DashboardScreen extends React.Component {
       const upcomingFilings = await this.getUpcomingFilings(companyId);
       const incompleteFilings = yearFilings.filter(f => f.due_date == null)
       const jurisdictions = await getCompanyJurisdictions(companyId);
+      const company = await getCompany(companyId)
 
       this.setState({
         timelineFilings: yearFilings.filter(f => f.due_date != null).sort(compareFilingsByDue),
         upcomingFilings: upcomingFilings,
-        notSupportedJuris: jurisdictions.filter(j => !j.supported),
+        notSupportedJuris: this.getNotSupported(jurisdictions, company),
         incompleteFilings: incompleteFilings
       })
 
     } catch (err) {
       console.log(err)
+    }
+  }
+
+  getNotSupported = (jurisdictions, company) => {
+    const companyType = company.type.toLowerCase()
+    if (companyType === 'corporation') {
+      return jurisdictions.filter(j => !j.corp_supported);
+    }
+    if (companyType === 'llc') {
+      return jurisdictions.filter(j => !j.llc_supported);
     }
   }
 
@@ -149,7 +161,7 @@ class DashboardScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    agencies: state.company.agencies
+    agencies: state.company.agencies,
   }
 }
 
