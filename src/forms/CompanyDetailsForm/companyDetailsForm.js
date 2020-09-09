@@ -42,10 +42,12 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
     year_end_day: company.year_end_day,
     year_end_month: company.year_end_month,
     type: company.type,
+    tax_class: company.tax_class,
     formation_state: company.formation_state,
     } : {
     year_end_day: '',
     year_end_month: '',
+    tax_class: '',
     type: '',
     formation_state: '',
   };
