@@ -119,7 +119,7 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
               <small>The entity you formed under state law.</small>
             </div>
           </div>
-          {values.type.toLowerCase() === 'llc' ? renderTaxClass() : null}
+          {(values.type && values.type.toLowerCase() === 'llc') ? renderTaxClass() : null}
           <div className={style.formRow}>
             <div className={style.labelGroup}>
               <label className={style.formLabel}>Fiscal Year End</label>
