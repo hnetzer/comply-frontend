@@ -36,6 +36,7 @@ class AdminCompaniesScreen extends React.Component {
             <thead>
               <tr>
                 <th>Company</th>
+                <th>Type</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Agencies</th>
@@ -52,6 +53,7 @@ class AdminCompaniesScreen extends React.Component {
                       key={i}
                     >
                       <td>{c.name}</td>
+                      <td>{c.type}</td>
                       <td>{`${c.users[0].first_name} ${c.users[0].last_name}`}</td>
                       <td>{`${c.users[0].email}`}</td>
                       <td>{c.agencies.length}</td>

@@ -58,6 +58,7 @@ class AdminFilingsScreen extends React.Component {
                 <th>Jurisdiction</th>
                 <th>Agency</th>
                 <th>Filing</th>
+                <th>Entity</th>
               </tr>
             </thead>
             <tbody className={style.tableBody}>
@@ -68,6 +69,11 @@ class AdminFilingsScreen extends React.Component {
                     <td>{f.agency.jurisdiction.name}</td>
                     <td>{f.agency.name}</td>
                     <td>{f.name}</td>
+                    <td>
+                      <span>{f.for_corp ? 'Corp': null}</span>
+                      <span>{f.for_corp && f.for_llc ? ', ' : null}</span>
+                      <span>{f.for_llc ? 'LLC' : null}</span>
+                    </td>
                   </tr>)
                 )
               }

@@ -4,7 +4,7 @@ import AgenciesForm from './agenciesForm';
 
 import LoginForm from './loginForm';
 import AdminRejectFilingForm from './adminRejectFilingForm';
-import AdminJurisdictionForm from './adminJurisidictionForm';
+import AdminJurisdictionForm from './AdminJurisdictionForm/adminJurisidictionForm';
 
 import CompanyDetailsForm from './CompanyDetailsForm/companyDetailsForm';
 import UserSettingsForm from './UserSettingsForm/userSettingsForm'

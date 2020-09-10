@@ -131,6 +131,7 @@ class AdminCompanyScreen extends React.Component {
   }
 
   renderJurisdictions = (jurisdictions) => {
+    const companyType = this.state.company.type;
     return (
       <Table bordered>
         <thead>
@@ -141,10 +142,11 @@ class AdminCompanyScreen extends React.Component {
         </thead>
         <tbody>
           {jurisdictions.map((j, index) => {
+            const supported = companyType === 'Corporation' ? j.corp_supported : j.llc_supported
             return (
               <tr key={index}>
                 <td>{j.name}</td>
-                <td style={{ textAlign: 'center'}}>{j.supported ? '✅' : '❌'}</td>
+                <td style={{ textAlign: 'center'}}>{supported ? '✅' : '❌'}</td>
               </tr>
             )
           })}

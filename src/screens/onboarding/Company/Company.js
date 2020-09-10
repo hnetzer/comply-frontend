@@ -10,9 +10,9 @@ import style from '../OnboardingScreen.module.scss'
 import screenStyle from './Company.module.scss'
 
 const Company = ({ user, company, dispatch }) => {
-
   const onSaveSuccess = (c) => {
-    if (c.type.toLowerCase() !== 'corporation') {
+    const companyType = c.type.toLowerCase()
+    if (companyType !== 'corporation' && companyType !== 'llc') {
       navigate('/onboarding/not-supported')
       return
     }
@@ -23,7 +23,6 @@ const Company = ({ user, company, dispatch }) => {
   const onSaveError = (err) => {
     alert(err.message)
   }
-
 
   return(
     <>

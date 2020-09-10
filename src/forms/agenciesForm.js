@@ -20,7 +20,7 @@ const formSchema = Yup.object().shape({
   }))
 });
 
-const AgenciesForm = ({ user, agencies, companyAgencies, cta, faqs, hideReg, onSuccess, onError, dispatch }) => {
+const AgenciesForm = ({ user, companyAgencies, cta, faqs, hideReg, onSuccess, onError, dispatch }) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     const data = values.agencies.map(a => {
       return {
@@ -41,39 +41,19 @@ const AgenciesForm = ({ user, agencies, companyAgencies, cta, faqs, hideReg, onS
 
 
   const initialValuesMap = () => {
-    console.log('Setting initial values map...')
-    let companyAgencyMap = {}
-    if(companyAgencies) {
-      companyAgencyMap = companyAgencies.reduce((acc, companyAgency) => {
-        acc[companyAgency.agency_id] = {
-          registration_date: companyAgency.registration,
-          registered: companyAgency.registered
-        }
-        return acc;
-      }, {})
-    }
-
-    const values = agencies.map((agency, index) => {
-      const companyAgency = companyAgencyMap[agency.id];
-      if (companyAgency) {
-        return {
-          agency_id: agency.id,
-          registered: companyAgency.registered ? 'yes' : 'no',
-          registration_date: companyAgency.registration_date || ''
-        }
-      }
-
+    const values = companyAgencies.map((companyAgency, index) => {
       return {
-        agency_id: agency.id,
-        registered: '',
-        registration_date: null
+        agency: companyAgency.agency,
+        agency_id: companyAgency.agency_id,
+        registered: companyAgency.registered ? 'yes' : 'no',
+        registration_date: companyAgency.registration_date || ''
       }
     })
 
     return { agencies: values };
   }
 
-  if (!agencies || !companyAgencies) {
+  if (!companyAgencies) {
     return (<div>Loading...</div>);
   }
 
@@ -109,10 +89,10 @@ const AgenciesForm = ({ user, agencies, companyAgencies, cta, faqs, hideReg, onS
                     {!hideReg && (<HeaderCell>Registration date</HeaderCell>)}
                   </Header>
                   <Body>
-                  {agencies.map((agency, index) => {
+                  {values.agencies.map((companyAgency, index) => {
                     return (<Row key={index}>
-                      <Cell className={style.cellText}>{agency.jurisdiction.name}</Cell>
-                      <Cell className={style.cellText}>{agency.name}</Cell>
+                      <Cell className={style.cellText}>{companyAgency.agency.jurisdiction.name}</Cell>
+                      <Cell className={style.cellText}>{companyAgency.agency.name}</Cell>
                       <Cell>
                         <Field
                           as="select"
