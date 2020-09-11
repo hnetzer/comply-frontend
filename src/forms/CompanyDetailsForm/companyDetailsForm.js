@@ -15,14 +15,12 @@ const formSchema = Yup.object().shape({
   year_end_day: Yup.number().required(),
   type: Yup.mixed().oneOf(['Corporation', 'LLC', 'LP', 'LLP']).required(),
   formation_state: Yup.mixed().oneOf(states.map(s => s.name)).required(),
-  tax_class: Yup.mixed().when('type', { is: 'LLC', then: Yup.string().oneOf(['C Corp', 'S Corp']).required() })
 });
 
 const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     const data = {
       type: values.type,
-      tax_class: values.tax_class,
       year_end_month: values.year_end_month,
       year_end_day: values.year_end_day,
       formation_state: values.formation_state,
@@ -41,35 +39,13 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
     year_end_day: company.year_end_day || '',
     year_end_month: company.year_end_month || '',
     type: company.type || '',
-    tax_class: company.tax_class || '',
     formation_state: company.formation_state || '',
     } : {
     year_end_day: '',
     year_end_month: '',
-    tax_class: '',
     type: '',
     formation_state: '',
   };
-
-  const renderTaxClass = () => {
-    return (
-      <div className={style.formRow}>
-       <div className={style.labelGroup}>
-         <label className={style.formLabel}>Tax Classification</label>
-         <small className={style.required}>required</small>
-       </div>
-       <div className={style.fieldGroup}>
-         <Field as="select" name="tax_class" className={style.field} style={{ width: 80 }}>
-           <option value={''}></option>
-           <option value="C Corp">C Corp</option>
-           <option value="S Corp">S Corp</option>
-         </Field>
-         <small>Most for-profit companies are C Corps.</small>
-       </div>
-     </div>
-   );
-  }
-
 
   return (
     <Formik
@@ -122,7 +98,6 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
               <small>The entity you formed under state law.</small>
             </div>
           </div>
-          {(values.type && values.type.toLowerCase() === 'llc') ? renderTaxClass() : null}
           <div className={style.formRow}>
             <div className={style.labelGroup}>
               <label className={style.formLabel}>Fiscal Year End</label>
