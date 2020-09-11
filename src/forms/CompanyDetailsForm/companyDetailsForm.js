@@ -15,8 +15,7 @@ const formSchema = Yup.object().shape({
   year_end_day: Yup.number().required(),
   type: Yup.mixed().oneOf(['Corporation', 'LLC', 'LP', 'LLP']).required(),
   formation_state: Yup.mixed().oneOf(states.map(s => s.name)).required(),
-  tax_class: Yup.mixed().oneOf(['C Corp', 'S Corp'])
-    .when('type', { is: 'LLC', then: Yup.string().required() })
+  tax_class: Yup.mixed().when('type', { is: 'LLC', then: Yup.string().oneOf(['C Corp', 'S Corp']).required() })
 });
 
 const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }) => {
@@ -39,11 +38,11 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
   }
 
   const initialValues = company ? {
-    year_end_day: company.year_end_day,
-    year_end_month: company.year_end_month,
-    type: company.type,
-    tax_class: company.tax_class,
-    formation_state: company.formation_state,
+    year_end_day: company.year_end_day || '',
+    year_end_month: company.year_end_month || '',
+    type: company.type || '',
+    tax_class: company.tax_class || '',
+    formation_state: company.formation_state || '',
     } : {
     year_end_day: '',
     year_end_month: '',
@@ -92,6 +91,8 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
       /* and other goodies */
     }) => (
         <Form className={style.formContainer}>
+          { console.log('values', values) }
+          { console.log('errors', errors) }
           <div className={style.formRow}>
             <div className={style.labelGroup}>
               <label className={style.formLabel}>Formation State</label>
