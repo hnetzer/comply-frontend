@@ -1,35 +1,37 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
-import { Button } from 'components/atoms';
+import { Button, Switch } from 'components/atoms';
 import * as Yup from 'yup';
 
 import style from './adminCompanyFilingForm.module.scss'
 
-const filingSchema = Yup.object().shape({
-  name: Yup.string().min(3, 'Too short!').required(),
-  agency_id: Yup.number().integer().required(),
+const companyFilingSchema = Yup.object().shape({
+  due_date: Yup.date().required(),
+  show: Yup.boolean().required(),
 });
 
 
 const AdminCompanyFilingForm = ({ companyFiling }) => {
   const submit = async (values, { setSubmitting }) => {
-    if (values.occurrence !== 'multiple') {
-      values.due_dates = [values.due_date];
-    }
+
+    console.log('values: ', values)
 
     // await handleSubmit(values, { setSubmitting })
   }
 
   if (!companyFiling) return null;
+  const initialValues = {
+    id: companyFiling.id,
+    due_date: companyFiling.due_date,
+    show: !companyFiling.hidden
+  }
 
   return (
     <div className={style.container}>
       <Formik
-        initialValues={companyFiling}
+        initialValues={initialValues}
         onSubmit={submit}
-        validationSchema={filingSchema}
-        enableReinitialize={true}
-        validateOnMount={true}
+        validationSchema={companyFilingSchema}
       >
       {({
         values,
@@ -43,15 +45,31 @@ const AdminCompanyFilingForm = ({ companyFiling }) => {
         /* and other goodies */
       }) => (
           <Form autoComplete="off" className={style.form}>
-            {console.log('Admin filing form is valid:', isValid)}
-            {console.log("Errors", errors)}
-            {console.log('Values', values)}
-            <div className={style.label}>Name</div>
-            <Field disabled={true} name="filing.name" className={style.field} />
-            <div className={style.label}>Agency</div>
-            <Field disabled={true} name="filing.agency.name" className={style.field} />
-            <div className={style.label}>Jurisdiction</div>
-            <Field disabled={true} name="filing.agency.jurisdiction.name" className={style.field} />
+            {console.log('values', values)}
+            {console.log('errors', errors)}
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+              <div>
+                <div className={style.label}>Name</div>
+                <Field disabled={true} value={companyFiling.filing.name} className={style.field} />
+                <div className={style.label}>Agency</div>
+                <Field disabled={true} value={companyFiling.filing.agency.name} className={style.field} />
+                <div className={style.label}>Jurisdiction</div>
+                <Field disabled={true} value={companyFiling.filing.agency.jurisdiction.name} className={style.field} />
+              </div>
+              <div>
+                <div className={style.label}>Due Date</div>
+                <Field type="date" name="due_date" className={style.field} />
+                <div style={{ paddingTop: 30 }}>
+                  <Switch
+                    trueLabel="SHOW"
+                    falseLabel="HIDE"
+                    value={values.show}
+                    name="show"
+                    onChange={handleChange} />
+                </div>
+              </div>
+            </div>
+
             <div className={style.divider} />
 
             <div className={style.ctaContainer}>
@@ -63,7 +81,7 @@ const AdminCompanyFilingForm = ({ companyFiling }) => {
                 className={style.submitButton}
                 variant="secondary"
                 type="submit">
-                { values.id == null ? 'Create Filing' : 'Update Filing'}
+                Update
               </Button>
             </div>
           </Form>
