@@ -13,7 +13,7 @@ import style from './AdminScreens.module.scss'
 class AdminCompanyScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { company: null, filings: [] };
+    this.state = { company: null, filings: [], displayHiddenFilings: false };
   }
 
   async componentDidMount() {
@@ -191,9 +191,14 @@ class AdminCompanyScreen extends React.Component {
   }
 
   render() {
-    const { company, filings } = this.state
+    const { company, filings, displayHiddenFilings } = this.state
     if (!company) return null;
     const { users, offices, agencies, jurisdictions } = company
+
+    let filingsToShow = filings;
+    if (!displayHiddenFilings) {
+      filingsToShow = filings.filter(f => !f.hidden)
+    }
 
     return (
       <main className={style.container}>
@@ -224,8 +229,18 @@ class AdminCompanyScreen extends React.Component {
             {this.renderAgencies(agencies)}
           </section>
           <section>
-            <h4>{`${moment().format('YYYY')} Filings`}</h4>
-            {this.renderFilings(filings)}
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <h4>{`${moment().format('YYYY')} Filings`}</h4>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <input
+                  type="checkbox"
+                  value={displayHiddenFilings}
+                  onChange={() => this.setState({ displayHiddenFilings: !displayHiddenFilings })}
+                  />
+                <label style={{ marginLeft: 8, marginTop: 8 }}>Display hidden filings</label>
+              </div>
+            </div>
+            {this.renderFilings(filingsToShow)}
           </section>
 
         </div>
