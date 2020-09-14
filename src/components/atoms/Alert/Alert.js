@@ -3,11 +3,13 @@ import React from 'react';
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import style from './Alert.module.scss';
+import stylesheet from './Alert.module.scss';
 
-const Alert = ({ children, show, onDismiss }) => {
+const Alert = ({ children, show, onDismiss, style }) => {
+  const styles = { ...style, display: show ? 'flex' : 'none' }
+
   return (
-    <div className={style.container} style={{ display: show ? 'flex' : 'none'}}>
+    <div className={stylesheet.container} style={styles}>
       <div>
       {children}
       </div>

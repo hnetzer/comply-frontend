@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { Button, Switch } from 'components/atoms';
+import { Button, Switch, Alert } from 'components/atoms';
 import * as Yup from 'yup';
+
+import { adminUpdateCompanyFiling } from 'network/api'
 
 import style from './adminCompanyFilingForm.module.scss'
 
@@ -12,11 +14,16 @@ const companyFilingSchema = Yup.object().shape({
 
 
 const AdminCompanyFilingForm = ({ companyFiling }) => {
+  const [saved, setSaved] = useState(false)
+
   const submit = async (values, { setSubmitting }) => {
+    const body = {
+      hidden: !values.show,
+      due_date: values.due_date
+    }
 
-    console.log('values: ', values)
-
-    // await handleSubmit(values, { setSubmitting })
+    await adminUpdateCompanyFiling(companyFiling.id, body)
+    setSaved(true)
   }
 
   if (!companyFiling) return null;
@@ -73,9 +80,12 @@ const AdminCompanyFilingForm = ({ companyFiling }) => {
             <div className={style.divider} />
 
             <div className={style.ctaContainer}>
-              {/*status != null ? (
-                <div style={{ color: 'green', marginRight: 16 }}>{status}</div>
-              ) : null */}
+              <Alert
+                style={{ width: 200 }}
+                show={saved}
+                onDismiss={() => setSaved(false)}>
+                Saved successfully
+              </Alert>
               <Button
                 disabled={!isValid || isSubmitting}
                 className={style.submitButton}

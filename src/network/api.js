@@ -135,11 +135,7 @@ export const getAllCompanyFilings = async () => {
   return sendRequest('GET', `/admin/companyfilings`)
 }
 
-export const adminRejectCompanyFiling = async (companyFilingId, data) => {
-  return sendRequest('PUT', `/admin/companyfilings/${companyFilingId}/reject`, data)
-}
-
-export const adminUpdateCompanyFilingStatus = async (companyFilingId, data) => {
+export const adminUpdateCompanyFiling = async (companyFilingId, data) => {
   return sendRequest('PUT', `/admin/companyfilings/${companyFilingId}`, data)
 }
 
@@ -251,8 +247,7 @@ export default {
 
   // admin requests
   getAllCompanyFilings,
-  adminRejectCompanyFiling,
-  adminUpdateCompanyFilingStatus,
+  adminUpdateCompanyFiling,
   adminGetCompanyFiling,
   adminGetJurisdictions,
   adminCreateJurisdiction,
