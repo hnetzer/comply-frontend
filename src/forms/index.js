@@ -3,13 +3,13 @@ import OfficeDetailsForm from './officeDetailsForm';
 import AgenciesForm from './agenciesForm';
 
 import LoginForm from './loginForm';
-import AdminRejectFilingForm from './adminRejectFilingForm';
 import AdminJurisdictionForm from './AdminJurisdictionForm/adminJurisidictionForm';
 
 import CompanyDetailsForm from './CompanyDetailsForm/companyDetailsForm';
 import UserSettingsForm from './UserSettingsForm/userSettingsForm'
 
-import AdminAgencyForm from './adminAgencyForm';
+import AdminAgencyForm from './AdminAgencyForm/adminAgencyForm';
+import AdminCompanyFilingForm from './AdminCompanyFilingForm/adminCompanyFilingForm';
 import AdminFilingForm from './AdminFilingForm/adminFilingForm';
 import CompanyFilingForm from './CompanyFilingForm/companyFilingForm';
 
@@ -19,9 +19,9 @@ export {
   OfficeDetailsForm,
   AgenciesForm,
   LoginForm,
-  AdminRejectFilingForm,
   AdminJurisdictionForm,
   AdminAgencyForm,
+  AdminCompanyFilingForm,
   AdminFilingForm,
   CompanyFilingForm,
   UserSettingsForm

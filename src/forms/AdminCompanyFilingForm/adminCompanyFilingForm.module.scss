@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+.form {
+  width: 100%
+}
+
+.field {
+  padding: 4px 8px;
+  margin: 8px 0px;
+  width: 380px;
+}
+
+.textArea {
+  width: 100%;
+}
+
+.label {
+  font-weight: 500;
+}
+
+.checkboxLabel {
+  display: inline-block;
+  font-weight: 500;
+  margin-left: 8px;
+  margin-bottom: 16px;
+  line-height: 20px;
+}
+
+
+.divider {
+  border-top: 1px solid #ccc;
+  width: 100%;
+  margin: 16px 0px;
+}
+
+.ctaContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.dateRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

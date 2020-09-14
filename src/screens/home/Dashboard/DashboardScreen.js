@@ -51,10 +51,10 @@ class DashboardScreen extends React.Component {
       const company = await getCompany(companyId)
 
       this.setState({
-        timelineFilings: yearFilings.filter(f => f.due_date != null).sort(compareFilingsByDue),
-        upcomingFilings: upcomingFilings,
+        timelineFilings: yearFilings.filter(f => f.due_date != null && !f.hidden).sort(compareFilingsByDue),
+        upcomingFilings: upcomingFilings.filter(f => !f.hidden),
         notSupportedJuris: this.getNotSupported(jurisdictions, company),
-        incompleteFilings: incompleteFilings
+        incompleteFilings: incompleteFilings.filter(f => !f.hidden)
       })
 
     } catch (err) {

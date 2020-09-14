@@ -3,6 +3,7 @@ import { Router } from "@reach/router"
 
 import AdminCompaniesScreen from './AdminCompaniesScreen'
 import AdminCompanyScreen from './AdminCompanyScreen'
+import AdminCompanyFilingScreen from './AdminCompanyFilingScreen'
 import AdminJurisdictionsScreen from './AdminJurisdictionsScreen'
 import AdminAgenciesScreen from './AdminAgenciesScreen'
 import AdminFilingsScreen from './AdminFilingsScreen'
@@ -22,6 +23,7 @@ const AdminScreen  = () => {
           <AdminCompaniesScreen path="/" />
           <AdminCompaniesScreen path="/companies" />
           <AdminCompanyScreen path="/companies/:companyId" />
+          <AdminCompanyFilingScreen path="/companies/:companyId/filings/:companyFilingId" />
           <AdminJurisdictionsScreen path="/platform/jurisdictions" />
           <AdminAgenciesScreen path="/platform/agencies" />
           <AdminFilingsScreen path="/platform/filings" />

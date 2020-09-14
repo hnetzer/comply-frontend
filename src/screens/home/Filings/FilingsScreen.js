@@ -31,14 +31,14 @@ class FilingsScreen extends React.Component {
     const start = moment().format('YYYY-MM-DD')
     const end = moment().add(3, 'M').format('YYYY-MM-DD')
     const filings = await getCompanyFilings(companyId, start, end)
-    return filings.sort(compareFilingsByDue)
+    return filings.sort(compareFilingsByDue).filter(f => !f.hidden)
   }
 
   getPastFilings = async (companyId) => {
     const start = '2020-01-01'
     const end = moment().subtract(1, 'days').format('YYYY-MM-DD')
     const filings = await getCompanyFilings(companyId, start, end)
-    return filings.sort(compareFilingsByDue)
+    return filings.sort(compareFilingsByDue).filter(f => !f.hidden)
   }
 
   render() {

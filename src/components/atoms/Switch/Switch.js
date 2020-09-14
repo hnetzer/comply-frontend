@@ -2,7 +2,7 @@ import React from 'react';
 
 import style from './Switch.module.scss'
 
-const Switch = ({ value, onChange, name }) => {
+const Switch = ({ value, onChange, name, trueLabel, falseLabel }) => {
   return (
     <>
       <label className={style.switch}>
@@ -10,8 +10,8 @@ const Switch = ({ value, onChange, name }) => {
         <span className={style.slider}></span>
       </label>
       {value ?
-        (<span className={style.onLabel}>ON</span>) :
-        (<span className={style.offLabel}>OFF</span>)
+        (<span className={style.onLabel}>{trueLabel}</span>) :
+        (<span className={style.offLabel}>{falseLabel}</span>)
       }
     </>
   )
@@ -19,6 +19,8 @@ const Switch = ({ value, onChange, name }) => {
 
 Switch.defaultProps = {
   // show: true,
+  trueLabel: 'ON',
+  falseLabel: 'OFF'
 }
 
 export default Switch;
