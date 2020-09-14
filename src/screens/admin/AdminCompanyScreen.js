@@ -1,12 +1,12 @@
 import React from 'react';
 import moment from 'moment';
+import { navigate } from "@reach/router"
 
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Table from 'react-bootstrap/Table';
 
 import { adminGetCompany, adminGetCompanyFilings } from 'network/api';
 import { compareFilingsByDue } from 'utils'
-
 
 import style from './AdminScreens.module.scss'
 
@@ -26,6 +26,11 @@ class AdminCompanyScreen extends React.Component {
     } catch (err) {
       console.log(err)
     }
+  }
+
+  handleSelectCompanyFiling = (companyFilingId) => {
+    const companyId = this.state.company.id
+    navigate(`/admin/companies/${companyId}/filings/${companyFilingId}`)
   }
 
   renderBasic = (company) => {
@@ -157,7 +162,7 @@ class AdminCompanyScreen extends React.Component {
 
   renderFilings = (filings) => {
     return (
-      <Table bordered>
+      <Table hover bordered className={style.table}>
         <thead>
           <tr>
             <th>Name</th>
@@ -169,7 +174,10 @@ class AdminCompanyScreen extends React.Component {
         <tbody>
         {filings.sort(compareFilingsByDue).map((f, index) => {
           return (
-            <tr key={index}>
+            <tr
+              className={style.tableRow}
+              key={index}
+              onClick={() => this.handleSelectCompanyFiling(f.id)}>
               <td>{f.filing.name}</td>
               <td>{f.filing.agency.name}</td>
               <td>{f.filing.agency.jurisdiction.name}</td>
