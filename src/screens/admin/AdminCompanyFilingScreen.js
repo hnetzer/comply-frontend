@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import { AdminCompanyFilingForm } from 'forms';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 import { adminGetCompany, adminGetCompanyFiling } from 'network/api';
+
 
 import style from './AdminScreens.module.scss'
 
@@ -42,6 +43,7 @@ class AdminCompanyFilingScreen extends React.Component {
               {companyFiling.filing.name}
             </Breadcrumb.Item>
           </Breadcrumb>
+          <AdminCompanyFilingForm companyFiling={companyFiling} />
         </section>
       </main>
     )
