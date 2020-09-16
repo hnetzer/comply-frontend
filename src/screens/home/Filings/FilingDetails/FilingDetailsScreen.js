@@ -25,7 +25,7 @@ class FilingDetailsScreen extends React.Component {
   }
 
   goToAllFilings = () => {
-    navigate('/home/filings')
+    navigate(-1)
   }
 
   renderEmpty = () => {
