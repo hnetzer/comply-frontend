@@ -15,7 +15,7 @@ const Alert = ({ children, show, onDismiss, style }) => {
       </div>
       <div onClick={onDismiss}>
         <FontAwesomeIcon
-          className={style.dismissIcon}
+          className={stylesheet.dismissIcon}
           icon={faTimes}/>
       </div>
     </div>
