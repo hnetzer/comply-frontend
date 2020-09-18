@@ -39,9 +39,9 @@ const CompanyDropdown = ({ companies, selectedId }) => {
       </Dropdown.Toggle>
       <Dropdown.Menu alignRight>
         <Dropdown.Header>COMPANIES</Dropdown.Header>
-        {companies.map(c =>
+        {companies.map((c, i) =>
           (
-            <Dropdown.Item onClick={() => navigate(`/company/${c.id}`)}>
+            <Dropdown.Item key={i} onClick={() => navigate(`/company/${c.id}`)}>
               {c.name}
             </Dropdown.Item>)
           )

@@ -7,13 +7,13 @@ import style from './AgencyRegistrationDrawer.module.scss'
 import { updateCompanyAgency } from 'network/api'
 
 
-const AgencyRegistrationDrawer = ({ agency, show, onHide, user, refreshDashboard }) => {
+const AgencyRegistrationDrawer = ({ agency, companyId, show, onHide, user, refreshDashboard }) => {
   if (!agency || !show) return null;
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       const data = { registration: values.registration_date }
-      await updateCompanyAgency(data, user.company_id, agency.id)
+      await updateCompanyAgency(data, companyId, agency.id)
       refreshDashboard()
       onHide()
     } catch (err) {
