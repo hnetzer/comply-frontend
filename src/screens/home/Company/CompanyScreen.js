@@ -19,16 +19,16 @@ import { getCompany, getAgencies, getCompanyAgencies } from 'network/api'
 class CompanyScreen extends Component {
 
   async componentDidMount() {
-    const { user, dispatch } = this.props;
+    const { user, dispatch, companyId } = this.props;
 
-    const company = await getCompany(user.company_id);
+    const company = await getCompany(companyId );
     dispatch(setCompanyDetails(company))
     dispatch(setCompanyOffices(company.offices))
 
-    const companyAgencies = await getCompanyAgencies(user.company_id)
+    const companyAgencies = await getCompanyAgencies(companyId)
     dispatch(setCompanyAgencies(companyAgencies))
 
-    const agencies = await getAgencies(user.company_id);
+    const agencies = await getAgencies(companyId);
     dispatch(setAgencies(agencies))
   }
 
@@ -46,7 +46,7 @@ class CompanyScreen extends Component {
 
 
   render() {
-    const { user } = this.props;
+    const { user, companyId } = this.props;
     if (!user) return null;
 
     return(
@@ -55,20 +55,20 @@ class CompanyScreen extends Component {
           <div className={style.navCard}>
             <h5>Company</h5>
             <Link
-              className={this.getClassName(["/home/company", "/home/company/general"])}
-              to="/home/company/general"
+              className={this.getClassName([`/company/${companyId}/company`, `/company/${companyId}/company/general`])}
+              to={`/company/${companyId}/company/general`}
               disabled={false}>
               General
             </Link>
             <Link
-              className={this.getClassName(["/home/company/offices"])}
-              to="/home/company/offices"
+              className={this.getClassName([`/company/${companyId}/company/offices`])}
+              to={`/company/${companyId}/company/offices`}
               disabled={false}>
               Offices
             </Link>
             <Link
-              className={this.getClassName(["/home/company/agencies"])}
-              to="/home/company/agencies"
+              className={this.getClassName([`/company/${companyId}/company/agencies`])}
+              to={`/company/${companyId}/company/agencies`}
               disabled={false}>
               Agencies
             </Link>

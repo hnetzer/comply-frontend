@@ -18,9 +18,9 @@ class FilingDetailsScreen extends React.Component {
   }
 
   async componentDidMount() {
-    const { user, companyFilingId } = this.props
-    console.log(`About to get company filing for company ${user.company_id} and companyFiling ${companyFilingId}`)
-    const companyFiling = await getCompanyFiling(user.company_id, companyFilingId);
+    const { user, companyFilingId, companyId } = this.props
+    console.log(`About to get company filing for company ${companyId} and companyFiling ${companyFilingId}`)
+    const companyFiling = await getCompanyFiling(companyId, companyFilingId);
     this.setState({ filing: companyFiling.filing, dueDate: companyFiling.due_date })
   }
 

@@ -47,6 +47,7 @@ const FilingTimeline = ({ filings }) => {
                   key={i}
                 >
                   <FilingCard
+                    companyId={f.company_id}
                     companyFilingId={f.id}
                     name={f.filing.name}
                     agency={f.filing.agency.name}

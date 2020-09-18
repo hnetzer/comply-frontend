@@ -28,7 +28,7 @@ class HomeScreen extends React.Component {
 
   async componentDidMount() {
     try {
-      const company = await getCompany(this.props.user.company_id);
+      const company = await getCompany(this.props.companyId);
       this.setState({ company: company })
     } catch (err) {
       console.log(err)
@@ -43,16 +43,16 @@ class HomeScreen extends React.Component {
       <>
         <div style={{ position: 'fixed', width: '100%', zIndex: 1}}>
           <HeaderBar selectedCompanyId={companyId} />
-          <SubNav />
+          <SubNav companyId={companyId} />
         </div>
         <main className={styles.main}>
           <Router primary={false} style={{ width: '100%' }}>
-            <CompanyScreen path="/company/*" company={company} />
+            <CompanyScreen companyId={companyId} path="/company/*" company={company} />
             <FAQScreen path="/faqs" />
             <GuideScreen path="/guide" />
             <DashboardScreen companyId={companyId} path="/" />
-            <FilingsScreen path="/filings" />
-            <FilingDetailsScreen path="/filings/:companyFilingId" />
+            <FilingsScreen companyId={companyId} path="/filings" />
+            <FilingDetailsScreen companyId={companyId} path="/filings/:companyFilingId" />
             <SettingsScreen path="/settings" />
           </Router>
         </main>
