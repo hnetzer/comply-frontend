@@ -37,11 +37,12 @@ class HomeScreen extends React.Component {
 
 
   render() {
-    const { company} = this.state;
+    const { company } = this.state;
+    const { companyId } = this.props;
     return(
       <>
         <div style={{ position: 'fixed', width: '100%', zIndex: 1}}>
-          <HeaderBar />
+          <HeaderBar selectedCompanyId={companyId} />
           <SubNav />
         </div>
         <main className={styles.main}>

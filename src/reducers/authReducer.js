@@ -3,6 +3,8 @@ const initialState = {
   error: null,
   user: null,
   token: null,
+  company: null,
+  companies: null,
 }
 
 export default (state = initialState, action) => {
@@ -15,6 +17,7 @@ export default (state = initialState, action) => {
       user: action.data.user,
       token: action.data.token,
       company: action.data.company,
+      companies: action.data.companies,
     }
   case 'CREATE_ACCOUNT_ERROR':
    return {
@@ -36,6 +39,7 @@ export default (state = initialState, action) => {
       user: action.data.user,
       token: action.data.token,
       company: action.data.company,
+      companies: action.data.companies
     }
   case 'LOGOUT':
     return initialState;

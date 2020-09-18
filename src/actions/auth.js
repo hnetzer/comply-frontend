@@ -15,6 +15,7 @@ const login = (data) => {
     data: {
       user: data.user,
       company: data.company,
+      companies: data.companies,
       token: data.token
     }
   }

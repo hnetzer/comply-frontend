@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { navigate } from "@reach/router"
 
-import { AccountMenu } from 'components/molecules'
+import { AccountMenu, CompanyDropdown } from 'components/molecules'
 
 import { logout } from 'actions';
 
 import style from './HeaderBar.module.scss'
 
-const HeaderBar = ({ user, company, dispatch }) => {
+const HeaderBar = ({ user, companies, selectedCompanyId, dispatch }) => {
 
   const handleLogout = () => {
     dispatch(logout())
@@ -20,7 +20,8 @@ const HeaderBar = ({ user, company, dispatch }) => {
       <div className={style.leftHeaderSection}>
         <h3 className={style.complyLogo}>Comply</h3>
         <span className={style.accountText}>ACCOUNT</span>
-        {company && (<span className={style.companyName}>{company.name}</span>)}
+        <CompanyDropdown companies={companies} selectedId={selectedCompanyId} />
+        {/*company && (<span className={style.companyName}>{company.name}</span>)*/}
       </div>
       <AccountMenu
         variant="light"
@@ -34,6 +35,7 @@ const mapStateToProps = state => {
   return {
     user: state.auth.user,
     company: state.auth.company,
+    companies: state.auth.companies,
   }
 }
 

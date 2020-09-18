@@ -1,0 +1,33 @@
+@import "styles/vars";
+
+.buttonDark {
+  text-decoration: none;
+  background: none;
+  border: none;
+  color: $navy;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.buttonLight {
+  text-decoration: none;
+  background: none;
+  border: none;
+  color: $white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.iconLight {
+  color: $white;
+}
+
+.iconDark {
+  color: $navy;
+}
+
+.companyName {
+  font-size: 16px;
+  font-weight: 400;
+  padding: 0px 8px;
+}
