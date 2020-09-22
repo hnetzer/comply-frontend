@@ -36,6 +36,7 @@ class Agencies extends React.Component {
   }
 
   render() {
+    const { companyId } = this.props;
     return(
       <>
         <Card className={style.progressBarSection}>
@@ -52,6 +53,7 @@ class Agencies extends React.Component {
             </p>
           </div>
           <AgenciesForm
+            companyId={companyId}
             onSuccess={this.onSuccess}
             onError={this.onError}
             hideReg={true}

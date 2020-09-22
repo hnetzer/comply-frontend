@@ -76,10 +76,13 @@ class CompanyScreen extends Component {
           <Router primary={false} style={{ width: '100%' }}>
             <EditCompanyScreen
               default
+              companyId={companyId}
               path="/general" />
             <EditAgenciesScreen
+              companyId={companyId}
               path="/agencies" />
             <EditOfficesScreen
+              companyId={companyId}
               path="/offices" />
           </Router>
         </div>

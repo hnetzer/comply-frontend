@@ -17,7 +17,7 @@ const formSchema = Yup.object().shape({
   formation_state: Yup.mixed().oneOf(states.map(s => s.name)).required(),
 });
 
-const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }) => {
+const CompanyDetailsForm = ({ companyId, company, cta, onSuccess, onError, dispatch }) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     const data = {
       name: values.name,
@@ -70,8 +70,6 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
       /* and other goodies */
     }) => (
         <Form className={style.formContainer}>
-          { console.log('values', values) }
-          { console.log('errors', errors) }
           <div className={style.formRow}>
             <div className={style.labelGroup}>
               <label className={style.formLabel}>Company Name</label>

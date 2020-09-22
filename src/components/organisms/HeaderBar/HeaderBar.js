@@ -21,9 +21,9 @@ const HeaderBar = ({ user, companies, selectedCompanyId, dispatch }) => {
         <h3 className={style.complyLogo}>Comply</h3>
         <span className={style.accountText}>ACCOUNT</span>
         <CompanyDropdown companies={companies} selectedId={selectedCompanyId} />
-        {/*company && (<span className={style.companyName}>{company.name}</span>)*/}
       </div>
       <AccountMenu
+        companyId={selectedCompanyId}
         variant="light"
         user={user}
         handleLogout={handleLogout} />

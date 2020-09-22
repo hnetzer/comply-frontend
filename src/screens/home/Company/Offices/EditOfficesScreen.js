@@ -6,17 +6,17 @@ import { OfficeDetailsForm } from 'forms'
 import { setAgencies, setCompanyAgencies } from 'actions'
 import { getAgencies, getCompanyAgencies } from 'network/api'
 
-const EditOfficesScreen= ({ user, dispatch }) => {
+const EditOfficesScreen= ({ companyId, dispatch }) => {
   const [saved, setSaved] = useState(false)
 
   const onSuccess = async () => {
     setSaved(true)
 
     // Make sure the agencies are updated after updating offices
-    const agencies = await getAgencies(user.company_id);
+    const agencies = await getAgencies(companyId);
     dispatch(setAgencies(agencies))
 
-    const companyAgencies = await getCompanyAgencies(user.company_id)
+    const companyAgencies = await getCompanyAgencies(companyId)
     dispatch(setCompanyAgencies(companyAgencies))
   }
 

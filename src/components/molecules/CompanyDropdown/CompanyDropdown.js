@@ -53,7 +53,7 @@ const CompanyDropdown = ({ companies, selectedId }) => {
             </Dropdown.Item>)
           )
         }
-        <Dropdown.Item onClick={() => handleAddCompanyClick()}>
+        <Dropdown.Item style={{ color: '#309F76', fontWeight: 'bold' }} onClick={() => handleAddCompanyClick()}>
           + Add Company
         </Dropdown.Item>
       </Dropdown.Menu>

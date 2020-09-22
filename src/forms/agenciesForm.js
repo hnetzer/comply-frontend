@@ -20,7 +20,7 @@ const formSchema = Yup.object().shape({
   }))
 });
 
-const AgenciesForm = ({ user, companyAgencies, cta, faqs, hideReg, onSuccess, onError, dispatch }) => {
+const AgenciesForm = ({ companyId, companyAgencies, cta, faqs, hideReg, onSuccess, onError, dispatch }) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     const data = values.agencies.map(a => {
       return {
@@ -31,7 +31,7 @@ const AgenciesForm = ({ user, companyAgencies, cta, faqs, hideReg, onSuccess, on
     })
 
     try {
-      const agencies = await updateCompanyAgencies(data, user.company_id)
+      const agencies = await updateCompanyAgencies(data, companyId)
       dispatch(setCompanyAgencies(agencies))
       onSuccess()
     } catch (err) {
