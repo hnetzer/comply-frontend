@@ -33,6 +33,11 @@ export default (state = initialState, action) => {
         settings: action.data
       }
     }
+  case 'UPDATE_USER_COMPANIES':
+    return {
+      ...state,
+      companies: action.data
+    }
   case 'LOGIN':
     return {
       error: null,

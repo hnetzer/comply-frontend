@@ -19,7 +19,7 @@ import { getCompany, getAgencies, getCompanyAgencies } from 'network/api'
 class CompanyScreen extends Component {
 
   async componentDidMount() {
-    const { user, dispatch, companyId } = this.props;
+    const { dispatch, companyId } = this.props;
 
     const company = await getCompany(companyId );
     dispatch(setCompanyDetails(company))

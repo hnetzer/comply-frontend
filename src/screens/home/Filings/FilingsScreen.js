@@ -21,7 +21,7 @@ class FilingsScreen extends React.Component {
   }
 
   async componentDidMount() {
-    const { user, companyId } = this.props
+    const { companyId } = this.props
     const upcoming = await this.getUpcomingFilings(companyId);
     const past = await this.getPastFilings(companyId);
     this.setState({ upcoming: upcoming, past: past })

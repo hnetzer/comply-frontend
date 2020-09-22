@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Router } from "@reach/router"
 
-import { getCompany } from 'network/api';
+import { getCompany, getUserCompanies } from 'network/api';
+import { updateUserCompanies } from 'actions'
 
 import { HeaderBar } from 'components/organisms'
 
@@ -28,6 +29,10 @@ class HomeScreen extends React.Component {
 
   async componentDidMount() {
     try {
+      const companies = await getUserCompanies(this.props.user.id)
+      console.log('user companies', companies)
+      this.props.dispatch(updateUserCompanies(companies))
+
       const company = await getCompany(this.props.companyId);
       this.setState({ company: company })
     } catch (err) {

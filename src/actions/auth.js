@@ -2,6 +2,7 @@ const LOGOUT = "LOGOUT";
 const LOGIN = "LOGIN";
 const ONBOARDED = "ONBOARDED";
 const UPDATE_USER_SETTINGS = "UPDATE_USER_SETTINGS";
+const UPDATE_USER_COMPANIES = "UPDATE_USER_COMPANIES";
 
 const logout = (data) => {
   return {
@@ -34,9 +35,17 @@ const updateUserSettings = (settings) => {
   }
 }
 
+const updateUserCompanies = (companies) => {
+  return {
+    type: UPDATE_USER_COMPANIES,
+    data: companies
+  }
+}
+
 export {
   logout,
   login,
   onboarded,
   updateUserSettings,
+  updateUserCompanies
 }

@@ -14,7 +14,7 @@ import style from '../OnboardingScreen.module.scss'
 class Agencies extends React.Component {
 
   async componentDidMount() {
-    const { user, companyId } = this.props
+    const { companyId } = this.props
     try {
 
       const companyAgencies = await getCompanyAgencies(companyId)
