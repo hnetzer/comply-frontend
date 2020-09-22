@@ -39,6 +39,15 @@ const CompanyDropdown = ({ companies, selectedId }) => {
     navigate(`/onboarding/company/${newCompany.id}/company`)
   }
 
+  const handleCompanyClick = (company) => {
+    if (!company.onboarded) {
+      navigate(`/onboarding/company/${company.id}/company`)
+      return
+    }
+
+    navigate(`/company/${company.id}/`)
+  }
+
   return (
     <Dropdown>
       <Dropdown.Toggle as={Toggle} variant="light" >
@@ -48,7 +57,7 @@ const CompanyDropdown = ({ companies, selectedId }) => {
         <Dropdown.Header>COMPANIES</Dropdown.Header>
         {companies.map((c, i) =>
           (
-            <Dropdown.Item key={i} onClick={() => navigate(`/company/${c.id}`)}>
+            <Dropdown.Item key={i} onClick={() => handleCompanyClick(c)}>
               {c.name}
             </Dropdown.Item>)
           )
