@@ -24,7 +24,7 @@ class OnboardingScreen extends Component {
   }
 
   async componentDidMount() {
-    const company = await getCompany(this.props.user.company_id);
+    const company = await getCompany(this.props.companyId);
     this.setState({
       company: company,
       offices: company.offices,
@@ -34,7 +34,6 @@ class OnboardingScreen extends Component {
     this.props.dispatch(setCompanyOffices(company.offices))
   }
 
-
   handleLogout = () => {
     this.props.dispatch(logout())
     navigate('/')
@@ -42,7 +41,7 @@ class OnboardingScreen extends Component {
 
   render() {
     const { company, offices } = this.state
-    const { user } = this.props
+    const { user, companyId } = this.props
     return(
       <div className={styles.onboardingContainer}>
         <header className={styles.headerBar}>
@@ -58,11 +57,11 @@ class OnboardingScreen extends Component {
         </header>
         <main>
           <Router className={styles.main}>
-            <GetStarted path="/" />
+            <GetStarted path="/" companyId={companyId} />
             <Company path="/company" company={company} />
-            <Offices path="/offices" offices={offices} />
-            <Agencies path="/agencies" />
-            <Done path="/done" />
+            <Offices path="/offices" offices={offices} companyId={companyId} />
+            <Agencies path="/agencies" companyId={companyId} />
+            <Done path="/done" companyId={companyId} />
             <NotSupported path="/not-supported" />
           </Router>
         </main>

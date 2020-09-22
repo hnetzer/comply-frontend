@@ -6,7 +6,7 @@ import { Card } from 'components/atoms'
 
 import style from '../OnboardingScreen.module.scss'
 
-const Done = ({ user, agencies, dispatch }) => {
+const Done = ({ user, agencies, companyId, dispatch }) => {
   return(
     <>
       <Card className={style.progressBarSection}>
@@ -22,7 +22,7 @@ const Done = ({ user, agencies, dispatch }) => {
           </p>
         </div>
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-          <Button style={{ width: 232 }} href="/home">
+          <Button style={{ width: 232 }} href={`/company/${companyId}`}>
             Go to my Filing Dashboard
           </Button>
         </div>

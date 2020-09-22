@@ -55,6 +55,10 @@ export const updateCompany = async (data, companyId) => {
   return sendRequest('PUT', `/company/${companyId}`, data)
 }
 
+export const createCompany = async (data) => {
+  return sendRequest('POST', `/company`, data)
+}
+
 export const updateCompanyPremium = async (companyId) => {
   return sendRequest('PUT', `/company/${companyId}/premium`)
 }
@@ -227,6 +231,7 @@ export default {
   BASE_URI,
   createAccount,
   updateCompany,
+  createCompany,
   updateCompanyPremium,
   updateOffices,
   loginRequest,

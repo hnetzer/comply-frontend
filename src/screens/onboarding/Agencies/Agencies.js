@@ -14,10 +14,10 @@ import style from '../OnboardingScreen.module.scss'
 class Agencies extends React.Component {
 
   async componentDidMount() {
-    const { user } = this.props
+    const { user, companyId } = this.props
     try {
 
-      const companyAgencies = await getCompanyAgencies(user.company_id)
+      const companyAgencies = await getCompanyAgencies(companyId)
       this.props.dispatch(setCompanyAgencies(companyAgencies))
 
     } catch (err) {
@@ -26,9 +26,9 @@ class Agencies extends React.Component {
   }
 
   onSuccess = async () => {
-    const { dispatch } = this.props;
+    const { dispatch, companyId } = this.props;
     dispatch(onboarded())
-    navigate('/onboarding/done')
+    navigate(`/onboarding/company/${companyId}/done`)
   }
 
   onError = (err) => {

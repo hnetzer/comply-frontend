@@ -10,9 +10,9 @@ import { Card } from 'components/atoms'
 import style from '../OnboardingScreen.module.scss'
 import screenStyle from './Offices.module.scss'
 
-const Offices = ({ user, offices, dispatch }) => {
+const Offices = ({ user, offices, companyId, dispatch }) => {
   const onSuccess = () => {
-    navigate('/onboarding/agencies')
+    navigate(`/onboarding/company/${companyId}/agencies`)
   }
 
   const onError = (err) => {
