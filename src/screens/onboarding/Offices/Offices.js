@@ -37,7 +37,7 @@ const Offices = ({ user, offices, companyId, dispatch }) => {
         </div>
         {!offices ? (<div>Loading...</div>) :
           <OfficeDetailsForm
-            companyId={user.company_id}
+            companyId={companyId}
             offices={offices}
             onSuccess={onSuccess}
             onError={onError}

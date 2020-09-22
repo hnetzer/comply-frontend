@@ -28,7 +28,7 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
     }
 
     try {
-      const response = await updateCompany(data, user.company_id)
+      const response = await updateCompany(data, company.id)
       dispatch(setCompanyDetails(response))
       onSuccess(response)
     } catch (err) {
