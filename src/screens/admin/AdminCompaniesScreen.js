@@ -54,8 +54,16 @@ class AdminCompaniesScreen extends React.Component {
                     >
                       <td>{c.name}</td>
                       <td>{c.type}</td>
-                      <td>{`${c.users[0].first_name} ${c.users[0].last_name}`}</td>
-                      <td>{`${c.users[0].email}`}</td>
+                      <td>
+                        {
+                          c.users.map((u, i) => (<div>{`${u.first_name} ${u.last_name}`}</div>))
+                        }
+                      </td>
+                      <td>
+                        {
+                          c.users.map((u, i) => (<div>{u.email}</div>))
+                        }
+                      </td>
                       <td>{c.agencies.length}</td>
                     </tr>
                   );

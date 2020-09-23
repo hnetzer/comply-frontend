@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { CompanyDetailsForm } from 'forms'
 import { Card, Alert } from 'components/atoms'
 
-const EditCompanyScreen= ({ company }) => {
+const EditCompanyScreen= ({ company, companyId }) => {
   const [saved, setSaved] = useState(false)
 
   const onSaveSuccess = (company) => {
@@ -27,6 +27,7 @@ const EditCompanyScreen= ({ company }) => {
       </div>
       {<CompanyDetailsForm
         cta="Save"
+        companyId={companyId}
         onSuccess={onSaveSuccess}
         onError={onSaveError} />}
     </Card>

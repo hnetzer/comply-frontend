@@ -37,7 +37,7 @@ const GetStartedScreen = (props) => {
     try {
       const response = await createAccount(data)
       props.dispatch(createAccountResponse(response))
-      navigate('/onboarding')
+      navigate(`/onboarding/company/${response.company.id}`)
 
       if (window.FS) {
         // Send the user info to full story

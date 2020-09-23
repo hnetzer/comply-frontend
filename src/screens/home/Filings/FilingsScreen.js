@@ -21,9 +21,9 @@ class FilingsScreen extends React.Component {
   }
 
   async componentDidMount() {
-    const { user } = this.props
-    const upcoming = await this.getUpcomingFilings(user.company_id);
-    const past = await this.getPastFilings(user.company_id);
+    const { companyId } = this.props
+    const upcoming = await this.getUpcomingFilings(companyId);
+    const past = await this.getPastFilings(companyId);
     this.setState({ upcoming: upcoming, past: past })
   }
 
@@ -57,6 +57,7 @@ class FilingsScreen extends React.Component {
                 <FilingCard
                   key={index}
                   companyFilingId={f.id}
+                  companyId={f.company_id}
                   name={f.filing.name}
                   agency={f.filing.agency.name}
                   jurisdiction={f.filing.agency.jurisdiction.name}

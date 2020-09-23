@@ -26,6 +26,7 @@ const EditAgenciesScreen= ({ companyId, agencies, companyAgencies }) => {
         </Alert>
       </div>
       <AgenciesForm
+        companyId={companyId}
         faqs={false}
         onSuccess={onSuccess}
         onError={onError}/>

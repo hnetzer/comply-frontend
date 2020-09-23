@@ -23,9 +23,11 @@ const App = ({ auth }) => {
   const renderProtectedRoutes = () => {
     return (
       <>
-        <OnboardingScreen path="/onboarding/*" />
+        <OnboardingScreen path="/onboarding/company/:companyId/*" />
         <AdminScreen path="/admin/*" />
-        <HomeScreen path="/home/*" />
+        <HomeScreen path="/company/:companyId/*" />
+        <Redirect from="/home/*" to={`/company/${auth.user.company_id}`} noThrow/>
+        <Redirect from="/onboarding" to={`/onboarding/company/${auth.user.company_id}`} noThrow/>
       </>
     )
   }

@@ -17,9 +17,10 @@ const formSchema = Yup.object().shape({
   formation_state: Yup.mixed().oneOf(states.map(s => s.name)).required(),
 });
 
-const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }) => {
+const CompanyDetailsForm = ({ companyId, company, cta, onSuccess, onError, dispatch }) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     const data = {
+      name: values.name,
       type: values.type,
       year_end_month: values.year_end_month,
       year_end_day: values.year_end_day,
@@ -27,7 +28,7 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
     }
 
     try {
-      const response = await updateCompany(data, user.company_id)
+      const response = await updateCompany(data, company.id)
       dispatch(setCompanyDetails(response))
       onSuccess(response)
     } catch (err) {
@@ -36,11 +37,13 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
   }
 
   const initialValues = company ? {
+    name: company.name || '',
     year_end_day: company.year_end_day || '',
     year_end_month: company.year_end_month || '',
     type: company.type || '',
     formation_state: company.formation_state || '',
     } : {
+    name: '',
     year_end_day: '',
     year_end_month: '',
     type: '',
@@ -67,8 +70,16 @@ const CompanyDetailsForm = ({ user, company, cta, onSuccess, onError, dispatch }
       /* and other goodies */
     }) => (
         <Form className={style.formContainer}>
-          { console.log('values', values) }
-          { console.log('errors', errors) }
+          <div className={style.formRow}>
+            <div className={style.labelGroup}>
+              <label className={style.formLabel}>Company Name</label>
+              <small className={style.required}>required</small>
+            </div>
+            <div className={style.fieldGroup}>
+              <Field name="name" className={style.field} style={{ width: 220 }} />
+              <small>The legal name of your company.</small>
+            </div>
+          </div>
           <div className={style.formRow}>
             <div className={style.labelGroup}>
               <label className={style.formLabel}>Formation State</label>

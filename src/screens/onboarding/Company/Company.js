@@ -17,7 +17,7 @@ const Company = ({ user, company, dispatch }) => {
       return
     }
 
-    navigate('/onboarding/offices')
+    navigate(`/onboarding/company/${company.id}/offices`)
   }
 
   const onSaveError = (err) => {

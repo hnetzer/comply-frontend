@@ -42,7 +42,11 @@ const AccountMenu = (props) => {
       </Dropdown.Toggle>
       <Dropdown.Menu alignRight>
         <Dropdown.Header>{email}</Dropdown.Header>
-        {!isAdmin && (<Dropdown.Item onClick={() => navigate('/home/settings')}>Account Settings</Dropdown.Item>)}
+        {!isAdmin && (
+          <Dropdown.Item onClick={() => navigate(`/company/${props.companyId}/settings`)}>
+          Account Settings
+          </Dropdown.Item>
+        )}
         <Dropdown.Item onClick={props.handleLogout}>Logout</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

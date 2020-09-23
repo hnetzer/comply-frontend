@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Router } from "@reach/router"
 
-import { getCompany } from 'network/api';
+import { getCompany, getUserCompanies } from 'network/api';
+import { updateUserCompanies } from 'actions'
 
 import { HeaderBar } from 'components/organisms'
 
@@ -28,7 +29,10 @@ class HomeScreen extends React.Component {
 
   async componentDidMount() {
     try {
-      const company = await getCompany(this.props.user.company_id);
+      const companies = await getUserCompanies(this.props.user.id)
+      this.props.dispatch(updateUserCompanies(companies))
+
+      const company = await getCompany(this.props.companyId);
       this.setState({ company: company })
     } catch (err) {
       console.log(err)
@@ -37,21 +41,22 @@ class HomeScreen extends React.Component {
 
 
   render() {
-    const { company} = this.state;
+    const { company } = this.state;
+    const { companyId } = this.props;
     return(
       <>
         <div style={{ position: 'fixed', width: '100%', zIndex: 1}}>
-          <HeaderBar />
-          <SubNav />
+          <HeaderBar selectedCompanyId={companyId} />
+          <SubNav companyId={companyId} />
         </div>
         <main className={styles.main}>
           <Router primary={false} style={{ width: '100%' }}>
-            <CompanyScreen path="/company/*" company={company} />
+            <CompanyScreen companyId={companyId} path="/company/*" company={company} />
             <FAQScreen path="/faqs" />
             <GuideScreen path="/guide" />
-            <DashboardScreen path="/" />
-            <FilingsScreen path="/filings" />
-            <FilingDetailsScreen path="/filings/:companyFilingId" />
+            <DashboardScreen companyId={companyId} path="/" />
+            <FilingsScreen companyId={companyId} path="/filings" />
+            <FilingDetailsScreen companyId={companyId} path="/filings/:companyFilingId" />
             <SettingsScreen path="/settings" />
           </Router>
         </main>

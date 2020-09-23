@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment'
 import { compareFilingsByDue } from 'utils'
 
-import { Card, Divider } from 'components/atoms'
+import { Card, Divider, Loading } from 'components/atoms'
 import {
   UpcomingDatesCard,
   PremiumCard,
@@ -40,10 +40,25 @@ class DashboardScreen extends React.Component {
     this.loadPageData()
   }
 
+  async componentDidUpdate(prevProps) {
+    if (this.props.companyId !== prevProps.companyId) {
+      this.setState({
+        timelineFilings: null,
+        upcomingFilings: null,
+        incompleteFilings: null,
+        showPremiumModal: false,
+        showDrawer: false,
+        selectedAgency: null,
+      })
+      
+      this.loadPageData()
+    }
+  }
+
 
   loadPageData = async () => {
     try {
-      const companyId = this.props.user.company_id;
+      const companyId = this.props.companyId
       const yearFilings = await this.getFilingsForCurrentYear(companyId, true);
       const upcomingFilings = await this.getUpcomingFilings(companyId);
       const incompleteFilings = yearFilings.filter(f => f.due_date == null)
@@ -88,7 +103,7 @@ class DashboardScreen extends React.Component {
 
 
   submitWantsPremium = () => {
-    updateCompanyPremium(this.props.user.company_id)
+    updateCompanyPremium(this.props.companyId)
   }
 
   render() {
@@ -101,8 +116,18 @@ class DashboardScreen extends React.Component {
       selectedAgency
     } = this.state
 
-    const { user } = this.props
+    const { user, companyId } = this.props
     if (!user) return null;
+
+    if (!user || !timelineFilings || !upcomingFilings) {
+      return (
+        <section className={screenStyle.container}>
+          <div className={screenStyle.content}>
+            <Loading />
+          </div>
+        </section>
+      )
+    }
 
 
     return(
@@ -150,6 +175,7 @@ class DashboardScreen extends React.Component {
         </div>
         <AgencyRegistrationDrawer
           agency={selectedAgency}
+          companyId={companyId}
           show={showDrawer}
           refreshDashboard={() => this.loadPageData()}
           onHide={() => this.setState({ showDrawer: false, selectedAgency: null })} />

@@ -22,10 +22,10 @@ const formSchema = Yup.object().shape({
   })).min(1)
 });
 
-const OfficeDetailsForm = ({ offices, user, cta, onSuccess, onError, dispatch }) => {
+const OfficeDetailsForm = ({ offices, companyId, cta, onSuccess, onError, dispatch }) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const offices = await updateOffices(values, user.company_id)
+      const offices = await updateOffices(values, companyId)
       dispatch(setCompanyOffices(offices))
       onSuccess()
     } catch (err) {

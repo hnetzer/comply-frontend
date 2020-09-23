@@ -45,7 +45,7 @@ const LoginScreen = (props) => {
       }
 
       if (!company.onboarded) {
-        navigate('/onboarding')
+        navigate(`/onboarding/company/${company.id}`)
         return
       }
 

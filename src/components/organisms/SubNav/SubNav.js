@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@reach/router'
 import styles from './SubNav.module.scss';
 
-const SubNav = ({ location }) => {
+const SubNav = ({ location, companyId }) => {
   const pathname = window.location.pathname
 
   const getClassName = (paths) => {
@@ -19,33 +19,33 @@ const SubNav = ({ location }) => {
   return (
     <div className={styles.subNav}>
       <Link
-        className={getClassName(["/home"])}
-        to="/home">
+        className={getClassName([`/company/${companyId}`])}
+        to={`/company/${companyId}`}>
         Dashboard
       </Link>
       <Link
-        className={getClassName(["/home/filings"])}
-        to="/home/filings">
+        className={getClassName([`/company/${companyId}/filings`])}
+        to={`/company/${companyId}/filings`}>
         Filings
       </Link>
       <Link
         className={getClassName([
-          "/home/company",
-          "/home/company/general",
-          "/home/company/offices",
-          "/home/company/agencies"
+          `/company/${companyId}/company`,
+          `/company/${companyId}/company/general`,
+          `/company/${companyId}/company/offices`,
+          `/company/${companyId}/company/agencies`
         ])}
-        to="/home/company">
+        to={`/company/${companyId}/company`}>
         Company
       </Link>
       <Link
-        className={getClassName(["/home/guide"])}
-        to="/home/guide">
+        className={getClassName([`/company/${companyId}/guide`])}
+        to={`/company/${companyId}/guide`}>
         Guide to Filing
       </Link>
       <Link
-        className={getClassName(["/home/faqs"])}
-        to="/home/faqs">
+        className={getClassName([`/company/${companyId}/faqs`])}
+        to={`/company/${companyId}/faqs`}>
         FAQs
       </Link>
     </div>

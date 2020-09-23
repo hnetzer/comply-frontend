@@ -7,7 +7,7 @@ import { VerticalProgressBar } from 'components/molecules'
 import styles from './GetStarted.module.scss'
 import onboardingStyle from '../OnboardingScreen.module.scss'
 
-const GetStarted = ({ user, company, dispatch }) => {
+const GetStarted = ({ user, companyId, dispatch }) => {
   return(
     <>
       <Card className={onboardingStyle.progressBarSection}>
@@ -26,7 +26,7 @@ const GetStarted = ({ user, company, dispatch }) => {
             </div>
           </div>
           <div>
-            <Button href="/onboarding/company">Let's get started</Button>
+            <Button href={`/onboarding/company/${companyId}/company`}>Let's get started</Button>
           </div>
         </div>
       </Card>
