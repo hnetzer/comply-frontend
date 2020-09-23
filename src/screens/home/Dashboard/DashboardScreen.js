@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment'
 import { compareFilingsByDue } from 'utils'
 
-import { Card, Divider } from 'components/atoms'
+import { Card, Divider, Loading } from 'components/atoms'
 import {
   UpcomingDatesCard,
   PremiumCard,
@@ -109,6 +109,16 @@ class DashboardScreen extends React.Component {
 
     const { user, companyId } = this.props
     if (!user) return null;
+
+    if (!user || !timelineFilings || !upcomingFilings) {
+      return (
+        <section className={screenStyle.container}>
+          <div className={screenStyle.content}>
+            <Loading />
+          </div>
+        </section>
+      )
+    }
 
 
     return(
