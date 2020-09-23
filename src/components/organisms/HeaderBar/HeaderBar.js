@@ -8,7 +8,7 @@ import { logout } from 'actions';
 
 import style from './HeaderBar.module.scss'
 
-const HeaderBar = ({ user, companies, selectedCompanyId, dispatch }) => {
+const HeaderBar = ({ user, company, companies, selectedCompanyId, dispatch }) => {
 
   const handleLogout = () => {
     dispatch(logout())
@@ -20,7 +20,7 @@ const HeaderBar = ({ user, companies, selectedCompanyId, dispatch }) => {
       <div className={style.leftHeaderSection}>
         <h3 className={style.complyLogo}>Comply</h3>
         <span className={style.accountText}>ACCOUNT</span>
-        <CompanyDropdown companies={companies} selectedId={selectedCompanyId} />
+        <CompanyDropdown company={company} companies={companies} selectedId={selectedCompanyId} />
       </div>
       <AccountMenu
         companyId={selectedCompanyId}

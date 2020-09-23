@@ -31,8 +31,11 @@ const Toggle = React.forwardRef(({ children, onClick, variant }, ref) => {
 })
 
 
-const CompanyDropdown = ({ companies, selectedId }) => {
-  const selectedCompany = companies.find(c => c.id == selectedId);
+const CompanyDropdown = ({ company, companies, selectedId }) => {
+  let selectedCompany = company;
+  if (companies && companies.length) {
+    selectedCompany = companies.find(c => c.id == selectedId);
+  }
 
   const handleAddCompanyClick = async () => {
     const newCompany = await createCompany({ name: "New Company Name"})
@@ -55,7 +58,7 @@ const CompanyDropdown = ({ companies, selectedId }) => {
       </Dropdown.Toggle>
       <Dropdown.Menu alignRight>
         <Dropdown.Header>COMPANIES</Dropdown.Header>
-        {companies.map((c, i) =>
+        {companies && companies.map((c, i) =>
           (
             <Dropdown.Item key={i} onClick={() => handleCompanyClick(c)}>
               {c.name}
