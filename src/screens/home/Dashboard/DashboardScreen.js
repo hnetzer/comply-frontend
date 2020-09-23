@@ -42,6 +42,15 @@ class DashboardScreen extends React.Component {
 
   async componentDidUpdate(prevProps) {
     if (this.props.companyId !== prevProps.companyId) {
+      this.setState({
+        timelineFilings: null,
+        upcomingFilings: null,
+        incompleteFilings: null,
+        showPremiumModal: false,
+        showDrawer: false,
+        selectedAgency: null,
+      })
+      
       this.loadPageData()
     }
   }
