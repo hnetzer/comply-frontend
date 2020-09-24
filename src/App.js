@@ -26,6 +26,7 @@ const App = ({ auth }) => {
         <OnboardingScreen path="/onboarding/company/:companyId/*" />
         <AdminScreen path="/admin/*" />
         <HomeScreen path="/company/:companyId/*" />
+        <Redirect from="/home/settings" to={`/company/${auth.user.company_id}/settings`} noThrow/>
         <Redirect from="/home/*" to={`/company/${auth.user.company_id}`} noThrow/>
         <Redirect from="/onboarding" to={`/onboarding/company/${auth.user.company_id}`} noThrow/>
       </>
