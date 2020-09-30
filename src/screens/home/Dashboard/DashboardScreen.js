@@ -50,7 +50,7 @@ class DashboardScreen extends React.Component {
         showDrawer: false,
         selectedAgency: null,
       })
-      
+
       this.loadPageData()
     }
   }
@@ -88,9 +88,8 @@ class DashboardScreen extends React.Component {
   }
 
   getFilingsForCurrentYear = async (companyId, unscheduled) => {
-    const year = moment().format('YYYY')
-    const start = `${year}-01-01`;
-    const end = `${year}-12-31`;
+    const start = `2020-01-01`;
+    const end = `2022-12-31`;
     return await getCompanyFilings(companyId, start, end, unscheduled)
   }
 

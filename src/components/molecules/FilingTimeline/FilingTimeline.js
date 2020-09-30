@@ -1,37 +1,78 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment'
 
 import { FilingCard } from 'components/molecules'
 import style from './FilingTimeline.module.scss';
 
+// Timeline should either start on January 1st or July 1st of the current year
+const getInitialStartDate = () => {
+  const now = moment();
+  if (now.month() >= 6) {
+    return moment().set({ date: 1, month: 6, year: now.year() })
+  }
+  return moment().set({ date: 1, month: 0, year: now.year() })
+}
+
+
 const FilingTimeline = ({ filings }) => {
+  const [startDate, setStartDate] = useState(getInitialStartDate())
+  const endDate = moment(startDate).add(1, 'year')
+
+
   if(!filings) return null;
 
   const sortByDate = (a, b) => (moment(a.due_date).isSameOrBefore(b.due_date) ? -1 : 1);
+  const filingsInRange = filings.filter((filing, index) => {
+    const dueDate = moment(filing.due_date)
+    if (dueDate.isSameOrAfter(startDate) && dueDate.isBefore(endDate)) {
+      return true
+    }
+    return false;
+  })
 
-  const groups = filings.reduce((map, filing) => {
+  console.log('startDate', startDate.format('DD-MM-YYYY'))
+  console.log('filings', filings)
+  console.log('filings in range', filingsInRange)
+
+  const groups = filingsInRange.reduce((map, filing) => {
+    const yearDue = moment(filing.due_date).year();
     const monthDue = moment(filing.due_date).month();
-    if(!map[monthDue]) {
-      map[monthDue] = [];
+
+    if (!map[yearDue]) {
+      map[yearDue] = {}
     }
 
-    map[monthDue].push(filing);
-    map[monthDue].sort(sortByDate);
+    if(!map[yearDue][monthDue]) {
+      map[yearDue][monthDue] = [];
+    }
+
+    map[yearDue][monthDue].push(filing);
+    map[yearDue][monthDue].sort(sortByDate);
     return map
   }, {})
 
-  const months = moment.monthsShort();
+  let months = []
+  let monthDate = moment(startDate)
+  for (let i=0; i<12; i++) {
+    months.push({
+      month: monthDate.month(),
+      year: monthDate.year()
+    })
+    monthDate.add(1, 'month')
+  }
+
+  const monthLabels = moment.monthsShort();
   const now = moment();
 
   return (
     <div className={style.container}>
       <div className={style.nodeSection}>
         {months.map((month, index) => {
-          const files = groups[index] != null ? groups[index] : [];
+          const files = (groups[month.year] && groups[month.year][month.month]) ? groups[month.year][month.month] : [];
           return (
           <div
             className={style.month}
-            style={{ borderLeft: index === now.month() ? '3px solid #112532': null }}
+            style={{ borderLeft: month.month === now.month() ? '3px solid #112532': null }}
             key={index}
           >
             <div className={style.monthCountSection}>
@@ -59,12 +100,25 @@ const FilingTimeline = ({ filings }) => {
             )}
             </div>
             <div className={style.monthLabelSection}>
-              {month}
+              {(month.month != 0 && month.month != 6) ?
+                monthLabels[month.month] :
+                `${monthLabels[month.month]} ${month.year}`}
             </div>
           </div>)
         })}
       </div>
-
+      <div>
+      <button
+        onClick={() => setStartDate(moment(startDate).subtract(6, 'months'))}
+        style={{ width: 100 }}>
+        Back
+      </button>
+      <button
+        onClick={() => setStartDate(moment(startDate).add(6, 'months'))}
+        style={{ width: 100 }}>
+        Forward
+      </button>
+      </div>
     </div>
   )
 }
