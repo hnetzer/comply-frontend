@@ -136,7 +136,7 @@ class DashboardScreen extends React.Component {
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
               <div>
                 <h4>Filing Overview</h4>
-                <p>{`A timeline of all of your filing due dates in ${moment().format('YYYY')}.`}</p>
+                <p>{`A timeline of all of your filing due dates.`}</p>
               </div>
               <div>
                 <NotSupportedModal jurisdictions={notSupportedJuris} />

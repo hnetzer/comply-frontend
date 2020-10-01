@@ -80,8 +80,8 @@ const FilingTimeline = ({ filings }) => {
             key={index}
           >
             <div className={style.monthCountSection}>
-              <span className={style.monthCount}>{files.length}</span>
-              <span className={style.dueLabel}>{` due`}</span>
+              <span className={style.monthName}>{monthLabels[month.month]}</span>
+              <span className={style.monthYear}>{(month.month === 0 || month.month === 6) ? month.year : null}</span>
             </div>
             <div className={style.monthNodeSection}>
             {files.map((f,i) =>
@@ -104,9 +104,7 @@ const FilingTimeline = ({ filings }) => {
             )}
             </div>
             <div className={style.monthLabelSection}>
-              {(month.month != 0 && month.month != 6) ?
-                monthLabels[month.month] :
-                `${monthLabels[month.month]} ${month.year}`}
+              {`${files.length} due`}
             </div>
           </div>)
         })}

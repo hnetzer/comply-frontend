@@ -68,15 +68,18 @@ $gray-blue-color: rgba(8,16,74, .08);
 .monthCountSection {
   width: 100%;
   padding: 4px;
+  padding-top: 10px;
+  height: 40px;
   border-bottom: 2px solid $gray-blue-color;
 }
 
-.monthCount {
+.monthName, .monthYear {
   color: rgba(8,16,74, .4);
-  font-size: 20px;
+  font-size: 16px;
+  margin-right: 4px;
 }
 
-.month:hover .monthCount {
+.month:hover .monthName, .month:hover .monthYear {
   color: #08104A;
   font-weight: 500;
 }
