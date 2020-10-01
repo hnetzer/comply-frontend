@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import moment from 'moment'
 
+import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { FilingCard } from 'components/molecules'
 import style from './FilingTimeline.module.scss';
 
@@ -29,10 +32,6 @@ const FilingTimeline = ({ filings }) => {
     }
     return false;
   })
-
-  console.log('startDate', startDate.format('DD-MM-YYYY'))
-  console.log('filings', filings)
-  console.log('filings in range', filingsInRange)
 
   const groups = filingsInRange.reduce((map, filing) => {
     const yearDue = moment(filing.due_date).year();
@@ -67,12 +66,17 @@ const FilingTimeline = ({ filings }) => {
   return (
     <div className={style.container}>
       <div className={style.nodeSection}>
+        <div
+          onClick={() => setStartDate(moment(startDate).subtract(6, 'months'))}
+          className={style.backContainer}>
+          <FontAwesomeIcon className={style.backButton} icon={faCaretLeft} />
+        </div>
         {months.map((month, index) => {
           const files = (groups[month.year] && groups[month.year][month.month]) ? groups[month.year][month.month] : [];
           return (
           <div
             className={style.month}
-            style={{ borderLeft: month.month === now.month() ? '3px solid #112532': null }}
+            style={{ borderLeft: (month.month === now.month() && month.year === now.year()) ? '3px solid #112532': null }}
             key={index}
           >
             <div className={style.monthCountSection}>
@@ -106,18 +110,11 @@ const FilingTimeline = ({ filings }) => {
             </div>
           </div>)
         })}
-      </div>
-      <div>
-      <button
-        onClick={() => setStartDate(moment(startDate).subtract(6, 'months'))}
-        style={{ width: 100 }}>
-        Back
-      </button>
-      <button
-        onClick={() => setStartDate(moment(startDate).add(6, 'months'))}
-        style={{ width: 100 }}>
-        Forward
-      </button>
+        <div
+          onClick={() => setStartDate(moment(startDate).add(6, 'months'))}
+          className={style.forwardContainer}>
+          <FontAwesomeIcon className={style.forwardButton} icon={faCaretRight} />
+        </div>
       </div>
     </div>
   )
