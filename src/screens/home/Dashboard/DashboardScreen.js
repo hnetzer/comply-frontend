@@ -59,17 +59,16 @@ class DashboardScreen extends React.Component {
   loadPageData = async () => {
     try {
       const companyId = this.props.companyId
-      const yearFilings = await this.getFilingsForCurrentYear(companyId, true);
+      const filings = await this.getFilings(companyId, true);
       const upcomingFilings = await this.getUpcomingFilings(companyId);
-      const incompleteFilings = yearFilings.filter(f => f.due_date == null)
       const jurisdictions = await getCompanyJurisdictions(companyId);
       const company = await getCompany(companyId)
 
       this.setState({
-        timelineFilings: yearFilings.filter(f => f.due_date != null && !f.hidden).sort(compareFilingsByDue),
+        timelineFilings: filings.filter(f => f.due_date != null && !f.hidden).sort(compareFilingsByDue),
         upcomingFilings: upcomingFilings.filter(f => !f.hidden),
         notSupportedJuris: this.getNotSupported(jurisdictions, company),
-        incompleteFilings: incompleteFilings.filter(f => !f.hidden)
+        incompleteFilings: this.getIncompleteFilings(filings)
       })
 
     } catch (err) {
@@ -87,7 +86,7 @@ class DashboardScreen extends React.Component {
     }
   }
 
-  getFilingsForCurrentYear = async (companyId, unscheduled) => {
+  getFilings = async (companyId, unscheduled) => {
     const start = `2020-01-01`;
     const end = `2022-12-31`;
     return await getCompanyFilings(companyId, start, end, unscheduled)
@@ -98,6 +97,19 @@ class DashboardScreen extends React.Component {
     const end = moment().add(3, 'M').format('YYYY-MM-DD')
     const filings = await getCompanyFilings(companyId, start, end)
     return filings.sort(compareFilingsByDue)
+  }
+
+  getIncompleteFilings = (yearFilings) => {
+    const filingIds = []
+    const incomplete = yearFilings.filter(f => {
+      if (f.hidden) return false;
+      if (f.due_date != null) return false;
+      if (filingIds.indexOf(f.filing.id) >= 0) return false;
+
+      filingIds.push(f.filing.id)
+      return true;
+    });
+    return incomplete;
   }
 
 
