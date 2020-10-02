@@ -21,8 +21,17 @@ const FilingTimeline = ({ filings }) => {
   const [startDate, setStartDate] = useState(getInitialStartDate())
   const endDate = moment(startDate).add(1, 'year')
 
-
   if(!filings) return null;
+
+  const handleForwardClick = () => {
+    if (startDate.year() === 2022) return;
+    setStartDate(moment(startDate).add(6, 'months'))
+  }
+
+  const handleBackwardClick = () => {
+    if (startDate.year() === 2020 && startDate.month() === 0) return;
+    setStartDate(moment(startDate).subtract(6, 'months'))
+  }
 
   const sortByDate = (a, b) => (moment(a.due_date).isSameOrBefore(b.due_date) ? -1 : 1);
   const filingsInRange = filings.filter((filing, index) => {
@@ -67,7 +76,7 @@ const FilingTimeline = ({ filings }) => {
     <div className={style.container}>
       <div className={style.nodeSection}>
         <div
-          onClick={() => setStartDate(moment(startDate).subtract(6, 'months'))}
+          onClick={handleBackwardClick}
           className={style.backContainer}>
           <FontAwesomeIcon className={style.backButton} icon={faCaretLeft} />
         </div>
@@ -109,7 +118,7 @@ const FilingTimeline = ({ filings }) => {
           </div>)
         })}
         <div
-          onClick={() => setStartDate(moment(startDate).add(6, 'months'))}
+          onClick={handleForwardClick}
           className={style.forwardContainer}>
           <FontAwesomeIcon className={style.forwardButton} icon={faCaretRight} />
         </div>
