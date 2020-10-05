@@ -19,6 +19,38 @@ $gray-blue-color: rgba(8,16,74, .08);
   display: flex;
 }
 
+@mixin timeframeContainer {
+  border: 2px solid $gray-blue-color;
+  width: 48px;
+  margin-top: 38px;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.backContainer {
+  @include timeframeContainer;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  border-right: none;
+}
+
+.forwardContainer {
+  @include timeframeContainer;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.backButton, .forwardButton {
+  color: $navy;
+  font-size: 24px;
+}
+
+.backButton:hover, .forwardButton:hover {
+  cursor: pointer;
+}
+
 .month {
   width: 96px;
   height: 120px;
@@ -36,15 +68,18 @@ $gray-blue-color: rgba(8,16,74, .08);
 .monthCountSection {
   width: 100%;
   padding: 4px;
+  padding-top: 10px;
+  height: 40px;
   border-bottom: 2px solid $gray-blue-color;
 }
 
-.monthCount {
+.monthName, .monthYear {
   color: rgba(8,16,74, .4);
-  font-size: 20px;
+  font-size: 16px;
+  margin-right: 4px;
 }
 
-.month:hover .monthCount {
+.month:hover .monthName, .month:hover .monthYear {
   color: #08104A;
   font-weight: 500;
 }
