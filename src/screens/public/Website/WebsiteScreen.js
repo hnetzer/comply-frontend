@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from "@reach/router"
 
+import { ReactComponent as SignupGraphic } from './signup.svg';
+
 import { checkForAdmin } from 'utils';
 
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import { Card, Button, Input } from 'components/atoms';
 
 import styles from './WebsiteScreen.module.scss'
 
@@ -26,30 +27,15 @@ const WebsiteScreen = ({ token, company, user }) => {
 
   return(
     <div className={styles.container}>
+      <div className={styles.wordmarkLogo}>
+        Comply
+      </div>
       <Card className={styles.card}>
-        <Card.Body className={styles.cardBody}>
-          <Card.Title className={styles.complyTitle}>Comply</Card.Title>
-          <Card.Subtitle className={styles.complyTagline}>Simple. Dependable. Smart.</Card.Subtitle>
-          <div style={{
-              marginTop: 32,
-              width: '70%',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-evenly'  }}>
-            <Button
-              variant="primary"
-              href="/signup"
-            >
-              Sign Up
-            </Button>
-            <Button
-              variant="secondary"
-              href="login"
-            >
-              Log In
-            </Button>
-          </div>
-        </Card.Body>
+        <div className={styles.title}>Start for Free</div>
+        <p className={styles.subtitle}>You're just seconds away from simplified compliance.</p>
+        <SignupGraphic style={{ width: 401 }} />
+        <input placeholder="Your Work Email" className={styles.emailInput} type="text" />
+        <Button className={styles.cta}>Sign Up</Button>
       </Card>
     </div>
   )
