@@ -42,8 +42,12 @@ export const sendRequest = async (method, path, data, includeAuth = true) => {
 }
 
 
-export const createAccount = async (data) => {
-  return sendRequest('POST', '/account', data, false)
+export const createUser = async (data) => {
+  return sendRequest('POST', '/users', data, false)
+}
+
+export const updateUser = async (userId, data) => {
+  return sendRequest('PUT', `/users/${userId}`, data, false)
 }
 
 export const loginRequest = async (email, password) => {
@@ -233,7 +237,8 @@ export const adminGetCompanyFilings = async (companyId, startDate, endDate, unsc
 
 export default {
   BASE_URI,
-  createAccount,
+  createUser,
+  updateUser,
   updateCompany,
   createCompany,
   updateCompanyPremium,
