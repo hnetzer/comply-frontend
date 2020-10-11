@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 
 import { checkForAdmin } from 'utils';
 import { createUser, googleLogin } from 'network/api'
+import { login } from 'actions';
 import { ReactComponent as SignupGraphic } from './signup.svg';
 import { Card, Button, Input } from 'components/atoms';
 
@@ -16,7 +17,7 @@ const formSchema = Yup.object().shape({
   email: Yup.string().email().required(),
 });
 
-const SignupScreen = ({ token, company, user }) => {
+const SignupScreen = ({ token, company, user, dispatch }) => {
   const [errorMessage, setErrorMessage] = useState(null)
 
   // If the user is already logged in, then take them to home
@@ -51,17 +52,36 @@ const SignupScreen = ({ token, company, user }) => {
   }
 
   const handleGoogleSignin = async (googleUser) => {
-    console.log('Got GOOGLE USER -->')
-    var profile = googleUser.getBasicProfile();
+    try {
+      setErrorMessage(null)
+      const response = await googleLogin(googleUser.tokenObj)
+      dispatch(login(response))
 
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail());
-    console.log(googleUser)
+      // Send user info to full story
+      /*if (window.FS) {
+        window.FS.identify(user.id, { email: user.email })
+      }
 
-    const response = await googleLogin(googleUser.tokenObj)
+      const { user, company } = response
 
+      // If admin, then go to admin
+      if (checkForAdmin(user)) {
+        navigate('/admin')
+        return
+      }
+
+      if (!company.onboarded) {
+        navigate(`/onboarding/company/${company.id}`)
+        return
+      }
+
+      // Otherwise go to client home
+      navigate('/home')*/
+
+    } catch (err) {
+      setErrorMessage(err.message)
+      console.log(err)
+    }
   }
 
   return(
