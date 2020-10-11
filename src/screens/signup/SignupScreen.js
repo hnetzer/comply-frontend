@@ -1,11 +1,12 @@
 import React, { useState} from 'react';
 import { connect } from 'react-redux';
 import { Redirect, navigate } from "@reach/router"
+import { GoogleLogin } from 'react-google-login';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 import { checkForAdmin } from 'utils';
-import { createUser } from 'network/api'
+import { createUser, googleLogin } from 'network/api'
 import { ReactComponent as SignupGraphic } from './signup.svg';
 import { Card, Button, Input } from 'components/atoms';
 
@@ -49,6 +50,20 @@ const SignupScreen = ({ token, company, user }) => {
     }
   }
 
+  const handleGoogleSignin = async (googleUser) => {
+    console.log('Got GOOGLE USER -->')
+    var profile = googleUser.getBasicProfile();
+
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail());
+    console.log(googleUser)
+
+    const response = await googleLogin(googleUser.tokenObj)
+
+  }
+
   return(
     <div className={styles.container}>
       <div className={styles.wordmarkLogo}>
@@ -69,6 +84,11 @@ const SignupScreen = ({ token, company, user }) => {
         <div className={styles.error}>
           {errorMessage}
         </div>
+        <GoogleLogin
+          clientId="175499467696-6ge2c4lq57vkka7om81namuk0rd362pa.apps.googleusercontent.com"
+          onSuccess={handleGoogleSignin}
+          onFailure={handleGoogleSignin}
+        />,
       </Card>
     </div>
   )

@@ -55,6 +55,10 @@ export const loginRequest = async (email, password) => {
   return sendRequest('POST', '/login', data, false)
 }
 
+export const googleLogin = async (data) => {
+  return sendRequest('POST', '/login/google', data, false)
+}
+
 export const updateCompany = async (data, companyId) => {
   return sendRequest('PUT', `/company/${companyId}`, data)
 }
@@ -244,6 +248,7 @@ export default {
   updateCompanyPremium,
   updateOffices,
   loginRequest,
+  googleLogin,
   getAgencies,
   getCompany,
   updateCompanyAgencies,
