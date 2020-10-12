@@ -21,15 +21,23 @@ export const sendRequest = async (method, path, data, includeAuth = true) => {
 
   let response = await fetch(`${BASE_URI}${path}`, settings);
 
+  console.log(response)
+
+
   // Check for error codes
   if (response.status !== 200) {
-    if (response.state === 401) {
+    if (response.status === 401) {
       // Unauthorized request
-      navigate('/')
+      if (includeAuth) {
+        navigate('/')
+      }
+      let error = await response.text()
+      throw error
     }
 
     let error = await response.json()
     throw error
+
   }
 
   try {

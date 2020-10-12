@@ -37,7 +37,8 @@ const LoginScreen = (props) => {
       const response = await login(email, password)
       onSuccess(response)
     } catch (err) {
-      setErrorMessage(err.message)
+      console.log(err)
+      setErrorMessage('Incorrect email and password.')
     }
   }
 
@@ -47,7 +48,8 @@ const LoginScreen = (props) => {
       const response = await googleLogin(googleUser.tokenObj)
       onSuccess(response)
     } catch (err) {
-      setErrorMessage(err.message)
+      console.log(err)
+      setErrorMessage('User account not found.')
     }
   }
 
@@ -91,9 +93,6 @@ const LoginScreen = (props) => {
             onSubmit={handleSubmit}>
           {({ values, errors, handleSubmit, isSubmitting, isValid }) => (
               <Form>
-                {console.log('Login form is valid: ', isValid)}
-                {console.log('Login form values: ', values)}
-                {console.log('Login form errors: ', errors)}
                 <Field type="email" name="email" placeholder="Email" className={styles.input} />
                 <Field type="password" name="password" placeholder="Password" className={styles.input} />
                 <Button type="submit" variant="signup" disabled={!isValid} className={styles.cta}>Log In</Button>
@@ -105,7 +104,7 @@ const LoginScreen = (props) => {
           </div>
         </div>
         <div className={styles.footer}>
-          <p style={{ marginRight: 4 }}>`New to Comply?</p>
+          <p style={{ marginRight: 4 }}>New to Comply?</p>
           <a href="/signup">Sign up now</a>
         </div>
       </div>
