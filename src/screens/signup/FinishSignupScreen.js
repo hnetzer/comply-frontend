@@ -69,7 +69,7 @@ const FinishSignupScreen = (props) => {
               <Field name="first_name" placeholder="First Name" className={styles.input} />
               <Field name="last_name" placeholder="Last Name" className={styles.input} />
               <Field type="password" name="password" placeholder="Password" className={styles.input} />
-              <Button type="submit" disabled={!isValid} className={styles.cta}>Agree and Continue</Button>
+              <Button type="submit" variant="signup" disabled={!isValid} className={styles.cta}>Agree and Continue</Button>
             </Form>
           )}
         </Formik>

@@ -5,6 +5,11 @@ import stylesheet from './Button.module.scss';
 
 const Button = ({ children, onClick, type, variant, outline, disabled, className, style }) => {
   const getButtonStyle = () => {
+    if (disabled && variant === "signup") {
+      return stylesheet.signupDisabled
+    }
+
+
     if (disabled) {
       return stylesheet.disabled;
     }
@@ -14,6 +19,7 @@ const Button = ({ children, onClick, type, variant, outline, disabled, className
         case "primary": return stylesheet.primary;
         case "secondary": return stylesheet.secondary;
         case "dark": return stylesheet.dark;
+        case "signup": return stylesheet.signup;
         default: return stylesheet.primary;
       }
     } else {

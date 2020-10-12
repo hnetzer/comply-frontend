@@ -12,7 +12,7 @@ const HeaderBar = ({ user, company, companies, selectedCompanyId, dispatch }) =>
 
   const handleLogout = () => {
     dispatch(logout())
-    navigate('/')
+    navigate('/login')
   }
 
   return (

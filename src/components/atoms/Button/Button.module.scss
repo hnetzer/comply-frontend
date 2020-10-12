@@ -65,3 +65,24 @@ $dark: #08104A;
   color: $dark;
   border: 2px solid $dark;
 }
+
+@mixin signupStyle {
+  background: #2089D3;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  height: 54px;
+  font-size: 20px;
+  line-height: 23px;
+  font-weight: 500;
+  border: none;
+  color: #fff;
+}
+
+.signup {
+  @include signupStyle;
+}
+
+.signupDisabled {
+  @include signupStyle;
+  opacity: .5;
+}

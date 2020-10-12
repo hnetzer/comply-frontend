@@ -37,16 +37,8 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
 
     try {
       setErrorMessage(null)
-
       // need to check email avaliablity here :)
-
       navigate(`/signup/${data.email}`)
-
-      // Send user info to full story
-      /*if (window.FS) {
-        window.FS.identify(user.id, { email: user.email })
-      }*/
-
     } catch (err) {
       setErrorMessage(err.message)
       console.log(err)
@@ -60,20 +52,9 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
       dispatch(setLogin(response))
 
       // Send user info to full story
-      /*if (window.FS) {
-        window.FS.identify(user.id, { email: user.email })
-      }*/
+      /*if (window.FS) { window.FS.identify(user.id, { email: user.email }) }*/
 
-      const { company } = response
-
-      if (!company.onboarded) {
-        navigate(`/onboarding/company/${company.id}`)
-        return
-      }
-
-      // Otherwise go to client home
-      navigate('/home')
-
+      navigate(`/onboarding/company/${response.company.id}`)
     } catch (err) {
       setErrorMessage(err.message)
       console.log(err)
@@ -105,11 +86,11 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
           <span className={styles.orText}>or</span>
           <Divider />
         </div>
-        <Formik validationSchema={formSchema} initialValues={{ email: '' }} onSubmit={handleEmailSignup}>
+        <Formik validateOnMount validationSchema={formSchema} initialValues={{ email: '' }} onSubmit={handleEmailSignup}>
           {({ values, errors, handleSubmit, isSubmitting, isValid }) => (
             <Form style={{ width: '100%'}}>
               <Field type="email" name="email" placeholder="Your Work Email" className={styles.input} />
-              <Button type="submit" disabled={!isValid} className={styles.cta}>Sign Up</Button>
+              <Button type="submit" variant="signup" disabled={!isValid} className={styles.cta}>Sign Up</Button>
             </Form>
           )}
         </Formik>
