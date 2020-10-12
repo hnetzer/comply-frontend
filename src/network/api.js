@@ -42,15 +42,15 @@ export const sendRequest = async (method, path, data, includeAuth = true) => {
 }
 
 
-export const createUser = async (data) => {
-  return sendRequest('POST', '/users', data, false)
+export const signup = async (data) => {
+  return sendRequest('POST', '/signup', data, false)
 }
 
-export const updateUser = async (userId, data) => {
-  return sendRequest('PUT', `/users/${userId}`, data, false)
+export const googleSignup = async (data) => {
+  return sendRequest('POST', '/signup/google', data, false)
 }
 
-export const loginRequest = async (email, password) => {
+export const login = async (email, password) => {
   const data = { username: email, password: password };
   return sendRequest('POST', '/login', data, false)
 }
@@ -241,14 +241,18 @@ export const adminGetCompanyFilings = async (companyId, startDate, endDate, unsc
 
 export default {
   BASE_URI,
-  createUser,
-  updateUser,
+
+  // signup & login
+  signup,
+  googleSignup,
+  login,
+  googleLogin,
+
+  // customer requests
   updateCompany,
   createCompany,
   updateCompanyPremium,
   updateOffices,
-  loginRequest,
-  googleLogin,
   getAgencies,
   getCompany,
   updateCompanyAgencies,

@@ -10,7 +10,7 @@ const logout = (data) => {
   }
 }
 
-const login = (data) => {
+const setLogin = (data) => {
   return {
     type: LOGIN,
     data: {
@@ -44,7 +44,7 @@ const updateUserCompanies = (companies) => {
 
 export {
   logout,
-  login,
+  setLogin,
   onboarded,
   updateUserSettings,
   updateUserCompanies

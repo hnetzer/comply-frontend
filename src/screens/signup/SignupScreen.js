@@ -6,8 +6,8 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 import { checkForAdmin } from 'utils';
-import { createUser, googleLogin } from 'network/api'
-import { login } from 'actions';
+import { signup, googleSignup } from 'network/api'
+import { setLogin } from 'actions';
 import { ReactComponent as SignupGraphic } from './signup.svg';
 import { Card, Button, Input } from 'components/atoms';
 
@@ -32,18 +32,20 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
   }
 
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleEmailSignup = async (values, { setSubmitting }) => {
     const data = { email: values.email }
 
     try {
       setErrorMessage(null)
-      const user = await createUser(data)
-      navigate(`/signup/${user.id}`)
+
+      // need to check email avaliablity here :)
+
+      navigate(`/signup/${data.email}`)
 
       // Send user info to full story
-      if (window.FS) {
+      /*if (window.FS) {
         window.FS.identify(user.id, { email: user.email })
-      }
+      }*/
 
     } catch (err) {
       setErrorMessage(err.message)
@@ -51,24 +53,18 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
     }
   }
 
-  const handleGoogleSignin = async (googleUser) => {
+  const handleGoogleSignup = async (googleUser) => {
     try {
       setErrorMessage(null)
-      const response = await googleLogin(googleUser.tokenObj)
-      dispatch(login(response))
+      const response = await googleSignup(googleUser.tokenObj)
+      dispatch(setLogin(response))
 
       // Send user info to full story
       /*if (window.FS) {
         window.FS.identify(user.id, { email: user.email })
-      }
+      }*/
 
       const { user, company } = response
-
-      // If admin, then go to admin
-      if (checkForAdmin(user)) {
-        navigate('/admin')
-        return
-      }
 
       if (!company.onboarded) {
         navigate(`/onboarding/company/${company.id}`)
@@ -76,7 +72,7 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
       }
 
       // Otherwise go to client home
-      navigate('/home')*/
+      navigate('/home')
 
     } catch (err) {
       setErrorMessage(err.message)
@@ -93,8 +89,14 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
         <div className={styles.title}>Start for Free</div>
         <p className={styles.subtitle}>You're just seconds away from simplified compliance.</p>
         <SignupGraphic />
-        <Formik validationSchema={formSchema} initialValues={{ email: '' }} onSubmit={handleSubmit}>
-          {({ values, errors, handleSubmit, isSubmitting,isValid }) => (
+        <GoogleLogin
+          className={styles.googleButton}
+          buttonText="Sign up with Google"
+          clientId="175499467696-6ge2c4lq57vkka7om81namuk0rd362pa.apps.googleusercontent.com"
+          onSuccess={handleGoogleSignup}
+          onFailure={handleGoogleSignup} />
+        <Formik validationSchema={formSchema} initialValues={{ email: '' }} onSubmit={handleEmailSignup}>
+          {({ values, errors, handleSubmit, isSubmitting, isValid }) => (
             <Form style={{ width: '100%'}}>
               <Field type="email" name="email" placeholder="Your Work Email" className={styles.input} />
               <Button type="submit" disabled={!isValid} className={styles.cta}>Sign Up</Button>
@@ -104,11 +106,6 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
         <div className={styles.error}>
           {errorMessage}
         </div>
-        <GoogleLogin
-          clientId="175499467696-6ge2c4lq57vkka7om81namuk0rd362pa.apps.googleusercontent.com"
-          onSuccess={handleGoogleSignin}
-          onFailure={handleGoogleSignin}
-        />,
       </Card>
     </div>
   )

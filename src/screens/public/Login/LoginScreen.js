@@ -7,8 +7,8 @@ import Button from 'react-bootstrap/Button';
 
 import styles from './LoginScreen.module.scss'
 
-import { loginRequest } from 'network/api';
-import { login } from 'actions';
+import { login } from 'network/api';
+import { setLogin } from 'actions';
 import { checkForAdmin } from 'utils';
 
 import { LoginForm } from 'forms'
@@ -24,8 +24,8 @@ const LoginScreen = (props) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     const { email, password } = values;
     try {
-      const response = await loginRequest(email, password)
-      props.dispatch(login(response))
+      const response = await login(email, password)
+      props.dispatch(setLogin(response))
 
       const { user, company } = response
 

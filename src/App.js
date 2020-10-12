@@ -46,9 +46,8 @@ const App = ({ auth }) => {
     <Router className="rootRouter">
       <SignupScreen path="/" />
       <SignupScreen path="/signup" />
-      <FinishSignupScreen path="/signup/:userId" />
+      <FinishSignupScreen path="/signup/:userEmail" />
       <LoginScreen path="/login" />
-
       {isAuth ? renderProtectedRoutes() : renderRedirects()}
     </Router>
   )

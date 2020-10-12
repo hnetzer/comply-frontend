@@ -4,8 +4,8 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { navigate } from "@reach/router"
 
-import { updateUser, loginRequest } from 'network/api';
-import { login } from 'actions';
+import { signup } from 'network/api';
+import { setLogin } from 'actions';
 import { Card, Button } from 'components/atoms'
 
 import styles from './Signup.module.scss'
@@ -19,26 +19,38 @@ const formSchema = Yup.object().shape({
 const FinishSignupScreen = (props) => {
   const [errorMessage, setErrorMessage] = useState(null)
 
-  if (!props.userId) {
-    setErrorMessage("No userId set")
+  if (!props.userEmail) {
+    setErrorMessage("No userEmail set")
   }
 
   const handleSubmit = async (values, { setSubmitting }) => {
     const data = {
+      email: props.userEmail,
       first_name: values.first_name,
       last_name: values.last_name,
       password: values.password,
     };
 
     try {
-      const user = await updateUser(props.userId, data)
-      const response = await loginRequest(user.email, values.password)
-      props.dispatch(login(response))
+      const response = await signup(data)
+      props.dispatch(setLogin(response))
 
-      navigate(`/onboarding/company/${user.company_id}`)
+      // Send user info to full story
+      /*if (window.FS) {
+        window.FS.identify(user.id, { email: user.email })
+      }*/
+
+      const { user, company } = response
+
+      if (!company.onboarded) {
+        navigate(`/onboarding/company/${company.id}`)
+        return
+      }
+
+      // Otherwise go to client home
+      navigate('/home')
 
     } catch (err) {
-      console.log(err)
       setErrorMessage(err.message)
     }
   }
@@ -71,6 +83,7 @@ const FinishSignupScreen = (props) => {
           {errorMessage}
         </div>
       </Card>
+      <p style={{ color: '#fff', paddingTop: 8 }}>Signing up as <b>{props.userEmail}</b></p>
     </div>
   )
 }
