@@ -6,10 +6,10 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 import { checkForAdmin } from 'utils';
-import { signup, googleSignup } from 'network/api'
+import { googleSignup } from 'network/api'
 import { setLogin } from 'actions';
 import { ReactComponent as SignupGraphic } from './signup.svg';
-import { Card, Button, Input } from 'components/atoms';
+import { Card, Button, Divider } from 'components/atoms';
 
 import styles from './Signup.module.scss'
 
@@ -64,7 +64,7 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
         window.FS.identify(user.id, { email: user.email })
       }*/
 
-      const { user, company } = response
+      const { company } = response
 
       if (!company.onboarded) {
         navigate(`/onboarding/company/${company.id}`)
@@ -82,8 +82,13 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
 
   return(
     <div className={styles.container}>
-      <div className={styles.wordmarkLogo}>
-        Comply
+      <div>
+        <div className={styles.wordmarkLogo}>
+          Comply
+        </div>
+        <div className={styles.loginLink}>
+          <a href="/login">Log In</a>
+        </div>
       </div>
       <Card className={styles.card}>
         <div className={styles.title}>Start for Free</div>
@@ -95,6 +100,11 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
           clientId="175499467696-6ge2c4lq57vkka7om81namuk0rd362pa.apps.googleusercontent.com"
           onSuccess={handleGoogleSignup}
           onFailure={handleGoogleSignup} />
+        <div className={styles.orSection}>
+          <Divider />
+          <span className={styles.orText}>or</span>
+          <Divider />
+        </div>
         <Formik validationSchema={formSchema} initialValues={{ email: '' }} onSubmit={handleEmailSignup}>
           {({ values, errors, handleSubmit, isSubmitting, isValid }) => (
             <Form style={{ width: '100%'}}>

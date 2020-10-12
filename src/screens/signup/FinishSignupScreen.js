@@ -40,7 +40,7 @@ const FinishSignupScreen = (props) => {
         window.FS.identify(user.id, { email: user.email })
       }*/
 
-      const { user, company } = response
+      const { company } = response
 
       if (!company.onboarded) {
         navigate(`/onboarding/company/${company.id}`)
