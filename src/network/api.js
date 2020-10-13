@@ -67,6 +67,10 @@ export const googleLogin = async (data) => {
   return sendRequest('POST', '/login/google', data, false)
 }
 
+export const checkEmail = async (email) => {
+  return sendRequest('GET', `/signup/${email}`, null, false)
+}
+
 export const updateCompany = async (data, companyId) => {
   return sendRequest('PUT', `/company/${companyId}`, data)
 }
@@ -255,6 +259,7 @@ export default {
   googleSignup,
   login,
   googleLogin,
+  checkEmail,
 
   // customer requests
   updateCompany,

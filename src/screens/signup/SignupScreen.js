@@ -6,7 +6,7 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 import { checkForAdmin } from 'utils';
-import { googleSignup } from 'network/api'
+import { googleSignup, checkEmail } from 'network/api'
 import { setLogin } from 'actions';
 import { ReactComponent as SignupGraphic } from './signup.svg';
 import { Card, Button, Divider } from 'components/atoms';
@@ -37,6 +37,8 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
 
     try {
       setErrorMessage(null)
+      await checkEmail(data.email)
+
       // need to check email avaliablity here :)
       navigate(`/signup/${data.email}`)
     } catch (err) {
@@ -51,10 +53,15 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
       const response = await googleSignup(googleUser.tokenObj)
       dispatch(setLogin(response))
 
-      // Send user info to full story
-      /*if (window.FS) { window.FS.identify(user.id, { email: user.email }) }*/
+      const user = response.user;
+      const company = response.company;
 
-      navigate(`/onboarding/company/${response.company.id}`)
+      // Send user info to full story
+      if (window.FS) {
+        window.FS.identify(user.id, { email: user.email });
+      }
+
+      navigate(`/onboarding/company/${company.id}`)
     } catch (err) {
       setErrorMessage(err.message)
       console.log(err)

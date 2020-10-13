@@ -35,21 +35,15 @@ const FinishSignupScreen = (props) => {
       const response = await signup(data)
       props.dispatch(setLogin(response))
 
+      const user = response.user;
+      const company = response.company;
+
       // Send user info to full story
-      /*if (window.FS) {
-        window.FS.identify(user.id, { email: user.email })
-      }*/
-
-      const { company } = response
-
-      if (!company.onboarded) {
-        navigate(`/onboarding/company/${company.id}`)
-        return
+      if (window.FS) {
+        window.FS.identify(user.id, { email: user.email });
       }
 
-      // Otherwise go to client home
-      navigate('/home')
-
+      navigate(`/onboarding/company/${company.id}`)
     } catch (err) {
       setErrorMessage(err.message)
     }
