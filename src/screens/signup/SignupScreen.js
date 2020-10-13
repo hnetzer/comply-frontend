@@ -17,6 +17,8 @@ const formSchema = Yup.object().shape({
   email: Yup.string().email().required(),
 });
 
+const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
 const SignupScreen = ({ token, company, user, dispatch }) => {
   const [errorMessage, setErrorMessage] = useState(null)
 
@@ -85,7 +87,7 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
         <GoogleLogin
           className={styles.googleButton}
           buttonText="Sign up with Google"
-          clientId="175499467696-6ge2c4lq57vkka7om81namuk0rd362pa.apps.googleusercontent.com"
+          clientId={GOOGLE_CLIENT_ID}
           onSuccess={handleGoogleSignup}
           onFailure={handleGoogleSignup} />
         <div className={styles.orSection}>

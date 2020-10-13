@@ -18,6 +18,7 @@ const formSchema = Yup.object().shape({
   password: Yup.string().required(),
 });
 
+const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const LoginScreen = (props) => {
   const [errorMessage, setErrorMessage] = useState(null)
@@ -78,7 +79,7 @@ const LoginScreen = (props) => {
           <GoogleLogin
             className={styles.googleButton}
             buttonText="Continue with Google"
-            clientId="175499467696-6ge2c4lq57vkka7om81namuk0rd362pa.apps.googleusercontent.com"
+            clientId={GOOGLE_CLIENT_ID}
             onSuccess={handleGoogleLogin}
             onFailure={handleGoogleLogin} />
           <div className={styles.orSection}>
