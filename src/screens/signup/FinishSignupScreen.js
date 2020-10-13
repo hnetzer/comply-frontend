@@ -50,9 +50,14 @@ const FinishSignupScreen = (props) => {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.wordmarkLogo}>
-        Comply
+    <div className={styles.signupPage}>
+      <div className={styles.topBar}>
+        <div className={styles.wordmarkLogo}>
+          Comply
+        </div>
+        <div className={styles.loginLink}>
+          <a href="/login">Log In</a>
+        </div>
       </div>
       <Card className={styles.card}>
         <div className={styles.title}>Finish Signing Up</div>

@@ -1,35 +1,39 @@
 @import "styles/vars";
 
-.container {
+.signupPage {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   max-width: none;
+  min-width: none;
   margin: 0;
   background: linear-gradient(284.1deg, #08104A -60.23%, #2F98E2 114.26%),
   linear-gradient(292.74deg, #08104A -151.59%, #2F98E2 117.79%), #FFFFFF;
+}
+
+.topBar {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #FFFFFF;
 }
 
 .wordmarkLogo {
   font-weight: 500;
   font-size: 28px;
   line-height: 23px;
-  color: #FFFFFF;
-  position: absolute;
-  top: 36px;
-  left: 46px;
+  margin-left: 46px;
 }
 
 .loginLink {
   font-weight: 500;
   font-size: 20px;
   line-height: 23px;
-  color: #FFFFFF;
-  position: absolute;
-  top: 36px;
-  right: 75px;
+  margin-right: 75px;
 }
 
 .loginLink a {
@@ -42,7 +46,8 @@
 }
 
 .card {
-  width: 500px;
+  margin-top: 24px;
+  max-width: 500px;
   padding: 50px;
   display: flex;
   flex-direction: column;

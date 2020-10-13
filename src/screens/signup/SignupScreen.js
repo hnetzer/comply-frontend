@@ -69,8 +69,8 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
   }
 
   return(
-    <div className={styles.container}>
-      <div>
+    <div className={styles.signupPage}>
+      <div className={styles.topBar}>
         <div className={styles.wordmarkLogo}>
           Comply
         </div>
@@ -81,7 +81,7 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
       <Card className={styles.card}>
         <div className={styles.title}>Start for Free</div>
         <p className={styles.subtitle}>You're just seconds away from simplified compliance.</p>
-        <SignupGraphic />
+        <SignupGraphic style={{ width: '100%'}} />
         <GoogleLogin
           className={styles.googleButton}
           buttonText="Sign up with Google"
