@@ -54,6 +54,10 @@ const LoginScreen = (props) => {
     }
   }
 
+  const handleGoogleLoginError = ({ error, details }) => {
+    setErrorMessage(details)
+  }
+
   const onSuccess = (response) => {
     props.dispatch(setLogin(response))
     const { user, company } = response
@@ -81,7 +85,7 @@ const LoginScreen = (props) => {
             buttonText="Continue with Google"
             clientId={GOOGLE_CLIENT_ID}
             onSuccess={handleGoogleLogin}
-            onFailure={handleGoogleLogin} />
+            onFailure={handleGoogleLoginError} />
           <div className={styles.orSection}>
             <Divider />
             <span className={styles.orText}>or</span>

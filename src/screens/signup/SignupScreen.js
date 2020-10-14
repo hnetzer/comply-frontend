@@ -70,6 +70,10 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
     }
   }
 
+  const handleGoogleSignupError = ({ error, details }) => {
+    setErrorMessage(details)
+  }
+
   return(
     <div className={styles.signupPage}>
       <div className={styles.topBar}>
@@ -89,7 +93,7 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
           buttonText="Sign up with Google"
           clientId={GOOGLE_CLIENT_ID}
           onSuccess={handleGoogleSignup}
-          onFailure={handleGoogleSignup} />
+          onFailure={handleGoogleSignupError} />
         <div className={styles.orSection}>
           <Divider />
           <span className={styles.orText}>or</span>
