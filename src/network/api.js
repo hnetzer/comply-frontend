@@ -21,15 +21,23 @@ export const sendRequest = async (method, path, data, includeAuth = true) => {
 
   let response = await fetch(`${BASE_URI}${path}`, settings);
 
+  console.log(response)
+
+
   // Check for error codes
   if (response.status !== 200) {
-    if (response.state === 401) {
+    if (response.status === 401) {
       // Unauthorized request
-      navigate('/')
+      if (includeAuth) {
+        navigate('/')
+      }
+      let error = await response.text()
+      throw error
     }
 
     let error = await response.json()
     throw error
+
   }
 
   try {
@@ -42,13 +50,25 @@ export const sendRequest = async (method, path, data, includeAuth = true) => {
 }
 
 
-export const createAccount = async (data) => {
-  return sendRequest('POST', '/account', data, false)
+export const signup = async (data) => {
+  return sendRequest('POST', '/signup', data, false)
 }
 
-export const loginRequest = async (email, password) => {
+export const googleSignup = async (data) => {
+  return sendRequest('POST', '/signup/google', data, false)
+}
+
+export const login = async (email, password) => {
   const data = { username: email, password: password };
   return sendRequest('POST', '/login', data, false)
+}
+
+export const googleLogin = async (data) => {
+  return sendRequest('POST', '/login/google', data, false)
+}
+
+export const checkEmail = async (email) => {
+  return sendRequest('GET', `/signup/${email}`, null, false)
 }
 
 export const updateCompany = async (data, companyId) => {
@@ -233,12 +253,19 @@ export const adminGetCompanyFilings = async (companyId, startDate, endDate, unsc
 
 export default {
   BASE_URI,
-  createAccount,
+
+  // signup & login
+  signup,
+  googleSignup,
+  login,
+  googleLogin,
+  checkEmail,
+
+  // customer requests
   updateCompany,
   createCompany,
   updateCompanyPremium,
   updateOffices,
-  loginRequest,
   getAgencies,
   getCompany,
   updateCompanyAgencies,
