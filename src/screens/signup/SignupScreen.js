@@ -85,7 +85,7 @@ const SignupScreen = ({ token, company, user, dispatch }) => {
         </div>
       </div>
       <Card className={styles.card}>
-        <div className={styles.title}>Start for Free</div>
+        <div className={styles.title}>Get Started</div>
         <p className={styles.subtitle}>You're just seconds away from simplified compliance.</p>
         <SignupGraphic style={{ width: '100%'}} />
         <GoogleLogin
